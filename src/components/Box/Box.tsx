@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
+import { PolymorphicComponentPropsWithRef } from '../../types/polymorphic';
 
 export type BorderRadiusType = 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full' | string;
 export type BoxShadowType = 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'inner' | 'none' | string;
 
-export interface BoxProps {
+// Base props for the Box component without the polymorphic 'as' prop
+export interface BoxBaseProps {
   /** The content of the box */
   children?: React.ReactNode;
   /** Additional CSS className */
@@ -61,8 +63,6 @@ export interface BoxProps {
   zIndex?: number;
   /** Overflow behavior */
   overflow?: 'visible' | 'hidden' | 'scroll' | 'auto';
-  /** HTML element to render as */
-  as?: React.ElementType;
   /** onClick handler */
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
   /** onMouseEnter handler */
@@ -71,13 +71,16 @@ export interface BoxProps {
   onMouseLeave?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
+// Polymorphic Box props that combine BoxBaseProps with the polymorphic component props
+export type BoxProps<C extends React.ElementType = 'div'> = PolymorphicComponentPropsWithRef<C, BoxBaseProps>
+
 const formatSpacingValue = (value: number | string | undefined, theme: any): string | undefined => {
   if (value === undefined) return undefined;
   if (typeof value === 'string') return value;
   return theme.spacing[value] || `${value}px`;
 };
 
-const StyledBox = styled.div<BoxProps>`
+const StyledBox = styled.div<BoxBaseProps>`
   ${({ display }) => display && `display: ${display};`}
   ${({ flexDirection }) => flexDirection && `flex-direction: ${flexDirection};`}
   ${({ justifyContent }) => justifyContent && `justify-content: ${justifyContent};`}
@@ -109,8 +112,28 @@ const StyledBox = styled.div<BoxProps>`
   ${({ overflow }) => overflow && `overflow: ${overflow};`}
 `;
 
-export const Box: React.FC<BoxProps> = ({ children, ...props }) => {
-  return <StyledBox {...props}>{children}</StyledBox>;
-};
+/**
+ * Box component that can be rendered as any HTML element or React component
+ * while maintaining proper typing for props and ref.
+ */
+type PolymorphicBoxComponent = <C extends React.ElementType = 'div'>(
+  props: BoxProps<C>
+) => JSX.Element;
+
+interface PolymorphicBoxComponentWithDisplayName extends PolymorphicBoxComponent {
+  displayName?: string;
+}
+
+export const Box = forwardRef(function Box<C extends React.ElementType = 'div'>(
+  { as, children, ...restProps }: BoxProps<C>,
+  ref: React.Ref<any>
+) {
+  const Component = as || 'div';
+  return (
+    <StyledBox as={Component} ref={ref} {...restProps}>
+      {children}
+    </StyledBox>
+  );
+}) as unknown as PolymorphicBoxComponentWithDisplayName;
 
 Box.displayName = 'Box';
