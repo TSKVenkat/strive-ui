@@ -1,0 +1,17 @@
+# Strive UI is solely owned and maintained by Venkataraman T S K
+# All pull requests require review from the owner
+
+# Default owner for everything in the repo
+* @TSKVenkat
+
+# Component ownership
+/src/components/ @TSKVenkat
+
+# Documentation ownership
+/docs/ @TSKVenkat
+
+# Build configuration ownership
+*.js @TSKVenkat
+*.json @TSKVenkat
+*.yml @TSKVenkat
+*.yaml @TSKVenkat

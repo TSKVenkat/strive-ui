@@ -1,11 +1,25 @@
-# Component Name
+# ComponentName
 
-Brief description of the component's purpose and main use cases.
+Brief description of the component's purpose, main use cases, and how it fits into the headless architecture of Strive UI.
+
+## Overview
+
+A more detailed explanation of the component, its design philosophy, and how it follows the headless component pattern.
+
+## Installation
+
+```bash
+npm install @strive-ui/core
+```
 
 ## Import
 
 ```jsx
-import { ComponentName } from 'strive-ui';
+// Import the component
+import { ComponentName } from '@strive-ui/core';
+
+// Import the hook (for headless usage)
+import { useComponentName } from '@strive-ui/core';
 ```
 
 ## Features
@@ -13,30 +27,103 @@ import { ComponentName } from 'strive-ui';
 - Feature 1
 - Feature 2
 - Feature 3
-- ...
+- Accessibility support
+- Keyboard navigation
+- Customizable styling
 
-## Usage
+## Component Usage
+
+### Basic Usage
 
 ```jsx
-// Basic usage example
 <ComponentName>Content</ComponentName>
+```
 
-// Example with props
-<ComponentName prop1="value" prop2={value}>
+### With Props
+
+```jsx
+<ComponentName 
+  prop1="value" 
+  prop2={value}
+  onChange={handleChange}
+>
   Content
 </ComponentName>
+```
 
-// Additional usage examples...
+### Styled Usage
+
+```jsx
+import styled from 'styled-components';
+
+const StyledComponent = styled(ComponentName)`
+  background-color: ${props => props.theme.colors.primary};
+  padding: ${props => props.theme.spacing.md};
+`;
+
+<StyledComponent>Styled Content</StyledComponent>
+```
+
+## Headless Usage
+
+```jsx
+function CustomComponent() {
+  const { state, getProps } = useComponentName({
+    // Initial options
+    initialValue: 'value',
+    onChange: handleChange,
+  });
+  
+  return (
+    <div {...getProps()}>
+      {/* Custom implementation */}
+      {state.isActive ? 'Active' : 'Inactive'}
+    </div>
+  );
+}
+```
+
+## Compound Component Pattern
+
+If the component supports the compound component pattern:
+
+```jsx
+<ComponentName.Root>
+  <ComponentName.Trigger>Open</ComponentName.Trigger>
+  <ComponentName.Content>
+    <ComponentName.Item>Item 1</ComponentName.Item>
+    <ComponentName.Item>Item 2</ComponentName.Item>
+  </ComponentName.Content>
+</ComponentName.Root>
 ```
 
 ## Props
 
+### ComponentName Props
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
+| `as` | `ElementType` | `'div'` | Polymorphic component prop to render as different element |
 | `prop1` | `string` | `'default'` | Description of prop1 |
 | `prop2` | `number` | `0` | Description of prop2 |
 | `prop3` | `boolean` | `false` | Description of prop3 |
-| ... | ... | ... | ... |
+| `onChange` | `(value: any) => void` | `undefined` | Callback when value changes |
+
+### useComponentName Hook Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `initialValue` | `any` | `undefined` | Initial value for the component |
+| `onChange` | `(value: any) => void` | `undefined` | Callback when value changes |
+| `disabled` | `boolean` | `false` | Whether the component is disabled |
+
+### useComponentName Hook Return Value
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `state` | `object` | Current state of the component |
+| `getProps` | `() => object` | Function to get props for the root element |
+| `actions` | `object` | Actions to update the component state |
 
 ## Variants
 
@@ -44,10 +131,10 @@ If the component has variants, describe them here with examples:
 
 ```jsx
 // Variant 1
-<ComponentName variant="variant1">Variant 1</ComponentName>
+<ComponentName variant="primary">Primary</ComponentName>
 
 // Variant 2
-<ComponentName variant="variant2">Variant 2</ComponentName>
+<ComponentName variant="secondary">Secondary</ComponentName>
 ```
 
 ## Sizes
@@ -75,18 +162,21 @@ If the component has different states, describe them here with examples:
 
 // Loading state
 <ComponentName isLoading>Loading</ComponentName>
+
+// Error state
+<ComponentName error="Invalid input">Error</ComponentName>
 ```
 
 ## Accessibility
 
 Describe accessibility features and considerations:
 
-- Keyboard navigation
-- Screen reader support
-- ARIA attributes
-- Focus management
-- Color contrast
-- ...
+- Keyboard navigation (Tab, Enter, Space, Arrow keys, etc.)
+- Screen reader announcements
+- ARIA attributes (roles, states, properties)
+- Focus management and focus trapping (if applicable)
+- Color contrast compliance
+- Reduced motion support
 
 ## Best Practices
 
@@ -95,5 +185,49 @@ Provide guidelines and best practices for using the component:
 - When to use this component
 - When not to use this component
 - Common patterns and combinations with other components
-- Performance considerations
-- ...
+- Performance considerations and optimizations
+- Server-side rendering considerations
+
+## Examples
+
+### Integration with Form
+
+```jsx
+function FormExample() {
+  const { register, handleSubmit } = useForm();
+  
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <ComponentName {...register('fieldName')} />
+      <Button type="submit">Submit</Button>
+    </form>
+  );
+}
+```
+
+### Custom Styling Example
+
+```jsx
+import { createTheme, ThemeProvider } from '@strive-ui/core';
+
+const customTheme = createTheme({
+  components: {
+    ComponentName: {
+      baseStyle: {
+        backgroundColor: '#f5f5f5',
+        borderRadius: '4px',
+      },
+      variants: {
+        primary: {
+          color: 'white',
+          backgroundColor: 'blue',
+        },
+      },
+    },
+  },
+});
+
+<ThemeProvider theme={customTheme}>
+  <ComponentName variant="primary">Themed Component</ComponentName>
+</ThemeProvider>
+```

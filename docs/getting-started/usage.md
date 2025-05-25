@@ -1,21 +1,25 @@
-# Basic Usage
+# Using Strive UI
 
-This guide will help you get started with using StriveUI components in your React application.
+## Overview
+
+Strive UI follows a headless component architecture that separates logic from presentation, giving you complete styling freedom while maintaining accessibility and functionality.
 
 ## Importing Components
 
-You can import components directly from the `strive-ui` package:
-
 ```jsx
-import { Button, Input, Card } from 'strive-ui';
+// Import components
+import { Button, Input, Card } from '@strive-ui/core';
+
+// Import hooks for headless usage
+import { useButton, useInput } from '@strive-ui/core';
 ```
 
-## Theme Provider
+## Basic Setup
 
-Always wrap your application with the `ThemeProvider` to ensure proper styling and theming:
+Wrap your application with the `ThemeProvider`:
 
 ```jsx
-import { ThemeProvider } from 'strive-ui';
+import { ThemeProvider } from '@strive-ui/core';
 
 function App() {
   return (
@@ -26,104 +30,143 @@ function App() {
 }
 ```
 
-## Basic Example
+## Component Patterns
 
-Here's a simple example showing how to use some of the core components:
+### Standard Usage
+
+Use pre-built components with your own styling:
 
 ```jsx
-import React, { useState } from 'react';
-import { ThemeProvider, Box, Card, Input, Button } from 'strive-ui';
+import { Button } from '@strive-ui/core';
+import './your-styles.css'; // Your custom styles
+
+function MyComponent() {
+  return (
+    <Button 
+      variant="primary" 
+      className="my-custom-button"
+      onClick={() => alert('Clicked!')}
+    >
+      Click Me
+    </Button>
+  );
+}
+```
+
+### Headless Pattern
+
+Use the logic hooks directly for complete styling control:
+
+```jsx
+import { useButton } from '@strive-ui/core';
+
+function CustomButton({ children, ...props }) {
+  const { buttonProps, state } = useButton(props);
+  
+  return (
+    <button 
+      {...buttonProps}
+      className={`my-button ${state.isHovered ? 'hovered' : ''} ${state.isPressed ? 'pressed' : ''}`}
+    >
+      {state.isLoading ? 'Loading...' : children}
+    </button>
+  );
+}
+```
+
+### Compound Component Pattern
+
+Use the compound component pattern for flexible composition:
+
+```jsx
+import { Select } from '@strive-ui/core';
+
+function FilterDropdown() {
+  return (
+    <Select.Root defaultValue="newest">
+      <Select.Label>Sort by</Select.Label>
+      <Select.Trigger className="my-trigger" />
+      <Select.Content className="my-dropdown">
+        <Select.Option value="newest">Newest first</Select.Option>
+        <Select.Option value="oldest">Oldest first</Select.Option>
+        <Select.Option value="price">Price</Select.Option>
+      </Select.Content>
+    </Select.Root>
+  );
+}
+```
+
+## Styling Approaches
+
+Strive UI works with any styling method:
+
+### CSS Modules
+
+```jsx
+import { Button } from '@strive-ui/core';
+import styles from './Button.module.css';
+
+<Button className={styles.button}>Click Me</Button>
+```
+
+### Tailwind CSS
+
+```jsx
+import { Button } from '@strive-ui/core';
+
+<Button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+  Click Me
+</Button>
+```
+
+### Styled Components
+
+```jsx
+import { Button } from '@strive-ui/core';
+import styled from 'styled-components';
+
+const StyledButton = styled(Button)`
+  background-color: ${props => props.theme.colors.primary.main};
+  border-radius: 4px;
+  padding: 8px 16px;
+`;
+
+<StyledButton>Click Me</StyledButton>
+```
+
+## Form Example
+
+```jsx
+import { useState } from 'react';
+import { Box, Card, Input, Button, useForm } from '@strive-ui/core';
 
 function LoginForm() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle login logic
-    console.log('Login attempt with:', username);
+  const { register, handleSubmit, errors } = useForm();
+  
+  const onSubmit = (data) => {
+    console.log('Form submitted:', data);
   };
 
   return (
-    <ThemeProvider>
-      <Box 
-        display="flex" 
-        justifyContent="center" 
-        alignItems="center" 
-        height="100vh"
-      >
-        <Card 
-          title="Login" 
-          style={{ width: '400px' }}
-        >
-          <form onSubmit={handleSubmit}>
-            <Input
-              label="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
-              fullWidth
-              marginBottom="16px"
-            />
-            
-            <Input
-              label="Password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              fullWidth
-              marginBottom="24px"
-            />
-            
-            <Button 
-              type="submit" 
-              variant="primary" 
-              fullWidth
-            >
-              Log In
-            </Button>
-          </form>
-        </Card>
-      </Box>
-    </ThemeProvider>
-  );
-}
-
-export default LoginForm;
-```
-
-## Component Composition
-
-StriveUI components are designed to work well together. Here's an example of composing multiple components:
-
-```jsx
-import { Card, Avatar, Badge, Box, Button } from 'strive-ui';
-
-function UserProfile({ user }) {
-  return (
-    <Card>
-      <Box display="flex" alignItems="center" marginBottom="16px">
-        <Avatar 
-          src={user.avatarUrl} 
-          name={user.name} 
-          size="lg" 
-          badge={{ status: 'online', position: 'bottom-right' }}
+    <Card className="login-card">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          {...register('username', { required: 'Username is required' })}
+          label="Username"
+          error={errors.username?.message}
         />
-        <Box marginLeft="16px">
-          <h2>{user.name}</h2>
-          <p>{user.title}</p>
-        </Box>
-      </Box>
-      
-      <Box display="flex" flexWrap="wrap" gap="8px" marginBottom="16px">
-        {user.skills.map(skill => (
-          <Badge key={skill}>{skill}</Badge>
-        ))}
-      </Box>
-      
-      <Button variant="primary">View Profile</Button>
-      <Button variant="tertiary" marginLeft="8px">Message</Button>
+        
+        <Input
+          {...register('password', { required: 'Password is required' })}
+          type="password"
+          label="Password"
+          error={errors.password?.message}
+        />
+        
+        <Button type="submit" variant="primary">
+          Log In
+        </Button>
+      </form>
     </Card>
   );
 }
@@ -131,6 +174,6 @@ function UserProfile({ user }) {
 
 ## Next Steps
 
-- Explore the [component documentation](/components) to learn about all available components
-- Learn about [theming](/guides/theming) to customize the look and feel of your application
-- Check out the [accessibility guide](/guides/accessibility) to ensure your application is accessible to all users
+- Explore [component API reference](../README.md)
+- Learn about [theming](./theming.md)
+- Review [accessibility guidelines](../guides/accessibility.md)

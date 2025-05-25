@@ -1,7 +1,7 @@
 {
-    "name": "strive-ui",
+    "name": "@strive-ui/core",
     "version": "1.0.0",
-    "description": "A professional React UI component library",
+    "description": "A professional, accessible, and customizable React UI component library with headless components for maximum styling flexibility",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
     "types": "dist/types/index.d.ts",
@@ -119,9 +119,14 @@
         "ui",
         "components",
         "library",
-        "design-system"
+        "design-system",
+        "headless",
+        "typescript",
+        "accessible",
+        "a11y",
+        "styled-components"
     ],
-    "author": "StriveUI Team",
+    "author": "StriveUI Team <info@strive-ui.com>",
     "license": "MIT",
     "repository": {
         "type": "git",

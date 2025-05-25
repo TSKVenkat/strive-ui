@@ -1,47 +1,53 @@
 # Strive UI Documentation
 
-This directory contains comprehensive documentation for the Strive UI component library.
+## Overview
+
+This directory contains official documentation for the Strive UI component library, a headless React UI library that prioritizes flexibility, accessibility, and developer experience.
 
 ## Documentation Structure
 
-- **getting-started/**: Guides for installation, setup, and basic usage
-- **components/**: Documentation for individual components
-- **guides/**: Advanced guides and best practices
-- **templates/**: Templates for creating consistent documentation
+```
+docs/
+├── getting-started/     # Installation, setup, and basic usage
+│   ├── installation.md  # Installation instructions
+│   ├── theming.md       # Theme customization
+│   └── usage.md         # Basic usage patterns
+├── guides/              # Advanced topics and best practices
+│   ├── accessibility.md # Accessibility guidelines
+│   ├── contributing.md  # Contribution workflow
+│   └── publishing.md    # Release process
+└── templates/           # Documentation templates
+```
 
-## Documentation Guidelines
+## Key Documentation Sections
 
-When creating or updating component documentation, please follow these guidelines:
+### Getting Started
 
-1. **Use the template**: Use the [component documentation template](./templates/component-doc-template.md) as a starting point.
+Start here if you're new to Strive UI. These guides will help you install the library, understand its architecture, and implement your first components.
 
-2. **Be comprehensive**: Include all relevant information about the component, including props, variants, examples, and accessibility considerations.
+### Component Patterns
 
-3. **Include examples**: Provide clear, concise examples that demonstrate the component's usage.
+Strive UI implements three powerful component patterns:
 
-4. **Document props**: Document all props, including their types, default values, and descriptions.
+1. **Headless Components** - Separate logic from presentation for complete styling freedom
+2. **Compound Components** - Flexible composition with context-based state sharing
+3. **Polymorphic Components** - Render as any HTML element while maintaining functionality
 
-5. **Accessibility**: Always include information about accessibility features and considerations.
+### Accessibility
 
-6. **Best practices**: Include guidelines and best practices for using the component.
+All Strive UI components are built with accessibility in mind, following WCAG guidelines and WAI-ARIA patterns. The accessibility guide provides details on how we implement accessibility features and how you can maintain them in your implementations.
 
-7. **Keep it updated**: When the component changes, update the documentation accordingly.
+## Documentation Standards
 
-## Component Documentation
+Each component documentation includes:
 
-Each component should have its own documentation file in its component directory. The documentation should follow the structure outlined in the template and include:
+- Clear, concise description
+- Import examples
+- Props API reference with types
+- Usage examples with code snippets
+- Accessibility considerations
+- Performance optimization tips
 
-- Component description
-- Import information
-- Features list
-- Usage examples
-- Props documentation
-- Variants, sizes, and states (if applicable)
-- Accessibility information
-- Best practices
+## Questions or Suggestions?
 
-## Contributing to Documentation
-
-If you find any issues or have suggestions for improving the documentation, please open an issue or submit a pull request.
-
-For more information about contributing to Strive UI, see the [Contributing Guide](./guides/contributing.md).
+If you have questions about the documentation or suggestions for improvement, please contact the project maintainer at tskv.0411@gmail.com or open an issue on GitHub.

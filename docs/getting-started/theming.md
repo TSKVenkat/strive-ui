@@ -1,13 +1,15 @@
 # Theming
 
-StriveUI comes with a powerful theming system that allows you to customize the look and feel of all components to match your brand.
+## Overview
+
+Strive UI provides a flexible theming system that works with its headless architecture, allowing complete customization of component styling while maintaining consistent design tokens.
 
 ## Default Theme
 
-StriveUI includes a default theme with carefully selected colors, typography, spacing, and other design tokens. This theme is automatically applied when you use the `ThemeProvider`.
+The default theme includes a comprehensive set of design tokens for colors, typography, spacing, and more. It's automatically applied when using the `ThemeProvider`:
 
 ```jsx
-import { ThemeProvider } from 'strive-ui';
+import { ThemeProvider } from '@strive-ui/core';
 
 function App() {
   return (
@@ -18,30 +20,29 @@ function App() {
 }
 ```
 
-## Customizing the Theme
+## Custom Theming
 
-You can customize the theme by passing a theme object to the `ThemeProvider`. Your custom theme will be merged with the default theme.
+Create a custom theme by extending the default theme:
 
 ```jsx
-import { ThemeProvider, theme } from 'strive-ui';
+import { ThemeProvider, theme } from '@strive-ui/core';
 
-// Create a custom theme by extending the default theme
 const customTheme = {
   ...theme,
   colors: {
     ...theme.colors,
     primary: {
       ...theme.colors.primary,
-      main: '#0066ff', // Change primary color
+      main: '#0066ff',
     },
     secondary: {
       ...theme.colors.secondary,
-      main: '#ff6b00', // Change secondary color
+      main: '#ff6b00',
     },
   },
   borderRadius: {
     ...theme.borderRadius,
-    md: '8px', // Change medium border radius
+    md: '8px',
   },
 };
 
@@ -56,179 +57,47 @@ function App() {
 
 ## Theme Structure
 
-The theme object has the following structure:
+The theme object is organized into logical categories for easy customization:
 
 ```typescript
 interface Theme {
-  colors: {
-    primary: {
-      main: string;
-      light: string;
-      dark: string;
-      contrastText: string;
-    };
-    secondary: {
-      main: string;
-      light: string;
-      dark: string;
-      contrastText: string;
-    };
-    error: {
-      main: string;
-      light: string;
-      dark: string;
-      contrastText: string;
-    };
-    warning: {
-      main: string;
-      light: string;
-      dark: string;
-      contrastText: string;
-    };
-    info: {
-      main: string;
-      light: string;
-      dark: string;
-      contrastText: string;
-    };
-    success: {
-      main: string;
-      light: string;
-      dark: string;
-      contrastText: string;
-    };
-    neutral: {
-      100: string;
-      200: string;
-      300: string;
-      400: string;
-      500: string;
-      600: string;
-      700: string;
-      800: string;
-      900: string;
-    };
-    common: {
-      black: string;
-      white: string;
-    };
-    text: {
-      primary: string;
-      secondary: string;
-      disabled: string;
-    };
-    background: {
-      default: string;
-      paper: string;
-    };
+  colors: {                // Color tokens
+    primary: ColorScale;   // Brand primary color
+    secondary: ColorScale; // Brand secondary color
+    error: ColorScale;     // Error states
+    warning: ColorScale;   // Warning states
+    info: ColorScale;      // Informational states
+    success: ColorScale;   // Success states
+    neutral: NeutralScale; // Grayscale palette
+    text: TextColors;      // Text colors
+    background: BgColors;  // Background colors
+    // ... other color tokens
   };
-  typography: {
-    fontFamily: {
-      base: string;
-      heading: string;
-      monospace: string;
-    };
-    fontSize: {
-      xs: string;
-      sm: string;
-      md: string;
-      lg: string;
-      xl: string;
-      '2xl': string;
-      '3xl': string;
-      '4xl': string;
-    };
-    fontWeight: {
-      light: number;
-      normal: number;
-      medium: number;
-      semibold: number;
-      bold: number;
-    };
-    lineHeight: {
-      none: number;
-      tight: number;
-      normal: number;
-      relaxed: number;
-      loose: number;
-    };
+  typography: {            // Typography system
+    fontFamily: FontFamilies;
+    fontSize: FontSizes;
+    fontWeight: FontWeights;
+    lineHeight: LineHeights;
   };
-  spacing: {
-    0: string;
-    1: string;
-    2: string;
-    3: string;
-    4: string;
-    5: string;
-    6: string;
-    8: string;
-    10: string;
-    12: string;
-    16: string;
-    20: string;
-    24: string;
-    32: string;
-    40: string;
-    48: string;
-    64: string;
-    80: string;
-    96: string;
-  };
-  borderRadius: {
-    none: string;
-    sm: string;
-    md: string;
-    lg: string;
-    xl: string;
-    full: string;
-  };
-  shadows: {
-    none: string;
-    xs: string;
-    sm: string;
-    md: string;
-    lg: string;
-    xl: string;
-  };
-  zIndices: {
-    hide: number;
-    auto: string;
-    base: number;
-    dropdown: number;
-    sticky: number;
-    fixed: number;
-    overlay: number;
-    modal: number;
-    popover: number;
-    toast: number;
-    tooltip: number;
-  };
-  transitions: {
-    duration: {
-      fastest: string;
-      fast: string;
-      normal: string;
-      slow: string;
-      slower: string;
-    };
-    easing: {
-      easeInOut: string;
-      easeOut: string;
-      easeIn: string;
-      sharp: string;
-    };
+  spacing: SpacingScale;   // Spacing system
+  borderRadius: RadiusScale; // Border radius tokens
+  shadows: ShadowScale;    // Elevation/shadow tokens
+  zIndices: ZIndexScale;   // z-index tokens
+  transitions: {           // Animation tokens
+    duration: TransitionDurations;
+    easing: TransitionEasings;
   };
 }
 ```
 
-## Using Theme Values in Your Components
+## Using Theme in Styled Components
 
-You can access theme values in your styled components:
+Access theme values in your styled components:
 
 ```jsx
 import styled from 'styled-components';
 
-const CustomCard = styled.div`
+const Card = styled.div`
   background-color: ${props => props.theme.colors.background.paper};
   border-radius: ${props => props.theme.borderRadius.md};
   padding: ${props => props.theme.spacing[4]};
@@ -238,15 +107,15 @@ const CustomCard = styled.div`
 `;
 ```
 
-## Dark Mode
+## Dark Mode Implementation
 
-You can implement dark mode by creating a dark theme and toggling between themes:
+Implement dark mode with a theme toggle:
 
 ```jsx
 import React, { useState } from 'react';
-import { ThemeProvider, theme, Button } from 'strive-ui';
+import { ThemeProvider, theme, Button } from '@strive-ui/core';
 
-// Create a dark theme
+// Create a dark theme variant
 const darkTheme = {
   ...theme,
   colors: {
@@ -260,7 +129,6 @@ const darkTheme = {
       secondary: '#b0b0b0',
       disabled: '#6c6c6c',
     },
-    // Add other color overrides as needed
   },
 };
 
@@ -270,31 +138,66 @@ function App() {
   
   return (
     <ThemeProvider theme={currentTheme}>
-      <div>
-        <Button onClick={() => setIsDarkMode(!isDarkMode)}>
-          Toggle {isDarkMode ? 'Light' : 'Dark'} Mode
-        </Button>
-        <YourApp />
-      </div>
+      <Button onClick={() => setIsDarkMode(!isDarkMode)}>
+        Toggle {isDarkMode ? 'Light' : 'Dark'} Mode
+      </Button>
+      <YourApp />
     </ThemeProvider>
   );
 }
 ```
 
-## Theme Utilities
+## Theme Hooks
 
-StriveUI provides utility hooks for accessing the theme:
+Access theme values in your functional components:
 
 ```jsx
-import { useTheme } from 'strive-ui';
+import { useTheme } from '@strive-ui/core';
 
 function MyComponent() {
   const theme = useTheme();
   
   return (
     <div style={{ color: theme.colors.primary.main }}>
-      This text uses the primary color from the theme
+      This text uses the primary color
     </div>
   );
 }
 ```
+
+## Theme Composition
+
+For larger applications, consider composing theme segments:
+
+```jsx
+// themes/colors.js
+export const colors = {
+  primary: { /* ... */ },
+  secondary: { /* ... */ },
+  // ...
+};
+
+// themes/typography.js
+export const typography = {
+  fontFamily: { /* ... */ },
+  // ...
+};
+
+// themes/index.js
+import { colors } from './colors';
+import { typography } from './typography';
+
+export const theme = {
+  colors,
+  typography,
+  // ...
+};
+```
+
+## Performance Considerations
+
+To optimize theme performance:
+
+1. Memoize theme objects to prevent unnecessary re-renders
+2. Use the `useMemo` hook when computing derived theme values
+3. Consider code-splitting theme modules for large applications

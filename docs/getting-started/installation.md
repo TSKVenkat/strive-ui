@@ -1,23 +1,39 @@
 # Installation
 
-## Using npm
+## Quick Install
 
 ```bash
-npm install strive-ui
+# npm
+npm install @strive-ui/core
+
+# yarn
+yarn add @strive-ui/core
+
+# pnpm
+pnpm add @strive-ui/core
 ```
 
-## Using yarn
+## Peer Dependencies
+
+Strive UI requires the following peer dependencies:
 
 ```bash
-yarn add strive-ui
+# npm
+npm install react@>=16.8.0 react-dom@>=16.8.0 styled-components@>=5.0.0
+
+# yarn
+yarn add react@>=16.8.0 react-dom@>=16.8.0 styled-components@>=5.0.0
+
+# pnpm
+pnpm add react@>=16.8.0 react-dom@>=16.8.0 styled-components@>=5.0.0
 ```
 
-## Setup
+## Basic Setup
 
-Wrap your application with the ThemeProvider:
+Wrap your application with the `ThemeProvider` to enable theming:
 
 ```jsx
-import { ThemeProvider } from 'strive-ui';
+import { ThemeProvider } from '@strive-ui/core';
 
 function App() {
   return (
@@ -28,16 +44,12 @@ function App() {
 }
 ```
 
-## Peer Dependencies
-
-StriveUI has the following peer dependencies:
-
-- React (>=16.8.0)
-- React DOM (>=16.8.0)
-- styled-components (>=5.0.0)
-
-Make sure these are installed in your project.
-
 ## TypeScript Support
 
-StriveUI is built with TypeScript and includes type definitions. No additional installation steps are required to use StriveUI with TypeScript.
+Strive UI is built with TypeScript and includes comprehensive type definitions. No additional configuration is required for TypeScript projects.
+
+## Next Steps
+
+- [Explore the component library](../README.md)
+- [Learn about theming](./theming.md)
+- [View usage examples](./usage.md)
