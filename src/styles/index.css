@@ -1,0 +1,251 @@
+/* Base styles for Strive UI components */
+
+/* Comment System */
+.strive-comment-system {
+  --strive-comment-border-color: #e0e0e0;
+  --strive-comment-background: #ffffff;
+  --strive-comment-hover-background: #f9f9f9;
+  --strive-comment-text-color: #333333;
+  --strive-comment-meta-color: #666666;
+  --strive-comment-highlight-color: #0066cc;
+  --strive-comment-avatar-size: 40px;
+  --strive-comment-spacing: 16px;
+  --strive-comment-border-radius: 4px;
+  --strive-comment-thread-indent: 24px;
+  
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: var(--strive-comment-text-color);
+  line-height: 1.5;
+}
+
+/* This is a minimal set of default styles that can be completely overridden */
+.strive-comment-system-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--strive-comment-spacing);
+}
+
+.strive-comment-system-thread {
+  margin-bottom: var(--strive-comment-spacing);
+}
+
+.strive-comment-system-replies {
+  margin-left: var(--strive-comment-thread-indent);
+  padding-left: var(--strive-comment-spacing);
+  border-left: 2px solid var(--strive-comment-border-color);
+}
+
+.strive-comment-system-item {
+  display: flex;
+  gap: var(--strive-comment-spacing);
+  padding: var(--strive-comment-spacing);
+  border: 1px solid var(--strive-comment-border-color);
+  border-radius: var(--strive-comment-border-radius);
+  background-color: var(--strive-comment-background);
+}
+
+.strive-comment-system-item:hover {
+  background-color: var(--strive-comment-hover-background);
+}
+
+.strive-comment-system-item.pinned {
+  border-left: 4px solid var(--strive-comment-highlight-color);
+}
+
+.strive-comment-system-item.deleted {
+  opacity: 0.7;
+}
+
+.strive-comment-system-avatar,
+.strive-comment-system-avatar-fallback {
+  width: var(--strive-comment-avatar-size);
+  height: var(--strive-comment-avatar-size);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.strive-comment-system-avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--strive-comment-highlight-color);
+  color: white;
+  font-weight: bold;
+}
+
+.strive-comment-system-item-body {
+  flex: 1;
+}
+
+.strive-comment-system-author {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.strive-comment-system-author-role {
+  font-size: 0.8em;
+  color: var(--strive-comment-meta-color);
+  margin-left: 8px;
+}
+
+.strive-comment-system-author-you {
+  font-size: 0.8em;
+  color: var(--strive-comment-highlight-color);
+  margin-left: 8px;
+}
+
+.strive-comment-system-content {
+  margin-bottom: var(--strive-comment-spacing);
+}
+
+.strive-comment-system-metadata {
+  display: flex;
+  align-items: center;
+  font-size: 0.8em;
+  color: var(--strive-comment-meta-color);
+  margin-bottom: 8px;
+}
+
+.strive-comment-system-edited {
+  margin-left: 8px;
+}
+
+.strive-comment-system-timestamp {
+  color: var(--strive-comment-meta-color);
+}
+
+.strive-comment-system-reactions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.strive-comment-system-reaction {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 16px;
+  border: 1px solid var(--strive-comment-border-color);
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.strive-comment-system-reaction:hover {
+  background-color: var(--strive-comment-hover-background);
+}
+
+.strive-comment-system-reaction.active {
+  background-color: rgba(0, 102, 204, 0.1);
+  border-color: var(--strive-comment-highlight-color);
+}
+
+.strive-comment-system-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.strive-comment-system-action {
+  background: transparent;
+  border: none;
+  color: var(--strive-comment-meta-color);
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 0.9em;
+  border-radius: var(--strive-comment-border-radius);
+}
+
+.strive-comment-system-action:hover {
+  color: var(--strive-comment-highlight-color);
+  background-color: var(--strive-comment-hover-background);
+}
+
+.strive-comment-system-form {
+  margin: var(--strive-comment-spacing) 0;
+  padding: var(--strive-comment-spacing);
+  border: 1px solid var(--strive-comment-border-color);
+  border-radius: var(--strive-comment-border-radius);
+}
+
+.strive-comment-system-form-replying-to,
+.strive-comment-system-form-editing {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  margin-bottom: 8px;
+  background-color: var(--strive-comment-hover-background);
+  border-radius: var(--strive-comment-border-radius);
+  font-size: 0.9em;
+}
+
+.strive-comment-system-form-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--strive-comment-border-color);
+  border-radius: var(--strive-comment-border-radius);
+  resize: vertical;
+  min-height: 80px;
+  margin-bottom: 12px;
+  font-family: inherit;
+}
+
+.strive-comment-system-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.strive-comment-system-form-submit,
+.strive-comment-system-form-cancel {
+  padding: 8px 16px;
+  border-radius: var(--strive-comment-border-radius);
+  cursor: pointer;
+}
+
+.strive-comment-system-form-submit {
+  background-color: var(--strive-comment-highlight-color);
+  color: white;
+  border: none;
+}
+
+.strive-comment-system-form-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.strive-comment-system-form-cancel {
+  background-color: transparent;
+  border: 1px solid var(--strive-comment-border-color);
+}
+
+.strive-comment-system-sort {
+  margin-bottom: var(--strive-comment-spacing);
+  padding: 8px;
+  border: 1px solid var(--strive-comment-border-color);
+  border-radius: var(--strive-comment-border-radius);
+}
+
+.strive-comment-system-load-more {
+  margin-top: var(--strive-comment-spacing);
+  padding: 8px 16px;
+  background-color: transparent;
+  border: 1px solid var(--strive-comment-border-color);
+  border-radius: var(--strive-comment-border-radius);
+  cursor: pointer;
+  width: 100%;
+}
+
+.strive-comment-system-load-more:hover {
+  background-color: var(--strive-comment-hover-background);
+}
+
+.strive-comment-system-empty,
+.strive-comment-system-loading {
+  text-align: center;
+  padding: var(--strive-comment-spacing);
+  color: var(--strive-comment-meta-color);
+}

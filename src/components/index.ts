@@ -30,22 +30,26 @@ export * from './Charts/ScatterPlot';
 export * from './Charts/SpeedometerChart';
 export * from './Charts/TreemapChart';
 export * from './Charts/WaterfallChart';
-export * from './Checkbox';
+// Export components with potential naming conflicts
+export { Checkbox } from './Checkbox';
 export * from './ComingSoonPage';
 export * from './Confetti';
 export * from './Drawer';
 export * from './EmptyState';
 export * from './ErrorBoundary';
-export * from './Form';
+// Export Form components without type conflicts
+export { default as Form } from './Form/Form';
 export * from './Grid';
 export * from './Icon';
-export * from './Input';
+// Export Input components without type conflicts
+export { Input } from './Input';
 export * from './MaintenancePage';
 export * from './Modal';
 export * from './NotFoundPage';
 export * from './Progress';
 export * from './Pulse';
-export * from './Select';
+// Export Select components without type conflicts
+export { Select } from './Select';
 export * from './Shimmer';
 export * from './Skeleton';
 export * from './Snackbar';
@@ -54,3 +58,5 @@ export * from './StatusAnimation';
 export * from './Tabs';
 export * from './Toast';
 export * from './Tooltip';
+export * from './HorizontalScroll';
+export * from './StickyScroll';

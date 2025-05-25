@@ -7,7 +7,7 @@ import {
 } from './useDrawingCanvas';
 
 // Define the props for the DrawingCanvas component
-export interface DrawingCanvasProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DrawingCanvasProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /**
    * Default drawing history (uncontrolled)
    */
@@ -99,7 +99,10 @@ export interface DrawingCanvasProps extends React.HTMLAttributes<HTMLDivElement>
 }
 
 // Create a context for the DrawingCanvas
-export interface DrawingCanvasContextValue extends UseDrawingCanvasReturn {}
+export interface DrawingCanvasContextValue extends UseDrawingCanvasReturn {
+  minWidth?: number;
+  maxWidth?: number;
+}
 
 const DrawingCanvasContext = createContext<DrawingCanvasContextValue | undefined>(undefined);
 
@@ -194,29 +197,30 @@ export const DrawingCanvasRoot = forwardRef<HTMLDivElement, DrawingCanvasProps>(
 DrawingCanvasRoot.displayName = 'DrawingCanvas';
 
 // Canvas component
-export interface DrawingCanvasCanvasProps extends React.CanvasHTMLAttributes<HTMLCanvasElement> {}
+export interface DrawingCanvasCanvasProps extends Omit<React.CanvasHTMLAttributes<HTMLCanvasElement>, 'ref'> {}
 
 export const DrawingCanvasCanvas = forwardRef<HTMLCanvasElement, DrawingCanvasCanvasProps>(
   (props, ref) => {
     const { getCanvasProps } = useDrawingCanvasContext();
-    const canvasProps = getCanvasProps({ ...props, ref });
+    const canvasProps = getCanvasProps({ ...props });
 
-    return <canvas {...canvasProps} />;
+    return <canvas {...canvasProps} ref={ref} />;
   }
 );
 
 DrawingCanvasCanvas.displayName = 'DrawingCanvas.Canvas';
 
 // Clear button component
-export interface DrawingCanvasClearButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+export interface DrawingCanvasClearButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'ref'> {}
 
 export const DrawingCanvasClearButton = forwardRef<HTMLButtonElement, DrawingCanvasClearButtonProps>(
   (props, ref) => {
     const { getClearButtonProps } = useDrawingCanvasContext();
-    const clearButtonProps = getClearButtonProps({ ...props, ref });
+    const clearButtonProps = getClearButtonProps({ ...props });
+    // Apply the ref to the button element
 
     return (
-      <button {...clearButtonProps}>
+      <button {...clearButtonProps} ref={ref}>
         {props.children || 'Clear'}
       </button>
     );
@@ -226,15 +230,16 @@ export const DrawingCanvasClearButton = forwardRef<HTMLButtonElement, DrawingCan
 DrawingCanvasClearButton.displayName = 'DrawingCanvas.ClearButton';
 
 // Undo button component
-export interface DrawingCanvasUndoButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+export interface DrawingCanvasUndoButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'ref'> {}
 
 export const DrawingCanvasUndoButton = forwardRef<HTMLButtonElement, DrawingCanvasUndoButtonProps>(
   (props, ref) => {
     const { getUndoButtonProps } = useDrawingCanvasContext();
-    const undoButtonProps = getUndoButtonProps({ ...props, ref });
+    const undoButtonProps = getUndoButtonProps({ ...props });
+    // Apply the ref to the button element
 
     return (
-      <button {...undoButtonProps}>
+      <button {...undoButtonProps} ref={ref}>
         {props.children || 'Undo'}
       </button>
     );
@@ -244,15 +249,16 @@ export const DrawingCanvasUndoButton = forwardRef<HTMLButtonElement, DrawingCanv
 DrawingCanvasUndoButton.displayName = 'DrawingCanvas.UndoButton';
 
 // Redo button component
-export interface DrawingCanvasRedoButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+export interface DrawingCanvasRedoButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'ref'> {}
 
 export const DrawingCanvasRedoButton = forwardRef<HTMLButtonElement, DrawingCanvasRedoButtonProps>(
   (props, ref) => {
     const { getRedoButtonProps } = useDrawingCanvasContext();
-    const redoButtonProps = getRedoButtonProps({ ...props, ref });
+    const redoButtonProps = getRedoButtonProps({ ...props });
+    // Apply the ref to the button element
 
     return (
-      <button {...redoButtonProps}>
+      <button {...redoButtonProps} ref={ref}>
         {props.children || 'Redo'}
       </button>
     );
@@ -262,7 +268,7 @@ export const DrawingCanvasRedoButton = forwardRef<HTMLButtonElement, DrawingCanv
 DrawingCanvasRedoButton.displayName = 'DrawingCanvas.RedoButton';
 
 // Save button component
-export interface DrawingCanvasSaveButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface DrawingCanvasSaveButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'ref' | 'type'> {
   /**
    * Type of the image
    */
@@ -276,10 +282,11 @@ export interface DrawingCanvasSaveButtonProps extends React.ButtonHTMLAttributes
 export const DrawingCanvasSaveButton = forwardRef<HTMLButtonElement, DrawingCanvasSaveButtonProps>(
   ({ type, encoderOptions, ...props }, ref) => {
     const { getSaveButtonProps } = useDrawingCanvasContext();
-    const saveButtonProps = getSaveButtonProps({ ...props, ref }, type, encoderOptions);
+    const saveButtonProps = getSaveButtonProps({ ...props }, type, encoderOptions);
+    // Apply the ref to the button element
 
     return (
-      <button {...saveButtonProps}>
+      <button {...saveButtonProps} ref={ref}>
         {props.children || 'Save'}
       </button>
     );
@@ -289,15 +296,16 @@ export const DrawingCanvasSaveButton = forwardRef<HTMLButtonElement, DrawingCanv
 DrawingCanvasSaveButton.displayName = 'DrawingCanvas.SaveButton';
 
 // Brush button component
-export interface DrawingCanvasBrushButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+export interface DrawingCanvasBrushButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'ref'> {}
 
 export const DrawingCanvasBrushButton = forwardRef<HTMLButtonElement, DrawingCanvasBrushButtonProps>(
   (props, ref) => {
     const { getBrushButtonProps } = useDrawingCanvasContext();
-    const brushButtonProps = getBrushButtonProps({ ...props, ref });
+    const brushButtonProps = getBrushButtonProps({ ...props });
+    // Apply the ref to the button element
 
     return (
-      <button {...brushButtonProps}>
+      <button {...brushButtonProps} ref={ref}>
         {props.children || 'Brush'}
       </button>
     );
@@ -307,15 +315,16 @@ export const DrawingCanvasBrushButton = forwardRef<HTMLButtonElement, DrawingCan
 DrawingCanvasBrushButton.displayName = 'DrawingCanvas.BrushButton';
 
 // Eraser button component
-export interface DrawingCanvasEraserButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+export interface DrawingCanvasEraserButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'ref'> {}
 
 export const DrawingCanvasEraserButton = forwardRef<HTMLButtonElement, DrawingCanvasEraserButtonProps>(
   (props, ref) => {
     const { getEraserButtonProps } = useDrawingCanvasContext();
-    const eraserButtonProps = getEraserButtonProps({ ...props, ref });
+    const eraserButtonProps = getEraserButtonProps({ ...props });
+    // Apply the ref to the button element
 
     return (
-      <button {...eraserButtonProps}>
+      <button {...eraserButtonProps} ref={ref}>
         {props.children || 'Eraser'}
       </button>
     );
@@ -342,7 +351,7 @@ export const DrawingCanvasColorPicker = forwardRef<HTMLInputElement, DrawingCanv
           setColor(e.target.value);
           props.onChange?.(e);
         }}
-        'data-disabled': (toolType === 'eraser' || props.disabled) ? '' : undefined,
+        data-disabled={(toolType === 'eraser' || props.disabled) ? '' : undefined}
       />
     );
   }

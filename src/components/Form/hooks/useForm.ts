@@ -53,32 +53,9 @@ export type FieldConfig<T = any> = {
    */
   validateOnBlur?: boolean;
   /**
-   * Transform function to apply before validation
+   * Transform function to apply to the value
    */
   transform?: (value: any) => T;
-  /**
-   * Dependencies that trigger validation
-   */
-  dependencies?: string[];
-};
-
-export type FormConfig = {
-  /**
-   * Initial values for the form
-   */
-  defaultValues?: Record<string, any>;
-  /**
-   * Mode for validation
-   */
-  mode?: 'onChange' | 'onBlur' | 'onSubmit' | 'all';
-  /**
-   * Whether to validate all fields on submit
-   */
-  validateOnSubmit?: boolean;
-  /**
-   * Whether to reset the form after submit
-   */
-  resetOnSubmit?: boolean;
 };
 
 export type FieldState<T = any> = {
@@ -87,17 +64,13 @@ export type FieldState<T = any> = {
    */
   value: T;
   /**
-   * Whether the field has been touched
+   * Whether the field has been touched (focused and blurred)
    */
   touched: boolean;
   /**
-   * Whether the field is dirty (value has changed)
+   * Whether the field has been modified
    */
   dirty: boolean;
-  /**
-   * Error message for the field
-   */
-  error: string | null;
   /**
    * Whether the field is currently being validated
    */
@@ -106,21 +79,25 @@ export type FieldState<T = any> = {
    * Whether the field is valid
    */
   valid: boolean;
+  /**
+   * Error message if the field is invalid
+   */
+  error: string | null;
 };
 
 export type FormState = {
   /**
-   * Whether the form is submitting
+   * Whether the form has been modified
    */
-  isSubmitting: boolean;
+  isDirty: boolean;
   /**
    * Whether the form is valid
    */
   isValid: boolean;
   /**
-   * Whether the form is dirty (any value has changed)
+   * Whether the form is currently being submitted
    */
-  isDirty: boolean;
+  isSubmitting: boolean;
   /**
    * Whether the form has been submitted
    */
@@ -130,327 +107,336 @@ export type FormState = {
    */
   isSubmitSuccessful: boolean;
   /**
-   * Submission count
+   * Number of times the form has been submitted
    */
   submitCount: number;
 };
 
-export type FieldProps = {
+export interface UseFormOptions<TFormValues extends Record<string, any> = Record<string, any>> {
   /**
-   * Name of the field
+   * Initial values for the form
    */
-  name: string;
+  defaultValues?: Partial<TFormValues>;
   /**
-   * onChange handler
+   * Field configurations
    */
-  onChange: (e: React.ChangeEvent<any>) => void;
+  fields?: Record<string, FieldConfig>;
   /**
-   * onBlur handler
+   * Whether to validate on change
    */
-  onBlur: (e: React.FocusEvent<any>) => void;
+  validateOnChange?: boolean;
   /**
-   * Value of the field
+   * Whether to validate on blur
    */
-  value: any;
+  validateOnBlur?: boolean;
   /**
-   * Checked state for checkboxes
+   * Whether to validate on submit
    */
-  checked?: boolean;
+  validateOnSubmit?: boolean;
   /**
-   * Error message for the field
+   * Callback when the form is submitted
    */
-  error: string | null;
+  onSubmit?: (values: TFormValues) => Promise<void> | void;
   /**
-   * Whether the field is required
+   * Callback when the form submission is successful
    */
-  required?: boolean;
+  onSubmitSuccess?: (values: TFormValues) => void;
   /**
-   * Whether the field is disabled
+   * Callback when the form submission fails
    */
-  disabled?: boolean;
+  onSubmitError?: (error: any) => void;
+}
+
+export interface UseFormReturn<TFormValues extends Record<string, any> = Record<string, any>> {
   /**
-   * ID for the field
+   * Current form state
    */
-  id: string;
-};
+  formState: FormState;
+  /**
+   * Current field states
+   */
+  fieldStates: Record<string, FieldState>;
+  /**
+   * Register a field
+   */
+  register: (name: string, config?: FieldConfig) => {
+    name: string;
+    value: any;
+    onChange: (e: React.ChangeEvent<any>) => void;
+    onBlur: (e: React.FocusEvent<any>) => void;
+  };
+  /**
+   * Handle form submission
+   */
+  handleSubmit: (e?: React.FormEvent) => Promise<void>;
+  /**
+   * Set a field's value programmatically
+   */
+  setValue: (name: string, value: any, shouldValidate?: boolean) => void;
+  /**
+   * Get a field's value
+   */
+  getValue: (name: string) => any;
+  /**
+   * Get all form values
+   */
+  getValues: () => TFormValues;
+  /**
+   * Set an error for a field
+   */
+  setError: (name: string, error: string | null) => void;
+  /**
+   * Get a field's error
+   */
+  getError: (name: string) => string | null;
+  /**
+   * Reset the form to its initial state
+   */
+  reset: () => void;
+  /**
+   * Validate all fields
+   */
+  validateAllFields: () => boolean;
+  /**
+   * Validate a specific field
+   */
+  validateField: (name: string, value?: any) => string | null;
+}
 
 /**
- * A hook for creating headless forms with validation
+ * A hook for managing form state and validation
  */
 export function useForm<TFormValues extends Record<string, any> = Record<string, any>>(
-  config: FormConfig = {}
-) {
+  options: UseFormOptions<TFormValues> = {}
+): UseFormReturn<TFormValues> {
   const {
-    defaultValues = {},
-    mode = 'onSubmit',
+    defaultValues = {} as Partial<TFormValues>,
+    fields = {},
+    validateOnChange = false,
+    validateOnBlur = true,
     validateOnSubmit = true,
-    resetOnSubmit = false,
-  } = config;
+    onSubmit,
+    onSubmitSuccess,
+    onSubmitError,
+  } = options;
+
+  // Store field configurations in a ref to avoid re-renders
+  const fieldConfigsRef = useRef<Record<string, FieldConfig>>(fields);
 
   // Form state
   const [formState, setFormState] = useState<FormState>({
-    isSubmitting: false,
-    isValid: true,
     isDirty: false,
+    isValid: true,
+    isSubmitting: false,
     isSubmitted: false,
     isSubmitSuccessful: false,
     submitCount: 0,
   });
 
-  // Field configurations
-  const fieldConfigsRef = useRef<Record<string, FieldConfig>>({});
-
   // Field states
-  const [fieldStates, setFieldStates] = useState<Record<string, FieldState>>({});
-
-  // Field refs
-  const fieldRefs = useRef<Record<string, React.RefObject<any>>>({});
-
-  // Initialize form with default values
-  useEffect(() => {
+  const [fieldStates, setFieldStates] = useState<Record<string, FieldState>>(() => {
     const initialFieldStates: Record<string, FieldState> = {};
-    
-    Object.keys(defaultValues).forEach((name) => {
+
+    // Initialize field states from default values and field configs
+    Object.keys(fieldConfigsRef.current).forEach((name) => {
+      const config = fieldConfigsRef.current[name];
+      const defaultValue = config?.defaultValue ?? defaultValues[name as keyof TFormValues] ?? '';
+
       initialFieldStates[name] = {
-        value: defaultValues[name],
+        value: defaultValue,
         touched: false,
         dirty: false,
-        error: null,
         validating: false,
         valid: true,
+        error: null,
       };
     });
-    
-    setFieldStates(initialFieldStates);
-  }, []);
+
+    // Add any fields from defaultValues that aren't in the field configs
+    Object.keys(defaultValues).forEach((name) => {
+      if (!initialFieldStates[name]) {
+        initialFieldStates[name] = {
+          value: defaultValues[name as keyof TFormValues],
+          touched: false,
+          dirty: false,
+          validating: false,
+          valid: true,
+          error: null,
+        };
+      }
+    });
+
+    return initialFieldStates;
+  });
+
+  // Update field configs when they change
+  useEffect(() => {
+    fieldConfigsRef.current = fields;
+  }, [fields]);
 
   /**
-   * Validates a single field
+   * Validate a field
    */
   const validateField = useCallback(
-    (name: string, value: any): string | null => {
-      const fieldConfig = fieldConfigsRef.current[name];
-      if (!fieldConfig || !fieldConfig.validation) return null;
+    (name: string, value?: any): string | null => {
+      const config = fieldConfigsRef.current[name];
       
-      const validation = fieldConfig.validation;
+      if (!config?.validation) {
+        return null;
+      }
+
+      const validation = config.validation;
+      const fieldValue = value !== undefined ? value : fieldStates[name]?.value;
       const formValues = getValues();
-      
+
       // Required validation
-      if (validation.required && (value === undefined || value === null || value === '')) {
+      if (validation.required && (fieldValue === '' || fieldValue === null || fieldValue === undefined)) {
         return validation.message || 'This field is required';
       }
-      
+
       // String validations
-      if (typeof value === 'string') {
-        if (validation.minLength !== undefined && value.length < validation.minLength) {
+      if (typeof fieldValue === 'string') {
+        // Min length validation
+        if (validation.minLength !== undefined && fieldValue.length < validation.minLength) {
           return validation.message || `Minimum length is ${validation.minLength}`;
         }
-        
-        if (validation.maxLength !== undefined && value.length > validation.maxLength) {
+
+        // Max length validation
+        if (validation.maxLength !== undefined && fieldValue.length > validation.maxLength) {
           return validation.message || `Maximum length is ${validation.maxLength}`;
         }
-        
-        if (validation.pattern && !validation.pattern.test(value)) {
+
+        // Pattern validation
+        if (validation.pattern && !validation.pattern.test(fieldValue)) {
           return validation.message || 'Invalid format';
         }
       }
-      
+
       // Number validations
-      if (typeof value === 'number') {
-        if (validation.min !== undefined && value < validation.min) {
+      if (typeof fieldValue === 'number') {
+        // Min validation
+        if (validation.min !== undefined && fieldValue < validation.min) {
           return validation.message || `Minimum value is ${validation.min}`;
         }
-        
-        if (validation.max !== undefined && value > validation.max) {
+
+        // Max validation
+        if (validation.max !== undefined && fieldValue > validation.max) {
           return validation.message || `Maximum value is ${validation.max}`;
         }
       }
-      
+
       // Custom validation
       if (validation.validate) {
-        const result = validation.validate(value, formValues);
-        if (result === false) {
-          return validation.message || 'Invalid value';
-        } else if (typeof result === 'string') {
+        const result = validation.validate(fieldValue, formValues);
+        
+        if (typeof result === 'string') {
           return result;
         }
+        
+        if (result === false) {
+          return validation.message || 'Invalid value';
+        }
       }
-      
+
       return null;
     },
-    []
+    [fieldStates]
   );
 
   /**
-   * Validates all fields
+   * Validate all fields
    */
   const validateAllFields = useCallback((): boolean => {
-    const fieldNames = Object.keys(fieldStates);
     let isValid = true;
     const newFieldStates = { ...fieldStates };
-    
-    fieldNames.forEach((name) => {
-      const value = fieldStates[name]?.value;
-      const error = validateField(name, value);
+
+    Object.keys(fieldStates).forEach((name) => {
+      const error = validateField(name);
       
       if (error) {
         isValid = false;
-        newFieldStates[name] = {
-          ...newFieldStates[name],
-          error,
-          valid: false,
-        };
-      } else {
-        newFieldStates[name] = {
-          ...newFieldStates[name],
-          error: null,
-          valid: true,
-        };
       }
+
+      newFieldStates[name] = {
+        ...newFieldStates[name],
+        error,
+        valid: !error,
+      };
     });
-    
+
     setFieldStates(newFieldStates);
+    
     return isValid;
   }, [fieldStates, validateField]);
 
   /**
-   * Registers a field with the form
+   * Register a field
    */
   const register = useCallback(
-    (name: string, config: FieldConfig = {}): FieldProps => {
-      // Store field config
-      fieldConfigsRef.current[name] = config;
-      
-      // Create ref if it doesn't exist
-      if (!fieldRefs.current[name]) {
-        fieldRefs.current[name] = { current: null };
+    (name: string, config?: FieldConfig) => {
+      // Update field config if provided
+      if (config) {
+        fieldConfigsRef.current[name] = {
+          ...fieldConfigsRef.current[name],
+          ...config,
+        };
       }
-      
+
       // Initialize field state if it doesn't exist
       if (!fieldStates[name]) {
-        const defaultValue = config.defaultValue !== undefined 
-          ? config.defaultValue 
-          : defaultValues[name] !== undefined 
-            ? defaultValues[name] 
-            : '';
-            
+        const defaultValue = config?.defaultValue ?? defaultValues[name as keyof TFormValues] ?? '';
+        
         setFieldStates((prev) => ({
           ...prev,
           [name]: {
             value: defaultValue,
             touched: false,
             dirty: false,
-            error: null,
             validating: false,
             valid: true,
+            error: null,
           },
         }));
       }
-      
-      const handleChange = (e: React.ChangeEvent<any>) => {
-        const target = e.target;
-        let value: any;
-        
-        // Handle different input types
-        if (target.type === 'checkbox') {
-          value = target.checked;
-        } else if (target.type === 'file') {
-          value = target.files;
-        } else {
-          value = target.value;
-        }
-        
-        // Apply transform if provided
-        if (config.transform) {
-          value = config.transform(value);
-        }
-        
-        // Update field state
-        setFieldStates((prev) => {
-          const prevValue = prev[name]?.value;
-          const isDirty = value !== prevValue;
-          
-          return {
+
+      return {
+        name,
+        value: fieldStates[name]?.value ?? '',
+        onChange: (e: React.ChangeEvent<any>) => {
+          const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+          setValue(name, value, (config?.validateOnChange ?? validateOnChange));
+        },
+        onBlur: (e: React.FocusEvent<any>) => {
+          // Mark as touched
+          setFieldStates((prev) => ({
             ...prev,
             [name]: {
               ...prev[name],
-              value,
-              dirty: isDirty || (prev[name]?.dirty || false),
               touched: true,
             },
-          };
-        });
-        
-        // Validate on change if needed
-        if (
-          (config.validateOnChange || mode === 'onChange' || mode === 'all') &&
-          fieldConfigsRef.current[name]?.validation
-        ) {
-          const error = validateField(name, value);
-          
-          setFieldStates((prev) => ({
-            ...prev,
-            [name]: {
-              ...prev[name],
-              error,
-              valid: !error,
-            },
           }));
-        }
-        
-        // Validate dependencies
-        if (config.dependencies && config.dependencies.length > 0) {
-          config.dependencies.forEach((dependentField) => {
-            if (fieldStates[dependentField]) {
-              const dependentValue = fieldStates[dependentField].value;
-              const error = validateField(dependentField, dependentValue);
-              
-              setFieldStates((prev) => ({
-                ...prev,
-                [dependentField]: {
-                  ...prev[dependentField],
-                  error,
-                  valid: !error,
-                },
-              }));
-            }
-          });
-        }
-        
-        // Update form state
-        setFormState((prev) => ({
-          ...prev,
-          isDirty: true,
-        }));
+
+          // Validate on blur if enabled
+          if (config?.validateOnBlur ?? validateOnBlur) {
+            const error = validateField(name);
+            
+            setFieldStates((prev) => ({
+              ...prev,
+              [name]: {
+                ...prev[name],
+                error,
+                valid: !error,
+              },
+            }));
+          }
+        },
       };
-      
-      const handleBlur = (e: React.FocusEvent<any>) => {
-        // Mark field as touched
-        setFieldStates((prev) => ({
-          ...prev,
-          [name]: {
-            ...prev[name],
-            touched: true,
-          },
-        }));
-        
-        // Validate on blur if needed
-        if (
-          (config.validateOnBlur || mode === 'onBlur' || mode === 'all') &&
-          fieldConfigsRef.current[name]?.validation
-        ) {
-          const value = fieldStates[name]?.value;
-          const error = validateField(name, value);
-          
-          setFieldStates((prev) => ({
-            ...prev,
-            [name]: {
-              ...prev[name],
-              error,
-              valid: !error,
-            },
+    },
+    [fieldStates, defaultValues, validateOnChange, validateOnBlur, validateField]
+  );
+
   /**
-   * Sets a field's value programmatically
+   * Set a field's value programmatically
    */
   const setValue = useCallback(
     (name: string, value: any, shouldValidate = false) => {
@@ -471,6 +457,7 @@ export function useForm<TFormValues extends Record<string, any> = Record<string,
             ...prev[name],
             value,
             dirty: isDirty || (prev[name]?.dirty || false),
+            validating: false,
           },
         };
       });
@@ -499,7 +486,7 @@ export function useForm<TFormValues extends Record<string, any> = Record<string,
   );
 
   /**
-   * Gets a field's value
+   * Get a field's value
    */
   const getValue = useCallback(
     (name: string) => {
@@ -509,7 +496,7 @@ export function useForm<TFormValues extends Record<string, any> = Record<string,
   );
 
   /**
-   * Gets all form values
+   * Get all form values
    */
   const getValues = useCallback(
     (): TFormValues => {
@@ -525,7 +512,7 @@ export function useForm<TFormValues extends Record<string, any> = Record<string,
   );
 
   /**
-   * Sets an error for a field
+   * Set an error for a field
    */
   const setError = useCallback(
     (name: string, error: string | null) => {
@@ -542,7 +529,7 @@ export function useForm<TFormValues extends Record<string, any> = Record<string,
   );
 
   /**
-   * Gets a field's error
+   * Get a field's error
    */
   const getError = useCallback(
     (name: string) => {
@@ -552,160 +539,112 @@ export function useForm<TFormValues extends Record<string, any> = Record<string,
   );
 
   /**
-   * Resets the form to its initial state
+   * Reset the form to its initial state
    */
-  const reset = useCallback(
-        
-        // Update form state
-        setFormState((prev) => ({
-          ...prev,
-          isSubmitting: true,
-          isSubmitted: true,
-          submitCount: prev.submitCount + 1,
-        }));
-        
-        // Validate all fields if needed
-        let isValid = true;
-        if (validateOnSubmit) {
-          isValid = validateAllFields();
-        }
-        
-        // Update form state with validation result
-        setFormState((prev) => ({
-          ...prev,
-          isValid,
-        }));
-        
-        // If valid, call onSubmit
-        if (isValid) {
-          try {
-            const values = getValues();
-            await onSubmit(values);
-            
-            // Update form state
-            setFormState((prev) => ({
-              ...prev,
-              isSubmitting: false,
-              isSubmitSuccessful: true,
-            }));
-            
-            // Reset form if needed
-            if (resetOnSubmit) {
-              reset();
-            }
-          } catch (error) {
-            // Update form state
-            setFormState((prev) => ({
-              ...prev,
-              isSubmitting: false,
-              isSubmitSuccessful: false,
-            }));
-          }
-        } else {
-          // Update form state
-          setFormState((prev) => ({
-            ...prev,
-            isSubmitting: false,
-            isSubmitSuccessful: false,
-          }));
-          
-          // Focus first invalid field
-          const firstInvalidField = Object.keys(fieldStates).find(
-            (name) => fieldStates[name].error
-          );
-          
-          if (firstInvalidField && fieldRefs.current[firstInvalidField]?.current) {
-            fieldRefs.current[firstInvalidField].current.focus();
-          }
-        }
-      };
-    },
-    [fieldStates, getValues, reset, validateAllFields]
-  );
-
-  /**
-   * Checks if the form is valid
-   */
-  const isValid = useCallback(
-    (): boolean => {
-      return Object.keys(fieldStates).every((name) => !fieldStates[name].error);
-    },
-    [fieldStates]
-  );
-
-  /**
-   * Watches for changes to specific fields
-   */
-  const watch = useCallback(
-    (fieldNames?: string | string[]) => {
-      if (!fieldNames) {
-        return getValues();
-      }
+  const reset = useCallback(() => {
+    // Reset all field states to their initial values
+    setFieldStates((prev) => {
+      const newFieldStates: Record<string, FieldState> = {};
       
-      if (typeof fieldNames === 'string') {
-        return getValue(fieldNames);
-      }
-      
-      const result: Record<string, any> = {};
-      fieldNames.forEach((name) => {
-        result[name] = getValue(name);
-      });
-      
-      return result;
-    },
-    [getValues, getValue]
-  );
-
-  /**
-   * Triggers validation for specific fields
-   */
-  const trigger = useCallback(
-    (fieldNames?: string | string[]): boolean => {
-      if (!fieldNames) {
-        return validateAllFields();
-      }
-      
-      if (typeof fieldNames === 'string') {
-        const value = getValue(fieldNames);
-        const error = validateField(fieldNames, value);
-        
-        setFieldStates((prev) => ({
-          ...prev,
-          [fieldNames]: {
-            ...prev[fieldNames],
-            error,
-            valid: !error,
-          },
-        }));
-        
-        return !error;
-      }
-      
-      let isValid = true;
-      const newFieldStates = { ...fieldStates };
-      
-      fieldNames.forEach((name) => {
-        const value = getValue(name);
-        const error = validateField(name, value);
-        
-        if (error) {
-          isValid = false;
-        }
+      Object.keys(fieldConfigsRef.current).forEach((name) => {
+        const config = fieldConfigsRef.current[name];
+        const defaultValue = config?.defaultValue ?? defaultValues[name as keyof TFormValues] ?? '';
         
         newFieldStates[name] = {
-          ...newFieldStates[name],
-          error,
-          valid: !error,
+          value: defaultValue,
+          error: null,
+          valid: true,
+          dirty: false,
+          touched: false,
+          validating: false,
         };
       });
       
-      setFieldStates(newFieldStates);
-      return isValid;
-    },
-    [fieldStates, getValue, validateField, validateAllFields]
-  );
+      return newFieldStates;
+    });
+    
+    // Reset form state
+    setFormState({
+      isDirty: false,
+      isValid: true,
+      isSubmitting: false,
+      isSubmitted: false,
+      isSubmitSuccessful: false,
+      submitCount: 0,
+    });
+  }, [defaultValues]);
+
+  /**
+   * Handle form submission
+   */
+  const handleSubmit = useCallback(async (event?: React.FormEvent) => {
+    if (event) {
+      event.preventDefault();
+    }
+    
+    // Update form state
+    setFormState((prev) => ({
+      ...prev,
+      isSubmitting: true,
+      isSubmitted: true,
+      submitCount: prev.submitCount + 1,
+    }));
+    
+    // Validate all fields if needed
+    let isValid = true;
+    if (validateOnSubmit) {
+      isValid = validateAllFields();
+    }
+    
+    // Update form state with validation result
+    setFormState((prev) => ({
+      ...prev,
+      isValid,
+    }));
+    
+    // If valid, call onSubmit
+    if (isValid && onSubmit) {
+      try {
+        const values = getValues();
+        await onSubmit(values);
+        
+        // Update form state on success
+        setFormState((prev) => ({
+          ...prev,
+          isSubmitting: false,
+          isSubmitSuccessful: true,
+        }));
+        
+        // Call onSubmitSuccess if provided
+        if (onSubmitSuccess) {
+          onSubmitSuccess(values);
+        }
+      } catch (error) {
+        // Update form state on error
+        setFormState((prev) => ({
+          ...prev,
+          isSubmitting: false,
+          isSubmitSuccessful: false,
+        }));
+        
+        // Call onSubmitError if provided
+        if (onSubmitError) {
+          onSubmitError(error);
+        }
+      }
+    } else {
+      // Update form state if invalid
+      setFormState((prev) => ({
+        ...prev,
+        isSubmitting: false,
+        isSubmitSuccessful: false,
+      }));
+    }
+  }, [validateOnSubmit, validateAllFields, onSubmit, onSubmitSuccess, onSubmitError, getValues]);
 
   return {
+    formState,
+    fieldStates,
     register,
     handleSubmit,
     setValue,
@@ -714,21 +653,8 @@ export function useForm<TFormValues extends Record<string, any> = Record<string,
     setError,
     getError,
     reset,
-    watch,
-    trigger,
-    formState,
-    isValid: isValid(),
-    isDirty: formState.isDirty,
-    isSubmitting: formState.isSubmitting,
-    isSubmitted: formState.isSubmitted,
-    isSubmitSuccessful: formState.isSubmitSuccessful,
-    submitCount: formState.submitCount,
-    errors: Object.keys(fieldStates).reduce((acc, name) => {
-      if (fieldStates[name].error) {
-        acc[name] = fieldStates[name].error;
-      }
-      return acc;
-    }, {} as Record<string, string | null>),
+    validateAllFields,
+    validateField,
   };
 }
 

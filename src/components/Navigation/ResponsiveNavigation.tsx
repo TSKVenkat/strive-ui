@@ -539,7 +539,7 @@ export const ResponsiveNavigation: React.FC<ResponsiveNavigationProps> = ({
   colorScheme = 'light',
   css,
   children
-}) {
+}) => {
   const [isMobile, setIsMobile] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeItemId, setActiveItemId] = useState<string | null>(null);
@@ -660,7 +660,7 @@ export const ResponsiveNavigation: React.FC<ResponsiveNavigationProps> = ({
                   transition={{ duration: 0.2 }}
                   $colorScheme={colorScheme}
                 >
-                  {renderNavItems(item.children, level + 1)}
+                  {renderNavItems(item.children || [], level + 1)}
                 </Dropdown>
               )}
             </AnimatePresence>
