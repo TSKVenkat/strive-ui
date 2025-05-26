@@ -54,24 +54,27 @@ git checkout -b fix/issue-number
 
 ## Pull Request Guidelines
 
-- Use a **clear, descriptive title**
-- **Reference any issues** the PR addresses
-- Ensure **all checks pass** (tests, linting, build)
-- Include **screenshots** for UI changes
-- Address any feedback from code review
+# Checklist Before Submitting a PR
+
+- [ ] I have tested the component on multiple screen sizes
+- [ ] I followed the component structure and headless pattern
+- [ ] I wrote or updated relevant tests
+- [ ] I ensured accessibility best practices are followed
+- [ ] I updated documentation/examples if needed
+- [ ] I ran `npm run lint` and `npm test`
 
 ## Commit Message Format
 
 We use [Conventional Commits](https://www.conventionalcommits.org/):
 
-```
-<type>(<scope>): <description>
-```
-
-Examples:
-- `feat(button): add loading state`
-- `fix(modal): resolve focus trap issue`
-- `docs(readme): update installation instructions`
+Common types include:
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Documentation only changes
+- `style`: Changes that do not affect meaning (whitespace, formatting)
+- `refactor`: Code change that neither fixes a bug nor adds a feature
+- `test`: Adding missing tests or correcting existing ones
+- `chore`: Changes to the build process or tools
 
 ## Component Architecture
 
@@ -135,4 +138,4 @@ Contact the project maintainer at tskv.0411@gmail.com or open an issue with the 
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under the project's [MIT License](LICENSE).
+By submitting a contribution, you agree that it will be licensed under the [MIT License](LICENSE).

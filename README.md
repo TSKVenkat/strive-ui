@@ -14,26 +14,6 @@ A professional, headless React component library offering maximum styling flexib
 - **TypeScript-first** - Complete type definitions for excellent developer experience
 - **Lightweight & tree-shakeable** - Import only what you need
 
-## Quick Install
-
-```bash
-npm install @strive-ui/core
-```
-
-## Basic Usage
-
-```jsx
-import { ThemeProvider, Button } from '@strive-ui/core';
-
-function App() {
-  return (
-    <ThemeProvider>
-      <Button variant="primary">Get Started</Button>
-    </ThemeProvider>
-  );
-}
-```
-
 ## Component Architecture
 
 Strive UI implements three powerful component patterns:
@@ -50,23 +30,10 @@ Strive UI implements three powerful component patterns:
 - [Component API Reference](docs/components/)
 - [Accessibility Guidelines](docs/guides/accessibility.md)
 
-## Available Components
-
-Strive UI includes a comprehensive set of components:
-
-- **Layout:** Box, Grid, Stack
-- **Inputs:** Button, Checkbox, Input, Select, Slider, RichTextEditor
-- **Display:** Accordion, Alert, Avatar, Badge, Card, Modal, Tooltip
-- **Navigation:** Tabs, Drawer, AdaptiveNavigation, ProgressiveNavigation
-- **Feedback:** Toast, Spinner, Progress, ErrorBoundary
-- **Visualization:** Various chart components
-
 ## Contributing
 
 Contributions are welcome! Please see our [Contributing Guide](docs/guides/contributing.md) for details.
 
 ## License
 
-MIT © [Venkataraman T S K](https://github.com/TSKVenkat)
-
-MIT
+This code is licensed under the [MIT License](https://opensource.org/licenses/MIT) © [Venkataraman T S K](https://github.com/TSKVenkat)
