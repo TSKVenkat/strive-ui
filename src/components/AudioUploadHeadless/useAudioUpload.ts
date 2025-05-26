@@ -83,7 +83,7 @@ export interface UseAudioUploadProps {
   uploadFn?: (files: File[]) => Promise<string[]>;
 }
 
-export interface AudioFile extends File {
+export interface AudioFile {
   /**
    * Preview URL
    */
@@ -623,11 +623,13 @@ export function useAudioUpload({
       disabled: disabled || readOnly,
       required,
       style: { display: 'none', ...props?.style },
-      onChange: (event: React.ChangeEvent<E>) => {
-        handleInputChange(event as unknown as React.ChangeEvent<HTMLInputElement>);
-        props?.onChange?.(event);
+      onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+        handleInputChange(event);
+        if (props?.onChange) {
+          (props.onChange as any)(event);
+        }
       },
-    };
+    } as React.InputHTMLAttributes<E>;
   }, [uploadId, name, accept, multiple, disabled, readOnly, required, handleInputChange]);
   
   // Get props for the drop zone element
@@ -643,36 +645,48 @@ export function useAudioUpload({
       'aria-readonly': readOnly ? true : undefined,
       'data-disabled': disabled ? '' : undefined,
       'data-readonly': readOnly ? '' : undefined,
-      onClick: (event: React.MouseEvent<E>) => {
+      onClick: (event: React.MouseEvent<HTMLDivElement>) => {
         if (!disabled && !readOnly) {
           openFileDialog();
         }
-        props?.onClick?.(event);
+        if (props?.onClick) {
+          (props.onClick as any)(event);
+        }
       },
-      onKeyDown: (event: React.KeyboardEvent<E>) => {
+      onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (!disabled && !readOnly && (event.key === 'Enter' || event.key === ' ')) {
           event.preventDefault();
           openFileDialog();
         }
-        props?.onKeyDown?.(event);
+        if (props?.onKeyDown) {
+          (props.onKeyDown as any)(event);
+        }
       },
-      onDragEnter: (event: React.DragEvent<E>) => {
-        handleDragEnter(event as unknown as React.DragEvent<HTMLDivElement>);
-        props?.onDragEnter?.(event);
+      onDragEnter: (event: React.DragEvent<HTMLDivElement>) => {
+        handleDragEnter(event);
+        if (props?.onDragEnter) {
+          (props.onDragEnter as any)(event);
+        }
       },
-      onDragOver: (event: React.DragEvent<E>) => {
-        handleDragOver(event as unknown as React.DragEvent<HTMLDivElement>);
-        props?.onDragOver?.(event);
+      onDragOver: (event: React.DragEvent<HTMLDivElement>) => {
+        handleDragOver(event);
+        if (props?.onDragOver) {
+          (props.onDragOver as any)(event);
+        }
       },
-      onDragLeave: (event: React.DragEvent<E>) => {
-        handleDragLeave(event as unknown as React.DragEvent<HTMLDivElement>);
-        props?.onDragLeave?.(event);
+      onDragLeave: (event: React.DragEvent<HTMLDivElement>) => {
+        handleDragLeave(event);
+        if (props?.onDragLeave) {
+          (props.onDragLeave as any)(event);
+        }
       },
-      onDrop: (event: React.DragEvent<E>) => {
-        handleDrop(event as unknown as React.DragEvent<HTMLDivElement>);
-        props?.onDrop?.(event);
+      onDrop: (event: React.DragEvent<HTMLDivElement>) => {
+        handleDrop(event);
+        if (props?.onDrop) {
+          (props.onDrop as any)(event);
+        }
       },
-    };
+    } as React.HTMLAttributes<E>;
   }, [
     disabled, 
     readOnly, 
@@ -714,7 +728,7 @@ function mergeRefs<T>(...refs: (React.Ref<T> | undefined)[]): React.RefCallback<
     refs.forEach((ref) => {
       if (typeof ref === 'function') {
         ref(value);
-      } else if (ref && 'current' in ref) {
+      } else if (ref && ref !== null && typeof ref === 'object' && 'current' in ref) {
         (ref as React.MutableRefObject<T>).current = value;
       }
     });

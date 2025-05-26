@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useId, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useRef, useId, useEffect, useMemo } from 'react';
 
 export interface AutocompleteOption {
   /**
@@ -23,11 +23,11 @@ export interface AutocompleteOption {
   [key: string]: any;
 }
 
-export interface UseAutocompleteProps {
+export interface UseAutocompleteProps<T extends AutocompleteOption = AutocompleteOption> {
   /**
    * Array of options to select from
    */
-  options: AutocompleteOption[];
+  options: T[];
   /**
    * Default selected value (uncontrolled)
    */
@@ -131,18 +131,18 @@ export interface UseAutocompleteProps {
   /**
    * Callback when the input is focused
    */
-  onFocus?: (event: React.FocusEvent) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
   /**
    * Callback when the input is blurred
    */
-  onBlur?: (event: React.FocusEvent) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   /**
    * Callback to load options asynchronously
    */
   loadOptions?: (inputValue: string) => Promise<AutocompleteOption[]>;
 }
 
-export interface UseAutocompleteReturn {
+export interface UseAutocompleteReturn<T extends AutocompleteOption = AutocompleteOption> {
   /**
    * Currently selected value
    */
@@ -150,7 +150,7 @@ export interface UseAutocompleteReturn {
   /**
    * Currently selected option
    */
-  selectedOption: AutocompleteOption | null;
+  selectedOption: T | null;
   /**
    * Input value
    */
@@ -162,11 +162,11 @@ export interface UseAutocompleteReturn {
   /**
    * Currently highlighted option
    */
-  highlightedOption: AutocompleteOption | null;
+  highlightedOption: T | null;
   /**
    * Filtered options based on input value
    */
-  filteredOptions: AutocompleteOption[];
+  filteredOptions: T[];
   /**
    * Whether options are being loaded asynchronously
    */
@@ -222,7 +222,7 @@ export interface UseAutocompleteReturn {
   /**
    * Select an option
    */
-  selectOption: (option: AutocompleteOption | string) => void;
+  selectOption: (option: T) => void;
   /**
    * Clear the selection
    */
@@ -230,7 +230,7 @@ export interface UseAutocompleteReturn {
   /**
    * Highlight an option
    */
-  highlightOption: (option: AutocompleteOption | null) => void;
+  highlightOption: (option: T | null) => void;
   /**
    * Highlight the next option
    */
@@ -267,7 +267,7 @@ export interface UseAutocompleteReturn {
    * Get props for an option element
    */
   getOptionProps: <E extends HTMLDivElement = HTMLDivElement>(
-    option: AutocompleteOption,
+    option: T,
     props?: React.HTMLAttributes<E>
   ) => React.HTMLAttributes<E>;
   /**
@@ -281,8 +281,8 @@ export interface UseAutocompleteReturn {
 /**
  * Hook for creating autocomplete functionality.
  */
-export function useAutocomplete({
-  options = [],
+export function useAutocomplete<T extends AutocompleteOption = AutocompleteOption>({
+  options = [] as T[],
   defaultValue = '',
   value: controlledValue,
   defaultInputValue = '',
@@ -292,11 +292,11 @@ export function useAutocomplete({
   disabled = false,
   readOnly = false,
   required = false,
-  id,
+  id: externalId,
   name,
-  placeholder = 'Search...',
+  placeholder = '',
   allowCustomValue = false,
-  openOnFocus = true,
+  openOnFocus = false,
   clearOnSelect = false,
   selectOnFocus = false,
   filterOptions = true,
@@ -311,10 +311,10 @@ export function useAutocomplete({
   onFocus,
   onBlur,
   loadOptions,
-}: UseAutocompleteProps = {}): UseAutocompleteReturn {
+}: UseAutocompleteProps<T> = {} as UseAutocompleteProps<T>): UseAutocompleteReturn<T> {
   // Generate a unique ID if none is provided
   const generatedId = useId();
-  const autocompleteId = id || `autocomplete-${generatedId}`;
+  const autocompleteId = externalId || `autocomplete-${generatedId}`;
   
   // State for autocomplete
   const [internalSelectedValue, setInternalSelectedValue] = useState<string>(defaultValue);
@@ -322,10 +322,11 @@ export function useAutocomplete({
     defaultInputValue || defaultValue
   );
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [highlightedOption, setHighlightedOption] = useState<AutocompleteOption | null>(null);
+  const [selectedOption, setSelectedOption] = useState<T | null>(null);
+  const [highlightedOption, setHighlightedOption] = useState<T | null>(null);
   const [focused, setFocused] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [asyncOptions, setAsyncOptions] = useState<AutocompleteOption[]>([]);
+  const [asyncOptions, setAsyncOptions] = useState<T[]>([]);
   
   // Use controlled or uncontrolled values
   const selectedValue = controlledValue !== undefined ? controlledValue : internalSelectedValue;
@@ -338,9 +339,16 @@ export function useAutocomplete({
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
   
   // Get selected option based on selected value
-  const selectedOption = useMemo(() => {
+  const selectedOptionMemo = useMemo(() => {
     return options.find(option => option.value === selectedValue) || null;
   }, [options, selectedValue]);
+  
+  // Update selected option from controlled value
+  useEffect(() => {
+    if (controlledValue !== undefined) {
+      setSelectedOption(options.find(option => option.value === controlledValue) || null);
+    }
+  }, [controlledValue, options]);
   
   // Get all available options (including async options)
   const allOptions = useMemo(() => {
@@ -353,7 +361,7 @@ export function useAutocomplete({
       return maxSuggestions ? allOptions.slice(0, maxSuggestions) : allOptions;
     }
     
-    let filtered: AutocompleteOption[];
+    let filtered: T[];
     
     if (filterFunction) {
       filtered = allOptions.filter(option => filterFunction(option, inputValue));
@@ -391,7 +399,7 @@ export function useAutocomplete({
       try {
         setLoading(true);
         const newOptions = await loadOptions(value);
-        setAsyncOptions(newOptions);
+        setAsyncOptions(newOptions as T[]);
       } catch (error) {
         console.error('Error loading options:', error);
         setAsyncOptions([]);
@@ -443,18 +451,16 @@ export function useAutocomplete({
   }, [isOpen, open, close]);
   
   // Select an option
-  const selectOption = useCallback((optionOrValue: AutocompleteOption | string) => {
+  const selectOption = useCallback((option: T) => {
     if (disabled || readOnly) {
       return;
     }
     
     // Get the option value
-    const value = typeof optionOrValue === 'string' ? optionOrValue : optionOrValue.value;
+    const value = option.value;
     
-    // Get the option
-    const option = typeof optionOrValue === 'string' 
-      ? options.find(opt => opt.value === optionOrValue)
-      : optionOrValue;
+    // Set selected option
+    setSelectedOption(option);
     
     // If the option doesn't exist and custom values are not allowed, return
     if (!option && !allowCustomValue) {
@@ -462,23 +468,24 @@ export function useAutocomplete({
     }
     
     // If the option exists and is disabled, return
-    if (option && option.disabled) {
-      return;
-    }
-    
     // Update internal state for uncontrolled component
     if (controlledValue === undefined) {
       setInternalSelectedValue(value);
     }
     
-    // Update input value
-    if (controlledInputValue === undefined) {
-      setInternalInputValue(clearOnSelect ? '' : (option ? option.label : value));
+    // Clear input value if needed
+    if (clearOnSelect) {
+      setInputValueInternal('');
+    } else if (option) {
+      setInputValueInternal(option.label);
+    } else if (allowCustomValue) {
+      setInputValueInternal(value);
     }
     
     // Call onChange callback
     if (onChange) {
-      onChange(value);
+      // Use type assertion to handle the generic constraint
+      onChange(value as any);
     }
     
     // Call onInputChange callback if input value changes
@@ -530,11 +537,13 @@ export function useAutocomplete({
     }
     
     // Focus the input
-    focus();
-  }, [disabled, readOnly, controlledValue, controlledInputValue, onChange, onInputChange, focus]);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [disabled, readOnly, controlledValue, controlledInputValue, onChange, onInputChange]);
   
   // Highlight an option
-  const highlightOption = useCallback((option: AutocompleteOption | null) => {
+  const highlightOption = useCallback((option: T | null) => {
     setHighlightedOption(option);
     
     // Call onHighlight callback
@@ -621,23 +630,40 @@ export function useAutocomplete({
   ]);
   
   // Focus the input
-  const focus = useCallback(() => {
+  const focusInput = useCallback(() => {
     if (inputRef.current && !disabled) {
       inputRef.current.focus();
       
-      // Select all text if selectOnFocus is true
-      if (selectOnFocus && inputRef.current.value) {
+      if (selectOnFocus) {
         inputRef.current.select();
       }
     }
-  }, [disabled, selectOnFocus]);
+  }, [inputRef, disabled, selectOnFocus]);
   
   // Blur the input
   const blur = useCallback(() => {
     if (inputRef.current) {
       inputRef.current.blur();
     }
-  }, []);
+  }, [inputRef]);
+  
+  // Handle input blur
+  const handleInputBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+    if (disabled || readOnly) {
+      return;
+    }
+    
+    // Close dropdown after a short delay to allow for option clicks
+    setTimeout(() => {
+      if (document.activeElement !== inputRef.current) {
+        close();
+      }
+    }, 150);
+    
+    if (onBlur) {
+      onBlur(e);
+    }
+  }, [disabled, readOnly, close, onBlur]);
   
   // Helper function to merge refs
   const mergeRefs = <T,>(...refs: (React.Ref<T> | undefined)[]) => {
@@ -654,147 +680,14 @@ export function useAutocomplete({
   
   // Get props for the input element
   const getInputProps = useCallback(<E extends HTMLInputElement = HTMLInputElement>(
-    props?: React.InputHTMLAttributes<E>
-  ): React.InputHTMLAttributes<E> => {
-    return {
-      ...props,
-      ref: mergeRefs(inputRef, props?.ref as React.Ref<E>),
-      id: `${autocompleteId}-input`,
-      role: 'combobox',
-      'aria-autocomplete': 'list',
-      'aria-controls': `${autocompleteId}-dropdown`,
-      'aria-expanded': isOpen,
-      'aria-activedescendant': highlightedOption 
-        ? `${autocompleteId}-option-${highlightedOption.value}` 
-        : undefined,
-      value: inputValue,
-      disabled: disabled || props?.disabled,
-      readOnly: readOnly || props?.readOnly,
-      required: required || props?.required,
-      placeholder: placeholder || props?.placeholder,
-      autoComplete: 'off',
-      onChange: (event: React.ChangeEvent<E>) => {
-        setInputValueInternal(event.target.value);
-        props?.onChange?.(event);
-      },
-      onFocus: (event: React.FocusEvent<E>) => {
-        setFocused(true);
-        
-        // Open dropdown if openOnFocus is true
-        if (openOnFocus) {
           open();
-        }
-        
-        props?.onFocus?.(event);
-        if (onFocus) {
-          onFocus(event as unknown as React.FocusEvent);
-        }
-      },
-      onBlur: (event: React.FocusEvent<E>) => {
-        setFocused(false);
-        
-        // Close dropdown after a short delay to allow for option clicks
-        setTimeout(() => {
-          if (document.activeElement !== inputRef.current) {
-            close();
-          }
-        }, 150);
-        
-        props?.onBlur?.(event);
-        if (onBlur) {
-          onBlur(event as unknown as React.FocusEvent);
-        }
-      },
-      onKeyDown: (event: React.KeyboardEvent<E>) => {
-        switch (event.key) {
-          case 'ArrowDown':
-            event.preventDefault();
-            if (!isOpen) {
-              open();
-            } else {
-              highlightNextOption();
-            }
-            break;
-          case 'ArrowUp':
-            event.preventDefault();
-            if (!isOpen) {
-              open();
-            } else {
-              highlightPrevOption();
-            }
-            break;
-          case 'Enter':
-            if (isOpen && highlightedOption) {
-              event.preventDefault();
-              selectOption(highlightedOption);
-            } else if (allowCustomValue && inputValue) {
-              selectOption(inputValue);
-            }
-            break;
-          case 'Escape':
-            if (isOpen) {
-              event.preventDefault();
-              close();
-            }
-            break;
-          case 'Tab':
-            if (isOpen && highlightedOption) {
-              selectOption(highlightedOption);
-            }
-            break;
-        }
-        
-        props?.onKeyDown?.(event);
-      },
-      'data-disabled': disabled ? '' : undefined,
-      'data-readonly': readOnly ? '' : undefined,
-      'data-required': required ? '' : undefined,
-      'data-focused': focused ? '' : undefined,
-      'data-loading': loading ? '' : undefined,
-    };
-  }, [
-    autocompleteId,
-    isOpen,
-    highlightedOption,
-    inputValue,
-    disabled,
-    readOnly,
-    required,
-    placeholder,
-    focused,
-    loading,
-    openOnFocus,
-    allowCustomValue,
-    setInputValueInternal,
-    open,
-    close,
-    highlightNextOption,
-    highlightPrevOption,
-    selectOption,
-    onFocus,
-    onBlur,
-  ]);
-  
-  // Get props for the dropdown element
-  const getDropdownProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
-    return {
-      ...props,
-      ref: mergeRefs(dropdownRef, props?.ref as React.Ref<E>),
-      id: `${autocompleteId}-dropdown`,
-      role: 'listbox',
-      'aria-labelledby': `${autocompleteId}-input`,
-      tabIndex: -1,
-      'data-open': isOpen ? '' : undefined,
-      'data-empty': filteredOptions.length === 0 ? '' : undefined,
       'data-loading': loading ? '' : undefined,
     };
   }, [autocompleteId, isOpen, filteredOptions.length, loading]);
   
   // Get props for an option element
   const getOptionProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
-    option: AutocompleteOption,
+    option: T,
     props?: React.HTMLAttributes<E>
   ): React.HTMLAttributes<E> => {
     const isSelected = option.value === selectedValue;

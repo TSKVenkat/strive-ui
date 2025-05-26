@@ -58,11 +58,10 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
+const Container = forwardRef(function Container<C extends React.ElementType = 'div'>(
     { as, children, ...props }: ContainerProps<C>,
     ref: PolymorphicRef<C>
-  ) => {
+  ) {
     const Component = as || 'div';
     const { getBannerProps, visible } = useBannerContext();
     
@@ -98,11 +97,10 @@ export type IconProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Icon component
-const Icon = forwardRef(
-  <C extends React.ElementType = 'div'>(
+const Icon = forwardRef(function Icon<C extends React.ElementType = 'div'>(
     { as, children, ...props }: IconProps<C>,
     ref: PolymorphicRef<C>
-  ) => {
+  ) {
     const Component = as || 'div';
     const { hasIcon, variant } = useBannerContext();
     
@@ -151,11 +149,10 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
+const Content = forwardRef(function Content<C extends React.ElementType = 'div'>(
     { as, children, ...props }: ContentProps<C>,
     ref: PolymorphicRef<C>
-  ) => {
+  ) {
     const Component = as || 'div';
     
     return (
@@ -183,11 +180,10 @@ export type TitleProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Title component
-const Title = forwardRef(
-  <C extends React.ElementType = 'div'>(
+const Title = forwardRef(function Title<C extends React.ElementType = 'div'>(
     { as, children, ...props }: TitleProps<C>,
     ref: PolymorphicRef<C>
-  ) => {
+  ) {
     const Component = as || 'div';
     
     return (
@@ -215,11 +211,10 @@ export type DescriptionProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // Description component
-const Description = forwardRef(
-  <C extends React.ElementType = 'div'>(
+const Description = forwardRef(function Description<C extends React.ElementType = 'div'>(
     { as, children, ...props }: DescriptionProps<C>,
     ref: PolymorphicRef<C>
-  ) => {
+  ) {
     const Component = as || 'div';
     
     return (
@@ -247,11 +242,10 @@ export type ActionsProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Actions component
-const Actions = forwardRef(
-  <C extends React.ElementType = 'div'>(
+const Actions = forwardRef(function Actions<C extends React.ElementType = 'div'>(
     { as, children, ...props }: ActionsProps<C>,
     ref: PolymorphicRef<C>
-  ) => {
+  ) {
     const Component = as || 'div';
     
     return (
@@ -279,11 +273,10 @@ export type CloseProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Close component
-const Close = forwardRef(
-  <C extends React.ElementType = 'button'>(
+const Close = forwardRef(function Close<C extends React.ElementType = 'button'>(
     { as, children, ...props }: CloseProps<C>,
     ref: PolymorphicRef<C>
-  ) => {
+  ) {
     const Component = as || 'button';
     const { getCloseButtonProps, hasCloseButton, dismissible } = useBannerContext();
     
@@ -318,6 +311,9 @@ export const BannerHeadless = {
   Actions,
   Close,
   useBannerContext,
-};
+} as const;
+
+// Type for the compound component
+export type BannerHeadlessType = typeof BannerHeadless;
 
 export default BannerHeadless;

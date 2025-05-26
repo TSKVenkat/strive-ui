@@ -838,7 +838,7 @@ export const Shake: React.FC<ShakeProps> = ({
 };
 
 // Export all components
-export default {
+export const PhysicsAnimationComponents = {
   PhysicsAnimation,
   PhysicsPresets,
   Draggable,
@@ -847,3 +847,5 @@ export default {
   Flip,
   Shake
 };
+
+export default PhysicsAnimationComponents;

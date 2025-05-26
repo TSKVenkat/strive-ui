@@ -1,7 +1,7 @@
-import React, { createContext, useContext, ReactNode } from 'react';
+import React, { createContext, useContext, ReactNode, ElementType, forwardRef } from 'react';
 import { useTable, TableOptions, TableColumn, TableRowProps, TableCellProps, TableHeaderCellProps, TablePaginationProps, SortDirection } from './hooks/useTable';
 import { Box } from '../Box/Box';
-import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../types/polymorphic';
+import { PolymorphicComponentPropsWithRef, PolymorphicRef, PolymorphicComponent } from '../../types/polymorphic';
 
 // Context for the table
 interface TableContextValue<T extends object = any> {
@@ -20,7 +20,7 @@ interface TableContextValue<T extends object = any> {
   toggleColumnVisibility: (columnId: string) => void;
 }
 
-const TableContext = createContext<TableContextValue | null>(null);
+const TableContext = createContext<TableContextValue<any> | null>(null);
 
 // Hook to use table context
 export function useTableContext<T extends object = any>() {
@@ -79,26 +79,25 @@ export type TableElementProps<C extends React.ElementType> = PolymorphicComponen
 
 export type TableProps<C extends React.ElementType> = TableElementProps<C>;
 
-export type TableComponent = <C extends React.ElementType = 'table'>(
-  props: TableProps<C>
-) => React.ReactElement | null;
+export type TableComponent = PolymorphicComponent<'table'>;
 
-const Table: TableComponent = React.forwardRef(
+const Table = forwardRef(
   <C extends React.ElementType = 'table'>(
-    { as, className, ...props }: TableProps<C>,
-    ref?: PolymorphicRef<C>
+    { as, className, ...props }: Omit<TableProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
   ) => {
     const Component = as || 'table';
     
-    return (
-      <Component
-        ref={ref}
-        className={className}
-        {...props}
-      />
+    return React.createElement(
+      Component,
+      {
+        ref,
+        className,
+        ...props
+      }
     );
   }
-);
+) as TableComponent;
 
 // Header component
 export type HeaderProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -108,19 +107,20 @@ export type HeaderProps<C extends React.ElementType> = PolymorphicComponentProps
   }
 >;
 
-const Header = React.forwardRef(
+const Header = forwardRef(
   <C extends React.ElementType = 'thead'>(
-    { as, className, ...props }: HeaderProps<C>,
-    ref?: PolymorphicRef<C>
+    { as, className, ...props }: Omit<HeaderProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
   ) => {
     const Component = as || 'thead';
     
-    return (
-      <Component
-        ref={ref}
-        className={className}
-        {...props}
-      />
+    return React.createElement(
+      Component,
+      {
+        ref,
+        className,
+        ...props
+      }
     );
   }
 );
@@ -133,78 +133,77 @@ export type HeaderRowProps<C extends React.ElementType> = PolymorphicComponentPr
   }
 >;
 
-const HeaderRow = React.forwardRef(
+const HeaderRow = forwardRef(
   <C extends React.ElementType = 'tr'>(
-    { as, className, ...props }: HeaderRowProps<C>,
-    ref?: PolymorphicRef<C>
+    { as, className, ...props }: Omit<HeaderRowProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
   ) => {
     const Component = as || 'tr';
     
-    return (
-      <Component
-        ref={ref}
-        className={className}
-        {...props}
-      />
+    return React.createElement(
+      Component,
+      {
+        ref,
+        className,
+        ...props
+      }
     );
   }
 );
 
 // HeaderCell component
-export interface HeaderCellProps<C extends React.ElementType = 'th'> extends PolymorphicComponentPropsWithRef<
+export type HeaderCellProps<C extends React.ElementType = 'th'> = PolymorphicComponentPropsWithRef<
   C,
   {
-    column: TableColumn;
+    column: TableColumn<any>;
     className?: string;
     showSortIndicator?: boolean;
     sortAscIcon?: ReactNode;
     sortDescIcon?: ReactNode;
     sortNoneIcon?: ReactNode;
   }
-> {}
+>;
 
-const HeaderCell = React.forwardRef(
+const HeaderCell = forwardRef(
   <C extends React.ElementType = 'th'>(
     {
       as,
       column,
       className,
-      showSortIndicator = true,
-      sortAscIcon = '↑',
-      sortDescIcon = '↓',
-      sortNoneIcon = '↕',
+      showSortIndicator = true as any,
+      sortAscIcon = '↑' as any,
+      sortDescIcon = '↓' as any,
+      sortNoneIcon = '↕' as any,
       ...props
-    }: HeaderCellProps<C>,
-    ref?: PolymorphicRef<C>
+    }: Omit<HeaderCellProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
   ) => {
     const Component = as || 'th';
     const table = useTableContext();
-    const { sortDirection, onSort } = table.getHeaderCellProps(column);
+    const { sortable, sortDirection, onSort } = table.getHeaderCellProps(column);
     
-    const getSortIcon = () => {
-      if (!showSortIndicator || !column.sortable) return null;
-      
-      if (sortDirection === 'asc') return sortAscIcon;
-      if (sortDirection === 'desc') return sortDescIcon;
-      return sortNoneIcon;
-    };
-    
-    return (
-      <Component
-        ref={ref}
-        className={className}
-        onClick={column.sortable ? onSort : undefined}
-        style={{
-          cursor: column.sortable ? 'pointer' : undefined,
+    return React.createElement(
+      Component,
+      {
+        ref,
+        className,
+        onClick: () => sortable && onSort?.(),
+        style: {
           width: column.width,
           minWidth: column.minWidth,
           maxWidth: column.maxWidth,
-        }}
-        {...props}
-      >
-        {column.header}
-        {getSortIcon()}
-      </Component>
+        },
+        ...props
+      },
+      column.header,
+      sortable && showSortIndicator && 
+        React.createElement(
+          'span',
+          null,
+          sortDirection === 'asc' ? sortAscIcon : 
+          sortDirection === 'desc' ? sortDescIcon : 
+          sortDirection === null ? sortNoneIcon : null
+        )
     );
   }
 );
@@ -217,25 +216,26 @@ export type BodyProps<C extends React.ElementType> = PolymorphicComponentPropsWi
   }
 >;
 
-const Body = React.forwardRef(
+const Body = forwardRef(
   <C extends React.ElementType = 'tbody'>(
-    { as, className, ...props }: BodyProps<C>,
-    ref?: PolymorphicRef<C>
+    { as, className, ...props }: Omit<BodyProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
   ) => {
     const Component = as || 'tbody';
     
-    return (
-      <Component
-        ref={ref}
-        className={className}
-        {...props}
-      />
+    return React.createElement(
+      Component,
+      {
+        ref,
+        className,
+        ...props
+      }
     );
   }
 );
 
 // Row component
-export interface RowProps<T = any, C extends React.ElementType = 'tr'> extends PolymorphicComponentPropsWithRef<
+export type RowProps<T = any, C extends React.ElementType = 'tr'> = PolymorphicComponentPropsWithRef<
   C,
   {
     row: T;
@@ -244,42 +244,41 @@ export interface RowProps<T = any, C extends React.ElementType = 'tr'> extends P
     selectedClassName?: string;
     expandedClassName?: string;
   }
-> {}
+>;
 
-const Row = React.forwardRef(
+const Row = forwardRef(
   <T extends object = any, C extends React.ElementType = 'tr'>(
     {
       as,
       row,
       index,
       className,
-      selectedClassName = '',
-      expandedClassName = '',
+      selectedClassName = '' as any,
+      expandedClassName = '' as any,
       ...props
-    }: RowProps<T, C>,
-    ref?: PolymorphicRef<C>
+    }: Omit<RowProps<T, C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
   ) => {
     const Component = as || 'tr';
     const table = useTableContext<T>();
     const { selected, expanded, onClick, onSelect, onExpand } = table.getRowProps(row, index);
     
-    return (
-      <Component
-        ref={ref}
-        className={`
-          ${className || ''}
-          ${selected ? selectedClassName : ''}
-          ${expanded ? expandedClassName : ''}
-        `.trim()}
-        onClick={onClick}
-        {...props}
-      />
+    const combinedClassName = `${className || ''} ${selected ? selectedClassName : ''} ${expanded ? expandedClassName : ''}`.trim();
+    
+    return React.createElement(
+      Component,
+      {
+        ref,
+        className: combinedClassName,
+        onClick: onClick,
+        ...props
+      }
     );
   }
 );
 
 // Cell component
-export interface CellProps<T = any, C extends React.ElementType = 'td'> extends PolymorphicComponentPropsWithRef<
+export type CellProps<T = any, C extends React.ElementType = 'td'> = PolymorphicComponentPropsWithRef<
   C,
   {
     column: TableColumn<T>;
@@ -287,9 +286,9 @@ export interface CellProps<T = any, C extends React.ElementType = 'td'> extends 
     index: number;
     className?: string;
   }
-> {}
+>;
 
-const Cell = React.forwardRef(
+const Cell = forwardRef(
   <T extends object = any, C extends React.ElementType = 'td'>(
     {
       as,
@@ -298,8 +297,8 @@ const Cell = React.forwardRef(
       index,
       className,
       ...props
-    }: CellProps<T, C>,
-    ref?: PolymorphicRef<C>
+    }: Omit<CellProps<T, C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
   ) => {
     const Component = as || 'td';
     const table = useTableContext<T>();
@@ -313,19 +312,19 @@ const Cell = React.forwardRef(
       return value;
     };
     
-    return (
-      <Component
-        ref={ref}
-        className={className}
-        style={{
+    return React.createElement(
+      Component,
+      {
+        ref,
+        className,
+        style: {
           width: column.width,
           minWidth: column.minWidth,
           maxWidth: column.maxWidth,
-        }}
-        {...props}
-      >
-        {renderContent()}
-      </Component>
+        },
+        ...props
+      },
+      renderContent()
     );
   }
 );
@@ -338,19 +337,20 @@ export type FooterProps<C extends React.ElementType> = PolymorphicComponentProps
   }
 >;
 
-const Footer = React.forwardRef(
+const Footer = forwardRef(
   <C extends React.ElementType = 'tfoot'>(
-    { as, className, ...props }: FooterProps<C>,
-    ref?: PolymorphicRef<C>
+    { as, className, ...props }: Omit<FooterProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
   ) => {
     const Component = as || 'tfoot';
     
-    return (
-      <Component
-        ref={ref}
-        className={className}
-        {...props}
-      />
+    return React.createElement(
+      Component,
+      {
+        ref,
+        className,
+        ...props
+      }
     );
   }
 );
@@ -363,60 +363,269 @@ export type FooterRowProps<C extends React.ElementType> = PolymorphicComponentPr
   }
 >;
 
-const FooterRow = React.forwardRef(
+const FooterRow = forwardRef(
   <C extends React.ElementType = 'tr'>(
-    { as, className, ...props }: FooterRowProps<C>,
-    ref?: PolymorphicRef<C>
+    { as, className, ...props }: Omit<FooterRowProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
   ) => {
     const Component = as || 'tr';
     
-    return (
-      <Component
-        ref={ref}
-        className={className}
-        {...props}
-      />
+    return React.createElement(
+      Component,
+      {
+        ref,
+        className,
+        ...props
+      }
     );
   }
 );
 
 // FooterCell component
-export interface FooterCellProps<C extends React.ElementType = 'td'> extends PolymorphicComponentPropsWithRef<
+export type FooterCellProps<C extends React.ElementType = 'td'> = PolymorphicComponentPropsWithRef<
   C,
   {
     column: TableColumn;
     className?: string;
   }
-> {}
+>;
 
-const FooterCell = React.forwardRef(
+const FooterCell = forwardRef(
   <C extends React.ElementType = 'td'>(
     {
       as,
       column,
       className,
       ...props
-    }: FooterCellProps<C>,
-    ref?: PolymorphicRef<C>
+    }: Omit<FooterCellProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
   ) => {
     const Component = as || 'td';
     
-    return (
-      <Component
-        ref={ref}
-        className={className}
-        style={{
+    return React.createElement(
+      Component,
+      {
+        ref,
+        className,
+        style: {
           width: column.width,
           minWidth: column.minWidth,
           maxWidth: column.maxWidth,
-        }}
-        {...props}
-      >
-        {column.footer}
-      </Component>
+        },
+        ...props
+      },
+      column.footer
     );
   }
 );
+
+// SelectionCell component
+export type SelectionCellProps<C extends React.ElementType = 'td'> = PolymorphicComponentPropsWithRef<
+  C,
+  {
+    row?: any;
+    index?: number;
+    className?: string;
+  }
+>;
+
+const SelectionCell = forwardRef(
+  <C extends React.ElementType = 'td'>(
+    { as, row, index, className, ...props }: Omit<SelectionCellProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) => {
+    const Component = as || 'td';
+    const table = useTableContext();
+    const { selected, onSelect } = table.getRowProps(row, index || 0);
+    
+    if (row) {
+      return React.createElement(
+        Component,
+        {
+          ref,
+          className,
+          onClick: (e: React.MouseEvent) => e.stopPropagation(),
+          ...props
+        },
+        React.createElement('input', {
+          type: 'checkbox',
+          checked: selected,
+          onChange: () => onSelect?.()
+        })
+      );
+    }
+    
+    return React.createElement(
+      Component,
+      {
+        ref,
+        className,
+        onClick: (e: React.MouseEvent) => e.stopPropagation(),
+        ...props
+      },
+      React.createElement('input', {
+        type: 'checkbox',
+        checked: table.areAllRowsSelected,
+        ref: (input: HTMLInputElement | null) => {
+          if (input) {
+            input.indeterminate = !table.areAllRowsSelected && table.areSomeRowsSelected;
+          }
+        },
+        onChange: () => table.selectAllRows && table.selectAllRows()
+      })
+    );
+  }
+);
+
+// ExpandCell component
+export type ExpandCellProps<C extends React.ElementType = 'td'> = PolymorphicComponentPropsWithRef<
+  C,
+  {
+    row: any;
+    index: number;
+    className?: string;
+    expandIcon?: ReactNode;
+    collapseIcon?: ReactNode;
+  }
+>;
+
+const ExpandCell = forwardRef(
+  <C extends React.ElementType = 'td'>(
+    { 
+      as, 
+      row, 
+      index, 
+      className, 
+      expandIcon = '+' as any, 
+      collapseIcon = '-' as any, 
+      ...props 
+    }: Omit<ExpandCellProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) => {
+    const Component = as || 'td';
+    const table = useTableContext();
+    const { expanded, onExpand } = table.getRowProps(row, index);
+    
+    return React.createElement(
+      Component,
+      {
+        ref,
+        className,
+        onClick: (e: React.MouseEvent) => e.stopPropagation(),
+        ...props
+      },
+      React.createElement(
+        'button',
+        {
+          onClick: () => onExpand && onExpand(),
+          style: { background: 'none', border: 'none', cursor: 'pointer' }
+        },
+        expanded ? collapseIcon : expandIcon
+      )
+    );
+  }
+);
+
+// Filter component
+export interface FilterProps<T extends object = any> {
+  column: TableColumn<T>;
+  className?: string;
+  placeholder?: string;
+}
+
+const Filter = <T extends object = any>({
+  column,
+  className,
+  placeholder = `Filter ${String(column.header)}...`,
+}) => {
+  const table = useTableContext();
+  
+  return React.createElement(
+    'input',
+    {
+      type: 'text',
+      className,
+      placeholder,
+      onChange: (e: React.ChangeEvent<HTMLInputElement>) => table.setFilter(column.id, e.target.value)
+    }
+  );
+};
+
+// ColumnToggle component
+export interface ColumnToggleProps<T extends object = any> {
+  column: TableColumn<T>;
+  className?: string;
+  label?: ReactNode;
+}
+
+const ColumnToggle = <T extends object = any>({
+  column,
+  className,
+  label,
+}) => {
+  const table = useTableContext();
+  const isHidden = table.visibleColumns.indexOf(column) === -1;
+  
+  return React.createElement(
+    'label',
+    { className },
+    React.createElement(
+      'input',
+      {
+        type: 'checkbox',
+        checked: !isHidden,
+        onChange: () => table.toggleColumnVisibility(column.id)
+      }
+    ),
+    label || column.header
+  );
+};
+
+// Empty state component
+export interface EmptyProps {
+  className?: string;
+  message?: ReactNode;
+}
+
+const Empty: React.FC<EmptyProps> = ({
+  className,
+  message = 'No data available',
+}) => {
+  const table = useTableContext();
+  
+  if (table.paginatedData.length > 0) {
+    return null;
+  }
+  
+  return React.createElement(
+    'div',
+    { className },
+    message
+  );
+};
+
+// Loading state component
+export interface LoadingProps {
+  loading?: boolean;
+  className?: string;
+  message?: ReactNode;
+}
+
+const Loading: React.FC<LoadingProps> = ({
+  loading,
+  className,
+  message = 'Loading...',
+}) => {
+  if (!loading) {
+    return null;
+  }
+  
+  return React.createElement(
+    'div',
+    { className },
+    message
+  );
+};
 
 // Pagination component
 export interface PaginationProps {
@@ -445,256 +654,55 @@ const Pagination: React.FC<PaginationProps> = ({
   const table = useTableContext();
   const { page, pageSize, totalPages, totalRows, onPageChange, onPageSizeChange, pageSizeOptions } = table.getPaginationProps();
   
-  return (
-    <div className={className}>
-      {showPageSizeOptions && (
-        <div>
-          {pageSizeLabel}
-          <select
-            value={pageSize}
-            onChange={e => onPageSizeChange(Number(e.target.value))}
-          >
-            {pageSizeOptions.map(option => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-      
-      {showPageInfo && (
-        <div>
-          {pageInfoTemplate({ page, pageSize, totalPages, totalRows })}
-        </div>
-      )}
-      
-      <div>
-        <button
-          onClick={() => onPageChange(page - 1)}
-          disabled={page === 0}
-        >
-          {prevLabel}
-        </button>
-        <button
-          onClick={() => onPageChange(page + 1)}
-          disabled={page >= totalPages - 1}
-        >
-          {nextLabel}
-        </button>
-      </div>
-    </div>
-  );
-};
-
-// SelectionCell component
-export interface SelectionCellProps<C extends React.ElementType = 'td'> extends PolymorphicComponentPropsWithRef<
-  C,
-  {
-    row?: any;
-    index?: number;
-    className?: string;
-  }
-> {}
-
-const SelectionCell = React.forwardRef(
-  <C extends React.ElementType = 'td'>(
-    {
-      as,
-      row,
-      index,
-      className,
-      ...props
-    }: SelectionCellProps<C>,
-    ref?: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'td';
-    const table = useTableContext();
-    
-    // If row and index are provided, render a row selection checkbox
-    if (row !== undefined && index !== undefined) {
-      const { selected, onSelect } = table.getRowProps(row, index);
-      
-      return (
-        <Component
-          ref={ref}
-          className={className}
-          onClick={e => e.stopPropagation()}
-          {...props}
-        >
-          <input
-            type="checkbox"
-            checked={selected}
-            onChange={onSelect}
-          />
-        </Component>
-      );
-    }
-    
-    // Otherwise, render a header selection checkbox
-    return (
-      <Component
-        ref={ref}
-        className={className}
-        onClick={e => e.stopPropagation()}
-        {...props}
-      >
-        <input
-          type="checkbox"
-          checked={table.areAllRowsSelected}
-          ref={input => {
-            if (input) {
-              input.indeterminate = !table.areAllRowsSelected && table.areSomeRowsSelected;
-            }
-          }}
-          onChange={table.selectAllRows}
-        />
-      </Component>
-    );
-  }
-);
-
-// ExpandCell component
-export interface ExpandCellProps<C extends React.ElementType = 'td'> extends PolymorphicComponentPropsWithRef<
-  C,
-  {
-    row: any;
-    index: number;
-    className?: string;
-    expandIcon?: ReactNode;
-    collapseIcon?: ReactNode;
-  }
-> {}
-
-const ExpandCell = React.forwardRef(
-  <C extends React.ElementType = 'td'>(
-    {
-      as,
-      row,
-      index,
-      className,
-      expandIcon = '+',
-      collapseIcon = '-',
-      ...props
-    }: ExpandCellProps<C>,
-    ref?: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'td';
-    const table = useTableContext();
-    const { expanded, onExpand } = table.getRowProps(row, index);
-    
-    return (
-      <Component
-        ref={ref}
-        className={className}
-        onClick={e => e.stopPropagation()}
-        {...props}
-      >
-        <button
-          onClick={onExpand}
-          style={{ background: 'none', border: 'none', cursor: 'pointer' }}
-        >
-          {expanded ? collapseIcon : expandIcon}
-        </button>
-      </Component>
-    );
-  }
-);
-
-// Filter component
-export interface FilterProps {
-  column: TableColumn;
-  className?: string;
-  placeholder?: string;
-}
-
-const Filter: React.FC<FilterProps> = ({
-  column,
-  className,
-  placeholder = `Filter ${String(column.header)}...`,
-}) => {
-  const table = useTableContext();
-  
-  return (
-    <input
-      type="text"
-      className={className}
-      placeholder={placeholder}
-      onChange={e => table.setFilter(column.id, e.target.value)}
-    />
-  );
-};
-
-// ColumnToggle component
-export interface ColumnToggleProps {
-  column: TableColumn;
-  className?: string;
-  label?: ReactNode;
-}
-
-const ColumnToggle: React.FC<ColumnToggleProps> = ({
-  column,
-  className,
-  label,
-}) => {
-  const table = useTableContext();
-  const isHidden = table.visibleColumns.indexOf(column) === -1;
-  
-  return (
-    <label className={className}>
-      <input
-        type="checkbox"
-        checked={!isHidden}
-        onChange={() => table.toggleColumnVisibility(column.id)}
-      />
-      {label || column.header}
-    </label>
-  );
-};
-
-// Empty state component
-export interface EmptyProps {
-  className?: string;
-  message?: ReactNode;
-}
-
-const Empty: React.FC<EmptyProps> = ({
-  className,
-  message = 'No data available',
-}) => {
-  const table = useTableContext();
-  
-  if (table.paginatedData.length > 0) {
-    return null;
-  }
-  
-  return (
-    <div className={className}>
-      {message}
-    </div>
-  );
-};
-
-// Loading state component
-export interface LoadingProps {
-  loading?: boolean;
-  className?: string;
-  message?: ReactNode;
-}
-
-const Loading: React.FC<LoadingProps> = ({
-  loading,
-  className,
-  message = 'Loading...',
-}) => {
-  if (!loading) {
-    return null;
-  }
-  
-  return (
-    <div className={className}>
-      {message}
-    </div>
+  return React.createElement(
+    'div',
+    { className },
+    showPageSizeOptions && React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'span',
+        null,
+        pageSizeLabel
+      ),
+      React.createElement(
+        'select',
+        {
+          value: pageSize,
+          onChange: (e: React.ChangeEvent<HTMLSelectElement>) => onPageSizeChange(Number(e.target.value))
+        },
+        pageSizeOptions.map(option => React.createElement(
+          'option',
+          { key: option, value: option },
+          option
+        ))
+      )
+    ),
+    showPageInfo && React.createElement(
+      'div',
+      null,
+      pageInfoTemplate({ page, pageSize, totalPages, totalRows })
+    ),
+    React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'button',
+        {
+          onClick: () => onPageChange(page - 1),
+          disabled: page === 0
+        },
+        prevLabel
+      ),
+      React.createElement(
+        'button',
+        {
+          onClick: () => onPageChange(page + 1),
+          disabled: page >= totalPages - 1
+        },
+        nextLabel
+      )
+    )
   );
 };
 

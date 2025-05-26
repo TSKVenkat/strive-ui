@@ -1,12 +1,12 @@
-import React, { createContext, useContext, forwardRef } from 'react';
-import { useAutocomplete, UseAutocompleteReturn, AutocompleteOption } from './useAutocomplete';
+import React, { createContext, useContext, forwardRef, HTMLAttributes, ButtonHTMLAttributes, FocusEvent, MouseEvent, KeyboardEvent, ReactNode } from 'react';
+import { useAutocomplete, UseAutocompleteReturn, AutocompleteOption as AutocompleteOptionType, UseAutocompleteProps } from './useAutocomplete';
 
 // Define the props for the Autocomplete component
-export interface AutocompleteProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface AutocompleteProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /**
    * Array of options to select from
    */
-  options: AutocompleteOption[];
+  options: AutocompleteOptionType[];
   /**
    * Default selected value (uncontrolled)
    */
@@ -78,7 +78,15 @@ export interface AutocompleteProps extends React.HTMLAttributes<HTMLDivElement> 
   /**
    * Custom filter function
    */
-  filterFunction?: (option: AutocompleteOption, inputValue: string) => boolean;
+  filterFunction?: (option: AutocompleteOptionType, inputValue: string) => boolean;
+  /**
+   * Custom render function for options
+   */
+  renderOption?: (option: AutocompleteOptionType, state: {
+    isSelected: boolean;
+    isHighlighted: boolean;
+    isDisabled: boolean;
+  }) => React.ReactNode;
   /**
    * Minimum number of characters to start showing suggestions
    */
@@ -106,19 +114,19 @@ export interface AutocompleteProps extends React.HTMLAttributes<HTMLDivElement> 
   /**
    * Callback when an option is highlighted
    */
-  onHighlight?: (option: AutocompleteOption | null) => void;
+  onHighlight?: (option: AutocompleteOptionType | null) => void;
   /**
    * Callback when the input is focused
    */
-  onFocus?: (event: React.FocusEvent) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
   /**
    * Callback when the input is blurred
    */
-  onBlur?: (event: React.FocusEvent) => void;
+  onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   /**
    * Callback to load options asynchronously
    */
-  loadOptions?: (inputValue: string) => Promise<AutocompleteOption[]>;
+  loadOptions?: (inputValue: string) => Promise<AutocompleteOptionType[]>;
   /**
    * Children elements
    */
@@ -126,15 +134,15 @@ export interface AutocompleteProps extends React.HTMLAttributes<HTMLDivElement> 
 }
 
 // Create a context for the Autocomplete
-export interface AutocompleteContextValue extends UseAutocompleteReturn {}
+export interface AutocompleteContextValue extends UseAutocompleteReturn<AutocompleteOptionType> {}
 
-const AutocompleteContext = createContext<AutocompleteContextValue | undefined>(undefined);
+const AutocompleteContext = createContext<AutocompleteContextValue | null>(null);
 
 // Hook to use the Autocomplete context
-export function useAutocompleteContext() {
+export function useAutocompleteContext(): AutocompleteContextValue {
   const context = useContext(AutocompleteContext);
   if (!context) {
-    throw new Error('useAutocompleteContext must be used within an AutocompleteProvider');
+    throw new Error('useAutocompleteContext must be used within an AutocompleteRoot component');
   }
   return context;
 }
@@ -161,7 +169,7 @@ export const AutocompleteRoot = forwardRef<HTMLDivElement, AutocompleteProps>(
       clearOnSelect,
       selectOnFocus,
       filterOptions,
-      filterFunction,
+      renderOption,
       minChars,
       maxSuggestions,
       debounceTime,
@@ -197,7 +205,7 @@ export const AutocompleteRoot = forwardRef<HTMLDivElement, AutocompleteProps>(
       clearOnSelect,
       selectOnFocus,
       filterOptions,
-      filterFunction,
+      renderOption,
       minChars,
       maxSuggestions,
       debounceTime,
@@ -211,7 +219,7 @@ export const AutocompleteRoot = forwardRef<HTMLDivElement, AutocompleteProps>(
     });
 
     return (
-      <AutocompleteContext.Provider value={autocomplete}>
+      <AutocompleteContext.Provider value={autocomplete as AutocompleteContextValue}>
         <div {...props} ref={ref}>
           {children || (
             <>
@@ -225,9 +233,12 @@ export const AutocompleteRoot = forwardRef<HTMLDivElement, AutocompleteProps>(
                 ) : (
                   <AutocompleteOptions>
                     {autocomplete.filteredOptions.map((option) => (
-                      <AutocompleteOption key={option.value} option={option}>
+                      <AutocompleteOptionComponent
+                        key={option.value}
+                        option={option}
+                      >
                         {option.label}
-                      </AutocompleteOption>
+                      </AutocompleteOptionComponent>
                     ))}
                   </AutocompleteOptions>
                 )}
@@ -248,9 +259,9 @@ export interface AutocompleteInputProps extends React.InputHTMLAttributes<HTMLIn
 export const AutocompleteInput = forwardRef<HTMLInputElement, AutocompleteInputProps>(
   (props, ref) => {
     const { getInputProps } = useAutocompleteContext();
-    const inputProps = getInputProps({ ...props, ref });
+    const inputProps = getInputProps(props);
 
-    return <input {...inputProps} />;
+    return <input {...inputProps} ref={ref} />;
   }
 );
 
@@ -262,13 +273,13 @@ export interface AutocompleteDropdownProps extends React.HTMLAttributes<HTMLDivE
 export const AutocompleteDropdown = forwardRef<HTMLDivElement, AutocompleteDropdownProps>(
   (props, ref) => {
     const { getDropdownProps, isOpen } = useAutocompleteContext();
-    const dropdownProps = getDropdownProps({ ...props, ref });
+    const dropdownProps = getDropdownProps(props);
 
     if (!isOpen) {
       return null;
     }
 
-    return <div {...dropdownProps} />;
+    return <div {...dropdownProps} ref={ref} />;
   }
 );
 
@@ -287,34 +298,36 @@ AutocompleteOptions.displayName = 'Autocomplete.Options';
 
 // Option component
 export interface AutocompleteOptionProps extends React.HTMLAttributes<HTMLDivElement> {
-  option: AutocompleteOption;
+  option: AutocompleteOptionType;
 }
 
-export const AutocompleteOption = forwardRef<HTMLDivElement, AutocompleteOptionProps>(
+export const AutocompleteOptionComponent = forwardRef<HTMLDivElement, AutocompleteOptionProps>(
   ({ option, children, ...props }, ref) => {
     const { getOptionProps } = useAutocompleteContext();
-    const optionProps = getOptionProps(option, { ...props, ref });
+    const optionProps = getOptionProps(option, props);
 
-    return <div {...optionProps}>{children}</div>;
+    return <div {...optionProps} ref={ref}>{children}</div>;
   }
 );
 
-AutocompleteOption.displayName = 'Autocomplete.Option';
+AutocompleteOptionComponent.displayName = 'Autocomplete.Option';
+
+
 
 // Clear button component
-export interface AutocompleteClearButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
+export interface AutocompleteClearButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export const AutocompleteClearButton = forwardRef<HTMLButtonElement, AutocompleteClearButtonProps>(
   (props, ref) => {
     const { getClearButtonProps, selectedValue } = useAutocompleteContext();
-    const clearButtonProps = getClearButtonProps({ ...props, ref });
+    const clearButtonProps = getClearButtonProps(props);
 
     if (!selectedValue) {
       return null;
     }
 
     return (
-      <button {...clearButtonProps}>
+      <button {...clearButtonProps} ref={ref}>
         {props.children || (
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
@@ -362,10 +375,18 @@ export const AutocompleteHeadless = Object.assign(AutocompleteRoot, {
   Input: AutocompleteInput,
   Dropdown: AutocompleteDropdown,
   Options: AutocompleteOptions,
-  Option: AutocompleteOption,
+  Option: AutocompleteOptionComponent,
   ClearButton: AutocompleteClearButton,
   Loading: AutocompleteLoading,
   Empty: AutocompleteEmpty,
-});
+}) as typeof AutocompleteRoot & {
+  Input: typeof AutocompleteInput;
+  Dropdown: typeof AutocompleteDropdown;
+  Options: typeof AutocompleteOptions;
+  Option: typeof AutocompleteOptionComponent;
+  ClearButton: typeof AutocompleteClearButton;
+  Loading: typeof AutocompleteLoading;
+  Empty: typeof AutocompleteEmpty;
+};
 
 export default AutocompleteHeadless;

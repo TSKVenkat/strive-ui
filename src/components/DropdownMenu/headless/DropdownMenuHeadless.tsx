@@ -54,24 +54,23 @@ export type TriggerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Trigger component
-const Trigger = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: TriggerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Trigger = forwardRef(function Trigger<C extends React.ElementType = 'button'>(
+    { as, children, ...props }: Omit<TriggerProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'button';
     const { getTriggerProps } = useDropdownMenuContext();
     
     const triggerProps = getTriggerProps();
     
-    return (
-      <Component 
-        {...triggerProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...triggerProps,
+        ...props,
+        ref: ref
+      },
+      children
     );
   }
 );
@@ -153,11 +152,10 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Content = forwardRef(function Content<C extends React.ElementType = 'div'>(
+    { as, children, ...props }: Omit<ContentProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'div';
     const { getContentProps, isOpen } = useDropdownMenuContext();
     
@@ -167,18 +165,18 @@ const Content = forwardRef(
     
     const contentProps = getContentProps();
     
-    return (
-      <Component 
-        {...contentProps} 
-        {...props} 
-        ref={ref}
-        style={{ 
+    return React.createElement(
+      Component,
+      {
+        ...contentProps,
+        ...props,
+        ref: ref,
+        style: { 
           ...contentProps.style,
           ...props.style,
-        }}
-      >
-        {children}
-      </Component>
+        }
+      },
+      children
     );
   }
 );
@@ -197,11 +195,10 @@ export type ArrowProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Arrow component
-const Arrow = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ArrowProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Arrow = forwardRef(function Arrow<C extends React.ElementType = 'div'>(
+    { as, children, ...props }: Omit<ArrowProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'div';
     const { getArrowProps, isOpen } = useDropdownMenuContext();
     
@@ -211,18 +208,18 @@ const Arrow = forwardRef(
     
     const arrowProps = getArrowProps();
     
-    return (
-      <Component 
-        {...arrowProps} 
-        {...props} 
-        ref={ref}
-        style={{ 
+    return React.createElement(
+      Component,
+      {
+        ...arrowProps,
+        ...props,
+        ref: ref,
+        style: { 
           ...arrowProps.style,
           ...props.style,
-        }}
-      >
-        {children}
-      </Component>
+        }
+      },
+      children
     );
   }
 );
@@ -249,11 +246,10 @@ export type ItemProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Item component
-const Item = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, item, index, ...props }: ItemProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Item = forwardRef(function Item<C extends React.ElementType = 'div'>(
+    { as, children, item, index, ...props }: Omit<ItemProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'div';
     const { getItemProps, highlightedIndex, selectedIds } = useDropdownMenuContext();
     
@@ -261,21 +257,21 @@ const Item = forwardRef(
     const isHighlighted = index === highlightedIndex;
     const isSelected = selectedIds.includes(item.id);
     
-    return (
-      <Component 
-        {...itemProps} 
-        {...props} 
-        ref={ref}
-        data-highlighted={isHighlighted}
-        data-selected={isSelected}
-        style={{ 
+    return React.createElement(
+      Component, 
+      {
+        ...itemProps, 
+        ...props, 
+        ref: ref,
+        'data-highlighted': isHighlighted,
+        'data-selected': isSelected,
+        style: { 
           cursor: item.disabled ? 'not-allowed' : 'pointer',
           opacity: item.disabled ? 0.5 : 1,
           ...props.style,
-        }}
-      >
-        {children}
-      </Component>
+        }
+      },
+      children
     );
   }
 );
@@ -289,19 +285,19 @@ export type DividerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Divider component
-const Divider = forwardRef(
-  <C extends React.ElementType = 'hr'>(
-    { as, ...props }: DividerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Divider = forwardRef(function Divider<C extends React.ElementType = 'hr'>(
+    { as, ...props }: Omit<DividerProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'hr';
     
-    return (
-      <Component 
-        role="separator"
-        {...props} 
-        ref={ref}
-      />
+    return React.createElement(
+      Component,
+      {
+        role: "separator",
+        ...props,
+        ref: ref
+      }
     );
   }
 );
@@ -320,21 +316,20 @@ export type HeaderProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Header component
-const Header = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: HeaderProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Header = forwardRef(function Header<C extends React.ElementType = 'div'>(
+    { as, children, ...props }: Omit<HeaderProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'div';
     
-    return (
-      <Component 
-        role="presentation"
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        role: "presentation",
+        ...props,
+        ref: ref
+      },
+      children
     );
   }
 );
@@ -357,30 +352,33 @@ export type GroupProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Group component
-const Group = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, label, ...props }: GroupProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Group = forwardRef(function Group<C extends React.ElementType = 'div'>(
+    { as, children, label, ...props }: Omit<GroupProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'div';
+    const labelId = label ? `group-label-${label.replace(/\s+/g, '-').toLowerCase()}` : undefined;
     
-    return (
-      <Component 
-        role="group"
-        aria-labelledby={label ? `group-label-${label.replace(/\s+/g, '-').toLowerCase()}` : undefined}
-        {...props} 
-        ref={ref}
-      >
-        {label && (
-          <div 
-            id={`group-label-${label.replace(/\s+/g, '-').toLowerCase()}`}
-            role="presentation"
-          >
-            {label}
-          </div>
-        )}
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        role: "group",
+        "aria-labelledby": labelId,
+        ...props,
+        ref: ref
+      },
+      [
+        label && React.createElement(
+          'div',
+          {
+            key: 'label',
+            id: labelId,
+            role: "presentation"
+          },
+          label
+        ),
+        children
+      ]
     );
   }
 );
@@ -399,31 +397,33 @@ export type SearchProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Search component
-const Search = forwardRef(
-  <C extends React.ElementType = 'input'>(
-    { as, placeholder, ...props }: SearchProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Search = forwardRef(function Search<C extends React.ElementType = 'input'>(
+    { as, placeholder, ...props }: Omit<SearchProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'input';
     const { getSearchInputProps } = useDropdownMenuContext();
     
     const searchProps = getSearchInputProps();
     
-    return (
-      <Component 
-        type="text"
-        {...searchProps} 
-        placeholder={placeholder || searchProps.placeholder}
-        {...props} 
-        ref={ref}
-        onClick={(e: React.MouseEvent) => {
-          // Prevent closing the dropdown when clicking the search input
-          e.stopPropagation();
-          if (props.onClick) {
-            props.onClick(e);
-          }
-        }}
-      />
+    const handleClick = (e: React.MouseEvent) => {
+      // Prevent closing the dropdown when clicking the search input
+      e.stopPropagation();
+      if (props.onClick) {
+        props.onClick(e);
+      }
+    };
+    
+    return React.createElement(
+      Component,
+      {
+        type: "text",
+        ...searchProps,
+        placeholder: placeholder || searchProps.placeholder,
+        ...props,
+        ref: ref,
+        onClick: handleClick
+      }
     );
   }
 );
@@ -442,11 +442,10 @@ export type EmptyProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Empty component
-const Empty = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: EmptyProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Empty = forwardRef(function Empty<C extends React.ElementType = 'div'>(
+    { as, children, ...props }: Omit<EmptyProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'div';
     const { filteredItems } = useDropdownMenuContext();
     
@@ -454,14 +453,14 @@ const Empty = forwardRef(
       return null;
     }
     
-    return (
-      <Component 
-        role="presentation"
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        role: "presentation",
+        ...props,
+        ref: ref
+      },
+      children
     );
   }
 );
@@ -484,33 +483,36 @@ export type CheckboxProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Checkbox component
-const Checkbox = forwardRef(
-  <C extends React.ElementType = 'input'>(
-    { as, itemId, children, ...props }: CheckboxProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Checkbox = forwardRef(function Checkbox<C extends React.ElementType = 'input'>(
+    { as, itemId, children, ...props }: Omit<CheckboxProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'input';
     const { selectedIds, toggleSelection } = useDropdownMenuContext();
     
     const isChecked = selectedIds.includes(itemId);
     
-    return (
-      <Component 
-        type="checkbox"
-        checked={isChecked}
-        onChange={() => toggleSelection(itemId)}
-        onClick={(e: React.MouseEvent) => {
-          // Prevent triggering the item click handler
-          e.stopPropagation();
-          if (props.onClick) {
-            props.onClick(e);
-          }
-        }}
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    const handleChange = () => toggleSelection(itemId);
+    
+    const handleClick = (e: React.MouseEvent) => {
+      // Prevent triggering the item click handler
+      e.stopPropagation();
+      if (props.onClick) {
+        props.onClick(e);
+      }
+    };
+    
+    return React.createElement(
+      Component,
+      {
+        type: "checkbox",
+        checked: isChecked,
+        onChange: handleChange,
+        onClick: handleClick,
+        ...props,
+        ref: ref
+      },
+      children
     );
   }
 );
@@ -532,6 +534,9 @@ export const DropdownMenuHeadless = {
   Empty,
   Checkbox,
   useDropdownMenuContext,
-};
+} as const;
+
+// Type for the compound component
+export type DropdownMenuHeadlessType = typeof DropdownMenuHeadless;
 
 export default DropdownMenuHeadless;

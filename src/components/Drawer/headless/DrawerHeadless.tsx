@@ -54,24 +54,23 @@ export type TriggerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Trigger component
-const Trigger = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: TriggerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Trigger = forwardRef(function Trigger<C extends React.ElementType = 'button'>(
+    { as, children, ...props }: Omit<TriggerProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'button';
     const { getTriggerProps } = useDrawerContext();
     
     const triggerProps = getTriggerProps();
     
-    return (
-      <Component 
-        {...triggerProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...triggerProps,
+        ...props,
+        ref: ref
+      },
+      children
     );
   }
 );
@@ -153,11 +152,10 @@ export type BackdropProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Backdrop component
-const Backdrop = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: BackdropProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Backdrop = forwardRef(function Backdrop<C extends React.ElementType = 'div'>(
+    { as, children, ...props }: Omit<BackdropProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'div';
     const { getBackdropProps, isOpen, hasBackdrop } = useDrawerContext();
     
@@ -167,12 +165,13 @@ const Backdrop = forwardRef(
     
     const backdropProps = getBackdropProps();
     
-    return (
-      <Component 
-        {...backdropProps} 
-        {...props} 
-        ref={ref}
-        style={{ 
+    return React.createElement(
+      Component,
+      {
+        ...backdropProps,
+        ...props,
+        ref: ref,
+        style: { 
           position: 'fixed',
           top: 0,
           right: 0,
@@ -181,10 +180,9 @@ const Backdrop = forwardRef(
           backgroundColor: 'rgba(0, 0, 0, 0.5)',
           zIndex: 1040,
           ...props.style,
-        }}
-      >
-        {children}
-      </Component>
+        }
+      },
+      children
     );
   }
 );
@@ -203,11 +201,10 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Content = forwardRef(function Content<C extends React.ElementType = 'div'>(
+    { as, children, ...props }: Omit<ContentProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'div';
     const { getContentProps, getContainerProps, isOpen } = useDrawerContext();
     
@@ -218,19 +215,19 @@ const Content = forwardRef(
     const contentProps = getContentProps();
     const containerProps = getContainerProps();
     
-    return (
-      <Component 
-        {...contentProps} 
-        {...containerProps} 
-        {...props} 
-        ref={ref}
-        style={{ 
+    return React.createElement(
+      Component,
+      {
+        ...contentProps,
+        ...containerProps,
+        ...props,
+        ref: ref,
+        style: { 
           ...contentProps.style,
           ...props.style,
-        }}
-      >
-        {children}
-      </Component>
+        }
+      },
+      children
     );
   }
 );
@@ -249,24 +246,23 @@ export type CloseProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Close component
-const Close = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: CloseProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Close = forwardRef(function Close<C extends React.ElementType = 'button'>(
+    { as, children, ...props }: Omit<CloseProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'button';
     const { getCloseButtonProps } = useDrawerContext();
     
     const closeProps = getCloseButtonProps();
     
-    return (
-      <Component 
-        {...closeProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...closeProps,
+        ...props,
+        ref: ref
+      },
+      children
     );
   }
 );
@@ -285,20 +281,19 @@ export type HeaderProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Header component
-const Header = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: HeaderProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Header = forwardRef(function Header<C extends React.ElementType = 'div'>(
+    { as, children, ...props }: Omit<HeaderProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'div';
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...props,
+        ref: ref
+      },
+      children
     );
   }
 );
@@ -317,25 +312,24 @@ export type BodyProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Body component
-const Body = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: BodyProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Body = forwardRef(function Body<C extends React.ElementType = 'div'>(
+    { as, children, ...props }: Omit<BodyProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'div';
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-        style={{ 
+    return React.createElement(
+      Component,
+      {
+        ...props,
+        ref: ref,
+        style: { 
           flex: 1,
           overflow: 'auto',
           ...props.style,
-        }}
-      >
-        {children}
-      </Component>
+        }
+      },
+      children
     );
   }
 );
@@ -354,20 +348,19 @@ export type FooterProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Footer component
-const Footer = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: FooterProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Footer = forwardRef(function Footer<C extends React.ElementType = 'div'>(
+    { as, children, ...props }: Omit<FooterProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'div';
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...props,
+        ref: ref
+      },
+      children
     );
   }
 );
@@ -386,6 +379,9 @@ export const DrawerHeadless = {
   Body,
   Footer,
   useDrawerContext,
-};
+} as const;
+
+// Type for the compound component
+export type DrawerHeadlessType = typeof DrawerHeadless;
 
 export default DrawerHeadless;

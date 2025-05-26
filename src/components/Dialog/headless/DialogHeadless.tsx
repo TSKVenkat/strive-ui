@@ -54,24 +54,23 @@ export type TriggerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Trigger component
-const Trigger = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: TriggerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Trigger = forwardRef(function Trigger<C extends React.ElementType = 'button'>(
+    { as, children, ...props }: Omit<TriggerProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'button';
     const { getTriggerProps } = useDialogContext();
     
     const triggerProps = getTriggerProps();
     
-    return (
-      <Component 
-        {...triggerProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...triggerProps,
+        ...props,
+        ref: ref
+      },
+      children
     );
   }
 );
@@ -103,11 +102,10 @@ export type OverlayProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Overlay component
-const Overlay = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: OverlayProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Overlay = forwardRef(function Overlay<C extends React.ElementType = 'div'>(
+    { as, children, ...props }: Omit<OverlayProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const { getOverlayProps, isOpen } = useDialogContext();
     
     if (!isOpen) {
@@ -143,11 +141,10 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Content = forwardRef(function Content<C extends React.ElementType = 'div'>(
+    { as, children, ...props }: Omit<ContentProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const { getContentProps, getContainerProps, isOpen } = useDialogContext();
     
     if (!isOpen) {
@@ -185,24 +182,23 @@ export type CloseProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Close component
-const Close = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: CloseProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Close = forwardRef(function Close<C extends React.ElementType = 'button'>(
+    { as, children, ...props }: Omit<CloseProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'button';
     const { getCloseButtonProps } = useDialogContext();
     
     const closeProps = getCloseButtonProps();
     
-    return (
-      <Component 
-        {...closeProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...closeProps,
+        ...props,
+        ref: ref
+      },
+      children
     );
   }
 );
@@ -225,24 +221,30 @@ export type ConfirmProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Confirm component
-const Confirm = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, value, ...props }: ConfirmProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Confirm = forwardRef(function Confirm<C extends React.ElementType = 'button'>(
+    { as, children, value, ...props }: Omit<ConfirmProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'button';
     const { getConfirmButtonProps } = useDialogContext();
     
     const confirmProps = getConfirmButtonProps(value);
     
-    return (
-      <Component 
-        {...confirmProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    // Cast type to proper button type if needed
+    if (confirmProps.type) {
+      confirmProps.type = confirmProps.type as "button" | "submit" | "reset";
+    } else {
+      confirmProps.type = "button"; // Default to button if undefined
+    }
+    
+    return React.createElement(
+      Component,
+      {
+        ...confirmProps,
+        ...props,
+        ref: ref
+      },
+      children
     );
   }
 );
@@ -265,24 +267,30 @@ export type CancelProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Cancel component
-const Cancel = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, value, ...props }: CancelProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Cancel = forwardRef(function Cancel<C extends React.ElementType = 'button'>(
+    { as, children, value, ...props }: Omit<CancelProps<C>, 'ref'>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
     const Component = as || 'button';
     const { getCancelButtonProps } = useDialogContext();
     
     const cancelProps = getCancelButtonProps(value);
     
-    return (
-      <Component 
-        {...cancelProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    // Cast type to proper button type if needed
+    if (cancelProps.type) {
+      cancelProps.type = cancelProps.type as "button" | "submit" | "reset";
+    } else {
+      cancelProps.type = "button"; // Default to button if undefined
+    }
+    
+    return React.createElement(
+      Component,
+      {
+        ...cancelProps,
+        ...props,
+        ref: ref
+      },
+      children
     );
   }
 );
@@ -320,6 +328,9 @@ export const DialogHeadless = {
   Title,
   Description,
   useDialogContext,
-};
+} as const;
 
-export default DialogHeadless;
+// Type for the compound component
+export type DialogHeadlessType = typeof DialogHeadless;
+
+export default DialogHeadless as typeof DialogHeadless;
