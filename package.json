@@ -126,15 +126,15 @@
         "a11y",
         "styled-components"
     ],
-    "author": "StriveUI Team <info@strive-ui.com>",
+    "author": "Venkatarama T S K <tskv.0411@gmail.com>",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/strive-ui/strive-ui.git"
+        "url": "https://github.com/TSKVenkat/strive-ui.git"
     },
-    "homepage": "https://github.com/strive-ui/strive-ui#readme",
+    "homepage": "https://github.com/TSKVenkat/strive-ui#readme",
     "bugs": {
-        "url": "https://github.com/strive-ui/strive-ui/issues"
+        "url": "https://github.com/TSKVenkat/strive-ui/issues"
     },
     "size-limit": [
         {

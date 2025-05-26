@@ -65,16 +65,65 @@ git checkout -b fix/issue-number
 
 ## Commit Message Format
 
-We use [Conventional Commits](https://www.conventionalcommits.org/):
+This project uses uses [Conventional Commits](https://www.conventionalcommits.org/) for automated versioning and changelog generation.:
 
-Common types include:
-- `feat`: A new feature
-- `fix`: A bug fix
-- `docs`: Documentation only changes
-- `style`: Changes that do not affect meaning (whitespace, formatting)
-- `refactor`: Code change that neither fixes a bug nor adds a feature
-- `test`: Adding missing tests or correcting existing ones
-- `chore`: Changes to the build process or tools
+<type>[optional scope]: <description>
+
+[optional body]
+
+[optional footer(s)]
+
+## 🔁 Common Commit Types
+
+- `feat`: A new feature  
+- `feat!`: A breaking feature change (triggers a **major version bump**)  
+- `fix`: A bug fix (triggers a **patch version bump**)  
+- `docs`: Documentation only changes  
+- `style`: Changes that do not affect code behavior (e.g., formatting, whitespace)  
+- `refactor`: Code changes that neither fix a bug nor add a feature  
+- `test`: Adding or correcting tests  
+- `chore`: Changes to tooling, dependencies, or the build process  
+- `ci`: Changes to CI configuration or scripts  
+
+---
+
+## 🆎 Examples
+
+### ✅ Good Commits
+
+- `feat: add new Modal component with accessibility support`
+- `fix(button): resolve hover state color issue`
+- `docs: add usage examples for Form components`
+- `feat!: redesign theming API`  
+
+
+### ❌ Bad Commits
+
+- `update stuff`
+- `fixed bug`
+- `added feature`
+- `WIP`
+- `asdf`
+
+---
+
+## 🔍 Optional Scopes
+
+Use component or area names as scopes:
+
+- `button`
+- `input`
+- `modal`
+- `theme`
+- `docs`
+- `build`
+
+**Examples:**
+
+- `feat(button): add loading state support`
+- `fix(input): handle empty string validation`
+- `refactor(theme): simplify dark mode switch logic`
+
 
 ## Component Architecture
 
