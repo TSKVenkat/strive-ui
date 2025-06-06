@@ -318,6 +318,12 @@ export const ProductCard = React.forwardRef<
       variant = 'default',
       css,
       children,
+      onDrag,
+      onDragStart,
+      onDragEnd,
+      draggable,
+      onAnimationStart: htmlOnAnimationStart,
+      onAnimationEnd: htmlOnAnimationEnd,
       ...rest
     },
     ref
@@ -355,7 +361,6 @@ export const ProductCard = React.forwardRef<
     
     return (
       <StyledProductCard
-        as={Component}
         ref={ref}
         $variant={variant}
         onClick={handleCardClick}
@@ -369,13 +374,13 @@ export const ProductCard = React.forwardRef<
           {badges && badges.length > 0 && (
             <BadgesContainer>
               {badges.map((badge, index) => (
-                <Badge key={index} variant={badge.variant || 'primary'}>
+                <Badge key={index} variant={badge.variant === 'primary' ? 'solid' : badge.variant === 'secondary' ? 'outline' : 'subtle'}>
                   {badge.text}
                 </Badge>
               ))}
               
               {originalPrice && discount > 0 && (
-                <Badge variant="error">-{discount}%</Badge>
+                <Badge variant="solid" color="error">-{discount}%</Badge>
               )}
             </BadgesContainer>
           )}
@@ -457,7 +462,7 @@ export const ProductCard = React.forwardRef<
               {showAddToCart && (
                 <Button
                   size="sm"
-                  variant={inStock ? 'primary' : 'disabled'}
+                  variant={inStock ? 'primary' : 'secondary'}
                   onClick={handleAddToCart}
                   disabled={!inStock}
                 >

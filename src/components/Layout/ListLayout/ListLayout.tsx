@@ -218,10 +218,10 @@ export const ListLayout = forwardRef<HTMLElement, ListLayoutProps>(
       return React.cloneElement(child, {
         style: {
           ...itemStyle,
-          ...child.props.style,
+          ...(child.props.style || {}),
         },
         className: `${itemClassName} ${child.props.className || ''}`,
-      });
+      } as any);
     });
 
     // Media queries for responsive props would be handled via CSS classes in a real implementation

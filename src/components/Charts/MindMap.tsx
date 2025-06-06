@@ -454,7 +454,7 @@ export const MindMap: React.FC<MindMapProps> = ({
     const svgHeight = maxY + 50;
     
     // Render nodes recursively
-    const renderNodes = (node: MindMapNode) => {
+    const renderNodes = (node: MindMapNode): React.ReactElement | null => {
       const position = positions.get(node.id);
       if (!position) return null;
       
@@ -534,8 +534,9 @@ export const MindMap: React.FC<MindMapProps> = ({
     };
     
     // Render nodes recursively
-    const renderAllNodes = (node: MindMapNode): React.ReactNode[] => {
-      const result = [renderNodes(node)];
+    const renderAllNodes = (node: MindMapNode): React.ReactElement[] => {
+      const nodeElement = renderNodes(node);
+      const result: React.ReactElement[] = nodeElement ? [nodeElement] : [];
       
       const isCollapsed = nodeStates.get(node.id)?.collapsed || false;
       

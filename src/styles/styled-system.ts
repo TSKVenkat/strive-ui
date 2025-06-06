@@ -58,6 +58,7 @@ const stylePropsMap: Record<keyof SystemStyleProps, string | string[]> = {
   borderColor: 'border-color',
   
   // Borders
+  border: 'border',
   borderRadius: 'border-radius',
   borderWidth: 'border-width',
   borderTopWidth: 'border-top-width',
@@ -103,10 +104,18 @@ const stylePropsMap: Record<keyof SystemStyleProps, string | string[]> = {
   gridColumnGap: 'grid-column-gap',
   gridRowGap: 'grid-row-gap',
   gridGap: 'grid-gap',
+  gap: 'gap',
   
   // Other
   cursor: 'cursor',
   visibility: 'visibility',
+  outline: 'outline',
+  
+  // Pseudo-class states (these will be handled specially)
+  _hover: '_hover',
+  _focus: '_focus', 
+  _active: '_active',
+  _disabled: '_disabled',
 };
 
 // Get theme value or use raw value

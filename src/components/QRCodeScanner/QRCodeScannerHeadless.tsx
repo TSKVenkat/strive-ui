@@ -1,6 +1,6 @@
 import React, { createContext, useContext, forwardRef } from 'react';
 import { useQRCodeScanner, UseQRCodeScannerReturn, QRCodeScannerOptions, QRCodeResult } from './useQRCodeScanner';
-import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../types/polymorphic';
+import { PolymorphicComponentPropsWithRef, PolymorphicRef, polymorphicForwardRef } from '../../types/polymorphic';
 
 // Context for the QRCodeScanner component
 interface QRCodeScannerContextValue extends UseQRCodeScannerReturn {}
@@ -93,10 +93,17 @@ export type ControlsProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Controls component
-const Controls = forwardRef<any, any>(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ControlsProps<C>,
-    ref: PolymorphicRef<C>
+const Controls = polymorphicForwardRef<'div', {
+  children: React.ReactNode | ((props: {
+    isScanning: boolean;
+    startScanning: () => void;
+    stopScanning: () => void;
+    clearResults: () => void;
+  }) => React.ReactNode);
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { isScanning, startScanning, stopScanning, clearResults } = useQRCodeScannerContext();
@@ -128,10 +135,15 @@ export type ResultProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Result component
-const Result = forwardRef<any, any>(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ResultProps<C>,
-    ref: PolymorphicRef<C>
+const Result = polymorphicForwardRef<'div', {
+  children: React.ReactNode | ((props: {
+    lastResult: QRCodeResult | null;
+    results: QRCodeResult[];
+  }) => React.ReactNode);
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { lastResult, results } = useQRCodeScannerContext();
@@ -162,10 +174,14 @@ export type ErrorProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Error component
-const ErrorComponent = forwardRef<any, any>(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ErrorProps<C>,
-    ref: PolymorphicRef<C>
+const ErrorComponent = polymorphicForwardRef<'div', {
+  children: React.ReactNode | ((props: {
+    error: Error;
+  }) => React.ReactNode);
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { error } = useQRCodeScannerContext();
@@ -200,10 +216,14 @@ export type OverlayProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Overlay component
-const Overlay = forwardRef<any, any>(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: OverlayProps<C>,
-    ref: PolymorphicRef<C>
+const Overlay = polymorphicForwardRef<'div', {
+  children: React.ReactNode | ((props: {
+    isScanning: boolean;
+  }) => React.ReactNode);
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { isScanning } = useQRCodeScannerContext();

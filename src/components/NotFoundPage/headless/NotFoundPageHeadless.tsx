@@ -4,7 +4,7 @@ import {
   UseNotFoundPageReturn, 
   NotFoundPageOptions 
 } from './useNotFoundPage';
-import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../../types/polymorphic';
+import { PolymorphicComponentPropsWithRef, PolymorphicRef, polymorphicForwardRef, assignDisplayName } from '../../../types/polymorphic';
 
 // Context for the NotFoundPage component
 interface NotFoundPageContextValue extends UseNotFoundPageReturn {}
@@ -57,10 +57,12 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
+const Container = polymorphicForwardRef<'div', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props }: PolymorphicComponentPropsWithRef<any, { children?: React.ReactNode }>,
+    ref: React.ForwardedRef<any>
   ) => {
     const Component = as || 'div';
     const { getContainerProps } = useNotFoundPageContext();
@@ -89,7 +91,7 @@ const Container = forwardRef(
   }
 );
 
-Container.displayName = 'NotFoundPageHeadless.Container';
+assignDisplayName(Container, 'NotFoundPageHeadless.Container');
 
 // Icon component props
 export type IconProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -103,10 +105,12 @@ export type IconProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Icon component
-const Icon = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: IconProps<C>,
-    ref: PolymorphicRef<C>
+const Icon = polymorphicForwardRef<'div', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props }: PolymorphicComponentPropsWithRef<any, { children?: React.ReactNode }>,
+    ref: React.ForwardedRef<any>
   ) => {
     const Component = as || 'div';
     const { icon } = useNotFoundPageContext();
@@ -127,7 +131,7 @@ const Icon = forwardRef(
   }
 );
 
-Icon.displayName = 'NotFoundPageHeadless.Icon';
+assignDisplayName(Icon, 'NotFoundPageHeadless.Icon');
 
 // Title component props
 export type TitleProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -141,10 +145,12 @@ export type TitleProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Title component
-const Title = forwardRef(
-  <C extends React.ElementType = 'h1'>(
-    { as, children, ...props }: TitleProps<C>,
-    ref: PolymorphicRef<C>
+const Title = polymorphicForwardRef<'h1', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props }: PolymorphicComponentPropsWithRef<any, { children?: React.ReactNode }>,
+    ref: React.ForwardedRef<any>
   ) => {
     const Component = as || 'h1';
     const { title } = useNotFoundPageContext();
@@ -166,7 +172,7 @@ const Title = forwardRef(
   }
 );
 
-Title.displayName = 'NotFoundPageHeadless.Title';
+assignDisplayName(Title, 'NotFoundPageHeadless.Title');
 
 // Description component props
 export type DescriptionProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -180,10 +186,12 @@ export type DescriptionProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // Description component
-const Description = forwardRef(
-  <C extends React.ElementType = 'p'>(
-    { as, children, ...props }: DescriptionProps<C>,
-    ref: PolymorphicRef<C>
+const Description = polymorphicForwardRef<'p', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props }: PolymorphicComponentPropsWithRef<any, { children?: React.ReactNode }>,
+    ref: React.ForwardedRef<any>
   ) => {
     const Component = as || 'p';
     const { description } = useNotFoundPageContext();
@@ -206,7 +214,7 @@ const Description = forwardRef(
   }
 );
 
-Description.displayName = 'NotFoundPageHeadless.Description';
+assignDisplayName(Description, 'NotFoundPageHeadless.Description');
 
 // Action component props
 export type ActionProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -220,10 +228,12 @@ export type ActionProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Action component
-const Action = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ActionProps<C>,
-    ref: PolymorphicRef<C>
+const Action = polymorphicForwardRef<'button', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props }: PolymorphicComponentPropsWithRef<any, { children?: React.ReactNode }>,
+    ref: React.ForwardedRef<any>
   ) => {
     const Component = as || 'button';
     const { actionText, getActionProps, showAction } = useNotFoundPageContext();
@@ -253,7 +263,7 @@ const Action = forwardRef(
   }
 );
 
-Action.displayName = 'NotFoundPageHeadless.Action';
+assignDisplayName(Action, 'NotFoundPageHeadless.Action');
 
 // Content component props
 export type ContentProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -267,10 +277,12 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
+const Content = polymorphicForwardRef<'div', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props }: PolymorphicComponentPropsWithRef<any, { children?: React.ReactNode }>,
+    ref: React.ForwardedRef<any>
   ) => {
     const Component = as || 'div';
     const { content } = useNotFoundPageContext();
@@ -294,7 +306,7 @@ const Content = forwardRef(
   }
 );
 
-Content.displayName = 'NotFoundPageHeadless.Content';
+assignDisplayName(Content, 'NotFoundPageHeadless.Content');
 
 // Search component props
 export type SearchProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -308,10 +320,12 @@ export type SearchProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Search component
-const Search = forwardRef(
-  <C extends React.ElementType = 'form'>(
-    { as, children, ...props }: SearchProps<C>,
-    ref: PolymorphicRef<C>
+const Search = polymorphicForwardRef<'form', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props }: PolymorphicComponentPropsWithRef<any, { children?: React.ReactNode }>,
+    ref: React.ForwardedRef<any>
   ) => {
     const Component = as || 'form';
     const { 
@@ -374,7 +388,7 @@ const Search = forwardRef(
   }
 );
 
-Search.displayName = 'NotFoundPageHeadless.Search';
+assignDisplayName(Search, 'NotFoundPageHeadless.Search');
 
 // Suggestions component props
 export type SuggestionsProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -388,10 +402,12 @@ export type SuggestionsProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // Suggestions component
-const Suggestions = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: SuggestionsProps<C>,
-    ref: PolymorphicRef<C>
+const Suggestions = polymorphicForwardRef<'div', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props }: PolymorphicComponentPropsWithRef<any, { children?: React.ReactNode }>,
+    ref: React.ForwardedRef<any>
   ) => {
     const Component = as || 'div';
     const { showSuggestions, suggestions } = useNotFoundPageContext();
@@ -441,7 +457,7 @@ const Suggestions = forwardRef(
   }
 );
 
-Suggestions.displayName = 'NotFoundPageHeadless.Suggestions';
+assignDisplayName(Suggestions, 'NotFoundPageHeadless.Suggestions');
 
 // Default component
 const Default = forwardRef<HTMLDivElement>(

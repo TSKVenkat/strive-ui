@@ -273,7 +273,7 @@ export function useEmptyState(options: EmptyStateOptions = {}): UseEmptyStateRet
     setIcon,
     setActionText,
     setOnAction,
-    setShowAction,
+    setShowAction: setShowActionButton,
     setContent,
     getDefaultTitle,
     getDefaultDescription,

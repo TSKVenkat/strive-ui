@@ -1,6 +1,6 @@
 import React, { forwardRef, createContext, useContext } from 'react';
-import { useSelect, UseSelectProps, UseSelectReturn } from './useSelect';
-import type { SelectOption, SelectGroup } from './useSelect';
+import { useSelect } from './useSelect';
+import type { UseSelectProps, UseSelectReturn, SelectOption as SelectOptionType, SelectGroup as SelectGroupType } from './useSelect';
 import { PolymorphicComponentPropsWithRef } from '../../types/polymorphic';
 
 /**
@@ -26,7 +26,7 @@ export type SelectTriggerProps<C extends React.ElementType = 'button'> = Polymor
   {
     /** Children to render inside the trigger */
     children?: React.ReactNode | ((props: {
-      selectedOption: SelectOption | null;
+      selectedOption: SelectOptionType | null;
       isOpen: boolean;
       placeholder: string;
     }) => React.ReactNode);
@@ -74,10 +74,10 @@ export type SelectOptionProps<C extends React.ElementType = 'div'> = Polymorphic
   C,
   {
     /** The option data */
-    option: SelectOption;
+    option: SelectOptionType;
     /** Children to render inside the option */
     children?: React.ReactNode | ((props: {
-      option: SelectOption;
+      option: SelectOptionType;
       isSelected: boolean;
       isHighlighted: boolean;
       isDisabled: boolean;

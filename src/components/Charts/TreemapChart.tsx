@@ -435,7 +435,7 @@ export const TreemapChart: React.FC<TreemapChartProps> = ({
               return (
                 <g key={`${item.data.name}-${i}`}>
                   <TreemapRect
-                    $interactive={enableDrillDown && hasChildren}
+                    $interactive={!!(enableDrillDown && hasChildren)}
                     x={item.x}
                     y={item.y}
                     width={item.width}

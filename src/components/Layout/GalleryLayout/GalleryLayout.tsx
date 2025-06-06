@@ -216,7 +216,7 @@ export const GalleryLayout = forwardRef<HTMLDivElement, GalleryLayoutProps>(
               style={itemStyle}
               onClick={() => openLightbox(index)}
             >
-              {React.cloneElement(child, {
+              {React.cloneElement(child as React.ReactElement<any>, {
                 style: {
                   position: aspectRatio !== 'auto' ? 'absolute' : 'relative',
                   top: 0,
@@ -224,7 +224,7 @@ export const GalleryLayout = forwardRef<HTMLDivElement, GalleryLayoutProps>(
                   width: '100%',
                   height: aspectRatio !== 'auto' ? '100%' : 'auto',
                   objectFit: 'cover',
-                  ...child.props.style,
+                  ...(child.props.style || {}),
                 },
                 className: `strive-gallery-image ${child.props.className || ''}`,
               })}
@@ -263,11 +263,11 @@ export const GalleryLayout = forwardRef<HTMLDivElement, GalleryLayoutProps>(
                   style={{ overflow: 'hidden' }}
                   onClick={() => openLightbox(globalIndex)}
                 >
-                  {React.cloneElement(item, {
+                  {React.cloneElement(item as React.ReactElement<any>, {
                     style: {
                       width: '100%',
                       display: 'block',
-                      ...item.props.style,
+                      ...(item.props.style || {}),
                     },
                     className: `strive-gallery-image ${item.props.className || ''}`,
                   })}
@@ -288,9 +288,6 @@ export const GalleryLayout = forwardRef<HTMLDivElement, GalleryLayoutProps>(
           WebkitOverflowScrolling: 'touch',
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
-          '&::-webkit-scrollbar': {
-            display: 'none',
-          },
         };
         
         processedChildren = React.Children.map(children, (child, index) => {
@@ -313,7 +310,7 @@ export const GalleryLayout = forwardRef<HTMLDivElement, GalleryLayoutProps>(
               style={itemStyle}
               onClick={() => openLightbox(index)}
             >
-              {React.cloneElement(child, {
+              {React.cloneElement(child as React.ReactElement<any>, {
                 style: {
                   position: aspectRatio !== 'auto' ? 'absolute' : 'relative',
                   top: 0,
@@ -321,7 +318,7 @@ export const GalleryLayout = forwardRef<HTMLDivElement, GalleryLayoutProps>(
                   width: '100%',
                   height: aspectRatio !== 'auto' ? '100%' : 'auto',
                   objectFit: 'cover',
-                  ...child.props.style,
+                  ...(child.props.style || {}),
                 },
                 className: `strive-gallery-image ${child.props.className || ''}`,
               })}
@@ -354,9 +351,6 @@ export const GalleryLayout = forwardRef<HTMLDivElement, GalleryLayoutProps>(
           WebkitOverflowScrolling: 'touch',
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
-          '&::-webkit-scrollbar': {
-            display: 'none',
-          },
         };
         
         processedChildren = (
@@ -365,7 +359,7 @@ export const GalleryLayout = forwardRef<HTMLDivElement, GalleryLayoutProps>(
               {React.Children.map(children, (child, index) => {
                 if (!React.isValidElement(child) || index !== 0) return null;
                 
-                return React.cloneElement(child, {
+                return React.cloneElement(child as React.ReactElement<any>, {
                   style: {
                     position: aspectRatio !== 'auto' ? 'absolute' : 'relative',
                     top: 0,
@@ -373,7 +367,7 @@ export const GalleryLayout = forwardRef<HTMLDivElement, GalleryLayoutProps>(
                     width: '100%',
                     height: aspectRatio !== 'auto' ? '100%' : 'auto',
                     objectFit: 'cover',
-                    ...child.props.style,
+                    ...(child.props.style || {}),
                   },
                   className: `strive-gallery-image ${child.props.className || ''}`,
                   onClick: () => openLightbox(0),
@@ -398,12 +392,12 @@ export const GalleryLayout = forwardRef<HTMLDivElement, GalleryLayoutProps>(
                     style={thumbnailStyle}
                     onClick={() => openLightbox(index)}
                   >
-                    {React.cloneElement(child, {
+                    {React.cloneElement(child as React.ReactElement<any>, {
                       style: {
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover',
-                        ...child.props.style,
+                        ...(child.props.style || {}),
                       },
                       className: `strive-gallery-thumbnail-image ${child.props.className || ''}`,
                     })}
@@ -453,12 +447,12 @@ export const GalleryLayout = forwardRef<HTMLDivElement, GalleryLayoutProps>(
               style={itemStyle}
               onClick={() => openLightbox(index)}
             >
-              {React.cloneElement(child, {
+              {React.cloneElement(child as React.ReactElement<any>, {
                 style: {
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover',
-                  ...child.props.style,
+                  ...(child.props.style || {}),
                 },
                 className: `strive-gallery-image ${child.props.className || ''}`,
               })}
@@ -514,12 +508,12 @@ export const GalleryLayout = forwardRef<HTMLDivElement, GalleryLayoutProps>(
           {React.Children.map(children, (child, index) => {
             if (!React.isValidElement(child) || index !== activeIndex) return null;
             
-            return React.cloneElement(child, {
+            return React.cloneElement(child as React.ReactElement<any>, {
               style: {
                 maxWidth: '100%',
                 maxHeight: '90vh',
                 objectFit: 'contain',
-                ...child.props.style,
+                ...(child.props.style || {}),
               },
               className: `strive-gallery-lightbox-image ${child.props.className || ''}`,
             });

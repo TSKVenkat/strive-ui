@@ -1,6 +1,7 @@
 import React, { createContext, useContext, forwardRef, useCallback } from 'react';
-import { useSignaturePad, UseSignaturePadReturn, Stroke } from './useSignaturePad';
-import { mergeRefs } from 'react-merge-refs';
+import { useSignaturePad } from './useSignaturePad';
+import type { UseSignaturePadReturn, Stroke } from './useSignaturePad';
+import { mergeRefs } from '../../utils/mergeRefs';
 
 // Define the props for the SignaturePad component
 export interface SignaturePadProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {

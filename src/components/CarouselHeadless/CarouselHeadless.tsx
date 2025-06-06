@@ -14,7 +14,7 @@ export const useCarouselContext = () => {
 };
 
 // Types for the compound components
-export interface CarouselRootProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>, UseCarouselOptions {
+export interface CarouselRootProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'draggable'>, UseCarouselOptions {
   /**
    * The component used for the root node
    * @default 'div'
@@ -114,7 +114,7 @@ const Root = forwardRef<HTMLDivElement, CarouselRootProps>(
       slidesToShow,
       slidesToScroll,
       centerMode,
-      draggable,
+      draggable: Boolean(draggable),
       swipeThreshold,
       onChange,
       keyboardNavigation,

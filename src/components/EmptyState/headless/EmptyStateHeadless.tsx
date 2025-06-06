@@ -5,7 +5,7 @@ import {
   EmptyStateOptions,
   EmptyStateType
 } from './useEmptyState';
-import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../../types/polymorphic';
+import { PolymorphicComponentPropsWithRef, PolymorphicRef, polymorphicForwardRef } from '../../../types/polymorphic';
 
 // Context for the EmptyState component
 interface EmptyStateContextValue extends UseEmptyStateReturn {}
@@ -16,7 +16,7 @@ const EmptyStateContext = createContext<EmptyStateContextValue | null>(null);
 export function useEmptyStateContext() {
   const context = useContext(EmptyStateContext);
   if (!context) {
-    throw new Error('useEmptyStateContext must be used within a EmptyStateHeadless.Root component');
+    throw new (globalThis as any).Error('useEmptyStateContext must be used within a EmptyStateHeadless.Root component');
   }
   return context;
 }
@@ -62,10 +62,12 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
+const Container = polymorphicForwardRef<'div', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { getContainerProps } = useEmptyStateContext();
@@ -77,6 +79,8 @@ const Container = forwardRef(
         {...containerProps} 
         {...props} 
         ref={ref}
+        role="status"
+        aria-live="polite"
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -107,10 +111,12 @@ export type IconProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Icon component
-const Icon = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: IconProps<C>,
-    ref: PolymorphicRef<C>
+const Icon = polymorphicForwardRef<'div', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { icon, type } = useEmptyStateContext();
@@ -164,10 +170,12 @@ export type TitleProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Title component
-const Title = forwardRef(
-  <C extends React.ElementType = 'h3'>(
-    { as, children, ...props }: TitleProps<C>,
-    ref: PolymorphicRef<C>
+const Title = polymorphicForwardRef<'h3', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'h3';
     const { title } = useEmptyStateContext();
@@ -203,10 +211,12 @@ export type DescriptionProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // Description component
-const Description = forwardRef(
-  <C extends React.ElementType = 'p'>(
-    { as, children, ...props }: DescriptionProps<C>,
-    ref: PolymorphicRef<C>
+const Description = polymorphicForwardRef<'p', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'p';
     const { description } = useEmptyStateContext();
@@ -242,10 +252,12 @@ export type ActionProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Action component
-const Action = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ActionProps<C>,
-    ref: PolymorphicRef<C>
+const Action = polymorphicForwardRef<'button', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'button';
     const { actionText, getActionProps, showAction } = useEmptyStateContext();
@@ -289,10 +301,12 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
+const Content = polymorphicForwardRef<'div', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { content } = useEmptyStateContext();

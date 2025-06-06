@@ -1,8 +1,9 @@
 import React, { createContext, useContext, forwardRef } from 'react';
-import { usePinInput, UsePinInputReturn } from './usePinInput';
+import { usePinInput } from './usePinInput';
+import type { UsePinInputReturn } from './usePinInput';
 
 // Define the props for the PinInput component
-export interface PinInputProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface PinInputProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onFocus' | 'onBlur' | 'onKeyDown' | 'onChange'> {
   /**
    * Default value (uncontrolled)
    */
@@ -181,11 +182,11 @@ export const PinInputRoot = forwardRef<HTMLDivElement, PinInputProps>(
     });
 
     // Get pin input props
-    const pinInputProps = pinInput.getPinInputProps({ ...props, ref });
+    const pinInputProps = pinInput.getPinInputProps(props);
 
     return (
       <PinInputContext.Provider value={pinInput}>
-        <div {...pinInputProps}>
+        <div {...pinInputProps} ref={ref}>
           {children || (
             <>
               {Array.from({ length }).map((_, index) => (
@@ -214,14 +215,14 @@ export interface PinInputFieldProps extends React.InputHTMLAttributes<HTMLInputE
 export const PinInputField = forwardRef<HTMLInputElement, PinInputFieldProps>(
   ({ index, ...props }, ref) => {
     const { getInputProps, type, mask } = usePinInputContext();
-    const inputProps = getInputProps(index, { ...props, ref });
+    const inputProps = getInputProps(index, props);
 
     // If type is password and mask is provided, display the mask character instead of the actual value
     if (type === 'password' && mask && inputProps.value) {
       inputProps.value = mask;
     }
 
-    return <input {...inputProps} />;
+    return <input {...inputProps} ref={ref} />;
   }
 );
 

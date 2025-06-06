@@ -7,7 +7,7 @@ import { PolymorphicComponentPropsWithRef } from '../../types/polymorphic';
  */
 export type BreadcrumbsHeadlessProps<C extends React.ElementType = 'nav'> = PolymorphicComponentPropsWithRef<
   C,
-  Omit<UseBreadcrumbsProps, 'items'> & {
+  {
     /** Children to render inside the breadcrumbs */
     children?: React.ReactNode;
     /** Custom class name */
@@ -16,6 +16,16 @@ export type BreadcrumbsHeadlessProps<C extends React.ElementType = 'nav'> = Poly
     style?: React.CSSProperties;
     /** Array of breadcrumb items */
     items?: BreadcrumbItem[];
+    /** Callback when a breadcrumb item is clicked */
+    onItemClick?: (item: BreadcrumbItem) => void;
+    /** Maximum number of items to display before collapsing */
+    maxItems?: number;
+    /** Number of items to show at the beginning when collapsed */
+    itemsBeforeCollapse?: number;
+    /** Number of items to show at the end when collapsed */
+    itemsAfterCollapse?: number;
+    /** Custom separator between breadcrumb items */
+    separator?: React.ReactNode;
   }
 >;
 
@@ -147,7 +157,7 @@ export const BreadcrumbsHeadless = forwardRef(function BreadcrumbsHeadless<C ext
     children, 
     className, 
     style, 
-    items = [],
+    items,
     onItemClick,
     maxItems,
     itemsBeforeCollapse,
@@ -157,8 +167,9 @@ export const BreadcrumbsHeadless = forwardRef(function BreadcrumbsHeadless<C ext
   }: Omit<BreadcrumbsHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>
 ) {
+  const resolvedItems = items || ([] as BreadcrumbItem[]);
   const breadcrumbsState = useBreadcrumbs({
-    items,
+    items: resolvedItems,
     onItemClick,
     maxItems,
     itemsBeforeCollapse,

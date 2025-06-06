@@ -148,7 +148,7 @@ type BottomNavigationBadgeHeadlessComponent = <C extends React.ElementType = 'di
  * A headless BottomNavigation component that provides all the functionality without any styling.
  * This component can be used as a base for creating custom styled bottom navigation implementations.
  */
-export const BottomNavigationHeadless = forwardRef(function BottomNavigationHeadless<C extends React.ElementType = 'nav'>(
+export const BottomNavigationHeadless = forwardRef<any, any>(function BottomNavigationHeadless(
   { 
     as, 
     children, 
@@ -166,7 +166,7 @@ export const BottomNavigationHeadless = forwardRef(function BottomNavigationHead
     scrollThreshold,
     ariaLabel = 'Bottom navigation',
     ...props 
-  }: Omit<BottomNavigationHeadlessProps<C>, 'ref'>,
+  }: any,
   ref: React.Ref<any>
 ) {
   const bottomNavigationState = useBottomNavigation({

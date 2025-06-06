@@ -245,7 +245,7 @@ export const DashboardItem = forwardRef<HTMLDivElement, DashboardItemProps>(
 
 DashboardItem.displayName = 'DashboardItem';
 
-export interface DashboardHeaderProps extends DashboardItemProps {
+export interface DashboardHeaderProps extends Omit<DashboardItemProps, 'title'> {
   /**
    * Title to display in the header
    */

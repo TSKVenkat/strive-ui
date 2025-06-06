@@ -583,7 +583,7 @@ const Item = forwardRef<HTMLDivElement, NewsFeedItemProps>(
               
               <ItemMeta>
                 {item.source && <ItemSource>{item.source}</ItemSource>}
-                {item.date && <ItemDate>{item.date}</ItemDate>}
+                {item.date && <ItemDate>{typeof item.date === 'string' ? item.date : item.date.toISOString()}</ItemDate>}
                 
                 {item.categories && item.categories.length > 0 && (
                   <ItemTags>
@@ -788,7 +788,7 @@ const ItemTag = forwardRef<HTMLSpanElement, NewsFeedItemTagProps>(
   ({ as: Component = 'span', tag, className = '', ...props }, ref) => {
     const { addCategory } = useNewsFeedContext();
     
-    const handleClick = (e: React.MouseEvent) => {
+    const handleClick = (e: React.MouseEvent<HTMLSpanElement>) => {
       e.stopPropagation();
       addCategory(tag);
       
@@ -834,7 +834,7 @@ const ItemAction = forwardRef<HTMLButtonElement, NewsFeedItemActionProps>(
   ({ as: Component = 'button', action, item, children, className = '', ...props }, ref) => {
     const { toggleLike, toggleBookmark, shareItem, commentItem } = useNewsFeedContext();
     
-    const handleClick = (e: React.MouseEvent) => {
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
       
       switch (action) {

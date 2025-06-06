@@ -1,8 +1,8 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, createContext, useContext, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { DragAndDropHeadless } from './DragAndDropHeadless';
 import { DragData, DragPosition, DragOperation } from './useDragAndDrop';
-import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../types/polymorphic';
+import { PolymorphicComponentPropsWithRef, PolymorphicRef, polymorphicForwardRef } from '../../types/polymorphic';
 
 // Styled components
 const StyledProvider = styled(DragAndDropHeadless.Provider)`
@@ -21,6 +21,10 @@ const StyledDraggable = styled(DragAndDropHeadless.Draggable)<{ $isDragging: boo
       transform: scale(1.02);
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     `}
+`;
+
+const StyledDragContent = styled.div<{ $isDragging: boolean }>`
+  /* Additional styling for drag content if needed */
 `;
 
 const StyledDroppable = styled(DragAndDropHeadless.Droppable)<{ $isOver: boolean; $canDrop: boolean }>`
@@ -42,6 +46,10 @@ const StyledDroppable = styled(DragAndDropHeadless.Droppable)<{ $isOver: boolean
       background-color: ${theme.colors.error[50]};
       border-color: ${theme.colors.error[300]};
     `}
+`;
+
+const StyledDropContent = styled.div<{ $isOver: boolean; $canDrop: boolean }>`
+  /* Additional styling for drop content if needed */
 `;
 
 const StyledDragLayer = styled(DragAndDropHeadless.DragLayer)`
@@ -105,19 +113,23 @@ export type ProviderProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Provider component
-const Provider = forwardRef(
-  <C extends React.ElementType = 'div'>(
+const Provider = polymorphicForwardRef<'div', {
+  children: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+}>(
+  (
     {
       as,
       children,
       className,
       style,
       ...props
-    }: ProviderProps<C>,
-    ref: PolymorphicRef<C>
+    },
+    ref
   ) => {
     return (
-      <StyledProvider as={as} ref={ref} className={className} style={style} {...props}>
+      <StyledProvider as={as as any} ref={ref} className={className} style={style} {...(props as any)}>
         {children}
       </StyledProvider>
     );
@@ -172,8 +184,19 @@ export type DraggableProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Draggable component
-const Draggable = forwardRef(
-  <C extends React.ElementType = 'div'>(
+const Draggable = polymorphicForwardRef<'div', {
+  data: DragData;
+  disabled?: boolean;
+  allowedOperations?: DragOperation[];
+  onDragStart?: (data: DragData, position: DragPosition) => void;
+  onDragMove?: (data: DragData, position: DragPosition) => void;
+  onDragEnd?: (data: DragData, position: DragPosition, operation: DragOperation) => void;
+  onDragCancel?: (data: DragData) => void;
+  children: React.ReactNode | ((props: { isDragging: boolean; position: DragPosition }) => React.ReactNode);
+  className?: string;
+  style?: React.CSSProperties;
+}>(
+  (
     {
       as,
       data,
@@ -187,12 +210,12 @@ const Draggable = forwardRef(
       className,
       style,
       ...props
-    }: DraggableProps<C>,
-    ref: PolymorphicRef<C>
+    },
+    ref
   ) => {
     return (
       <StyledDraggable
-        as={as}
+        as={as as any}
         ref={ref}
         data={data}
         disabled={disabled}
@@ -203,12 +226,12 @@ const Draggable = forwardRef(
         onDragCancel={onDragCancel}
         className={className}
         style={style}
-        {...props}
+        {...(props as any)}
       >
         {({ isDragging, position }) => (
-          <div $isDragging={isDragging}>
+          <StyledDragContent $isDragging={isDragging}>
             {typeof children === 'function' ? children({ isDragging, position }) : children}
-          </div>
+          </StyledDragContent>
         )}
       </StyledDraggable>
     );
@@ -259,8 +282,18 @@ export type DroppableProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Droppable component
-const Droppable = forwardRef(
-  <C extends React.ElementType = 'div'>(
+const Droppable = polymorphicForwardRef<'div', {
+  accept: string | string[];
+  disabled?: boolean;
+  onDragOver?: (data: DragData, position: DragPosition) => void;
+  onDragLeave?: (data: DragData) => void;
+  onDrop?: (data: DragData, position: DragPosition, operation: DragOperation) => void;
+  canDrop?: (data: DragData) => boolean;
+  children: React.ReactNode | ((props: { isOver: boolean; canDrop: boolean; dragData: DragData | null }) => React.ReactNode);
+  className?: string;
+  style?: React.CSSProperties;
+}>(
+  (
     {
       as,
       accept,
@@ -273,12 +306,12 @@ const Droppable = forwardRef(
       className,
       style,
       ...props
-    }: DroppableProps<C>,
-    ref: PolymorphicRef<C>
+    },
+    ref
   ) => {
     return (
       <StyledDroppable
-        as={as}
+        as={as as any}
         ref={ref}
         accept={accept}
         disabled={disabled}
@@ -288,12 +321,12 @@ const Droppable = forwardRef(
         canDrop={canDrop}
         className={className}
         style={style}
-        {...props}
+        {...(props as any)}
       >
-        {({ isOver, canDrop: canDropHere, dragData }) => (
-          <div $isOver={isOver} $canDrop={canDropHere}>
-            {typeof children === 'function' ? children({ isOver, canDrop: canDropHere, dragData }) : children}
-          </div>
+        {({ isOver, canDrop: canDropState, dragData }) => (
+          <StyledDropContent $isOver={isOver} $canDrop={canDropState}>
+            {typeof children === 'function' ? children({ isOver, canDrop: canDropState, dragData }) : children}
+          </StyledDropContent>
         )}
       </StyledDroppable>
     );

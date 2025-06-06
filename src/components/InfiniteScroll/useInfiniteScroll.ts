@@ -68,10 +68,10 @@ export interface UseInfiniteScrollReturn {
   /**
    * Get props for the sentinel element
    */
-  getSentinelProps: <T extends HTMLElement = HTMLDivElement>(props?: React.HTMLProps<T>) => {
-    ref: React.RefObject<HTMLElement>;
+  getSentinelProps: <T extends HTMLElement = HTMLDivElement>(props?: React.HTMLProps<T>) => React.HTMLProps<T> & {
+    ref: React.RefObject<T>;
     'aria-hidden': boolean;
-    style?: React.CSSProperties;
+    style: React.CSSProperties;
   };
   /**
    * Get props for the loading indicator element
@@ -232,7 +232,7 @@ export function useInfiniteScroll({
       style: {
         height: '1px',
         width: '100%',
-        visibility: 'hidden',
+        visibility: 'hidden' as const,
         ...props.style,
       },
     };

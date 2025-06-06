@@ -201,8 +201,8 @@ export const BoxPlotChart: React.FC<BoxPlotChartProps> = ({
   const boxPlotData: BoxPlotDataPoint[] = data.series[0].data.map((value, index) => {
     if (typeof value === 'object' && 'min' in value && 'q1' in value && 'median' in value && 'q3' in value && 'max' in value) {
       return {
-        label: data.labels[index] || `Item ${index + 1}`,
-        ...value as BoxPlotDataPoint
+        ...value as BoxPlotDataPoint,
+        label: (value as any).label || data.labels[index] || `Item ${index + 1}`
       };
     }
     

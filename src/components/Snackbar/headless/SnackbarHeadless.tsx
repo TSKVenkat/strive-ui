@@ -221,10 +221,7 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 
 // Content component
 const Content = forwardRef<any, any>(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     
     return (
@@ -253,10 +250,7 @@ export type ActionProps<C extends React.ElementType> = PolymorphicComponentProps
 
 // Action component
 const Action = forwardRef<any, any>(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ActionProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getActionButtonProps, hasAction } = useSnackbarContext();
     

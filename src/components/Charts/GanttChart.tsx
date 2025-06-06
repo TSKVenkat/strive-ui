@@ -519,7 +519,7 @@ export const GanttChart: React.FC<GanttChartProps> = ({
     
     // Use type for consistent coloring if available
     if (task.type) {
-      const typeIndex = [...new Set(tasks.map(t => t.type))].indexOf(task.type);
+      const typeIndex = Array.from(new Set(tasks.map(t => t.type))).indexOf(task.type);
       return colors[typeIndex % colors.length];
     }
     

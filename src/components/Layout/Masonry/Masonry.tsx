@@ -163,11 +163,13 @@ export const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
           if (ref) {
             if (typeof ref === 'function') {
               ref(node);
-            } else {
-              ref.current = node;
+            } else if (ref && 'current' in ref) {
+              (ref as React.MutableRefObject<any>).current = node;
             }
           }
-          containerRef.current = node;
+          if (containerRef && 'current' in containerRef) {
+            (containerRef as React.MutableRefObject<any>).current = node;
+          }
         }}
         className={`strive-masonry ${className}`}
         style={containerStyle}
@@ -201,3 +203,4 @@ export const Masonry = forwardRef<HTMLDivElement, MasonryProps>(
 );
 
 Masonry.displayName = 'Masonry';
+

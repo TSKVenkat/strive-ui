@@ -217,6 +217,11 @@ export interface UseCarouselReturn {
    * Whether the carousel is in autoplay mode
    */
   isAutoPlaying: boolean;
+  
+  /**
+   * The number of items to scroll at once
+   */
+  slidesToScroll: number;
 }
 
 /**
@@ -534,6 +539,7 @@ export function useCarousel(options: UseCarouselOptions): UseCarouselReturn {
     pageCount,
     isDragging,
     isAutoPlaying,
+    slidesToScroll,
   };
 }
 

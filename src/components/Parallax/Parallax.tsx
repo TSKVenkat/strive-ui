@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, EasingFunction } from 'framer-motion';
 
 export interface ParallaxProps {
   /** The content to display with parallax effect */
@@ -18,7 +18,7 @@ export interface ParallaxProps {
   /** Whether to use the viewport as the scroll container */
   useViewport?: boolean;
   /** Easing function for the parallax effect */
-  easing?: string;
+  easing?: EasingFunction | string;
   /** Optional style overrides for the container */
   style?: React.CSSProperties;
 }
@@ -44,7 +44,7 @@ export const Parallax = ({
   zIndex,
   className,
   useViewport = true,
-  easing = 'linear',
+  easing,
   style,
 }: ParallaxProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -85,7 +85,7 @@ export const Parallax = ({
     direction === 'vertical' ? 
       [speed * -100, speed * 100] : 
       [0, 0],
-    { ease: easing }
+    easing ? { ease: easing as EasingFunction } : undefined
   );
   
   const x = useTransform(
@@ -94,7 +94,7 @@ export const Parallax = ({
     direction === 'horizontal' ? 
       [speed * -100, speed * 100] : 
       [0, 0],
-    { ease: easing }
+    easing ? { ease: easing as EasingFunction } : undefined
   );
   
   // If parallax is disabled, just render children

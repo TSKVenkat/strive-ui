@@ -105,8 +105,8 @@ export interface UsePopoverReturn {
   /**
    * Get props for the popover trigger
    */
-  getTriggerProps: <T extends HTMLElement = HTMLElement>() => {
-    ref: React.RefObject<T>;
+  getTriggerProps: () => {
+    ref: React.RefObject<HTMLElement>;
     onClick: (e: React.MouseEvent) => void;
     'aria-expanded': boolean;
     'aria-haspopup': boolean;
@@ -114,8 +114,8 @@ export interface UsePopoverReturn {
   /**
    * Get props for the popover content
    */
-  getContentProps: <T extends HTMLElement = HTMLElement>() => {
-    ref: React.RefObject<T>;
+  getContentProps: () => {
+    ref: React.RefObject<HTMLElement>;
     style: React.CSSProperties;
     role: string;
     tabIndex: number;
@@ -125,8 +125,8 @@ export interface UsePopoverReturn {
   /**
    * Get props for the popover arrow
    */
-  getArrowProps: <T extends HTMLElement = HTMLElement>() => {
-    ref: React.RefObject<T>;
+  getArrowProps: () => {
+    ref: React.RefObject<HTMLElement>;
     style: React.CSSProperties;
   };
   /**
@@ -454,9 +454,9 @@ export function usePopover(options: PopoverOptions = {}): UsePopoverReturn {
     return {
       ref: contentRef,
       style: {
-        position: 'absolute',
+        position: 'absolute' as const,
         zIndex: 1000,
-        visibility: isOpen ? 'visible' : 'hidden',
+        visibility: isOpen ? 'visible' as const : 'hidden' as const,
         opacity: isOpen ? 1 : 0,
       },
       role: 'dialog',
@@ -475,11 +475,11 @@ export function usePopover(options: PopoverOptions = {}): UsePopoverReturn {
     return {
       ref: arrowRef,
       style: {
-        position: 'absolute',
+        position: 'absolute' as const,
         width: `${arrowSize * 2}px`,
         height: `${arrowSize * 2}px`,
         background: 'inherit',
-        visibility: isOpen && showArrow ? 'visible' : 'hidden',
+        visibility: isOpen && showArrow ? 'visible' as const : 'hidden' as const,
       },
     };
   }, [isOpen, showArrow, arrowSize]);

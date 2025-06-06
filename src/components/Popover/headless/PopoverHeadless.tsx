@@ -1,7 +1,7 @@
 import React, { createContext, useContext, forwardRef } from 'react';
 import { createPortal } from 'react-dom';
 import { usePopover, UsePopoverReturn, PopoverOptions, PopoverPlacement } from './usePopover';
-import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../../types/polymorphic';
+import { PolymorphicComponentPropsWithRef, PolymorphicRef, polymorphicForwardRef, assignDisplayName } from '../../../types/polymorphic';
 
 // Context for the Popover component
 interface PopoverContextValue extends UsePopoverReturn {}
@@ -54,10 +54,12 @@ export type TriggerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Trigger component
-const Trigger = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: TriggerProps<C>,
-    ref: PolymorphicRef<C>
+const Trigger = polymorphicForwardRef<'button', {
+  children: React.ReactNode;
+}>(
+  (
+    { as, children, ...props }: PolymorphicComponentPropsWithRef<any, { children: React.ReactNode }>,
+    ref: React.ForwardedRef<any>
   ) => {
     const Component = as || 'button';
     const { getTriggerProps } = usePopoverContext();
@@ -76,7 +78,7 @@ const Trigger = forwardRef(
   }
 );
 
-Trigger.displayName = 'PopoverHeadless.Trigger';
+assignDisplayName(Trigger, 'PopoverHeadless.Trigger');
 
 // Portal component props
 export type PortalProps = {
@@ -153,10 +155,12 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
+const Content = polymorphicForwardRef<'div', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props }: PolymorphicComponentPropsWithRef<any, { children?: React.ReactNode }>,
+    ref: React.ForwardedRef<any>
   ) => {
     const Component = as || 'div';
     const { getContentProps, isOpen } = usePopoverContext();
@@ -183,7 +187,7 @@ const Content = forwardRef(
   }
 );
 
-Content.displayName = 'PopoverHeadless.Content';
+assignDisplayName(Content, 'PopoverHeadless.Content');
 
 // Arrow component props
 export type ArrowProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -197,10 +201,12 @@ export type ArrowProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Arrow component
-const Arrow = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ArrowProps<C>,
-    ref: PolymorphicRef<C>
+const Arrow = polymorphicForwardRef<'div', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props }: PolymorphicComponentPropsWithRef<any, { children?: React.ReactNode }>,
+    ref: React.ForwardedRef<any>
   ) => {
     const Component = as || 'div';
     const { getArrowProps, isOpen } = usePopoverContext();
@@ -227,7 +233,7 @@ const Arrow = forwardRef(
   }
 );
 
-Arrow.displayName = 'PopoverHeadless.Arrow';
+assignDisplayName(Arrow, 'PopoverHeadless.Arrow');
 
 // Close component props
 export type CloseProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -241,10 +247,12 @@ export type CloseProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Close component
-const Close = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: CloseProps<C>,
-    ref: PolymorphicRef<C>
+const Close = polymorphicForwardRef<'button', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props }: PolymorphicComponentPropsWithRef<any, { children?: React.ReactNode }>,
+    ref: React.ForwardedRef<any>
   ) => {
     const Component = as || 'button';
     const { getCloseButtonProps } = usePopoverContext();
@@ -263,7 +271,7 @@ const Close = forwardRef(
   }
 );
 
-Close.displayName = 'PopoverHeadless.Close';
+assignDisplayName(Close, 'PopoverHeadless.Close');
 
 // Header component props
 export type HeaderProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -277,10 +285,12 @@ export type HeaderProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Header component
-const Header = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: HeaderProps<C>,
-    ref: PolymorphicRef<C>
+const Header = polymorphicForwardRef<'div', {
+  children: React.ReactNode;
+}>(
+  (
+    { as, children, ...props }: PolymorphicComponentPropsWithRef<any, { children: React.ReactNode }>,
+    ref: React.ForwardedRef<any>
   ) => {
     const Component = as || 'div';
     
@@ -295,7 +305,7 @@ const Header = forwardRef(
   }
 );
 
-Header.displayName = 'PopoverHeadless.Header';
+assignDisplayName(Header, 'PopoverHeadless.Header');
 
 // Body component props
 export type BodyProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -309,10 +319,12 @@ export type BodyProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Body component
-const Body = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: BodyProps<C>,
-    ref: PolymorphicRef<C>
+const Body = polymorphicForwardRef<'div', {
+  children: React.ReactNode;
+}>(
+  (
+    { as, children, ...props }: PolymorphicComponentPropsWithRef<any, { children: React.ReactNode }>,
+    ref: React.ForwardedRef<any>
   ) => {
     const Component = as || 'div';
     
@@ -327,7 +339,7 @@ const Body = forwardRef(
   }
 );
 
-Body.displayName = 'PopoverHeadless.Body';
+assignDisplayName(Body, 'PopoverHeadless.Body');
 
 // Footer component props
 export type FooterProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -341,10 +353,12 @@ export type FooterProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Footer component
-const Footer = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: FooterProps<C>,
-    ref: PolymorphicRef<C>
+const Footer = polymorphicForwardRef<'div', {
+  children: React.ReactNode;
+}>(
+  (
+    { as, children, ...props }: PolymorphicComponentPropsWithRef<any, { children: React.ReactNode }>,
+    ref: React.ForwardedRef<any>
   ) => {
     const Component = as || 'div';
     
@@ -359,7 +373,7 @@ const Footer = forwardRef(
   }
 );
 
-Footer.displayName = 'PopoverHeadless.Footer';
+assignDisplayName(Footer, 'PopoverHeadless.Footer');
 
 // Export all components
 export const PopoverHeadless = {

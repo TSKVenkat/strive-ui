@@ -38,22 +38,21 @@ export const Basic = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = (values: Record<string, any>) => {
     setIsSubmitting(true);
     setIsSubmitted(true);
     
     // Validate form
     const newErrors: Record<string, string> = {};
-    if (!formState.email) {
+    if (!values.email) {
       newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formState.email)) {
+    } else if (!/\S+@\S+\.\S+/.test(values.email)) {
       newErrors.email = 'Email is invalid';
     }
     
-    if (!formState.password) {
+    if (!values.password) {
       newErrors.password = 'Password is required';
-    } else if (formState.password.length < 6) {
+    } else if (values.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
     }
     
@@ -62,18 +61,16 @@ export const Basic = () => {
     // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false);
-      if (Object.keys(newErrors).length === 0) {
-        alert(JSON.stringify(formState, null, 2));
-      }
+              if (Object.keys(newErrors).length === 0) {
+          alert(JSON.stringify(values, null, 2));
+          setFormState(prev => ({ ...prev, ...values }));
+        }
     }, 1000);
   };
 
   return (
     <Form 
       onSubmit={handleSubmit} 
-      isSubmitting={isSubmitting}
-      isSubmitted={isSubmitted}
-      errors={errors}
       spacing="md"
     >
       <FormControl 
@@ -121,45 +118,52 @@ export const Basic = () => {
   );
 };
 
-export const WithDifferentSpacing = () => (
-  <>
-    <h3>Small Spacing</h3>
-    <Form spacing="sm">
-      <FormControl label="First Name">
-        <Input placeholder="Enter first name" />
-      </FormControl>
-      <FormControl label="Last Name">
-        <Input placeholder="Enter last name" />
-      </FormControl>
-      <Button>Submit</Button>
-    </Form>
-    
-    <h3 style={{ marginTop: '2rem' }}>Medium Spacing (Default)</h3>
-    <Form spacing="md">
-      <FormControl label="First Name">
-        <Input placeholder="Enter first name" />
-      </FormControl>
-      <FormControl label="Last Name">
-        <Input placeholder="Enter last name" />
-      </FormControl>
-      <Button>Submit</Button>
-    </Form>
-    
-    <h3 style={{ marginTop: '2rem' }}>Large Spacing</h3>
-    <Form spacing="lg">
-      <FormControl label="First Name">
-        <Input placeholder="Enter first name" />
-      </FormControl>
-      <FormControl label="Last Name">
-        <Input placeholder="Enter last name" />
-      </FormControl>
-      <Button>Submit</Button>
-    </Form>
-  </>
-);
+export const WithDifferentSpacing = () => {
+  const handleSubmit = () => {};
+  
+  return (
+    <>
+      <h3>Small Spacing</h3>
+      <Form spacing="sm" onSubmit={handleSubmit}>
+        <FormControl label="First Name">
+          <Input placeholder="Enter first name" />
+        </FormControl>
+        <FormControl label="Last Name">
+          <Input placeholder="Enter last name" />
+        </FormControl>
+        <Button>Submit</Button>
+      </Form>
+      
+      <h3 style={{ marginTop: '2rem' }}>Medium Spacing (Default)</h3>
+      <Form spacing="md" onSubmit={handleSubmit}>
+        <FormControl label="First Name">
+          <Input placeholder="Enter first name" />
+        </FormControl>
+        <FormControl label="Last Name">
+          <Input placeholder="Enter last name" />
+        </FormControl>
+        <Button>Submit</Button>
+      </Form>
+      
+      <h3 style={{ marginTop: '2rem' }}>Large Spacing</h3>
+      <Form spacing="lg" onSubmit={handleSubmit}>
+        <FormControl label="First Name">
+          <Input placeholder="Enter first name" />
+        </FormControl>
+        <FormControl label="Last Name">
+          <Input placeholder="Enter last name" />
+        </FormControl>
+        <Button>Submit</Button>
+      </Form>
+    </>
+  );
+};
 
-export const WithErrors = () => (
-  <Form errors={{ email: 'Email is invalid', password: 'Password is too short' }}>
+export const WithErrors = () => {
+  const handleSubmit = () => {};
+  
+  return (
+    <Form onSubmit={handleSubmit}>
     <FormControl 
       label="Email" 
       name="email"
@@ -193,4 +197,5 @@ export const WithErrors = () => (
     
     <Button>Submit</Button>
   </Form>
-);
+  );
+};

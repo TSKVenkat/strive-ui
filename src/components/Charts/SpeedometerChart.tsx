@@ -61,23 +61,11 @@ export const SpeedometerChart: React.FC<SpeedometerChartProps> = ({
   knobColor = '#f5f5f5',
   showUnits = true,
   units = 'mph',
+  label,
   ...props
 }) => {
-  // Custom renderer to add needle and knob
-  const renderSpeedometer = (originalRender: () => React.ReactNode) => {
-    return (
-      <>
-        {originalRender()}
-        
-        {/* Add units below the value */}
-        {showUnits && units && (
-          <UnitsLabel>
-            {units}
-          </UnitsLabel>
-        )}
-      </>
-    );
-  };
+  // Combine the label with units if needed
+  const speedometerLabel = label || (showUnits && units ? units : undefined);
   
   // Extend the GaugeChart with speedometer-specific configuration
   return (
@@ -91,9 +79,8 @@ export const SpeedometerChart: React.FC<SpeedometerChartProps> = ({
       showTicks={true}
       showTickLabels={true}
       animate={true}
-    >
-      {renderSpeedometer}
-    </GaugeChart>
+      label={speedometerLabel}
+    />
   );
 };
 

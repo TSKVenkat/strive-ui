@@ -53,10 +53,8 @@ export type ScannerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Scanner component
-const Scanner = forwardRef(function Scanner<C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ScannerProps<C>,
-    ref: PolymorphicRef<C>
-  ) {
+const Scanner = forwardRef<any, any>(
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { getVideoProps, getCanvasProps } = useBarcodeScannerContext();
     
@@ -92,10 +90,8 @@ export type ControlsProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Controls component
-const Controls = forwardRef(function Controls<C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ControlsProps<C>,
-    ref: PolymorphicRef<C>
-  ) {
+const Controls = forwardRef<any, any>(
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { isScanning, startScanning, stopScanning, clearResults } = useBarcodeScannerContext();
     
@@ -126,10 +122,8 @@ export type ResultProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Result component
-const Result = forwardRef(function Result<C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ResultProps<C>,
-    ref: PolymorphicRef<C>
-  ) {
+const Result = forwardRef<any, any>(
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { lastResult, results } = useBarcodeScannerContext();
     
@@ -161,10 +155,8 @@ export type FormatSelectorProps<C extends React.ElementType> = PolymorphicCompon
 >;
 
 // FormatSelector component
-const FormatSelector = forwardRef(function FormatSelector<C extends React.ElementType = 'div'>(
-    { as, children, ...props }: FormatSelectorProps<C>,
-    ref: PolymorphicRef<C>
-  ) {
+const FormatSelector = forwardRef<any, any>(
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { activeFormats, setFormats, toggleFormat } = useBarcodeScannerContext();
     
@@ -194,10 +186,8 @@ export type ErrorProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Error component
-const Error = forwardRef(function Error<C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ErrorProps<C>,
-    ref: PolymorphicRef<C>
-  ) {
+const ErrorComponent = forwardRef<any, any>(
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { error } = useBarcodeScannerContext();
     
@@ -215,7 +205,7 @@ const Error = forwardRef(function Error<C extends React.ElementType = 'div'>(
   }
 );
 
-Error.displayName = 'BarcodeScannerHeadless.Error';
+ErrorComponent.displayName = 'BarcodeScannerHeadless.Error';
 
 // Overlay component props
 export type OverlayProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -232,10 +222,8 @@ export type OverlayProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Overlay component
-const Overlay = forwardRef(function Overlay<C extends React.ElementType = 'div'>(
-    { as, children, ...props }: OverlayProps<C>,
-    ref: PolymorphicRef<C>
-  ) {
+const Overlay = forwardRef<any, any>(
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { isScanning, lastResult } = useBarcodeScannerContext();
     
@@ -270,7 +258,7 @@ export const BarcodeScannerHeadless = {
   Controls,
   Result,
   FormatSelector,
-  Error,
+  Error: ErrorComponent,
   Overlay,
   useBarcodeScannerContext,
 } as const;

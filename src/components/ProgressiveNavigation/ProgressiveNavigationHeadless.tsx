@@ -195,39 +195,43 @@ export const ProgressiveNavigationHeadless = forwardRef(function ProgressiveNavi
     className, 
     style, 
     items,
-    defaultActiveId,
-    activeId: controlledActiveId,
-    onActiveChange,
-    defaultOverflowBehavior,
-    overflowBehavior: controlledOverflowBehavior,
-    onOverflowBehaviorChange,
-    isOverflowMenuOpen: controlledIsOverflowMenuOpen,
-    onOverflowMenuOpenChange,
-    minVisibleItems,
-    maxVisibleItems,
-    prioritizeItems,
-    adaptToSpace,
-    adaptToScreenSize,
-    ariaLabel = 'Progressive navigation',
+    currentStep,
+    onStepClick,
+    ariaLabel,
+    allowClickToSteps,
+    showLabels,
+    size,
+    variant,
+    orientation,
     ...props 
   }: Omit<ProgressiveNavigationHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>
 ) {
+  // Set default values
+  const resolvedItems = items || ([] as ProgressiveNavigationItem[]);
+  const resolvedCurrentStep = currentStep ?? 0;
+  const resolvedAriaLabel = ariaLabel || 'Progressive navigation';
+  const resolvedAllowClickToSteps = allowClickToSteps ?? true;
+  const resolvedShowLabels = showLabels ?? true;
+  const resolvedSize = size || 'medium';
+  const resolvedVariant = variant || 'default';
+  const resolvedOrientation = orientation || 'horizontal';
+
   const progressiveNavigationState = useProgressiveNavigation({
-    items,
-    defaultActiveId,
-    activeId: controlledActiveId,
-    onActiveChange,
-    defaultOverflowBehavior,
-    overflowBehavior: controlledOverflowBehavior,
-    onOverflowBehaviorChange,
-    isOverflowMenuOpen: controlledIsOverflowMenuOpen,
-    onOverflowMenuOpenChange,
-    minVisibleItems,
-    maxVisibleItems,
-    prioritizeItems,
-    adaptToSpace,
-    adaptToScreenSize,
+    items: resolvedItems,
+    defaultActiveId: String(resolvedCurrentStep),
+    activeId: String(resolvedCurrentStep),
+    onActiveChange: onStepClick,
+    defaultOverflowBehavior: 'collapse',
+    overflowBehavior: 'collapse',
+    onOverflowBehaviorChange: () => {},
+    isOverflowMenuOpen: false,
+    onOverflowMenuOpenChange: () => {},
+    minVisibleItems: 1,
+    maxVisibleItems: 10,
+    prioritizeItems: true,
+    adaptToSpace: true,
+    adaptToScreenSize: true,
   });
 
   const { 
@@ -272,7 +276,7 @@ export const ProgressiveNavigationHeadless = forwardRef(function ProgressiveNavi
         {...getContainerProps({
           className,
           style,
-          'aria-label': ariaLabel as any,
+          'aria-label': resolvedAriaLabel as any,
           ...props,
         })}
         ref={ref}

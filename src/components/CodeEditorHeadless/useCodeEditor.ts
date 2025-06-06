@@ -192,13 +192,13 @@ export interface UseCodeEditorReturn {
    * Get props for the container element
    */
   getContainerProps: <E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ) => React.HTMLAttributes<E> & { 'data-disabled'?: string; 'data-readonly'?: string; 'data-required'?: string };
   /**
    * Get props for the editor element
    */
   getEditorProps: <E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
   ) => React.HTMLAttributes<E>;
 }
 
@@ -322,27 +322,27 @@ export function useCodeEditor({
     }
   }, []);
   
-  // Get props for the container element
+    // Get props for the container element
   const getContainerProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.HTMLAttributes<E> & { 'data-disabled'?: string; 'data-readonly'?: string; 'data-required'?: string } => {
     return {
       ...props,
-      ref: mergeRefs(containerRef, props?.ref),
+      ref: mergeRefs(containerRef, props?.ref) as any,
       id: editorId,
       'data-disabled': disabled ? '' : undefined,
       'data-readonly': readOnly ? '' : undefined,
       'data-required': required ? '' : undefined,
-    };
+    } as any;
   }, [editorId, disabled, readOnly, required]);
-  
+
   // Get props for the editor element
   const getEditorProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
   ): React.HTMLAttributes<E> => {
     return {
       ...props,
-      ref: mergeRefs(editorRef, props?.ref),
+      ref: mergeRefs(editorRef, props?.ref) as any,
       role: 'textbox',
       'aria-multiline': true,
       'aria-label': props?.['aria-label'] || 'Code editor',
@@ -359,7 +359,7 @@ export function useCodeEditor({
         props?.onBlur?.(event);
         onBlur?.(event);
       },
-    };
+    } as any;
   }, [disabled, readOnly, required, onFocus, onBlur]);
   
   return {

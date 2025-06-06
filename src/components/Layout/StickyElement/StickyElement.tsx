@@ -134,7 +134,7 @@ export const StickyElement = forwardRef<HTMLDivElement, StickyElementProps>(
     ref
   ) => {
     const [isSticky, setIsSticky] = useState(false);
-    const elementRef = useRef<HTMLDivElement>(null);
+    const [elementNode, setElementNode] = useState<HTMLDivElement | null>(null);
     const placeholderRef = useRef<HTMLDivElement>(null);
     
     // Convert offset to pixel value if it's a string
@@ -146,9 +146,9 @@ export const StickyElement = forwardRef<HTMLDivElement, StickyElementProps>(
     };
     
     useEffect(() => {
-      if (!enabled || !elementRef.current || !placeholderRef.current) return;
+      if (!enabled || !elementNode || !placeholderRef.current) return;
       
-      const element = elementRef.current;
+      const element = elementNode;
       const placeholder = placeholderRef.current;
       const container = containerRef?.current;
       
@@ -205,7 +205,7 @@ export const StickyElement = forwardRef<HTMLDivElement, StickyElementProps>(
         window.removeEventListener('scroll', handleScroll);
         window.removeEventListener('resize', handleScroll);
       };
-    }, [enabled, position, offset, containerRef, isSticky, onStick]);
+    }, [enabled, position, offset, containerRef, isSticky, onStick, elementNode]);
     
     // Build the sticky style
     const stickyStyle: React.CSSProperties = {
@@ -240,11 +240,11 @@ export const StickyElement = forwardRef<HTMLDivElement, StickyElementProps>(
             if (ref) {
               if (typeof ref === 'function') {
                 ref(node);
-              } else {
-                ref.current = node;
+              } else if (ref && 'current' in ref) {
+                (ref as React.MutableRefObject<any>).current = node;
               }
             }
-            elementRef.current = node;
+            setElementNode(node);
           }}
           className={`strive-sticky-element ${isSticky ? 'sticky' : ''} ${className}`}
           style={stickyStyle}

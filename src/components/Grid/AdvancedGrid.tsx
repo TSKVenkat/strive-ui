@@ -145,10 +145,10 @@ const createResponsiveStyles = <T extends any>(
   value: T | ResponsiveValue<T> | undefined,
   transform: (val: T) => string = (val) => String(val)
 ): string => {
-  if (value === undefined) return '';
+  if (value === undefined || value === null) return '';
   
-  if (typeof value === 'object') {
-    return Object.entries(value)
+  if (typeof value === 'object' && !Array.isArray(value) && value !== null) {
+    return Object.entries(value as ResponsiveValue<T>)
       .map(([breakpoint, breakpointValue]) => {
         if (breakpointValue === undefined) return '';
         
@@ -167,7 +167,7 @@ const createResponsiveStyles = <T extends any>(
       .join('');
   }
   
-  return `${property}: ${transform(value)};`;
+  return `${property}: ${transform(value as T)};`;
 };
 
 const formatGridGap = (gap: GridGap): string => {

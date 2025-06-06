@@ -1,8 +1,9 @@
 import React, { createContext, useContext, forwardRef } from 'react';
-import { useDocumentUpload, UseDocumentUploadReturn, DocumentFile } from './useDocumentUpload';
+import { useDocumentUpload } from './useDocumentUpload';
+import type { UseDocumentUploadReturn, DocumentFile } from './useDocumentUpload';
 
 // Define the props for the DocumentUpload component
-export interface DocumentUploadProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DocumentUploadProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /**
    * Default files (uncontrolled)
    */
@@ -249,9 +250,9 @@ export interface DocumentUploadInputProps extends React.InputHTMLAttributes<HTML
 export const DocumentUploadInput = forwardRef<HTMLInputElement, DocumentUploadInputProps>(
   (props, ref) => {
     const { getInputProps } = useDocumentUploadContext();
-    const inputProps = getInputProps({ ...props, ref });
+    const inputProps = getInputProps(props);
 
-    return <input {...inputProps} />;
+    return <input {...inputProps} ref={ref} />;
   }
 );
 
@@ -265,10 +266,10 @@ export interface DocumentUploadDropZoneProps extends React.HTMLAttributes<HTMLDi
 export const DocumentUploadDropZone = forwardRef<HTMLDivElement, DocumentUploadDropZoneProps>(
   ({ children, ...props }, ref) => {
     const { getDropZoneProps, disabled, readOnly } = useDocumentUploadContext();
-    const dropZoneProps = getDropZoneProps({ ...props, ref });
+    const dropZoneProps = getDropZoneProps(props);
 
     return (
-      <div {...dropZoneProps}>
+      <div {...dropZoneProps} ref={ref}>
         {children || (
           <div>
             <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
@@ -291,7 +292,7 @@ export const DocumentUploadDropZone = forwardRef<HTMLDivElement, DocumentUploadD
 DocumentUploadDropZone.displayName = 'DocumentUpload.DropZone';
 
 // Preview component
-export interface DocumentUploadPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DocumentUploadPreviewProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   children?: ((context: DocumentUploadContextValue) => React.ReactNode) | React.ReactNode;
 }
 

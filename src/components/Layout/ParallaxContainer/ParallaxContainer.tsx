@@ -291,7 +291,9 @@ export const ParallaxContainer = forwardRef<HTMLDivElement, ParallaxContainerPro
               ref.current = node;
             }
           }
-          containerRef.current = node;
+          if (containerRef && 'current' in containerRef) {
+            (containerRef as React.MutableRefObject<any>).current = node;
+          }
         }}
         className={`strive-parallax-container ${className}`}
         style={containerStyle}

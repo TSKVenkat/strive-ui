@@ -221,8 +221,8 @@ export interface UseSignaturePadReturn {
    */
   getSaveButtonProps: <E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E> & { ref?: React.Ref<E> },
-    type = 'image/png',
-    encoderOptions = 0.92
+    type?: string,
+    encoderOptions?: number
   ) => React.ButtonHTMLAttributes<E> & { 'data-disabled'?: string; ref?: any };
 }
 

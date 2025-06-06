@@ -207,7 +207,6 @@ const Container = forwardRef((props: any, ref: any) => {
       {...restProps} 
       ref={ref}
       style={{ 
-        ...containerProps.style,
         ...restProps.style,
       }}
     >
@@ -395,7 +394,7 @@ export type ImageProps<C extends React.ElementType> = PolymorphicComponentPropsW
 const Image = forwardRef((props: any, ref: any) => {
   const { as, src, alt, ...restProps } = props;
   const Component = as || 'img';
-  const { getImageProps, imageSrc } = useImageCropModalContext();
+  const { getImageProps, src: contextSrc } = useImageCropModalContext();
   
   const imageProps = getImageProps();
   
@@ -404,7 +403,7 @@ const Image = forwardRef((props: any, ref: any) => {
       {...imageProps}
       {...restProps} 
       ref={ref}
-      src={src || imageSrc}
+      src={src || contextSrc}
       alt={alt || 'Crop image'}
     />
   );

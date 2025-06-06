@@ -475,21 +475,21 @@ export function usePinInput({
       role: 'group',
       'aria-labelledby': props?.['aria-labelledby'],
       'aria-label': props?.['aria-label'] || 'Pin input',
-      'data-disabled': disabled ? '' : undefined,
-      'data-readonly': readOnly ? '' : undefined,
-      'data-required': required ? '' : undefined,
-      'data-complete': value.length === length ? '' : undefined,
-    };
+      ...(disabled && { 'data-disabled': '' }),
+      ...(readOnly && { 'data-readonly': '' }),
+      ...(required && { 'data-required': '' }),
+      ...(value.length === length && { 'data-complete': '' }),
+    } as React.HTMLAttributes<E>;
   }, [pinInputId, disabled, readOnly, required, value.length, length]);
   
   // Get props for an individual input element
   const getInputProps = useCallback(<E extends HTMLInputElement = HTMLInputElement>(
     index: number,
-    props?: React.InputHTMLAttributes<E>
-  ): React.InputHTMLAttributes<E> => {
+    props?: React.InputHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.InputHTMLAttributes<E> & { ref: React.RefCallback<E> } => {
     return {
       ...props,
-      ref: mergeRefs(inputRefs[index], props?.ref),
+      ref: mergeRefs(inputRefs[index] as React.Ref<E>, props?.ref),
       id: `${pinInputId}-${index}`,
       type,
       inputMode: type === 'number' ? 'numeric' : 'text',
@@ -523,13 +523,13 @@ export function usePinInput({
         handlePaste(event as unknown as React.ClipboardEvent<HTMLInputElement>);
         props?.onPaste?.(event);
       },
-      'data-disabled': disabled ? '' : undefined,
-      'data-readonly': readOnly ? '' : undefined,
-      'data-required': required ? '' : undefined,
-      'data-filled': values[index] ? '' : undefined,
-      'data-focused': focusedIndex === index ? '' : undefined,
+      ...(disabled && { 'data-disabled': '' }),
+      ...(readOnly && { 'data-readonly': '' }),
+      ...(required && { 'data-required': '' }),
+      ...(values[index] && { 'data-filled': '' }),
+      ...(focusedIndex === index && { 'data-focused': '' }),
       'data-index': index,
-    };
+    } as React.InputHTMLAttributes<E> & { ref: React.RefCallback<E> };
   }, [
     inputRefs,
     pinInputId,
@@ -575,12 +575,12 @@ export function usePinInput({
 
 // Helper function to merge refs
 function mergeRefs<T>(...refs: (React.Ref<T> | undefined)[]): React.RefCallback<T> {
-  return (value: T) => {
+  return (value: T | null) => {
     refs.forEach((ref) => {
       if (typeof ref === 'function') {
         ref(value);
       } else if (ref && 'current' in ref) {
-        (ref as React.MutableRefObject<T>).current = value;
+        (ref as React.MutableRefObject<T | null>).current = value;
       }
     });
   };

@@ -876,7 +876,7 @@ export function DataTable<T extends object = any>({
   };
 
   return (
-    <Box css={css}>
+    <Box style={css}>
       {renderToolbar()}
       
       <TableContainer $bordered={bordered}>

@@ -3,7 +3,6 @@ export {
   useFormWizard
 } from './useFormWizard';
 export type {
-  FormWizardProps,
   UseFormWizardOptions, 
   UseFormWizardReturn,
   FormWizardStep,

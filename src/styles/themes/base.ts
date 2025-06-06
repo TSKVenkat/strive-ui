@@ -214,6 +214,14 @@ export interface ThemeAnimation {
   easing: Record<string, string>;
 }
 
+export interface ThemeBreakpoints {
+  sm: string;
+  md: string;
+  lg: string;
+  xl: string;
+  '2xl': string;
+}
+
 export interface ComponentVariants {
   [component: string]: {
     [variant: string]: Record<string, any>;
@@ -229,6 +237,7 @@ export interface ThemeOptions {
   shadows: ThemeShadows;
   zIndex: ThemeZIndex;
   animation: ThemeAnimation;
+  breakpoints: ThemeBreakpoints;
   isDark?: boolean;
   componentVariants?: ComponentVariants;
 }
@@ -385,6 +394,13 @@ export const baseTheme: ThemeOptions = {
   shadows: {
     ...shadows,
     focus: `0 0 0 3px ${colors.primary[300]}`,
+  },
+  breakpoints: {
+    sm: '640px',
+    md: '768px',
+    lg: '1024px',
+    xl: '1280px',
+    '2xl': '1536px',
   },
   zIndex,
   animation,

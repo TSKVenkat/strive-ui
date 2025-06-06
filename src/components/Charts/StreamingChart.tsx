@@ -793,7 +793,7 @@ export const StreamingChart: React.FC<StreamingChartProps> = ({
     );
   };
   
-  // Convert to Chart component format for compatibility
+    // Convert to Chart component format for compatibility
   const chartData = {
     labels: seriesData[0]?.data.map(d => xFormatter(d.timestamp)) || [],
     series: seriesData.map(s => ({
@@ -801,12 +801,15 @@ export const StreamingChart: React.FC<StreamingChartProps> = ({
       data: s.data.map(d => d.value)
     }))
   };
-  
+
+  // Separate data from chartProps to avoid overwrite
+  const { data: _, ...restChartProps } = chartProps;
+
   return (
     <Chart
       data={chartData}
       type="streaming"
-      {...chartProps}
+      {...restChartProps}
     >
       {renderStreamingChart()}
     </Chart>

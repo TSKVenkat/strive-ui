@@ -18,6 +18,11 @@ export interface ComparativeDataSeries {
   color?: string;
 }
 
+interface DifferenceData {
+  value: number;
+  percentage: number;
+}
+
 export interface ComparativeChartProps extends Omit<ChartProps, 'type' | 'children'> {
   /**
    * Labels for the x-axis
@@ -335,10 +340,10 @@ export const ComparativeChart: React.FC<ComparativeChartProps> = ({
   };
   
   // Calculate differences between series
-  const calculateDifferences = () => {
+  const calculateDifferences = (): DifferenceData[] | null => {
     if (series.length < 2 || !showDifference) return null;
     
-    const differences = [];
+    const differences: DifferenceData[] = [];
     
     for (let i = 0; i < labels.length; i++) {
       const value1 = series[0].data[i] || 0;
@@ -731,11 +736,14 @@ export const ComparativeChart: React.FC<ComparativeChartProps> = ({
     );
   };
   
+  // Separate data from chartProps to avoid overwrite
+  const { data: _, ...restChartProps } = chartProps;
+  
   return (
     <Chart
       data={{ labels, series: series.map(s => ({ name: s.name, data: s.data })) }}
       type="comparative"
-      {...chartProps}
+      {...restChartProps}
     >
       {renderComparativeChart()}
     </Chart>

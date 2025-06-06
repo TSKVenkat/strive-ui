@@ -63,3 +63,43 @@ export type PolymorphicComponent<
 > = <C extends React.ElementType = DefaultElement>(
   props: PolymorphicComponentPropsWithRef<C, Props>
 ) => React.ReactElement | null;
+
+/**
+ * Fixed forwardRef for polymorphic components
+ * This version preserves generic type inference and supports displayName
+ */
+export function polymorphicForwardRef<
+  DefaultElement extends React.ElementType,
+  OwnProps = {}
+>(
+  render: <C extends React.ElementType = DefaultElement>(
+    props: PolymorphicComponentPropsWithRef<C, OwnProps>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) => React.ReactElement | null
+): PolymorphicComponent<DefaultElement, OwnProps> & { displayName?: string } {
+  const Component = React.forwardRef<any, any>((props: any, ref: any) => {
+    return render(props, ref);
+  }) as any;
+  
+  return Component;
+}
+
+/**
+ * A more permissive forwardRef for cases where the generic constraint is causing issues
+ */
+export function fixedForwardRef<T, P = {}>(
+  render: (props: P, ref: React.Ref<T>) => React.ReactNode
+): (props: P & React.RefAttributes<T>) => React.ReactNode {
+  return React.forwardRef((props: any, ref: any) => render(props, ref)) as any;
+}
+
+/**
+ * Utility to assign displayName to polymorphic components
+ */
+export function assignDisplayName<T extends any>(
+  component: T,
+  displayName: string
+): T & { displayName: string } {
+  (component as any).displayName = displayName;
+  return component as T & { displayName: string };
+}

@@ -239,11 +239,13 @@ export const RangeSliderHeadless = forwardRef(function RangeSliderHeadless<C ext
     className, 
     style, 
     label,
+    orientation,
     ...props 
   }: Omit<RangeSliderHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>
 ) {
-  const rangeSliderState = useRangeSlider(props);
+  const resolvedOrientation = orientation || 'horizontal';
+  const rangeSliderState = useRangeSlider({ orientation: resolvedOrientation, ...props });
   
   // Use the 'as' prop or default to 'div'
   const ElementType: React.ElementType = as || 'div';
@@ -251,9 +253,7 @@ export const RangeSliderHeadless = forwardRef(function RangeSliderHeadless<C ext
   return (
     <RangeSliderContext.Provider value={{
       ...rangeSliderState,
-      orientation: rangeSliderState.orientation || 'horizontal',
-      startValue: rangeSliderState.startValue || rangeSliderState.values[0],
-      endValue: rangeSliderState.endValue || rangeSliderState.values[1]
+      orientation: resolvedOrientation,
     }}>
       <ElementType
         ref={ref}

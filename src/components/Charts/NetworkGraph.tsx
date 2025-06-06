@@ -564,7 +564,7 @@ export const NetworkGraph: React.FC<NetworkGraphProps> = ({
     
     // Use group for consistent coloring if available
     if (node.group) {
-      const groupIndex = [...new Set(nodes.map(n => n.group))].indexOf(node.group);
+      const groupIndex = Array.from(new Set(nodes.map(n => n.group))).indexOf(node.group);
       return colors[groupIndex % colors.length];
     }
     

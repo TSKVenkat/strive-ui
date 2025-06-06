@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
-import { CarouselHeadless } from '../CarouselHeadless/CarouselHeadless';
+import { CarouselHeadless, useCarouselContext } from '../CarouselHeadless';
 import { UseCarouselOptions } from '../CarouselHeadless/useCarousel';
 
 // Define the image item type
@@ -188,6 +188,16 @@ const StyledCounter = styled.div`
   z-index: 10;
 `;
 
+// Add a Counter component to use the hook
+const Counter: React.FC<{ total: number }> = ({ total }) => {
+  const carousel = useCarouselContext();
+  return (
+    <StyledCounter>
+      {carousel.activeIndex + 1} of {total}
+    </StyledCounter>
+  );
+};
+
 // ImageCarousel component
 export const ImageCarousel = forwardRef<HTMLDivElement, ImageCarouselProps>(
   ({
@@ -217,15 +227,7 @@ export const ImageCarousel = forwardRef<HTMLDivElement, ImageCarouselProps>(
         className={`strive-image-carousel ${className}`}
         {...carouselProps}
       >
-        {showCounter && (
-          <CarouselHeadless.Consumer>
-            {(carousel) => (
-              <StyledCounter>
-                {carousel.activeIndex + 1} of {images.length}
-              </StyledCounter>
-            )}
-          </CarouselHeadless.Consumer>
-        )}
+        {showCounter && <Counter total={images.length} />}
         
         <StyledCarouselTrack>
           {images.map((image, index) => (

@@ -280,13 +280,11 @@ export function useDataGrid<T extends object = any>({
   onGroupByChange,
   ...tableOptions
 }: DataGridOptions<T>): UseDataGridReturn<T> {
-  // Use the base table hook
+  // Create table instance
   const tableProps = useTable<T>({
     ...tableOptions,
     columns: columns as TableColumn<T>[],
     data,
-    selectable: selectionMode !== 'none',
-    selectMultiple: selectionMode === 'multiple',
   });
 
   // Cell editing state

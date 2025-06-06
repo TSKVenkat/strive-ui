@@ -242,11 +242,12 @@ export const NavbarContentHeadless = forwardRef(function NavbarContentHeadless<C
  * A headless NavbarItem component for navigation items.
  */
 export const NavbarItemHeadless = forwardRef(function NavbarItemHeadless<C extends React.ElementType = 'a'>(
-  { as, children, className, style, id, disabled = false, ...props }: Omit<NavbarItemHeadlessProps<C>, 'ref'>,
+  { as, children, className, style, id, disabled, ...props }: Omit<NavbarItemHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>
 ) {
   const { getItemProps, registerItem, unregisterItem } = useNavbarContext();
-  const itemProps = getItemProps(id, disabled);
+  const resolvedDisabled = disabled ?? false;
+  const itemProps = getItemProps(id, resolvedDisabled);
 
   // Register and unregister the item
   useEffect(() => {

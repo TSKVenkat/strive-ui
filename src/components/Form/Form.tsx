@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Form from './FormHeadless';
-import { FormConfig, ValidationRule } from './hooks/useForm';
+import { FieldConfig, ValidationRule } from './hooks/useForm';
 
 // Styled components for form elements
 const StyledForm = styled.form<{ spacing?: 'sm' | 'md' | 'lg' }>`
@@ -418,11 +418,15 @@ type FormStyledComponent = typeof FormStyled & {
 (FormStyled as FormStyledComponent).SubmitButton = StyledSubmitButton;
 (FormStyled as FormStyledComponent).ErrorMessage = Form.ErrorMessage;
 
-// Re-export the useFormContext hook for convenience
-export const { useFormContext } = Form;
-
 // Export types from the headless form
-export type { FormConfig, ValidationRule } from './hooks/useForm';
+export type { FieldConfig, ValidationRule } from './hooks/useForm';
+
+// Re-export the useFormContext hook for convenience
+export { useFormContext } from './FormHeadless';
 
 // Export the FormStyled component as the default export
 export default FormStyled;
+
+// Also export as named export for convenience
+export { FormStyled as Form };
+export type { StyledFormProps as FormProps };

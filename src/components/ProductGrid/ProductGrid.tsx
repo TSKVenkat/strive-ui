@@ -226,31 +226,34 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
   return (
     <StyledProductGrid $columns={columns} $gap={gap} css={css}>
       <AnimatePresence>
-        {products.map((product, index) => (
-          <motion.div
-            key={product.id}
-            custom={index}
-            initial={animated ? 'hidden' : undefined}
-            animate={animated ? 'visible' : undefined}
-            exit={animated ? 'exit' : undefined}
-            variants={animationVariants}
-            layout
-          >
-            <ProductCard
-              {...product}
-              variant={cardVariant}
-              showWishlist={showWishlist}
-              showQuickView={showQuickView}
-              showAddToCart={showAddToCart}
-              isInWishlist={wishlistItems.includes(product.id)}
-              currencySymbol={currencySymbol}
-              onAddToCart={() => onAddToCart?.(product)}
-              onWishlistToggle={() => onWishlistToggle?.(product)}
-              onQuickView={() => onQuickView?.(product)}
-              onClick={() => onProductClick?.(product)}
-            />
-          </motion.div>
-        ))}
+        {products.map((product, index) => {
+          const { id, ...productProps } = product;
+          return (
+            <motion.div
+              key={id}
+              custom={index}
+              initial={animated ? 'hidden' : undefined}
+              animate={animated ? 'visible' : undefined}
+              exit={animated ? 'exit' : undefined}
+              variants={animationVariants}
+              layout
+            >
+              <ProductCard
+                {...productProps}
+                variant={cardVariant}
+                showWishlist={showWishlist}
+                showQuickView={showQuickView}
+                showAddToCart={showAddToCart}
+                isInWishlist={wishlistItems.includes(id)}
+                currencySymbol={currencySymbol}
+                onAddToCart={() => onAddToCart?.(product)}
+                onWishlistToggle={() => onWishlistToggle?.(product)}
+                onQuickView={() => onQuickView?.(product)}
+                onClick={() => onProductClick?.(product)}
+              />
+            </motion.div>
+          );
+        })}
       </AnimatePresence>
       {children}
     </StyledProductGrid>

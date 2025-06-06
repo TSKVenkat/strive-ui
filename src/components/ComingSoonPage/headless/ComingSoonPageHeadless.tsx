@@ -57,11 +57,8 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Container = forwardRef<any, any>(
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { getContainerProps } = useComingSoonPageContext();
     
@@ -103,11 +100,8 @@ export type IconProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Icon component
-const Icon = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: IconProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Icon = forwardRef<any, any>(
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { icon } = useComingSoonPageContext();
     
@@ -141,11 +135,8 @@ export type TitleProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Title component
-const Title = forwardRef(
-  <C extends React.ElementType = 'h1'>(
-    { as, children, ...props }: TitleProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Title = forwardRef<any, any>(
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'h1';
     const { title } = useComingSoonPageContext();
     
@@ -180,11 +171,8 @@ export type DescriptionProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // Description component
-const Description = forwardRef(
-  <C extends React.ElementType = 'p'>(
-    { as, children, ...props }: DescriptionProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Description = forwardRef<any, any>(
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'p';
     const { description } = useComingSoonPageContext();
     
@@ -220,11 +208,8 @@ export type CountdownProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Countdown component
-const Countdown = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: CountdownProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Countdown = forwardRef<any, any>(
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { showCountdown, timeRemaining, launchDate } = useComingSoonPageContext();
     
@@ -294,11 +279,8 @@ export type ActionProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Action component
-const Action = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ActionProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Action = forwardRef<any, any>(
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { actionText, getActionProps, showAction } = useComingSoonPageContext();
     
@@ -341,11 +323,8 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Content = forwardRef<any, any>(
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { content } = useComingSoonPageContext();
     
@@ -382,11 +361,8 @@ export type NewsletterProps<C extends React.ElementType> = PolymorphicComponentP
 >;
 
 // Newsletter component
-const Newsletter = forwardRef(
-  <C extends React.ElementType = 'form'>(
-    { as, children, ...props }: NewsletterProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Newsletter = forwardRef<any, any>(
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'form';
     const { 
       showNewsletter, 
@@ -464,11 +440,8 @@ export type SocialProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Social component
-const Social = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: SocialProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Social = forwardRef<any, any>(
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { showSocial, socialLinks } = useComingSoonPageContext();
     

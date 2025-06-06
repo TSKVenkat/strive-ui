@@ -1,6 +1,6 @@
 import React, { createContext, useContext, forwardRef } from 'react';
 import { useDrawingBoard, UseDrawingBoardReturn, DrawingBoardOptions, DrawingObject, DrawingTool, DrawingMode, DrawingStyle } from './useDrawingBoard';
-import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../types/polymorphic';
+import { PolymorphicComponentPropsWithRef, PolymorphicRef, polymorphicForwardRef } from '../../types/polymorphic';
 
 // Context for the DrawingBoard component
 interface DrawingBoardContextValue extends UseDrawingBoardReturn {}
@@ -53,10 +53,12 @@ export type CanvasProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Canvas component
-const Canvas = forwardRef(
-  <C extends React.ElementType = 'canvas'>(
-    { as, children, ...props }: CanvasProps<C>,
-    ref: PolymorphicRef<C>
+const Canvas = polymorphicForwardRef<'canvas', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'canvas';
     const { getBoardProps } = useDrawingBoardContext();
@@ -99,10 +101,22 @@ export type ToolbarProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Toolbar component
-const Toolbar = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ToolbarProps<C>,
-    ref: PolymorphicRef<C>
+const Toolbar = polymorphicForwardRef<'div', {
+  children: React.ReactNode | ((props: {
+    tool: DrawingTool;
+    setTool: (tool: DrawingTool) => void;
+    mode: DrawingMode;
+    setMode: (mode: DrawingMode) => void;
+    style: DrawingStyle;
+    setStyle: (style: Partial<DrawingStyle>) => void;
+    clear: () => void;
+    undo: () => void;
+    redo: () => void;
+  }) => React.ReactNode);
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { 
@@ -148,10 +162,16 @@ export type ColorPickerProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // ColorPicker component
-const ColorPicker = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, type, children, ...props }: ColorPickerProps<C>,
-    ref: PolymorphicRef<C>
+const ColorPicker = polymorphicForwardRef<'div', {
+  type: 'stroke' | 'fill';
+  children: React.ReactNode | ((props: {
+    color: string;
+    setColor: (color: string) => void;
+  }) => React.ReactNode);
+}>(
+  (
+    { as, type, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { style, setStyle } = useDrawingBoardContext();
@@ -193,10 +213,15 @@ export type StrokeWidthPickerProps<C extends React.ElementType> = PolymorphicCom
 >;
 
 // StrokeWidthPicker component
-const StrokeWidthPicker = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: StrokeWidthPickerProps<C>,
-    ref: PolymorphicRef<C>
+const StrokeWidthPicker = polymorphicForwardRef<'div', {
+  children: React.ReactNode | ((props: {
+    strokeWidth: number;
+    setStrokeWidth: (width: number) => void;
+  }) => React.ReactNode);
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { style, setStyle } = useDrawingBoardContext();
@@ -232,10 +257,15 @@ export type OpacityPickerProps<C extends React.ElementType> = PolymorphicCompone
 >;
 
 // OpacityPicker component
-const OpacityPicker = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: OpacityPickerProps<C>,
-    ref: PolymorphicRef<C>
+const OpacityPicker = polymorphicForwardRef<'div', {
+  children: React.ReactNode | ((props: {
+    opacity: number;
+    setOpacity: (opacity: number) => void;
+  }) => React.ReactNode);
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { style, setStyle } = useDrawingBoardContext();
@@ -273,10 +303,17 @@ export type ObjectsProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Objects component
-const Objects = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ObjectsProps<C>,
-    ref: PolymorphicRef<C>
+const Objects = polymorphicForwardRef<'div', {
+  children: React.ReactNode | ((props: {
+    objects: DrawingObject[];
+    selectedObjectId: string | null;
+    selectObject: (id: string | null) => void;
+    removeObject: (id: string) => void;
+  }) => React.ReactNode);
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { objects, selectedObjectId, selectObject, removeObject } = useDrawingBoardContext();
@@ -308,10 +345,15 @@ export type ExportProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Export component
-const Export = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ExportProps<C>,
-    ref: PolymorphicRef<C>
+const Export = polymorphicForwardRef<'div', {
+  children: React.ReactNode | ((props: {
+    exportImage: (type?: string, quality?: number) => string;
+    importImage: (dataUrl: string) => void;
+  }) => React.ReactNode);
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { exportImage, importImage } = useDrawingBoardContext();

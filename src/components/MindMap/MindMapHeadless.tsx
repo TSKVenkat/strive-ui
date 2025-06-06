@@ -1,6 +1,6 @@
 import React, { createContext, useContext, forwardRef } from 'react';
 import { useMindMap, UseMindMapReturn, MindMapOptions, MindMapNode, MindMapConnection } from './useMindMap';
-import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../types/polymorphic';
+import { PolymorphicComponentPropsWithRef, PolymorphicRef, polymorphicForwardRef } from '../../types/polymorphic';
 
 // Context for the MindMap component
 interface MindMapContextValue extends UseMindMapReturn {}
@@ -53,10 +53,12 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
+const Container = polymorphicForwardRef<'div', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { getContainerProps } = useMindMapContext();
@@ -104,10 +106,23 @@ export type NodeProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Node component
-const Node = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, id, children, ...props }: NodeProps<C>,
-    ref: PolymorphicRef<C>
+const Node = polymorphicForwardRef<'div', {
+  id: string;
+  children?: React.ReactNode | ((props: {
+    node: MindMapNode;
+    isSelected: boolean;
+    isEditing: boolean;
+    select: () => void;
+    startEdit: () => void;
+    stopEdit: (text?: string) => void;
+    toggleExpansion: () => void;
+    delete: () => void;
+    move: (position: { x: number; y: number }) => void;
+  }) => React.ReactNode);
+}>(
+  (
+    { as, id, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { 
@@ -207,10 +222,19 @@ export type ConnectionProps<C extends React.ElementType> = PolymorphicComponentP
 >;
 
 // Connection component
-const Connection = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, id, children, ...props }: ConnectionProps<C>,
-    ref: PolymorphicRef<C>
+const Connection = polymorphicForwardRef<'div', {
+  id: string;
+  children?: React.ReactNode | ((props: {
+    connection: MindMapConnection;
+    sourceNode: MindMapNode | undefined;
+    targetNode: MindMapNode | undefined;
+    update: (updates: Partial<MindMapConnection>) => void;
+    delete: () => void;
+  }) => React.ReactNode);
+}>(
+  (
+    { as, id, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { connections, nodes, updateConnection, deleteConnection } = useMindMapContext();
@@ -287,10 +311,15 @@ export type NodesProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Nodes component
-const Nodes = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: NodesProps<C>,
-    ref: PolymorphicRef<C>
+const Nodes = polymorphicForwardRef<'div', {
+  children: React.ReactNode | ((props: {
+    nodes: MindMapNode[];
+    selectedNode: MindMapNode | null;
+  }) => React.ReactNode);
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { nodes, selectedNode } = useMindMapContext();
@@ -321,10 +350,14 @@ export type ConnectionsProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // Connections component
-const Connections = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ConnectionsProps<C>,
-    ref: PolymorphicRef<C>
+const Connections = polymorphicForwardRef<'div', {
+  children: React.ReactNode | ((props: {
+    connections: MindMapConnection[];
+  }) => React.ReactNode);
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { connections } = useMindMapContext();
@@ -360,10 +393,19 @@ export type ControlsProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Controls component
-const Controls = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ControlsProps<C>,
-    ref: PolymorphicRef<C>
+const Controls = polymorphicForwardRef<'div', {
+  children: React.ReactNode | ((props: {
+    addNode: (data: Partial<MindMapNode> & { parentId: string | null }) => MindMapNode;
+    addConnection: (data: Partial<MindMapConnection> & { sourceId: string; targetId: string }) => MindMapConnection;
+    autoLayout: () => void;
+    exportToJSON: () => string;
+    importFromJSON: (json: string) => void;
+    selectedNode: MindMapNode | null;
+  }) => React.ReactNode);
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { 
@@ -413,10 +455,16 @@ export type NodeChildrenProps<C extends React.ElementType> = PolymorphicComponen
 >;
 
 // NodeChildren component
-const NodeChildren = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, id, children, ...props }: NodeChildrenProps<C>,
-    ref: PolymorphicRef<C>
+const NodeChildren = polymorphicForwardRef<'div', {
+  id: string;
+  children: React.ReactNode | ((props: {
+    children: MindMapNode[];
+    parent: MindMapNode | undefined;
+  }) => React.ReactNode);
+}>(
+  (
+    { as, id, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { getNodeChildren, nodes } = useMindMapContext();

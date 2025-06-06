@@ -36,7 +36,7 @@ export interface ChartProps {
   /**
    * Chart type
    */
-  type?: 'line' | 'bar' | 'area' | 'pie' | 'donut' | 'radar' | 'gauge';
+  type?: 'line' | 'bar' | 'area' | 'pie' | 'donut' | 'radar' | 'gauge' | 'waterfall' | 'comparative' | 'boxPlot' | 'candlestick' | 'gantt' | 'heatmap' | 'network' | 'orgChart' | 'progressRing' | 'streaming' | 'treemap' | 'calendarHeatmap';
   /**
    * Chart width
    */

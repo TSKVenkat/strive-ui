@@ -403,7 +403,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
         initial={isMobile ? { x: '-100%' } : false}
         animate={isMobile ? { x: mobileSidebarVisible ? 0 : '-100%' } : false}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
-        css={css}
+        style={css}
       >
         {header ? (
           header
@@ -876,7 +876,7 @@ export const DashboardNavItem: React.FC<DashboardNavItemProps> = ({
       $disabled={disabled}
       $hasChildren={!!children}
       $expanded={sidebarExpanded}
-      css={css}
+      style={css}
     >
       <NavItemContent 
         className="nav-item-content"

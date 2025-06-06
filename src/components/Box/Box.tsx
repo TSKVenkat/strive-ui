@@ -27,8 +27,36 @@ export interface BoxBaseProps {
   padding?: number | string;
   /** Margin (can be a number for uniform margin or a string for custom margin) */
   margin?: number | string;
+  /** Shorthand for padding */
+  p?: number | string | (number | string)[];
+  /** Shorthand for margin */
+  m?: number | string;
+  /** Margin top */
+  mt?: number | string;
+  /** Margin right */
+  mr?: number | string;
+  /** Margin bottom */
+  mb?: number | string;
+  /** Margin left */
+  ml?: number | string;
+  /** Margin horizontal (left and right) */
+  mx?: number | string;
+  /** Margin vertical (top and bottom) */
+  my?: number | string;
+  /** Padding top */
+  pt?: number | string;
+  /** Padding right */
+  pr?: number | string;
+  /** Padding bottom */
+  pb?: number | string;
+  /** Padding left */
+  pl?: number | string;
+  /** Padding horizontal (left and right) */
+  px?: number | string;
+  /** Padding vertical (top and bottom) */
+  py?: number | string;
   /** Width of the box */
-  width?: number | string;
+  width?: number | string | (number | string)[];
   /** Height of the box */
   height?: number | string;
   /** Max width of the box */
@@ -41,8 +69,12 @@ export interface BoxBaseProps {
   minHeight?: number | string;
   /** Background color */
   backgroundColor?: string;
+  /** Shorthand for backgroundColor */
+  bg?: string;
   /** Text color */
   color?: string;
+  /** Border color */
+  borderColor?: string;
   /** Border radius of the box */
   borderRadius?: BorderRadiusType | number | string;
   /** Border */
@@ -74,8 +106,9 @@ export interface BoxBaseProps {
 // Polymorphic Box props that combine BoxBaseProps with the polymorphic component props
 export type BoxProps<C extends React.ElementType = 'div'> = PolymorphicComponentPropsWithRef<C, BoxBaseProps>
 
-const formatSpacingValue = (value: number | string | undefined, theme: any): string | undefined => {
+const formatSpacingValue = (value: number | string | (number | string)[] | undefined, theme: any): string | undefined => {
   if (value === undefined) return undefined;
+  if (Array.isArray(value)) return formatSpacingValue(value[0], theme);
   if (typeof value === 'string') return value;
   return theme.spacing[value] || `${value}px`;
 };
@@ -87,16 +120,29 @@ const StyledBox = styled.div<BoxBaseProps>`
   ${({ alignItems }) => alignItems && `align-items: ${alignItems};`}
   ${({ flexWrap }) => flexWrap && `flex-wrap: ${flexWrap};`}
   ${({ gap, theme }) => gap !== undefined && `gap: ${formatSpacingValue(gap, theme)};`}
-  ${({ padding, theme }) => padding !== undefined && `padding: ${formatSpacingValue(padding, theme)};`}
-  ${({ margin, theme }) => margin !== undefined && `margin: ${formatSpacingValue(margin, theme)};`}
-  ${({ width }) => width !== undefined && `width: ${typeof width === 'number' ? `${width}px` : width};`}
+  ${({ padding, p, theme }) => (padding !== undefined || p !== undefined) && `padding: ${formatSpacingValue((p || padding) as number | string | undefined, theme)};`}
+  ${({ margin, m, theme }) => (margin !== undefined || m !== undefined) && `margin: ${formatSpacingValue(m || margin, theme)};`}
+  ${({ mt, theme }) => mt !== undefined && `margin-top: ${formatSpacingValue(mt, theme)};`}
+  ${({ mr, theme }) => mr !== undefined && `margin-right: ${formatSpacingValue(mr, theme)};`}
+  ${({ mb, theme }) => mb !== undefined && `margin-bottom: ${formatSpacingValue(mb, theme)};`}
+  ${({ ml, theme }) => ml !== undefined && `margin-left: ${formatSpacingValue(ml, theme)};`}
+  ${({ mx, theme }) => mx !== undefined && `margin-left: ${formatSpacingValue(mx, theme)}; margin-right: ${formatSpacingValue(mx, theme)};`}
+  ${({ my, theme }) => my !== undefined && `margin-top: ${formatSpacingValue(my, theme)}; margin-bottom: ${formatSpacingValue(my, theme)};`}
+  ${({ pt, theme }) => pt !== undefined && `padding-top: ${formatSpacingValue(pt, theme)};`}
+  ${({ pr, theme }) => pr !== undefined && `padding-right: ${formatSpacingValue(pr, theme)};`}
+  ${({ pb, theme }) => pb !== undefined && `padding-bottom: ${formatSpacingValue(pb, theme)};`}
+  ${({ pl, theme }) => pl !== undefined && `padding-left: ${formatSpacingValue(pl, theme)};`}
+  ${({ px, theme }) => px !== undefined && `padding-left: ${formatSpacingValue(px, theme)}; padding-right: ${formatSpacingValue(px, theme)};`}
+  ${({ py, theme }) => py !== undefined && `padding-top: ${formatSpacingValue(py, theme)}; padding-bottom: ${formatSpacingValue(py, theme)};`}
+  ${({ width }) => width !== undefined && `width: ${Array.isArray(width) ? width[0] : (typeof width === 'number' ? `${width}px` : width)};`}
   ${({ height }) => height !== undefined && `height: ${typeof height === 'number' ? `${height}px` : height};`}
   ${({ maxWidth }) => maxWidth !== undefined && `max-width: ${typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth};`}
   ${({ maxHeight }) => maxHeight !== undefined && `max-height: ${typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight};`}
   ${({ minWidth }) => minWidth !== undefined && `min-width: ${typeof minWidth === 'number' ? `${minWidth}px` : minWidth};`}
   ${({ minHeight }) => minHeight !== undefined && `min-height: ${typeof minHeight === 'number' ? `${minHeight}px` : minHeight};`}
-  ${({ backgroundColor }) => backgroundColor && `background-color: ${backgroundColor};`}
+  ${({ backgroundColor, bg }) => (backgroundColor || bg) && `background-color: ${bg || backgroundColor};`}
   ${({ color }) => color && `color: ${color};`}
+  ${({ borderColor }) => borderColor && `border-color: ${borderColor};`}
   ${({ borderRadius, theme }) => borderRadius !== undefined && 
     `border-radius: ${typeof borderRadius === 'number' ? `${borderRadius}px` : 
     (typeof borderRadius === 'string' && borderRadius in theme.borderRadius) ? 

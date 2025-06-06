@@ -26,16 +26,17 @@ export type StarRatingHeadlessProps<C extends React.ElementType = 'div'> = Polym
  * This component extends the base Rating component with star-specific features.
  */
 export const StarRatingHeadless = forwardRef(function StarRatingHeadless<C extends React.ElementType = 'div'>(
-  { 
-    size = 'md' as any, 
-    activeColor = 'currentColor' as any,
-    inactiveColor = 'currentColor' as any,
-    showValue = false as any,
-    formatValue,
-    ...props 
-  }: Omit<StarRatingHeadlessProps<C>, 'ref'>,
+  props: Omit<StarRatingHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>
 ) {
+  const { 
+    size = 'md', 
+    activeColor = 'currentColor',
+    inactiveColor = 'currentColor',
+    showValue = false,
+    formatValue,
+    ...ratingProps 
+  } = props;
   // Convert size to pixels
   const sizeInPx = typeof size === 'number' 
     ? size 
@@ -54,30 +55,32 @@ export const StarRatingHeadless = forwardRef(function StarRatingHeadless<C exten
     if (formatValue) {
       return formatValue(value);
     }
-    return props.allowHalf ? value.toFixed(1) : value;
+    return ratingProps.allowHalf ? value.toFixed(1) : value;
   };
 
+
+  
   return (
     <Rating
-      {...props}
+      {...(ratingProps as any)}
       ref={ref as any}
     >
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        {props.label && (
+        {ratingProps.label && (
           <Rating.Label style={{ marginRight: '8px' }}>
-            {props.label}
+            {ratingProps.label}
           </Rating.Label>
         )}
         
         <Rating.Group style={{ display: 'flex', gap: '2px' }}>
-          {Array.from({ length: props.max || 5 }, (_, i) => (
+          {Array.from({ length: ratingProps.max || 5 }, (_, i) => (
             <React.Fragment key={i + 1}>
-              {props.allowHalf && (
+              {ratingProps.allowHalf && (
                 <Rating.Item
                   value={i + 0.5}
                   half
                   style={{ 
-                    cursor: props.disabled || props.readOnly ? 'default' : 'pointer',
+                    cursor: ratingProps.disabled || ratingProps.readOnly ? 'default' : 'pointer',
                     width: sizeInPx / 2,
                     height: sizeInPx,
                     position: 'relative',
@@ -92,7 +95,7 @@ export const StarRatingHeadless = forwardRef(function StarRatingHeadless<C exten
                       style={{ 
                         position: 'absolute',
                         left: 0,
-                        opacity: props.disabled ? 0.5 : 1,
+                        opacity: ratingProps.disabled ? 0.5 : 1,
                       }}
                     >
                       <path d={starHalfPath} />
@@ -109,7 +112,7 @@ export const StarRatingHeadless = forwardRef(function StarRatingHeadless<C exten
                       style={{ 
                         position: 'absolute',
                         left: 0,
-                        opacity: props.disabled ? 0.5 : 1,
+                        opacity: ratingProps.disabled ? 0.5 : 1,
                       }}
                     >
                       <path d={starHalfPath} />
@@ -121,8 +124,8 @@ export const StarRatingHeadless = forwardRef(function StarRatingHeadless<C exten
               <Rating.Item
                 value={i + 1}
                 style={{ 
-                  cursor: props.disabled || props.readOnly ? 'default' : 'pointer',
-                  width: props.allowHalf ? sizeInPx / 2 : sizeInPx,
+                  cursor: ratingProps.disabled || ratingProps.readOnly ? 'default' : 'pointer',
+                  width: ratingProps.allowHalf ? sizeInPx / 2 : sizeInPx,
                   height: sizeInPx,
                   position: 'relative',
                   overflow: 'hidden',
@@ -136,7 +139,7 @@ export const StarRatingHeadless = forwardRef(function StarRatingHeadless<C exten
                     style={{ 
                       position: 'absolute',
                       right: 0,
-                      opacity: props.disabled ? 0.5 : 1,
+                      opacity: ratingProps.disabled ? 0.5 : 1,
                     }}
                   >
                     <path d={starPath} />
@@ -153,7 +156,7 @@ export const StarRatingHeadless = forwardRef(function StarRatingHeadless<C exten
                     style={{ 
                       position: 'absolute',
                       right: 0,
-                      opacity: props.disabled ? 0.5 : 1,
+                      opacity: ratingProps.disabled ? 0.5 : 1,
                     }}
                   >
                     <path d={starPath} />
@@ -166,7 +169,7 @@ export const StarRatingHeadless = forwardRef(function StarRatingHeadless<C exten
         
         {showValue && (
           <span style={{ marginLeft: '8px' }}>
-            {formattedValue(props.value !== undefined ? props.value : props.defaultValue || 0)}
+            {formattedValue(ratingProps.value !== undefined ? ratingProps.value : ratingProps.defaultValue || 0)}
           </span>
         )}
       </div>

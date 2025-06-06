@@ -408,7 +408,7 @@ export const CollapsibleGroup = forwardRef<HTMLDivElement, CollapsibleGroupProps
     // Clone children with expanded state
     const childrenWithProps = React.Children.map(children, (child, index) => {
       if (React.isValidElement(child) && child.type === CollapsiblePanel) {
-        return React.cloneElement(child, {
+        return React.cloneElement(child as React.ReactElement<any>, {
           expanded: expandedState[index] || false,
           onToggle: (expanded: boolean) => {
             handleToggle(index, expanded);

@@ -411,7 +411,7 @@ export const DataGrid = forwardRef(<T extends object = any>(
         {showToolbar && (
           <StyledToolbar>
             {showColumnSelector && (
-              <StyledColumnSelector label="Columns" />
+              <StyledColumnSelector />
             )}
             
             {showExportButton && enableExport && exportFormats.map(format => (
@@ -449,7 +449,7 @@ export const DataGrid = forwardRef(<T extends object = any>(
               {columns.map(column => (
                 <StyledCell
                   key={column.id}
-                  column={column}
+                  column={column as any}
                   row={row}
                   index={index}
                   $pinned={column.pinLeft ? 'left' : column.pinRight ? 'right' : undefined}

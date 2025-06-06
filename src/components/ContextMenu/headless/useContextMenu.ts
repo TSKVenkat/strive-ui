@@ -160,15 +160,15 @@ export interface UseContextMenuReturn {
   /**
    * Get props for the context menu target
    */
-  getTargetProps: <T extends HTMLElement = HTMLElement>() => {
-    ref: React.RefObject<T>;
+  getTargetProps: () => {
+    ref: React.RefObject<HTMLElement>;
     onContextMenu: (e: React.MouseEvent) => void;
   };
   /**
    * Get props for the context menu content
    */
-  getContentProps: <T extends HTMLElement = HTMLElement>() => {
-    ref: React.RefObject<T>;
+  getContentProps: () => {
+    ref: React.RefObject<HTMLElement>;
     style: React.CSSProperties;
     role: string;
     tabIndex: number;
@@ -608,14 +608,14 @@ export function useContextMenu(options: ContextMenuOptions = {}): UseContextMenu
     return {
       ref: contentRef,
       style: {
-        position: 'fixed',
+        position: 'fixed' as const,
         top: 0,
         left: 0,
         zIndex: 1000,
-        visibility: isOpen ? 'visible' : 'hidden',
+        visibility: isOpen ? ('visible' as const) : ('hidden' as const),
         opacity: isOpen ? 1 : 0,
         transform: `translate(${position.x}px, ${position.y}px)`,
-      },
+      } as React.CSSProperties,
       role: 'menu',
       tabIndex: -1,
       'aria-hidden': !isOpen,

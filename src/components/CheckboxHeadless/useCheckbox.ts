@@ -214,7 +214,9 @@ export function useCheckbox({
   }, []);
   
   // Get props for the input element
-  const getInputProps = useCallback(<E extends HTMLInputElement = HTMLInputElement>(
+  const getInputProps: <E extends HTMLInputElement = HTMLInputElement>(
+    props?: React.InputHTMLAttributes<E>
+  ) => React.InputHTMLAttributes<E> = useCallback(<E extends HTMLInputElement = HTMLInputElement>(
     props?: React.InputHTMLAttributes<E>
   ) => {
     return {
@@ -222,10 +224,10 @@ export function useCheckbox({
       id: checkboxId,
       ref: inputRef as React.RefObject<E>,
       type: 'checkbox',
-      checked,
-      onChange: handleChange as unknown as React.ChangeEventHandler<E>,
-      onFocus: handleFocus as unknown as React.FocusEventHandler<E>,
-      onBlur: handleBlur as unknown as React.FocusEventHandler<E>,
+      checked: checked,
+      onChange: handleChange,
+      onFocus: handleFocus,
+      onBlur: handleBlur,
       disabled,
       required,
       name,
@@ -244,7 +246,6 @@ export function useCheckbox({
     required,
     name,
     value,
-    indeterminate,
   ]);
   
   // Get props for the label element

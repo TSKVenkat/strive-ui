@@ -4,7 +4,7 @@ import {
   UseErrorBoundaryReturn, 
   ErrorBoundaryOptions 
 } from './useErrorBoundary';
-import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../../types/polymorphic';
+import { PolymorphicComponentPropsWithRef, PolymorphicRef, polymorphicForwardRef } from '../../../types/polymorphic';
 
 // Context for the ErrorBoundary component
 interface ErrorBoundaryContextValue extends UseErrorBoundaryReturn {}
@@ -94,10 +94,12 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
+const Container = polymorphicForwardRef<'div', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { getErrorContainerProps } = useErrorBoundaryContext();
@@ -109,6 +111,8 @@ const Container = forwardRef(
         {...containerProps} 
         {...props} 
         ref={ref}
+        role="alert"
+        aria-live="assertive"
         style={{
           padding: '24px',
           backgroundColor: '#fff3f3',
@@ -137,10 +141,12 @@ export type TitleProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Title component
-const Title = forwardRef(
-  <C extends React.ElementType = 'h3'>(
-    { as, children, ...props }: TitleProps<C>,
-    ref: PolymorphicRef<C>
+const Title = polymorphicForwardRef<'h3', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'h3';
     
@@ -176,10 +182,12 @@ export type MessageProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Message component
-const Message = forwardRef(
-  <C extends React.ElementType = 'p'>(
-    { as, children, ...props }: MessageProps<C>,
-    ref: PolymorphicRef<C>
+const Message = polymorphicForwardRef<'p', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'p';
     const { error } = useErrorBoundaryContext();
@@ -218,10 +226,13 @@ export type DetailsProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Details component
-const Details = forwardRef(
-  <C extends React.ElementType = 'pre'>(
-    { as, children, show = false, ...props }: DetailsProps<C>,
-    ref: PolymorphicRef<C>
+const Details = polymorphicForwardRef<'pre', {
+  children?: React.ReactNode;
+  show?: boolean;
+}>(
+  (
+    { as, children, show = false, ...props },
+    ref
   ) => {
     const Component = as || 'pre';
     const { error, errorInfo } = useErrorBoundaryContext();
@@ -267,10 +278,12 @@ export type ResetProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Reset component
-const Reset = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ResetProps<C>,
-    ref: PolymorphicRef<C>
+const Reset = polymorphicForwardRef<'button', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'button';
     const { getResetButtonProps } = useErrorBoundaryContext();
@@ -314,10 +327,12 @@ export type IconProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Icon component
-const Icon = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: IconProps<C>,
-    ref: PolymorphicRef<C>
+const Icon = polymorphicForwardRef<'div', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     

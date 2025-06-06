@@ -310,9 +310,7 @@ export function useMediaCapture(options: MediaCaptureOptions = {}): UseMediaCapt
       if (mediaType === 'screen' || mediaType === 'screenWithAudio') {
         // Screen capture
         const displayMediaOptions: DisplayMediaStreamOptions = {
-          video: {
-            cursor: 'always',
-          },
+          video: true,
           audio: mediaType === 'screenWithAudio',
         };
         
@@ -328,9 +326,9 @@ export function useMediaCapture(options: MediaCaptureOptions = {}): UseMediaCapt
         try {
           const track = newStream.getVideoTracks()[0];
           if (track && 'getCapabilities' in track) {
-            const capabilities = track.getCapabilities();
+            const capabilities = track.getCapabilities() as any;
             if (capabilities.torch) {
-              await track.applyConstraints({ advanced: [{ torch: true }] });
+              await track.applyConstraints({ advanced: [{ torch: true } as any] });
             }
           }
         } catch (flashError) {
@@ -579,10 +577,10 @@ export function useMediaCapture(options: MediaCaptureOptions = {}): UseMediaCapt
     if (stream && mediaType === 'camera') {
       const track = stream.getVideoTracks()[0];
       if (track && 'getCapabilities' in track) {
-        const capabilities = track.getCapabilities();
+        const capabilities = track.getCapabilities() as any;
         if (capabilities.torch) {
           track.applyConstraints({
-            advanced: [{ torch: !flashEnabled }],
+            advanced: [{ torch: !flashEnabled } as any],
           }).catch(err => {
             console.warn('Could not toggle flash:', err);
           });

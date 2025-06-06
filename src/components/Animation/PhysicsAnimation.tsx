@@ -208,12 +208,18 @@ export const PhysicsAnimation: React.FC<PhysicsAnimationProps> = ({
   // Create animation variants
   const variants = {
     initial: {
-      [axis]: initialPosition,
-      opacity: withOpacity ? 0 : 1
+      opacity: withOpacity ? 0 : 1,
+      ...(axis === 'x' && { x: initialPosition }),
+      ...(axis === 'y' && { y: initialPosition }),
+      ...(axis === 'rotate' && { rotate: initialPosition }),
+      ...(axis === 'scale' && { scale: initialPosition })
     },
     animate: {
-      [axis]: targetPosition,
       opacity: withOpacity ? 1 : 1,
+      ...(axis === 'x' && { x: targetPosition }),
+      ...(axis === 'y' && { y: targetPosition }),
+      ...(axis === 'rotate' && { rotate: targetPosition }),
+      ...(axis === 'scale' && { scale: targetPosition }),
       transition: {
         ...springOptions,
         delay,
@@ -245,8 +251,8 @@ export const PhysicsAnimation: React.FC<PhysicsAnimationProps> = ({
       variants={variants}
       style={{ 
         ...style,
-        [axis]: transformedValue
-      }}
+        [axis as string]: transformedValue
+      } as React.CSSProperties}
       onAnimationComplete={handleComplete}
       onAnimationStart={handleStart}
     >
@@ -379,11 +385,16 @@ export const Draggable: React.FC<DraggableProps> = ({
   children
 }) => {
   // Set up drag constraints
-  const dragConstraints = constraints || false;
+  const dragConstraints = constraints ? {
+    top: constraints.top,
+    right: constraints.right, 
+    bottom: constraints.bottom,
+    left: constraints.left
+  } : undefined;
   
   // Configure drag options
   const dragOptions = {
-    drag: dragAxis === 'both' ? true : { [dragAxis]: true },
+    drag: dragAxis === 'both' ? true : (dragAxis === 'x' ? 'x' : 'y') as 'x' | 'y' | boolean,
     dragConstraints,
     dragElastic: 0.1,
     dragMomentum: momentum,
@@ -393,7 +404,7 @@ export const Draggable: React.FC<DraggableProps> = ({
       modifyTarget: snapToGrid
         ? (target: number) => Math.round(target / gridSize) * gridSize
         : undefined
-    } : false,
+    } : undefined,
     onDragStart,
     onDrag,
     onDragEnd
@@ -495,7 +506,7 @@ export const Swipe: React.FC<SwipeProps> = ({
         x,
         y
       }}
-      drag={disabled ? false : (direction === 'both' ? true : direction)}
+      drag={disabled ? false : (direction === 'both' ? true : (direction === 'horizontal' ? 'x' : 'y'))}
       dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
       dragElastic={0.8}
       dragTransition={{
@@ -696,13 +707,10 @@ export const Flip: React.FC<FlipProps> = ({
   style,
   onFlipComplete
 }) => {
-  // Determine rotation axis
-  const rotationAxis = direction === 'horizontal' ? 'rotateY' : 'rotateX';
-  
   // Animation variants
   const variants = {
     front: {
-      [rotationAxis]: '0deg',
+      ...(direction === 'horizontal' ? { rotateY: '0deg' } : { rotateX: '0deg' }),
       transition: {
         type: 'spring',
         stiffness: springConfig.stiffness,
@@ -711,7 +719,7 @@ export const Flip: React.FC<FlipProps> = ({
       }
     },
     back: {
-      [rotationAxis]: '180deg',
+      ...(direction === 'horizontal' ? { rotateY: '180deg' } : { rotateX: '180deg' }),
       transition: {
         type: 'spring',
         stiffness: springConfig.stiffness,
@@ -793,8 +801,8 @@ export const Shake: React.FC<ShakeProps> = ({
   children
 }) => {
   // Generate shake keyframes
-  const generateShakeValues = () => {
-    const values = [];
+  const generateShakeValues = (): number[] => {
+    const values: number[] = [];
     for (let i = 0; i < count * 2; i++) {
       values.push(i % 2 === 0 ? intensity : -intensity);
     }

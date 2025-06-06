@@ -140,6 +140,10 @@ export interface UseSortableListReturn<T extends SortableItem = SortableItem> {
    * Whether an item is being dragged
    */
   isDragging: boolean;
+  /**
+   * Whether the list is empty
+   */
+  isEmpty: boolean;
 }
 
 /**
@@ -287,6 +291,7 @@ export function useSortableList<T extends SortableItem = SortableItem>(
     draggedIndex,
     overIndex,
     isDragging: isDraggingRef.current,
+    isEmpty: items.length === 0,
   };
 }
 

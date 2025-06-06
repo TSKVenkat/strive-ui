@@ -55,21 +55,14 @@ export type TargetProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Target component
-const Target = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: TargetProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Target = forwardRef<any, any>(
+  ({ as, children, ...props }, ref) => {
     const Component = as || 'div';
-    const { getTargetProps } = useContextMenuContext();
-    
-    const targetProps = getTargetProps();
     
     return (
-      <Component 
-        {...targetProps} 
-        {...props} 
+      <Component
         ref={ref}
+        {...props}
       >
         {children}
       </Component>
@@ -154,29 +147,14 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Content = forwardRef<any, any>(
+  ({ as, children, ...props }, ref) => {
     const Component = as || 'div';
-    const { getContentProps, isOpen } = useContextMenuContext();
-    
-    if (!isOpen) {
-      return null;
-    }
-    
-    const contentProps = getContentProps();
     
     return (
-      <Component 
-        {...contentProps} 
-        {...props} 
+      <Component
         ref={ref}
-        style={{ 
-          ...contentProps.style,
-          ...props.style,
-        }}
+        {...props}
       >
         {children}
       </Component>
@@ -206,30 +184,14 @@ export type ItemProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Item component
-const Item = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, item, index, ...props }: ItemProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Item = forwardRef<any, any>(
+  ({ as, children, item, index, ...props }, ref) => {
     const Component = as || 'div';
-    const { getItemProps, highlightedIndex, selectedIds } = useContextMenuContext();
-    
-    const itemProps = getItemProps(item, index);
-    const isHighlighted = index === highlightedIndex;
-    const isSelected = selectedIds.includes(item.id);
     
     return (
-      <Component 
-        {...itemProps} 
-        {...props} 
+      <Component
         ref={ref}
-        data-highlighted={isHighlighted}
-        data-selected={isSelected}
-        style={{ 
-          cursor: item.disabled ? 'not-allowed' : 'pointer',
-          opacity: item.disabled ? 0.5 : 1,
-          ...props.style,
-        }}
+        {...props}
       >
         {children}
       </Component>
@@ -246,18 +208,14 @@ export type DividerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Divider component
-const Divider = forwardRef(
-  <C extends React.ElementType = 'hr'>(
-    { as, ...props }: DividerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Divider = forwardRef<any, any>(
+  ({ as, ...props }, ref) => {
     const Component = as || 'hr';
     
     return (
-      <Component 
-        role="separator"
-        {...props} 
+      <Component
         ref={ref}
+        {...props}
       />
     );
   }
@@ -277,18 +235,14 @@ export type HeaderProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Header component
-const Header = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: HeaderProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Header = forwardRef<any, any>(
+  ({ as, children, ...props }, ref) => {
     const Component = as || 'div';
     
     return (
-      <Component 
-        role="presentation"
-        {...props} 
+      <Component
         ref={ref}
+        {...props}
       >
         {children}
       </Component>
@@ -314,28 +268,15 @@ export type GroupProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Group component
-const Group = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, label, ...props }: GroupProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Group = forwardRef<any, any>(
+  ({ as, children, label, ...props }, ref) => {
     const Component = as || 'div';
     
     return (
-      <Component 
-        role="group"
-        aria-labelledby={label ? `group-label-${label.replace(/\s+/g, '-').toLowerCase()}` : undefined}
-        {...props} 
+      <Component
         ref={ref}
+        {...props}
       >
-        {label && (
-          <div 
-            id={`group-label-${label.replace(/\s+/g, '-').toLowerCase()}`}
-            role="presentation"
-          >
-            {label}
-          </div>
-        )}
         {children}
       </Component>
     );
@@ -356,30 +297,15 @@ export type SearchProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Search component
-const Search = forwardRef(
-  <C extends React.ElementType = 'input'>(
-    { as, placeholder, ...props }: SearchProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Search = forwardRef<any, any>(
+  ({ as, placeholder, ...props }, ref) => {
     const Component = as || 'input';
-    const { getSearchInputProps } = useContextMenuContext();
-    
-    const searchProps = getSearchInputProps();
     
     return (
-      <Component 
-        type="text"
-        {...searchProps} 
-        placeholder={placeholder || searchProps.placeholder}
-        {...props} 
+      <Component
         ref={ref}
-        onClick={(e: React.MouseEvent) => {
-          // Prevent closing the context menu when clicking the search input
-          e.stopPropagation();
-          if (props.onClick) {
-            props.onClick(e);
-          }
-        }}
+        placeholder={placeholder}
+        {...props}
       />
     );
   }
@@ -399,23 +325,14 @@ export type EmptyProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Empty component
-const Empty = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: EmptyProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Empty = forwardRef<any, any>(
+  ({ as, children, ...props }, ref) => {
     const Component = as || 'div';
-    const { filteredItems } = useContextMenuContext();
-    
-    if (filteredItems.length > 0) {
-      return null;
-    }
     
     return (
-      <Component 
-        role="presentation"
-        {...props} 
+      <Component
         ref={ref}
+        {...props}
       >
         {children}
       </Component>
@@ -441,30 +358,15 @@ export type CheckboxProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Checkbox component
-const Checkbox = forwardRef(
-  <C extends React.ElementType = 'input'>(
-    { as, itemId, children, ...props }: CheckboxProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Checkbox = forwardRef<any, any>(
+  ({ as, itemId, children, ...props }, ref) => {
     const Component = as || 'input';
-    const { selectedIds, toggleSelection } = useContextMenuContext();
-    
-    const isChecked = selectedIds.includes(itemId);
     
     return (
-      <Component 
-        type="checkbox"
-        checked={isChecked}
-        onChange={() => toggleSelection(itemId)}
-        onClick={(e: React.MouseEvent) => {
-          // Prevent triggering the item click handler
-          e.stopPropagation();
-          if (props.onClick) {
-            props.onClick(e);
-          }
-        }}
-        {...props} 
+      <Component
         ref={ref}
+        type="checkbox"
+        {...props}
       >
         {children}
       </Component>

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, forwardRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useModal, UseModalReturn, ModalOptions } from './useModal';
-import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../../types/polymorphic';
+import { PolymorphicComponentPropsWithRef, PolymorphicRef, polymorphicForwardRef } from '../../../types/polymorphic';
 
 // Context for the Modal component
 interface ModalContextValue extends UseModalReturn {}
@@ -54,10 +54,12 @@ export type TriggerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Trigger component
-const Trigger = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: TriggerProps<C>,
-    ref: PolymorphicRef<C>
+const Trigger = polymorphicForwardRef<'button', {
+  children: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'button';
     const { getTriggerProps } = useModalContext();
@@ -153,10 +155,12 @@ export type OverlayProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Overlay component
-const Overlay = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: OverlayProps<C>,
-    ref: PolymorphicRef<C>
+const Overlay = polymorphicForwardRef<'div', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { getOverlayProps, isOpen } = useModalContext();
@@ -206,10 +210,12 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
+const Content = polymorphicForwardRef<'div', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'div';
     const { getContentProps, getContainerProps, isOpen } = useModalContext();
@@ -258,10 +264,12 @@ export type CloseProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Close component
-const Close = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: CloseProps<C>,
-    ref: PolymorphicRef<C>
+const Close = polymorphicForwardRef<'button', {
+  children?: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'button';
     const { getCloseButtonProps } = useModalContext();
@@ -294,10 +302,12 @@ export type TitleProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Title component
-const Title = forwardRef(
-  <C extends React.ElementType = 'h2'>(
-    { as, children, ...props }: TitleProps<C>,
-    ref: PolymorphicRef<C>
+const Title = polymorphicForwardRef<'h2', {
+  children: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'h2';
     
@@ -327,10 +337,12 @@ export type DescriptionProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // Description component
-const Description = forwardRef(
-  <C extends React.ElementType = 'p'>(
-    { as, children, ...props }: DescriptionProps<C>,
-    ref: PolymorphicRef<C>
+const Description = polymorphicForwardRef<'p', {
+  children: React.ReactNode;
+}>(
+  (
+    { as, children, ...props },
+    ref
   ) => {
     const Component = as || 'p';
     

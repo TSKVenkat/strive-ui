@@ -54,10 +54,7 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 
 // Content component
 const Content = forwardRef<any, any>(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { size, isResizing } = useResizableContext();
     

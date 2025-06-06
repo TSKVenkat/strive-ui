@@ -53,6 +53,7 @@ export type FontSizeScale =
   | 'xs'   // 0.75rem (12px)
   | 'sm'   // 0.875rem (14px)
   | 'base' // 1rem (16px)
+  | 'md'   // 1rem (16px) - alias for base
   | 'lg'   // 1.125rem (18px)
   | 'xl'   // 1.25rem (20px)
   | '2xl'  // 1.5rem (24px)
@@ -221,6 +222,7 @@ export interface SystemStyleProps {
   borderColor?: ResponsiveColor;
   
   // Borders
+  border?: ResponsiveValue<string>;
   borderRadius?: ResponsiveBorderRadius;
   borderWidth?: ResponsiveBorderWidth;
   borderTopWidth?: ResponsiveBorderWidth;
@@ -266,10 +268,18 @@ export interface SystemStyleProps {
   gridColumnGap?: ResponsiveSpacing;
   gridRowGap?: ResponsiveSpacing;
   gridGap?: ResponsiveSpacing;
+  gap?: ResponsiveSpacing;
   
   // Other
   cursor?: ResponsiveValue<'auto' | 'default' | 'pointer' | 'wait' | 'text' | 'move' | 'not-allowed'>;
   visibility?: ResponsiveValue<'visible' | 'hidden' | 'collapse'>;
+  outline?: ResponsiveValue<string>;
+
+  // Pseudo-class states
+  _hover?: Partial<SystemStyleProps>;
+  _focus?: Partial<SystemStyleProps>;
+  _active?: Partial<SystemStyleProps>;
+  _disabled?: Partial<SystemStyleProps>;
 }
 
 // Helper type for creating style props with theme values

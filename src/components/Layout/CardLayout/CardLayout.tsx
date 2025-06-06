@@ -182,10 +182,10 @@ export const CardLayout = forwardRef<HTMLDivElement, CardLayoutProps>(
         cardStyle.padding = '0.5rem';
       }
 
-      return React.cloneElement(child, {
+      return React.cloneElement(child as React.ReactElement<any>, {
         style: {
           ...cardStyle,
-          ...child.props.style,
+          ...(child.props.style || {}),
         },
         className: `strive-card ${child.props.className || ''}`,
       });

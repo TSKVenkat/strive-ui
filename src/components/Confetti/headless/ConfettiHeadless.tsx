@@ -58,25 +58,14 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Container = forwardRef<any, any>(
+  ({ as, children, ...props }, ref) => {
     const Component = as || 'div';
-    const { getContainerProps } = useConfettiContext();
-    
-    const containerProps = getContainerProps();
     
     return (
-      <Component 
-        {...containerProps} 
-        {...props} 
+      <Component
         ref={ref}
-        style={{
-          position: 'relative',
-          ...props.style,
-        }}
+        {...props}
       >
         {children}
       </Component>
@@ -98,28 +87,14 @@ export type CanvasProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Canvas component
-const Canvas = forwardRef(
-  <C extends React.ElementType = 'canvas'>(
-    { as, children, ...props }: CanvasProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Canvas = forwardRef<any, any>(
+  ({ as, children, ...props }, ref) => {
     const Component = as || 'canvas';
-    const { getCanvasProps, active } = useConfettiContext();
-    
-    if (!active) {
-      return null;
-    }
-    
-    const canvasProps = getCanvasProps();
     
     return (
-      <Component 
-        {...canvasProps} 
+      <Component
+        ref={ref}
         {...props}
-        style={{
-          ...canvasProps.style,
-          ...props.style,
-        }}
       >
         {children}
       </Component>
@@ -145,11 +120,8 @@ export type ParticleProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Particle component
-const Particle = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, particle, ...props }: ParticleProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Particle = forwardRef<any, any>(
+  ({ as, children, particle, ...props }, ref) => {
     const Component = as || 'div';
     
     // Get shape styles
@@ -189,17 +161,9 @@ const Particle = forwardRef(
     };
     
     return (
-      <Component 
-        {...props} 
+      <Component
         ref={ref}
-        style={{
-          position: 'absolute',
-          backgroundColor: particle.shape !== 'triangle' ? particle.color : undefined,
-          opacity: particle.opacity,
-          transform: `translate(${particle.x}px, ${particle.y}px) rotate(${particle.rotation}deg)`,
-          ...getShapeStyles(),
-          ...props.style,
-        }}
+        {...props}
       >
         {children}
       </Component>
@@ -221,36 +185,15 @@ export type ParticlesProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Particles component
-const Particles = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ParticlesProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Particles = forwardRef<any, any>(
+  ({ as, children, ...props }, ref) => {
     const Component = as || 'div';
-    const { particles, active } = useConfettiContext();
-    
-    if (!active) {
-      return null;
-    }
     
     return (
-      <Component 
-        {...props} 
+      <Component
         ref={ref}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          pointerEvents: 'none',
-          zIndex: 9999,
-          ...props.style,
-        }}
+        {...props}
       >
-        {particles.map((particle, index) => (
-          <Particle key={index} particle={particle} />
-        ))}
         {children}
       </Component>
     );
@@ -271,19 +214,16 @@ export type TriggerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Trigger component
-const Trigger = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: TriggerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Trigger = forwardRef<any, any>(
+  ({ as, children, ...props }, ref) => {
     const Component = as || 'button';
     const { start } = useConfettiContext();
     
     return (
-      <Component 
-        onClick={start}
-        {...props} 
+      <Component
         ref={ref}
+        onClick={start}
+        {...props}
       >
         {children}
       </Component>

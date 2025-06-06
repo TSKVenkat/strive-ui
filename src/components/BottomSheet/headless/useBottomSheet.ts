@@ -370,7 +370,7 @@ export function useBottomSheet(options: BottomSheetOptions = {}): UseBottomSheet
     return {
       ...containerProps,
       style: {
-        position: 'fixed',
+        position: 'fixed' as const,
         bottom: 0,
         left: 0,
         right: 0,
@@ -394,7 +394,7 @@ export function useBottomSheet(options: BottomSheetOptions = {}): UseBottomSheet
     return {
       ...overlayProps,
       style: {
-        position: 'fixed',
+        position: 'fixed' as const,
         top: 0,
         right: 0,
         bottom: 0,
@@ -402,7 +402,7 @@ export function useBottomSheet(options: BottomSheetOptions = {}): UseBottomSheet
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         zIndex: 1040,
         opacity: modalProps.isOpen ? 1 : 0,
-        visibility: modalProps.isOpen ? 'visible' : 'hidden',
+        visibility: modalProps.isOpen ? ('visible' as const) : ('hidden' as const),
         transition: 'opacity 0.3s ease, visibility 0.3s ease',
       },
     };

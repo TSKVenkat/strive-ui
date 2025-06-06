@@ -171,29 +171,29 @@ export interface UseDropdownMenuReturn {
   /**
    * Get props for the dropdown menu trigger
    */
-  getTriggerProps: <T extends HTMLElement = HTMLElement>() => {
-    ref: React.RefObject<T>;
-    onClick: (e: React.MouseEvent) => void;
-    onKeyDown: (e: React.KeyboardEvent) => void;
+  getTriggerProps: () => {
+    ref: React.RefObject<HTMLElement>;
+    onClick: (e: React.MouseEvent<Element, MouseEvent>) => void;
+    onKeyDown: (e: React.KeyboardEvent<Element>) => void;
     'aria-expanded': boolean;
     'aria-haspopup': boolean;
   };
   /**
    * Get props for the dropdown menu content
    */
-  getContentProps: <T extends HTMLElement = HTMLElement>() => {
-    ref: React.RefObject<T>;
+  getContentProps: () => {
+    ref: React.RefObject<HTMLElement>;
     style: React.CSSProperties;
     role: string;
     tabIndex: number;
     'aria-hidden': boolean;
-    onKeyDown: (e: React.KeyboardEvent) => void;
+    onKeyDown: (e: React.KeyboardEvent<Element>) => void;
   };
   /**
    * Get props for the dropdown menu arrow
    */
-  getArrowProps: <T extends HTMLElement = HTMLElement>() => {
-    ref: React.RefObject<T>;
+  getArrowProps: () => {
+    ref: React.RefObject<HTMLElement>;
     style: React.CSSProperties;
   };
   /**
@@ -497,7 +497,7 @@ export function useDropdownMenu(options: DropdownMenuOptions = {}): UseDropdownM
     
     return {
       ...triggerProps,
-      onKeyDown: (e: React.KeyboardEvent) => {
+      onKeyDown: (e: React.KeyboardEvent<Element>) => {
         if (e.key === 'ArrowDown' && !popoverProps.isOpen) {
           e.preventDefault();
           popoverProps.open();

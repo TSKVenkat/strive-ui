@@ -173,13 +173,15 @@ export const CodeEditorHeadless = forwardRef(function CodeEditorHeadless<C exten
     editorState.setValue
   ]);
 
+  const { ...containerProps } = editorState.getContainerProps();
+
   return (
     <CodeEditorContext.Provider value={editorState}>
       <ElementType
         ref={ref}
         className={className}
         style={style}
-        {...editorState.getContainerProps()}
+        {...containerProps}
       >
         {children || (
           <>

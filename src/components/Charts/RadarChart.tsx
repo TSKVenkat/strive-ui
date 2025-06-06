@@ -277,15 +277,15 @@ export const RadarChart: React.FC<RadarChartProps> = ({
     };
   };
   
-  // Generate path for data line
-  const generateLinePath = (points: ReturnType<typeof calculateChart>['seriesPoints'][0]['points']) => {
+    // Generate path for data line
+  const generateLinePath = (points: NonNullable<ReturnType<typeof calculateChart>>['seriesPoints'][0]['points']) => {
     return points.map((point, i) => 
       `${i === 0 ? 'M' : 'L'} ${point.x} ${point.y}`
     ).join(' ') + ' Z'; // Close the path
   };
-  
+
   // Generate path for data area
-  const generateAreaPath = (points: ReturnType<typeof calculateChart>['seriesPoints'][0]['points']) => {
+  const generateAreaPath = (points: NonNullable<ReturnType<typeof calculateChart>>['seriesPoints'][0]['points']) => {
     return generateLinePath(points);
   };
   

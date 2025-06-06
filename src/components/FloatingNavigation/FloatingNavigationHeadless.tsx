@@ -195,55 +195,54 @@ type FloatingNavigationDragHandleHeadlessComponent = <C extends React.ElementTyp
 ) => JSX.Element;
 
 /**
- * A headless FloatingNavigation component that provides all the functionality without any styling.
- * This component can be used as a base for creating custom styled floating navigation implementations.
+ * A headless FloatingNavigation component for building custom floating navigation UIs.
  */
-export const FloatingNavigationHeadless = forwardRef(function FloatingNavigationHeadless<C extends React.ElementType = 'div'>(
+export const FloatingNavigationHeadless = forwardRef(function FloatingNavigationHeadless<C extends React.ElementType = 'nav'>(
   { 
     as, 
     children, 
     className, 
     style, 
     items,
-    defaultActiveId,
-    activeId: controlledActiveId,
-    onActiveChange,
-    defaultPosition,
-    position: controlledPosition,
-    onPositionChange,
-    draggable,
-    visible,
-    onVisibleChange,
-    collapsed,
-    onCollapsedChange,
-    offset,
-    zIndex,
-    ariaLabel = 'Floating navigation',
+    orientation,
+    size,
+    variant,
+    position,
+    ariaLabel,
+    onItemClick,
     ...props 
   }: Omit<FloatingNavigationHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>
 ) {
+  // Set default values
+  const resolvedItems = items || ([] as FloatingNavigationItem[]);
+  const resolvedOrientation = orientation || 'horizontal';
+  const resolvedSize = size || 'medium';
+  const resolvedVariant = variant || 'default';
+  const resolvedPosition = position || 'bottom-right';
+  const resolvedAriaLabel = ariaLabel || 'Floating navigation';
+
   const floatingNavigationState = useFloatingNavigation({
-    items,
-    defaultActiveId,
-    activeId: controlledActiveId,
-    onActiveChange,
-    defaultPosition,
-    position: controlledPosition,
-    onPositionChange,
-    draggable,
-    visible,
-    onVisibleChange,
-    collapsed,
-    onCollapsedChange,
-    offset,
-    zIndex,
+    items: resolvedItems,
+    defaultActiveId: undefined,
+    activeId: undefined,
+    onActiveChange: () => {},
+    defaultPosition: resolvedPosition,
+    position: resolvedPosition,
+    onPositionChange: () => {},
+    draggable: false,
+    visible: true,
+    onVisibleChange: () => {},
+    collapsed: false,
+    onCollapsedChange: () => {},
+    offset: 0,
+    zIndex: 1000,
   });
 
   const { 
     activeId,
     setActiveId,
-    position,
+    position: currentPosition,
     setPosition,
     visible: isVisible,
     show,
@@ -274,7 +273,7 @@ export const FloatingNavigationHeadless = forwardRef(function FloatingNavigation
       value={{ 
         activeId,
         setActiveId,
-        position,
+        position: currentPosition,
         setPosition,
         visible: isVisible,
         show,
@@ -299,7 +298,7 @@ export const FloatingNavigationHeadless = forwardRef(function FloatingNavigation
         })}
         ref={ref}
         role="navigation"
-        aria-label={ariaLabel}
+        aria-label={resolvedAriaLabel}
       >
         {children}
       </ElementType>

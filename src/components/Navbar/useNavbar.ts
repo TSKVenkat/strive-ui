@@ -218,11 +218,11 @@ export function useNavbar({
       id: `nav-item-${id}`,
       role: 'menuitem',
       tabIndex: isActive ? 0 : -1,
-      'aria-current': isActive ? 'page' : false,
+      'aria-current': isActive ? ('page' as const) : (false as const),
       'aria-disabled': disabled,
       disabled,
       onClick: handleClick,
-      'data-state': isActive ? 'active' : 'inactive',
+      'data-state': isActive ? ('active' as const) : ('inactive' as const),
     };
   }, [activeItem, setActiveItem]);
 

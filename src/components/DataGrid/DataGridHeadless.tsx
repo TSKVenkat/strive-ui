@@ -4,7 +4,7 @@ import { useDataGrid, UseDataGridReturn, DataGridOptions, DataGridGroup, DataGri
 // Extend DataGridColumn to include formatter and render properties
 export interface DataGridColumn<T> {
   id: string;
-  header: string;
+  header: React.ReactNode;
   accessor: ((row: T) => any) | string;
   isVisible?: boolean;
   editable?: boolean;

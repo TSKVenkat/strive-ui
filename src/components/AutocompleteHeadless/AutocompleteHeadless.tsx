@@ -219,7 +219,7 @@ export const AutocompleteRoot = forwardRef<HTMLDivElement, AutocompleteProps>(
     });
 
     return (
-      <AutocompleteContext.Provider value={autocomplete as AutocompleteContextValue}>
+      <AutocompleteContext.Provider value={autocomplete as any}>
         <div {...props} ref={ref}>
           {children || (
             <>

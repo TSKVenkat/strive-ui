@@ -730,7 +730,7 @@ const Summary = forwardRef((props: any, ref: any) => {
                   color: 
                     status === 'completed' ? '#4caf50' : 
                     status === 'error' ? '#f44336' : 
-                    status === 'active' ? '#1976d2' : 
+                    status === 'current' ? '#1976d2' : 
                     '#757575',
                   textTransform: 'capitalize',
                 }}

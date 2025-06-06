@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useEffect, useState, ChangeEvent, KeyboardEvent } from 'react';
+import React, { forwardRef, useRef, useEffect, useState, ChangeEvent, KeyboardEvent, useCallback } from 'react';
 import { 
   useChatMessagesContext,
   ChatMessagesContentProps,
@@ -468,32 +468,6 @@ const Input = forwardRef<HTMLTextAreaElement, ChatMessagesInputProps>(
   }, ref) => {
     const { sendMessage, replyingTo, editingMessage, setEditingMessage } = useChatMessagesContext();
     const [value, setValue] = useState(editingMessage ? editingMessage.content : '');
-    const inputRef = useRef<HTMLTextAreaElement>(null);
-    
-    // Reset input when editing message changes
-    useEffect(() => {
-      if (editingMessage) {
-        setValue(editingMessage.content);
-        inputRef.current?.focus();
-      } else {
-        setValue('');
-      }
-    }, [editingMessage]);
-    
-    // Auto resize input
-    useEffect(() => {
-      if (!autoResize || !inputRef.current) return;
-      
-      const textarea = inputRef.current;
-      textarea.style.height = 'auto';
-      
-      const newHeight = Math.min(
-        textarea.scrollHeight,
-        parseInt(getComputedStyle(textarea).lineHeight) * maxRows
-      );
-      
-      textarea.style.height = `${newHeight}px`;
-    }, [value, autoResize, maxRows]);
     
     // Handle input change
     const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -536,19 +510,8 @@ const Input = forwardRef<HTMLTextAreaElement, ChatMessagesInputProps>(
       }
     };
     
-    // Combine refs
-    const combinedRef = (element: HTMLTextAreaElement) => {
-      if (ref) {
-        if (typeof ref === 'function') {
-          ref(element);
-        } else {
-          (ref as React.MutableRefObject<HTMLTextAreaElement | null>).current = element;
-        }
-      }
-      if (inputRef.current !== element) {
-        inputRef.current = element;
-      }
-    };
+    // Use a separate internal ref for our logic
+    const internalRef = useRef<HTMLTextAreaElement>(null);
     
     return (
       <div className="strive-chat-messages-input-container">
@@ -590,7 +553,7 @@ const Input = forwardRef<HTMLTextAreaElement, ChatMessagesInputProps>(
         
         <div className="strive-chat-messages-input-wrapper">
           <Component
-            ref={combinedRef}
+            ref={ref}
             className={`strive-chat-messages-input ${className}`}
             placeholder={placeholder}
             value={value}

@@ -604,7 +604,7 @@ export const Item = forwardRef<HTMLDivElement, ChatMessagesItemProps>(
             
             <div className="strive-chat-messages-item-footer">
               {message.timestamp && (
-                <Timestamp>{message.timestamp}</Timestamp>
+                <Timestamp>{typeof message.timestamp === 'string' ? message.timestamp : message.timestamp.toISOString()}</Timestamp>
               )}
               
               {isCurrentUser && (

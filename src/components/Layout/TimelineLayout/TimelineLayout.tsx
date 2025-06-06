@@ -438,7 +438,7 @@ export const TimelineLayout = forwardRef<HTMLDivElement, TimelineLayoutProps>(
 
 TimelineLayout.displayName = 'TimelineLayout';
 
-export interface TimelineItemProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface TimelineItemProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /**
    * The content of the timeline item
    */

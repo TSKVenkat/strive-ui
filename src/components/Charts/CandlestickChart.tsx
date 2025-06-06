@@ -249,8 +249,8 @@ export const CandlestickChart: React.FC<CandlestickChartProps> = ({
   const candlestickData: CandlestickDataPoint[] = data.series[0].data.map((value, index) => {
     if (typeof value === 'object' && 'open' in value && 'high' in value && 'low' in value && 'close' in value) {
       return {
-        date: data.labels[index] || new Date().toISOString(),
-        ...value as CandlestickDataPoint
+        ...value as CandlestickDataPoint,
+        date: (value as any).date || data.labels[index] || new Date().toISOString()
       };
     }
     

@@ -118,8 +118,8 @@ const Overlay = forwardRef(function Overlay<C extends React.ElementType = 'div'>
       <ModalHeadless.Overlay 
         as={as} 
         {...overlayProps} 
-        {...props} 
-        ref={ref}
+        {...(props as any)} 
+        ref={ref as any}
       >
         {children}
       </ModalHeadless.Overlay>
@@ -159,8 +159,8 @@ const Content = forwardRef(function Content<C extends React.ElementType = 'div'>
         as={as} 
         {...contentProps} 
         {...containerProps} 
-        {...props} 
-        ref={ref}
+        {...(props as any)} 
+        ref={ref as any}
       >
         {children}
       </ModalHeadless.Content>

@@ -272,11 +272,13 @@ export const SplitLayout = forwardRef<HTMLDivElement, SplitLayoutProps>(
           if (ref) {
             if (typeof ref === 'function') {
               ref(node);
-            } else {
-              ref.current = node;
+            } else if (ref && 'current' in ref) {
+              (ref as React.MutableRefObject<any>).current = node;
             }
           }
-          containerRef.current = node;
+          if (containerRef && 'current' in containerRef) {
+            (containerRef as React.MutableRefObject<any>).current = node;
+          }
         }}
         className={`strive-split-layout ${direction} ${className}`}
         style={containerStyle}
@@ -353,3 +355,4 @@ export const SplitPane = forwardRef<HTMLDivElement, SplitPaneProps>(
 );
 
 SplitPane.displayName = 'SplitPane';
+

@@ -486,15 +486,18 @@ export const BarChart: React.FC<BarChartProps> = ({
                     />
                     
                     {showDataLabels && (
-                      <DataLabel
+                      <motion.text
                         x={barX + barWidth / 2}
                         y={barY - 5}
+                        textAnchor="middle"
+                        fill="currentColor"
+                        fontSize="12"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.5, delay: 0.5 }}
                       >
                         {dataLabelFormatter(value)}
-                      </DataLabel>
+                      </motion.text>
                     )}
                   </g>
                 );

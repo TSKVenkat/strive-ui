@@ -72,6 +72,10 @@ export interface UseBreadcrumbsReturn {
    */
   collapsedItems: BreadcrumbItem[];
   /**
+   * The separator element to use between breadcrumb items
+   */
+  separator: React.ReactNode;
+  /**
    * Get props for the breadcrumbs container
    */
   getBreadcrumbsProps: () => {
@@ -212,6 +216,7 @@ export function useBreadcrumbs({
     items: visibleItems,
     isCollapsed,
     collapsedItems,
+    separator,
     getBreadcrumbsProps,
     getItemProps,
     getSeparatorProps,

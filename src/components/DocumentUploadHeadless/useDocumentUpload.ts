@@ -212,7 +212,7 @@ export interface UseDocumentUploadReturn {
    */
   getContainerProps: <E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { 'data-disabled'?: string; 'data-readonly'?: string; 'data-required'?: string };
   /**
    * Get props for the input element
    */
@@ -224,7 +224,7 @@ export interface UseDocumentUploadReturn {
    */
   getDropZoneProps: <E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { 'data-disabled'?: string; 'data-readonly'?: string };
 }
 
 /**
@@ -711,14 +711,14 @@ export function useDocumentUpload({
   // Get props for the container element
   const getContainerProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { 'data-disabled'?: string; 'data-readonly'?: string; 'data-required'?: string } => {
     return {
       ...props,
       id: uploadId,
       'data-disabled': disabled ? '' : undefined,
       'data-readonly': readOnly ? '' : undefined,
       'data-required': required ? '' : undefined,
-    };
+    } as React.HTMLAttributes<E> & { 'data-disabled'?: string; 'data-readonly'?: string; 'data-required'?: string };
   }, [uploadId, disabled, readOnly, required]);
   
   // Get props for the input element
@@ -727,7 +727,6 @@ export function useDocumentUpload({
   ): React.InputHTMLAttributes<E> => {
     return {
       ...props,
-      ref: mergeRefs(inputRef, props?.ref),
       type: 'file',
       id: `${uploadId}-input`,
       name,
@@ -746,10 +745,9 @@ export function useDocumentUpload({
   // Get props for the drop zone element
   const getDropZoneProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { 'data-disabled'?: string; 'data-readonly'?: string } => {
     return {
       ...props,
-      ref: mergeRefs(dropZoneRef, props?.ref),
       role: 'button',
       tabIndex: disabled || readOnly ? -1 : 0,
       'aria-disabled': disabled ? true : undefined,
@@ -785,7 +783,7 @@ export function useDocumentUpload({
         handleDrop(event as unknown as React.DragEvent<HTMLDivElement>);
         props?.onDrop?.(event);
       },
-    };
+    } as React.HTMLAttributes<E> & { 'data-disabled'?: string; 'data-readonly'?: string };
   }, [
     disabled, 
     readOnly, 

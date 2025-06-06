@@ -6,7 +6,7 @@ import {
   PulseSize,
   PulseShape
 } from './usePulse';
-import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../../types/polymorphic';
+import { PolymorphicComponentPropsWithRef, PolymorphicRef, polymorphicForwardRef } from '../../../types/polymorphic';
 
 // Context for the Pulse component
 interface PulseContextValue extends UsePulseReturn {}
@@ -212,11 +212,12 @@ export type EffectProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Effect component
-const Effect = forwardRef<any, any>(
-  <C extends React.ElementType = 'div'>(
-    { as, children, index, ...props }: EffectProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Effect = polymorphicForwardRef<'div', { index: number }>(
+  function Effect<C extends React.ElementType = 'div'>(
+    props: PolymorphicComponentPropsWithRef<C, { index: number }>,
+    ref: React.ForwardedRef<React.ElementRef<C>>
+  ) {
+    const { as, children, index, ...restProps } = props;
     const Component = as || 'div';
     const { 
       getEffectProps, 
@@ -249,11 +250,11 @@ const Effect = forwardRef<any, any>(
     
     return (
       <Component 
-        {...props} 
+        {...restProps} 
         ref={ref}
         style={{
           ...getAnimationStyles(),
-          ...props.style,
+          ...restProps.style,
         }}
       >
         {children}

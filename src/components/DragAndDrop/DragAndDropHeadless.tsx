@@ -1,6 +1,6 @@
 import React, { createContext, useContext, forwardRef } from 'react';
 import { useDragAndDrop, UseDragAndDropReturn, DragData, DragPosition, DragOperation } from './useDragAndDrop';
-import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../types/polymorphic';
+import { PolymorphicComponentPropsWithRef, PolymorphicRef, polymorphicForwardRef } from '../../types/polymorphic';
 
 // Context for the DragAndDrop system
 const DragAndDropContext = createContext<UseDragAndDropReturn | null>(null);
@@ -26,14 +26,16 @@ export type ProviderProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Provider component
-const Provider = forwardRef(
-  <C extends React.ElementType = 'div'>(
+const Provider = polymorphicForwardRef<'div', {
+  children: React.ReactNode;
+}>(
+  (
     {
       as,
       children,
       ...props
-    }: ProviderProps<C>,
-    ref: PolymorphicRef<C>
+    },
+    ref
   ) => {
     const Component = as || 'div';
     const dragAndDrop = useDragAndDrop();
@@ -88,8 +90,17 @@ export type DraggableProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Draggable component
-const Draggable = forwardRef(
-  <C extends React.ElementType = 'div'>(
+const Draggable = polymorphicForwardRef<'div', {
+  data: DragData;
+  disabled?: boolean;
+  allowedOperations?: DragOperation[];
+  onDragStart?: (data: DragData, position: DragPosition) => void;
+  onDragMove?: (data: DragData, position: DragPosition) => void;
+  onDragEnd?: (data: DragData, position: DragPosition, operation: DragOperation) => void;
+  onDragCancel?: (data: DragData) => void;
+  children: React.ReactNode | ((props: { isDragging: boolean; position: DragPosition }) => React.ReactNode);
+}>(
+  (
     {
       as,
       data,
@@ -101,8 +112,8 @@ const Draggable = forwardRef(
       onDragCancel,
       children,
       ...props
-    }: DraggableProps<C>,
-    ref: PolymorphicRef<C>
+    },
+    ref
   ) => {
     const Component = as || 'div';
     const { createDraggable } = useDragAndDropContext();
@@ -161,8 +172,16 @@ export type DroppableProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Droppable component
-const Droppable = forwardRef(
-  <C extends React.ElementType = 'div'>(
+const Droppable = polymorphicForwardRef<'div', {
+  accept: string | string[];
+  disabled?: boolean;
+  onDragOver?: (data: DragData, position: DragPosition) => void;
+  onDragLeave?: (data: DragData) => void;
+  onDrop?: (data: DragData, position: DragPosition, operation: DragOperation) => void;
+  canDrop?: (data: DragData) => boolean;
+  children: React.ReactNode | ((props: { isOver: boolean; canDrop: boolean; dragData: DragData | null }) => React.ReactNode);
+}>(
+  (
     {
       as,
       accept,
@@ -173,8 +192,8 @@ const Droppable = forwardRef(
       canDrop,
       children,
       ...props
-    }: DroppableProps<C>,
-    ref: PolymorphicRef<C>
+    },
+    ref
   ) => {
     const Component = as || 'div';
     const { createDroppable } = useDragAndDropContext();
@@ -213,14 +232,21 @@ export type DragLayerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // DragLayer component
-const DragLayer = forwardRef(
-  <C extends React.ElementType = 'div'>(
+const DragLayer = polymorphicForwardRef<'div', {
+  children: (props: {
+    isDragging: boolean;
+    dragData: DragData | null;
+    position: DragPosition;
+    currentOperation: DragOperation;
+  }) => React.ReactNode;
+}>(
+  (
     {
       as,
       children,
       ...props
-    }: DragLayerProps<C>,
-    ref: PolymorphicRef<C>
+    },
+    ref
   ) => {
     const Component = as || 'div';
     const { dragState } = useDragAndDropContext();

@@ -55,6 +55,14 @@ export interface UsePasswordInputReturn extends UseTextInputReturn {
     hasSpecialChars: boolean;
   };
   /**
+   * Whether to show password strength indicator
+   */
+  showStrengthIndicator: boolean;
+  /**
+   * Whether to show password requirements
+   */
+  showRequirements: boolean;
+  /**
    * Get props for the visibility toggle button
    */
   getToggleButtonProps: <E extends HTMLButtonElement = HTMLButtonElement>(
@@ -162,10 +170,10 @@ export function usePasswordInput({
   // Get props for the visibility toggle button
   const getToggleButtonProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ) => {
+  ): React.ButtonHTMLAttributes<E> => {
     return {
       ...props,
-      type: 'button',
+      type: 'button' as const,
       onClick: (event: React.MouseEvent<E>) => {
         toggleVisibility();
         props?.onClick?.(event as any);
@@ -212,6 +220,8 @@ export function usePasswordInput({
     strength,
     meetsRequirements,
     requirementsMet,
+    showStrengthIndicator,
+    showRequirements,
     getToggleButtonProps,
     getStrengthIndicatorProps,
   };

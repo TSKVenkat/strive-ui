@@ -114,6 +114,14 @@ export interface UseAutocompleteProps<T extends AutocompleteOption = Autocomplet
    */
   filterFunction?: (option: AutocompleteOption, inputValue: string) => boolean;
   /**
+   * Custom render function for options
+   */
+  renderOption?: (option: AutocompleteOption, state: {
+    isSelected: boolean;
+    isHighlighted: boolean;
+    isDisabled: boolean;
+  }) => React.ReactNode;
+  /**
    * Minimum number of characters to start showing suggestions
    */
   minChars?: number;
@@ -314,6 +322,7 @@ export function useAutocomplete<T extends AutocompleteOption = AutocompleteOptio
   selectOnFocus = false,
   filterOptions = true,
   filterFunction,
+  renderOption,
   minChars = 1,
   maxSuggestions,
   debounceTime = 200,
@@ -756,12 +765,12 @@ export function useAutocomplete<T extends AutocompleteOption = AutocompleteOptio
   
   // Helper function to merge refs
   const mergeRefs = <T,>(...refs: (React.Ref<T> | undefined)[]) => {
-    return (value: T) => {
+    return (value: T | null) => {
       refs.forEach((ref) => {
         if (typeof ref === 'function') {
           ref(value);
         } else if (ref && 'current' in ref) {
-          (ref as React.MutableRefObject<T>).current = value;
+          (ref as React.MutableRefObject<T | null>).current = value;
         }
       });
     };
@@ -771,9 +780,9 @@ export function useAutocomplete<T extends AutocompleteOption = AutocompleteOptio
   const getInputProps = useCallback(<E extends HTMLInputElement = HTMLInputElement>(
     props?: React.InputHTMLAttributes<E> & { ref?: React.Ref<E> }
   ): React.InputHTMLAttributes<E> & { ref: React.Ref<E> } => {
-    const inputProps: React.InputHTMLAttributes<E> & { ref: React.Ref<E> } = {
+    const inputProps = {
       ...props,
-      ref: mergeRefs(inputRef, props?.ref),
+      ref: mergeRefs(inputRef as React.RefObject<E>, props?.ref),
       role: 'combobox',
       'aria-expanded': isOpen,
       'aria-controls': isOpen ? `${autocompleteId}-dropdown` : undefined,
@@ -796,8 +805,8 @@ export function useAutocomplete<T extends AutocompleteOption = AutocompleteOptio
           open();
         }
       },
-      'data-loading': loading ? '' : undefined,
-    };
+      ...(loading && { 'data-loading': '' }),
+    } as React.InputHTMLAttributes<E> & { ref: React.Ref<E> };
     return inputProps;
   }, [
     autocompleteId,
@@ -881,8 +890,8 @@ export function useAutocomplete<T extends AutocompleteOption = AutocompleteOptio
   // Get props for the clear button
   const getClearButtonProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E> & { ref?: React.Ref<E> }
-  ): React.ButtonHTMLAttributes<E> & { ref: React.Ref<E> } => {
-    const clearButtonProps: React.ButtonHTMLAttributes<E> & { ref: React.Ref<E> } = {
+  ): React.ButtonHTMLAttributes<E> & { ref?: React.Ref<E> } => {
+    const clearButtonProps: React.ButtonHTMLAttributes<E> & { ref?: React.Ref<E> } = {
       ...props,
       type: 'button',
       'aria-label': 'Clear selection',
@@ -900,7 +909,7 @@ export function useAutocomplete<T extends AutocompleteOption = AutocompleteOptio
   ): React.HTMLAttributes<E> & { ref: React.Ref<E> } => {
     const dropdownProps: React.HTMLAttributes<E> & { ref: React.Ref<E> } = {
       ...props,
-      ref: mergeRefs(dropdownRef, props?.ref),
+      ref: mergeRefs(dropdownRef as React.RefObject<E>, props?.ref),
       role: 'listbox',
       id: `${autocompleteId}-dropdown`,
       'aria-labelledby': autocompleteId,

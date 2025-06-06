@@ -54,13 +54,13 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 
 // Container component
 const Container = forwardRef<any, any>(
-  <C extends React.ElementType = 'div'>(
+  (
     {
       as,
       children,
       ...props
-    }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
+    }: any,
+    ref: any
   ) => {
     const Component = as || 'div';
     const { getContainerProps } = useSortableListContext();
@@ -77,9 +77,11 @@ const Container = forwardRef<any, any>(
       </Component>
     );
   }
-);
+) as <C extends React.ElementType = 'div'>(
+  props: ContainerProps<C> & { ref?: PolymorphicRef<C> }
+) => React.ReactElement;
 
-Container.displayName = 'SortableListHeadless.Container';
+(Container as any).displayName = 'SortableListHeadless.Container';
 
 // Item component props
 export interface ItemProps<T extends SortableItem = SortableItem> {
@@ -180,13 +182,13 @@ export type EmptyProps<C extends React.ElementType> = PolymorphicComponentPropsW
 
 // Empty component
 const Empty = forwardRef<any, any>(
-  <C extends React.ElementType = 'div'>(
+  (
     {
       as,
       children,
       ...props
-    }: EmptyProps<C>,
-    ref: PolymorphicRef<C>
+    }: any,
+    ref: any
   ) => {
     const Component = as || 'div';
     const { isEmpty } = useSortableListContext();
@@ -204,7 +206,9 @@ const Empty = forwardRef<any, any>(
       </Component>
     );
   }
-);
+) as <C extends React.ElementType = 'div'>(
+  props: EmptyProps<C> & { ref?: PolymorphicRef<C> }
+) => React.ReactElement;
 
 // Export all components
 export const SortableListHeadless = {

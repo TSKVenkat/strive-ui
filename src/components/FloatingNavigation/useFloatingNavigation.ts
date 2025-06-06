@@ -172,11 +172,11 @@ export interface UseFloatingNavigationReturn {
   /**
    * Get props for the container element
    */
-  getContainerProps: <E extends HTMLElement = HTMLDivElement>(props?: React.HTMLProps<E>) => {
-    ref: React.RefObject<HTMLElement>;
+  getContainerProps: <E extends HTMLElement = HTMLDivElement>(props?: React.HTMLProps<E>) => React.HTMLProps<E> & {
+    ref: React.RefObject<E>;
     style: React.CSSProperties;
-    onMouseDown?: (event: React.MouseEvent) => void;
-    onTouchStart?: (event: React.TouchEvent) => void;
+    onMouseDown?: (event: React.MouseEvent<E>) => void;
+    onTouchStart?: (event: React.TouchEvent<E>) => void;
   };
   /**
    * Get props for a navigation item

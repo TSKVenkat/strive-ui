@@ -312,7 +312,7 @@ export const EmailLayout = forwardRef<HTMLDivElement, EmailLayoutProps>(
             width="100%"
             cellPadding="0"
             cellSpacing="0"
-            border="0"
+            border={0}
             style={{ backgroundColor: themeColors.backgroundColor }}
           >
             <tr>
@@ -321,7 +321,7 @@ export const EmailLayout = forwardRef<HTMLDivElement, EmailLayoutProps>(
                   width={typeof width === 'number' ? width : width}
                   cellPadding="0"
                   cellSpacing="0"
-                  border="0"
+                  border={0}
                   style={{ maxWidth: typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth }}
                 >
                   {showHeader && (
@@ -470,7 +470,7 @@ export const EmailSection = forwardRef<HTMLDivElement, EmailSectionProps>(
           width="100%"
           cellPadding="0"
           cellSpacing="0"
-          border="0"
+          border={0}
           style={sectionStyle}
           {...rest as any}
         >
@@ -621,7 +621,7 @@ export const EmailButton = forwardRef<HTMLAnchorElement, EmailButtonProps>(
         width="100%"
         cellPadding="0"
         cellSpacing="0"
-        border="0"
+        border={0}
         className={`strive-email-button ${className}`}
       >
         <tr>
