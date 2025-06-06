@@ -1,6 +1,8 @@
 export { default as TourGuideHeadless } from './TourGuideHeadless';
 export { 
-  useTourGuide,
+  useTourGuide
+} from './useTourGuide';
+export type {
   UseTourGuideReturn,
   TourOptions,
   TourStep

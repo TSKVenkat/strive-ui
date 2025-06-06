@@ -239,48 +239,84 @@ export interface UseMultiSelectReturn {
    * Get props for the trigger element
    */
   getTriggerProps: <E extends HTMLButtonElement = HTMLButtonElement>(
-    props?: React.ButtonHTMLAttributes<E>
-  ) => React.ButtonHTMLAttributes<E>;
+    props?: React.ButtonHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ) => ButtonPropsWithRef<E>;
   /**
    * Get props for the dropdown element
    */
   getDropdownProps: <E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ) => HTMLPropsWithRef<E>;
   /**
    * Get props for an option element
    */
   getOptionProps: <E extends HTMLDivElement = HTMLDivElement>(
     option: SelectOption,
-    props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ) => HTMLPropsWithRef<E>;
   /**
    * Get props for the input element
    */
   getInputProps: <E extends HTMLInputElement = HTMLInputElement>(
-    props?: React.InputHTMLAttributes<E>
-  ) => React.InputHTMLAttributes<E>;
+    props?: React.InputHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ) => InputPropsWithRef<E>;
   /**
    * Get props for the clear button
    */
   getClearButtonProps: <E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ) => React.ButtonHTMLAttributes<E>;
+  ) => React.ButtonHTMLAttributes<E> & {
+    'data-disabled'?: string;
+  };
   /**
    * Get props for a selected item element
    */
   getSelectedItemProps: <E extends HTMLDivElement = HTMLDivElement>(
     option: SelectOption,
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & {
+    'data-disabled'?: string;
+  };
   /**
    * Get props for a selected item remove button
    */
   getSelectedItemRemoveProps: <E extends HTMLButtonElement = HTMLButtonElement>(
     option: SelectOption,
     props?: React.ButtonHTMLAttributes<E>
-  ) => React.ButtonHTMLAttributes<E>;
+  ) => React.ButtonHTMLAttributes<E> & {
+    'data-disabled'?: string;
+  };
 }
+
+// Extended types to include ref and data attributes
+type ButtonPropsWithRef<E extends HTMLButtonElement = HTMLButtonElement> = 
+  React.ButtonHTMLAttributes<E> & {
+    ref?: React.Ref<E>;
+    'data-disabled'?: string;
+    'data-readonly'?: string;
+    'data-required'?: string;
+    'data-open'?: string;
+    'data-focused'?: string;
+    'data-empty'?: string;
+  };
+
+type HTMLPropsWithRef<E extends HTMLElement = HTMLElement> = 
+  React.HTMLAttributes<E> & {
+    ref?: React.Ref<E>;
+    'data-disabled'?: string;
+    'data-readonly'?: string;
+    'data-selected'?: string;
+    'data-highlighted'?: string;
+    'data-open'?: string;
+    'data-empty'?: string;
+  };
+
+type InputPropsWithRef<E extends HTMLInputElement = HTMLInputElement> = 
+  React.InputHTMLAttributes<E> & {
+    ref?: React.Ref<E>;
+    'data-disabled'?: string;
+    'data-readonly'?: string;
+  };
 
 /**
  * Hook for creating multi-select functionality.
@@ -309,7 +345,7 @@ export function useMultiSelect({
   onHighlight,
   onFocus,
   onBlur,
-}: UseMultiSelectProps = {}): UseMultiSelectReturn {
+}: UseMultiSelectProps): UseMultiSelectReturn {
   // Generate a unique ID if none is provided
   const generatedId = useId();
   const selectId = id || `multi-select-${generatedId}`;
@@ -640,12 +676,12 @@ export function useMultiSelect({
   
   // Helper function to merge refs
   const mergeRefs = <T,>(...refs: (React.Ref<T> | undefined)[]) => {
-    return (value: T) => {
+    return (value: T | null) => {
       refs.forEach((ref) => {
         if (typeof ref === 'function') {
           ref(value);
         } else if (ref && 'current' in ref) {
-          (ref as React.MutableRefObject<T>).current = value;
+          (ref as React.MutableRefObject<T | null>).current = value;
         }
       });
     };
@@ -653,11 +689,11 @@ export function useMultiSelect({
   
   // Get props for the trigger element
   const getTriggerProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
-    props?: React.ButtonHTMLAttributes<E>
-  ): React.ButtonHTMLAttributes<E> => {
+    props?: React.ButtonHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): ButtonPropsWithRef<E> => {
     return {
       ...props,
-      ref: mergeRefs(triggerRef, props?.ref as React.Ref<E>),
+      ref: mergeRefs(triggerRef, props?.ref),
       id: `${selectId}-trigger`,
       type: 'button',
       role: 'combobox',
@@ -763,11 +799,11 @@ export function useMultiSelect({
   
   // Get props for the dropdown element
   const getDropdownProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): HTMLPropsWithRef<E> => {
     return {
       ...props,
-      ref: mergeRefs(dropdownRef, props?.ref as React.Ref<E>),
+      ref: mergeRefs(dropdownRef, props?.ref),
       id: `${selectId}-dropdown`,
       role: 'listbox',
       'aria-multiselectable': 'true',
@@ -781,8 +817,8 @@ export function useMultiSelect({
   // Get props for an option element
   const getOptionProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     option: SelectOption,
-    props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): HTMLPropsWithRef<E> => {
     const isSelected = selectedValues.includes(option.value);
     const isHighlighted = highlightedOption?.value === option.value;
     
@@ -842,11 +878,11 @@ export function useMultiSelect({
   
   // Get props for the input element
   const getInputProps = useCallback(<E extends HTMLInputElement = HTMLInputElement>(
-    props?: React.InputHTMLAttributes<E>
-  ): React.InputHTMLAttributes<E> => {
+    props?: React.InputHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): InputPropsWithRef<E> => {
     return {
       ...props,
-      ref: mergeRefs(inputRef, props?.ref as React.Ref<E>),
+      ref: mergeRefs(inputRef, props?.ref),
       id: `${selectId}-input`,
       role: 'searchbox',
       'aria-autocomplete': 'list',
@@ -916,7 +952,9 @@ export function useMultiSelect({
   // Get props for the clear button
   const getClearButtonProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ): React.ButtonHTMLAttributes<E> => {
+  ): React.ButtonHTMLAttributes<E> & {
+    'data-disabled'?: string;
+  } => {
     return {
       ...props,
       type: 'button',
@@ -935,7 +973,9 @@ export function useMultiSelect({
   const getSelectedItemProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     option: SelectOption,
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & {
+    'data-disabled'?: string;
+  } => {
     return {
       ...props,
       role: 'listitem',
@@ -948,7 +988,9 @@ export function useMultiSelect({
   const getSelectedItemRemoveProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
     option: SelectOption,
     props?: React.ButtonHTMLAttributes<E>
-  ): React.ButtonHTMLAttributes<E> => {
+  ): React.ButtonHTMLAttributes<E> & {
+    'data-disabled'?: string;
+  } => {
     return {
       ...props,
       type: 'button',

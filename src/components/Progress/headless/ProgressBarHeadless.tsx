@@ -59,7 +59,7 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
+const Container = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: ContainerProps<C>,
     ref: PolymorphicRef<C>
@@ -116,7 +116,7 @@ export type TrackProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Track component
-const Track = forwardRef(
+const Track = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: TrackProps<C>,
     ref: PolymorphicRef<C>
@@ -154,7 +154,7 @@ export type BufferProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Buffer component
-const Buffer = forwardRef(
+const Buffer = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: BufferProps<C>,
     ref: PolymorphicRef<C>
@@ -203,7 +203,7 @@ export type BarProps<C extends React.ElementType> = PolymorphicComponentPropsWit
 >;
 
 // Bar component
-const Bar = forwardRef(
+const Bar = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: BarProps<C>,
     ref: PolymorphicRef<C>
@@ -277,7 +277,7 @@ export type LabelProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Label component
-const Label = forwardRef(
+const Label = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: LabelProps<C>,
     ref: PolymorphicRef<C>

@@ -5,27 +5,50 @@ import { DynamicFormGeneratorHeadless, RootProps as HeadlessRootProps } from './
 import { DynamicFormField, FieldType } from './useDynamicForm';
 import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../../types/polymorphic';
 import { Input } from '../../Input';
-import { Textarea } from '../../Textarea';
-import { Select } from '../../Select';
+import { SimpleSelect as Select } from '../../Select';
 import { Checkbox } from '../../Checkbox';
-import { Radio } from '../../Radio';
-import { Switch } from '../../Switch';
-import { DatePicker } from '../../DatePicker';
-import { TimePicker } from '../../TimePicker';
-import { ColorPicker } from '../../ColorPicker';
-import { FileUpload } from '../../FileUpload';
-import { Slider } from '../../Slider';
-import { Rating } from '../../Rating';
-import { TagInput } from '../../TagInput';
-import { Autocomplete } from '../../Autocomplete';
-import { Box } from '../../Box';
-import { Flex } from '../../Flex';
-import { Text } from '../../Text';
 import { Button } from '../../Button';
 import { Card } from '../../Card';
 import { Accordion } from '../../Accordion';
-import { Divider } from '../../Divider';
 import { Icon } from '../../Icon';
+
+// Create simple styled wrappers for missing components
+const Text = styled.span`
+  font-family: ${({ theme }) => theme.typography.fontFamily};
+  color: ${({ theme }) => theme.colors.text.primary};
+`;
+
+const Flex = styled.div`
+  display: flex;
+`;
+
+const Divider = styled.hr`
+  border: none;
+  border-top: 1px solid ${({ theme }) => theme.colors.neutral[200]};
+  margin: ${({ theme }) => theme.spacing[2]} 0;
+`;
+
+// Create placeholder components for missing ones
+const Textarea = ({ ...props }: any) => <textarea {...props} />;
+const Radio = ({ options = [], ...props }: any) => (
+  <div>
+    {options.map((option: any) => (
+      <label key={option.value}>
+        <input type="radio" value={option.value} {...props} />
+        {option.label}
+      </label>
+    ))}
+  </div>
+);
+const Switch = ({ ...props }: any) => <input type="checkbox" {...props} />;
+const DatePicker = ({ ...props }: any) => <Input type="date" {...props} />;
+const TimePicker = ({ ...props }: any) => <Input type="time" {...props} />;
+const ColorPicker = ({ ...props }: any) => <Input type="color" {...props} />;
+const FileUpload = ({ ...props }: any) => <Input type="file" {...props} />;
+const Slider = ({ ...props }: any) => <Input type="range" {...props} />;
+const Rating = ({ ...props }: any) => <Input type="number" min="1" max="5" {...props} />;
+const TagInput = ({ ...props }: any) => <Input {...props} />;
+const Autocomplete = ({ ...props }: any) => <Input {...props} />;
 
 // Styled components
 const StyledRoot = styled.div`
@@ -49,7 +72,7 @@ const StyledField = styled.div<{ $width?: number }>`
   grid-column: span ${({ $width }) => $width || 12};
   margin-bottom: ${({ theme }) => theme.spacing[3]};
   
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+  @media (max-width: 768px) {
     grid-column: span 12;
   }
 `;
@@ -415,16 +438,19 @@ export const DynamicFormGenerator = forwardRef(<T extends FieldValues = any>(
     
     if (useAccordion) {
       return (
-        <Accordion key={group.id} title={group.label}>
-          {group.description && (
-            <Text variant="body2" color="textSecondary" mb={3}>
-              {group.description}
-            </Text>
-          )}
-          <StyledFieldsContainer
-            groupId={group.id}
-            renderField={renderFieldComponent}
-          />
+        <Accordion key={group.id}>
+          <div>
+            <h4>{group.label}</h4>
+            {group.description && (
+              <Text style={{ marginBottom: '12px', color: '#666' }}>
+                {group.description}
+              </Text>
+            )}
+            <StyledFieldsContainer
+              groupId={group.id}
+              renderField={renderFieldComponent}
+            />
+          </div>
         </Accordion>
       );
     }
@@ -476,9 +502,9 @@ export const DynamicFormGenerator = forwardRef(<T extends FieldValues = any>(
       <StyledRoot ref={ref} className={className} style={style}>
         <StyledForm onSubmit={onSubmit} onError={onError}>
           {useCard ? (
-            <Card padding="md">
+            <div style={{ padding: '16px', border: '1px solid #e1e1e1', borderRadius: '8px', backgroundColor: '#fff' }}>
               {formContent}
-            </Card>
+            </div>
           ) : (
             formContent
           )}

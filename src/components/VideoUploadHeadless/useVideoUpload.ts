@@ -390,7 +390,7 @@ export function useVideoUpload({
       });
       
       // Generate thumbnails at different times
-      const thumbnailPromises = [];
+      const thumbnailPromises: Promise<string>[] = [];
       for (let i = 0; i < thumbnailCount; i++) {
         const time = i === 0 ? 0 : (file.duration! * i) / thumbnailCount;
         thumbnailPromises.push(generateThumbnail(file, time));
@@ -726,7 +726,7 @@ export function useVideoUpload({
   // Get props for the container element
   const getContainerProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { 'data-disabled'?: string; 'data-readonly'?: string; 'data-required'?: string } => {
     return {
       ...props,
       id: uploadId,
@@ -738,8 +738,8 @@ export function useVideoUpload({
   
   // Get props for the input element
   const getInputProps = useCallback(<E extends HTMLInputElement = HTMLInputElement>(
-    props?: React.InputHTMLAttributes<E>
-  ): React.InputHTMLAttributes<E> => {
+    props?: React.InputHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.InputHTMLAttributes<E> & { ref: React.RefCallback<E> } => {
     return {
       ...props,
       ref: mergeRefs(inputRef, props?.ref),
@@ -760,8 +760,8 @@ export function useVideoUpload({
   
   // Get props for the drop zone element
   const getDropZoneProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.HTMLAttributes<E> & { ref: React.RefCallback<E>; 'data-disabled'?: string; 'data-readonly'?: string } => {
     return {
       ...props,
       ref: mergeRefs(dropZoneRef, props?.ref),

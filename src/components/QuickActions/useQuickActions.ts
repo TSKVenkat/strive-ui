@@ -443,7 +443,7 @@ export function useQuickActions({
       tabIndex: -1,
       onKeyDown: (event: React.KeyboardEvent) => {
         handleKeyDown(event);
-        props?.onKeyDown?.(event);
+        props?.onKeyDown?.(event as any);
       },
     };
   }, [handleKeyDown]);

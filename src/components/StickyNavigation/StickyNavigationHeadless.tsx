@@ -158,7 +158,7 @@ export const StickyNavigationHeadless = forwardRef(function StickyNavigationHead
     animateSticky,
     hideOnScroll,
     scrollThreshold,
-    ariaLabel = 'Sticky navigation',
+    ariaLabel = 'Sticky navigation' as any,
     ...props 
   }: Omit<StickyNavigationHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>

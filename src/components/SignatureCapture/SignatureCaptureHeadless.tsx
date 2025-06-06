@@ -53,11 +53,8 @@ export type CanvasProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Canvas component
-const Canvas = forwardRef(
-  <C extends React.ElementType = 'canvas'>(
-    { as, children, ...props }: CanvasProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Canvas = forwardRef<any, any>(
+  ({ as, children, ...props }, ref) => {
     const Component = as || 'canvas';
     const { getSignaturePadProps } = useSignatureCaptureContext();
     
@@ -96,11 +93,8 @@ export type ControlsProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Controls component
-const Controls = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ControlsProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Controls = forwardRef<any, any>(
+  ({ as, children, ...props }, ref) => {
     const Component = as || 'div';
     const { 
       clear, 
@@ -139,11 +133,8 @@ export type ExportProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Export component
-const Export = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ExportProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Export = forwardRef<any, any>(
+  ({ as, children, ...props }, ref) => {
     const Component = as || 'div';
     const { toDataURL, toSVG, isEmpty } = useSignatureCaptureContext();
     
@@ -182,11 +173,8 @@ export type PreviewProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Preview component
-const Preview = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, type = 'image/png', encoderOptions = 1, children, ...props }: PreviewProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Preview = forwardRef<any, any>(
+  ({ as, type = 'image/png', encoderOptions = 1, children, ...props }, ref) => {
     const Component = as || 'div';
     const { toDataURL, isEmpty } = useSignatureCaptureContext();
     
@@ -224,11 +212,8 @@ export type EmptyProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Empty component
-const Empty = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: EmptyProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Empty = forwardRef<any, any>(
+  ({ as, children, ...props }, ref) => {
     const Component = as || 'div';
     const { isEmpty } = useSignatureCaptureContext();
     
@@ -258,11 +243,8 @@ export type NotEmptyProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // NotEmpty component
-const NotEmpty = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: NotEmptyProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const NotEmpty = forwardRef<any, any>(
+  ({ as, children, ...props }, ref) => {
     const Component = as || 'div';
     const { isEmpty } = useSignatureCaptureContext();
     

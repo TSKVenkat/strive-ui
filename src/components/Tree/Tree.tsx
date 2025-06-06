@@ -223,7 +223,7 @@ const TreeNodeComponent: React.FC<TreeNodeComponentProps> = ({
     const newExpanded = !isExpanded;
     
     if (newExpanded) {
-      setExpandedNodes(prev => new Set([...prev, node.id]));
+      setExpandedNodes(prev => new Set([...Array.from(prev), node.id]));
     } else {
       setExpandedNodes(prev => {
         const next = new Set(prev);
@@ -306,9 +306,9 @@ const TreeNodeComponent: React.FC<TreeNodeComponentProps> = ({
         <AnimatePresence initial={false}>
           {isExpanded && (
             <ChildrenContainer
-              initial={animate ? { height: 0, opacity: 0 } : false}
-              animate={animate ? { height: 'auto', opacity: 1 } : false}
-              exit={animate ? { height: 0, opacity: 0 } : false}
+              initial={animate ? { height: 0, opacity: 0 } : undefined}
+              animate={animate ? { height: 'auto', opacity: 1 } : undefined}
+              exit={animate ? { height: 0, opacity: 0 } : undefined}
               transition={{ duration: 0.2 }}
             >
               <TreeList showLines={showLines} role="group">

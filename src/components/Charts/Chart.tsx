@@ -36,7 +36,7 @@ export interface ChartProps {
   /**
    * Chart type
    */
-  type?: 'line' | 'bar' | 'area' | 'pie' | 'donut' | 'radar';
+  type?: 'line' | 'bar' | 'area' | 'pie' | 'donut' | 'radar' | 'gauge';
   /**
    * Chart width
    */

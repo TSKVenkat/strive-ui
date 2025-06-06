@@ -496,7 +496,7 @@ export function useSelectMenu(options: SelectMenuOptions = {}): UseSelectMenuRet
       setInternalValue([]);
     }
     
-    onChange?.(newValue, multiple ? [] : null);
+    onChange?.(newValue, multiple ? [] : undefined);
   }, [isControlled, onChange, multiple]);
 
   // Create new option
@@ -590,19 +590,20 @@ export function useSelectMenu(options: SelectMenuOptions = {}): UseSelectMenuRet
   }, [disabled, dropdownMenuProps, multiple, valueArray, searchValue, setValue]);
 
   // Get container props
-  const getContainerProps = useCallback(() => {
+  const getContainerProps = useCallback(<T extends HTMLElement = HTMLElement>() => {
     return {
-      ref: containerRef,
+      ref: containerRef as React.RefObject<T>,
       onKeyDown: handleKeyDown,
     };
   }, [handleKeyDown]);
 
   // Get trigger props
-  const getTriggerProps = useCallback(() => {
+  const getTriggerProps = useCallback(<T extends HTMLElement = HTMLElement>() => {
     const triggerProps = dropdownMenuProps.getTriggerProps();
     
     return {
       ...triggerProps,
+      ref: triggerProps.ref as React.RefObject<T>,
       'aria-disabled': disabled,
       'aria-required': required,
       'aria-invalid': !!error,
@@ -611,11 +612,12 @@ export function useSelectMenu(options: SelectMenuOptions = {}): UseSelectMenuRet
   }, [dropdownMenuProps, disabled, required, error]);
 
   // Get menu props
-  const getMenuProps = useCallback(() => {
+  const getMenuProps = useCallback(<T extends HTMLElement = HTMLElement>() => {
     const contentProps = dropdownMenuProps.getContentProps();
     
     return {
       ...contentProps,
+      ref: contentProps.ref as React.RefObject<T>,
       role: 'listbox',
       'aria-multiselectable': multiple,
     };
@@ -678,7 +680,7 @@ export function useSelectMenu(options: SelectMenuOptions = {}): UseSelectMenuRet
         }
       },
       placeholder: searchPlaceholder,
-      'aria-autocomplete': 'list',
+      'aria-autocomplete': 'list' as const,
       'aria-controls': 'select-menu-options',
       'aria-activedescendant': dropdownMenuProps.highlightedIndex >= 0 
         ? `option-${filteredOptions()[dropdownMenuProps.highlightedIndex]?.value}` 

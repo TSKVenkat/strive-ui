@@ -132,25 +132,23 @@ export type StepperProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Stepper component
-const Stepper = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
-      as,
-      className,
-      style,
-      showConnector = true,
-      showNumbers = true,
-      showIcons = true,
-      showTitles = true,
-      showSubtitles = false,
-      showStatus = true,
-      clickable = true,
-      ...props
-    }: StepperProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { steps, activeStep, direction, goToStep, linear } = useFormWizardContext();
+const Stepper = forwardRef((props: any, ref: any) => {
+  const {
+    as,
+    className,
+    style,
+    showConnector = true,
+    showNumbers = true,
+    showIcons = true,
+    showTitles = true,
+    showSubtitles = false,
+    showStatus = true,
+    clickable = true,
+    ...restProps
+  } = props;
+  const Component = as || 'div';
+  const { steps, activeStep, direction, goToStep } = useFormWizardContext();
+  const linear = (useFormWizardContext() as any).linear || false;
     
     // Handle step click
     const handleStepClick = async (index: number) => {
@@ -178,7 +176,7 @@ const Stepper = forwardRef(
           flexDirection: direction === 'horizontal' ? 'row' : 'column',
           ...style,
         }}
-        {...props}
+        {...restProps}
       >
         {steps.map((step, index) => (
           <div
@@ -291,7 +289,7 @@ const Stepper = forwardRef(
       </Component>
     );
   }
-);
+) as any;
 
 // Step container props
 export type StepContainerProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -305,76 +303,59 @@ export type StepContainerProps<C extends React.ElementType> = PolymorphicCompone
      * Custom styles
      */
     style?: React.CSSProperties;
+    /**
+     * Children of the component
+     */
+    children: React.ReactNode;
   }
 >;
 
-// Step container component
-const StepContainer = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
-      as,
-      className,
-      style,
-      children,
-      ...props
-    }: StepContainerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { activeStep, transition } = useFormWizardContext();
-    
-    // Get animation variants based on the transition type
-    const getVariants = () => {
-      switch (transition) {
-        case 'fade':
-          return {
-            hidden: { opacity: 0 },
-            visible: { opacity: 1 },
-            exit: { opacity: 0 },
-          };
-        case 'slide':
-          return {
-            hidden: { x: 50, opacity: 0 },
-            visible: { x: 0, opacity: 1 },
-            exit: { x: -50, opacity: 0 },
-          };
-        default:
-          return {
-            hidden: {},
-            visible: {},
-            exit: {},
-          };
-      }
-    };
-    
-    return (
-      <Component
-        ref={ref}
-        className={className}
-        style={{
-          position: 'relative',
-          overflow: 'hidden',
-          ...style,
-        }}
-        {...props}
-      >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeStep}
-            initial={transition !== 'none' ? 'hidden' : undefined}
-            animate={transition !== 'none' ? 'visible' : undefined}
-            exit={transition !== 'none' ? 'exit' : undefined}
-            variants={getVariants()}
-            transition={{ duration: 0.3 }}
-            style={{ width: '100%' }}
-          >
-            {children}
-          </motion.div>
-        </AnimatePresence>
-      </Component>
-    );
-  }
-);
+// Step container component  
+const StepContainer = forwardRef((props: any, ref: any) => {
+  const { as, className, style, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { activeStep, transition } = useFormWizardContext();
+  
+  // Get animation variants based on the transition type
+  const getVariants = () => {
+    switch (transition) {
+      case 'fade':
+        return {
+          enter: { opacity: 1, transition: { duration: 0.3 } },
+          exit: { opacity: 0, transition: { duration: 0.3 } },
+        };
+      case 'slide':
+        return {
+          enter: { x: 0, opacity: 1, transition: { duration: 0.3 } },
+          exit: { x: '-100%', opacity: 0, transition: { duration: 0.3 } },
+        };
+      case 'scale':
+        return {
+          enter: { scale: 1, opacity: 1, transition: { duration: 0.3 } },
+          exit: { scale: 0.95, opacity: 0, transition: { duration: 0.3 } },
+        };
+      default:
+        return {};
+    }
+  };
+  
+  return (
+    <Component
+      ref={ref}
+      className={className}
+      style={{
+        position: 'relative',
+        width: '100%',
+        ...style,
+      }}
+      {...restProps}
+    >
+      {children}
+    </Component>
+  );
+  }) as any;
+
+Stepper.displayName = 'FormWizardHeadless.Stepper';
 
 // Step props
 export interface StepProps {
@@ -403,15 +384,19 @@ const Step: React.FC<StepProps> = ({
   className,
   style,
 }) => {
-  const { activeStep } = useFormWizardContext();
+  const { activeStep, getStepStatus } = useFormWizardContext();
   
-  // Only render the active step
   if (index !== activeStep) {
     return null;
   }
   
   return (
-    <div className={className} style={style}>
+    <div
+      className={className}
+      style={style}
+      data-step-index={index}
+      data-step-status={getStepStatus(index)}
+    >
       {children}
     </div>
   );
@@ -461,97 +446,107 @@ export type NavigationProps<C extends React.ElementType> = PolymorphicComponentP
 >;
 
 // Navigation component
-const Navigation = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
-      as,
-      className,
-      style,
-      backText = 'Back',
-      nextText = 'Next',
-      finishText = 'Finish',
-      showBackButton = true,
-      showNextButton = true,
-      renderBackButton,
-      renderNextButton,
-      ...props
-    }: NavigationProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { 
-      prevStep, 
-      nextStep, 
-      isFirstStep, 
-      isLastStep, 
-      allowBackNavigation 
-    } = useFormWizardContext();
-    
-    return (
-      <Component
-        ref={ref}
-        className={className}
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          marginTop: 16,
-          ...style,
-        }}
-        {...props}
-      >
-        {showBackButton && (
-          renderBackButton ? (
+const Navigation = forwardRef((props: any, ref: any) => {
+  const {
+    as,
+    className,
+    style,
+    backText = 'Back',
+    nextText = 'Next',
+    finishText = 'Finish',
+    showBackButton = true,
+    showNextButton = true,
+    renderBackButton,
+    renderNextButton,
+    ...restProps
+  } = props;
+  const Component = as || 'div';
+  const {
+    activeStep,
+    canGoToPreviousStep,
+    canGoToNextStep,
+    goToPreviousStep,
+    goToNextStep,
+    isLastStep,
+  } = useFormWizardContext();
+  const allowBackNavigation = (useFormWizardContext() as any).allowBackNavigation !== false;
+  
+  const handleNext = async () => {
+    const success = await goToNextStep();
+    return success;
+  };
+  
+  return (
+    <Component
+      ref={ref}
+      className={className}
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: '1rem',
+        ...style,
+      }}
+      {...restProps}
+    >
+      {showBackButton && (
+        <div>
+          {renderBackButton ? (
             renderBackButton({
-              onClick: prevStep,
-              disabled: isFirstStep || !allowBackNavigation,
+              onClick: goToPreviousStep,
+              disabled: !allowBackNavigation || !canGoToPreviousStep,
             })
           ) : (
             <button
               type="button"
-              onClick={prevStep}
-              disabled={isFirstStep || !allowBackNavigation}
+              onClick={goToPreviousStep}
+              disabled={!allowBackNavigation || !canGoToPreviousStep}
               style={{
-                padding: '8px 16px',
+                padding: '0.5rem 1rem',
+                border: '1px solid #ccc',
+                borderRadius: '4px',
                 backgroundColor: 'transparent',
-                border: '1px solid var(--neutral-color, #e0e0e0)',
-                borderRadius: 4,
-                cursor: isFirstStep || !allowBackNavigation ? 'not-allowed' : 'pointer',
-                opacity: isFirstStep || !allowBackNavigation ? 0.5 : 1,
+                cursor: (!allowBackNavigation || !canGoToPreviousStep) ? 'not-allowed' : 'pointer',
+                opacity: (!allowBackNavigation || !canGoToPreviousStep) ? 0.5 : 1,
               }}
             >
               {backText}
             </button>
-          )
-        )}
-        
-        {showNextButton && (
-          renderNextButton ? (
+          )}
+        </div>
+      )}
+      
+      {showNextButton && (
+        <div>
+          {renderNextButton ? (
             renderNextButton({
-              onClick: nextStep,
-              disabled: false,
+              onClick: handleNext,
+              disabled: !canGoToNextStep,
               isLastStep,
             })
           ) : (
             <button
               type="button"
-              onClick={nextStep}
+              onClick={handleNext}
+              disabled={!canGoToNextStep}
               style={{
-                padding: '8px 16px',
-                backgroundColor: 'var(--primary-color, #1976d2)',
-                color: 'var(--on-primary-color, white)',
+                padding: '0.5rem 1rem',
                 border: 'none',
-                borderRadius: 4,
-                cursor: 'pointer',
+                borderRadius: '4px',
+                backgroundColor: '#1976d2',
+                color: 'white',
+                cursor: !canGoToNextStep ? 'not-allowed' : 'pointer',
+                opacity: !canGoToNextStep ? 0.5 : 1,
               }}
             >
               {isLastStep ? finishText : nextText}
             </button>
-          )
-        )}
-      </Component>
-    );
-  }
-);
+          )}
+        </div>
+      )}
+    </Component>
+  );
+}) as any;
 
 // Progress props
 export type ProgressProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -577,70 +572,77 @@ export type ProgressProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Progress component
-const Progress = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
-      as,
-      className,
-      style,
-      showPercentage = true,
-      showStepCount = true,
-      ...props
-    }: ProgressProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { progress, activeStep, steps } = useFormWizardContext();
-    
-    return (
-      <Component
-        ref={ref}
-        className={className}
+const Progress = forwardRef((props: any, ref: any) => {
+  const {
+    as,
+    className,
+    style,
+    showPercentage = true,
+    showStepCount = true,
+    ...restProps
+  } = props;
+  const Component = as || 'div';
+  const { steps, activeStep } = useFormWizardContext();
+  
+  const totalSteps = steps.length;
+  const progress = totalSteps > 0 ? ((activeStep + 1) / totalSteps) * 100 : 0;
+  
+  return (
+    <Component
+      ref={ref}
+      className={className}
+      style={{
+        width: '100%',
+        ...style,
+      }}
+      {...restProps}
+    >
+      <div
         style={{
-          marginBottom: 16,
-          ...style,
+          width: '100%',
+          height: '8px',
+          backgroundColor: '#e0e0e0',
+          borderRadius: '4px',
+          overflow: 'hidden',
         }}
-        {...props}
       >
-        {/* Progress bar */}
         <div
           style={{
-            width: '100%',
-            height: 8,
-            backgroundColor: 'var(--neutral-color, #e0e0e0)',
-            borderRadius: 4,
-            overflow: 'hidden',
+            width: `${progress}%`,
+            height: '100%',
+            backgroundColor: '#1976d2',
+            transition: 'width 0.3s ease',
+          }}
+        />
+      </div>
+      
+      {(showPercentage || showStepCount) && (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginTop: '0.5rem',
+            fontSize: '0.875rem',
+            color: '#757575',
           }}
         >
-          <div
-            style={{
-              width: `${progress}%`,
-              height: '100%',
-              backgroundColor: 'var(--primary-color, #1976d2)',
-              transition: 'width 0.3s ease',
-            }}
-          />
+          {showStepCount && (
+            <span>
+              Step {activeStep + 1} of {totalSteps}
+            </span>
+          )}
+          
+          {showPercentage && (
+            <span>
+              {Math.round(progress)}%
+            </span>
+          )}
         </div>
-        
-        {/* Progress info */}
-        {(showPercentage || showStepCount) && (
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginTop: 4,
-              fontSize: 'smaller',
-              color: 'var(--text-secondary-color, #757575)',
-            }}
-          >
-            {showPercentage && <div>{progress}% completed</div>}
-            {showStepCount && <div>Step {activeStep + 1} of {steps.length}</div>}
-          </div>
-        )}
-      </Component>
-    );
-  }
-);
+      )}
+    </Component>
+  );
+}) as any;
 
 // Summary props
 export type SummaryProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -670,91 +672,90 @@ export type SummaryProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Summary component
-const Summary = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
-      as,
-      className,
-      style,
-      showTitles = true,
-      showStatus = true,
-      renderStep,
-      ...props
-    }: SummaryProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { steps, activeStep } = useFormWizardContext();
-    
-    return (
-      <Component
-        ref={ref}
-        className={className}
-        style={{
-          marginBottom: 16,
-          ...style,
-        }}
-        {...props}
-      >
-        <ul
-          style={{
-            listStyle: 'none',
-            padding: 0,
-            margin: 0,
-          }}
-        >
-          {steps.map((step, index) => (
-            <li
-              key={step.id}
-              style={{
-                padding: 8,
-                marginBottom: 4,
-                borderLeft: `3px solid ${
-                  index === activeStep ? 'var(--primary-color, #1976d2)' : 
-                  step.completed ? 'var(--success-color, #4caf50)' : 
-                  step.hasError ? 'var(--error-color, #f44336)' : 
-                  'var(--neutral-color, #e0e0e0)'
-                }`,
-                backgroundColor: index === activeStep ? 'rgba(25, 118, 210, 0.1)' : 'transparent',
-              }}
-            >
-              {renderStep ? (
-                renderStep(step, index, index === activeStep)
-              ) : (
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  {showTitles && (
-                    <div>
-                      <strong>{step.title}</strong>
-                      {step.subtitle && (
-                        <div style={{ fontSize: 'smaller', color: 'var(--text-secondary-color, #757575)' }}>
-                          {step.subtitle}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  
-                  {showStatus && (
-                    <div>
-                      {step.completed && !step.hasError && '✓'}
-                      {step.hasError && '✗'}
-                      {!step.completed && !step.hasError && '○'}
-                    </div>
-                  )}
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-      </Component>
-    );
-  }
-);
+const Summary = forwardRef((props: any, ref: any) => {
+  const {
+    as,
+    className,
+    style,
+    showTitles = true,
+    showStatus = true,
+    renderStep,
+    ...restProps
+  } = props;
+  const Component = as || 'div';
+  const { steps, activeStep, getStepStatus } = useFormWizardContext();
+  
+  return (
+    <Component
+      ref={ref}
+      className={className}
+      style={style}
+      {...restProps}
+    >
+      {steps.map((step, index) => {
+        const isActive = index === activeStep;
+        const status = getStepStatus(index);
+        
+        if (renderStep) {
+          return renderStep(step, index, isActive);
+        }
+        
+        return (
+          <div
+            key={step.id}
+            style={{
+              padding: '1rem',
+              marginBottom: '0.5rem',
+              border: '1px solid #e0e0e0',
+              borderRadius: '4px',
+              backgroundColor: isActive ? '#f5f5f5' : 'transparent',
+            }}
+          >
+            {showTitles && (
+              <div
+                style={{
+                  fontWeight: isActive ? 'bold' : 'normal',
+                  marginBottom: '0.5rem',
+                }}
+              >
+                {step.title}
+                {step.optional && ' (Optional)'}
+              </div>
+            )}
+            
+            {showStatus && (
+              <div
+                style={{
+                  fontSize: '0.875rem',
+                  color: 
+                    status === 'completed' ? '#4caf50' : 
+                    status === 'error' ? '#f44336' : 
+                    status === 'active' ? '#1976d2' : 
+                    '#757575',
+                  textTransform: 'capitalize',
+                }}
+              >
+                Status: {status}
+              </div>
+            )}
+            
+            {step.subtitle && (
+              <div
+                style={{
+                  fontSize: '0.875rem',
+                  color: '#757575',
+                  marginTop: '0.25rem',
+                }}
+              >
+                {step.subtitle}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </Component>
+  );
+}) as any;
 
 // Export all components
 export const FormWizardHeadless = {

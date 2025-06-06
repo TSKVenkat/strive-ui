@@ -1,6 +1,8 @@
 export { default as DrawerHeadless } from './DrawerHeadless';
 export { 
-  useDrawer,
+  useDrawer
+} from './useDrawer';
+export type {
   UseDrawerReturn,
   DrawerOptions,
   DrawerPlacement

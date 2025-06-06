@@ -54,27 +54,23 @@ export type TriggerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Trigger component
-const Trigger = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: TriggerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getTriggerProps } = useBottomSheetContext();
-    
-    const triggerProps = getTriggerProps();
-    
-    return (
-      <Component 
-        {...triggerProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Trigger = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getTriggerProps } = useBottomSheetContext();
+  
+  const triggerProps = getTriggerProps();
+  
+  return (
+    <Component 
+      {...triggerProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 Trigger.displayName = 'BottomSheetHeadless.Trigger';
 
@@ -153,75 +149,56 @@ export type BackdropProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Backdrop component
-const Backdrop = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: BackdropProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getBackdropProps, isOpen } = useBottomSheetContext();
-    
-    if (!isOpen) {
-      return null;
-    }
-    
-    const backdropProps = getBackdropProps();
-    
-    return (
-      <Component 
-        {...backdropProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
+const Backdrop = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { getBackdropProps, isOpen } = useBottomSheetContext();
+  
+  if (!isOpen) {
+    return null;
   }
-);
+  
+  const backdropProps = getBackdropProps();
+  
+  return (
+    <Component 
+      {...backdropProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 Backdrop.displayName = 'BottomSheetHeadless.Backdrop';
 
-// Container component props
-export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
-  {
-    /**
-     * Children of the component
-     */
-    children?: React.ReactNode;
-  }
->;
-
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getContainerProps, isOpen } = useBottomSheetContext();
-    
-    if (!isOpen) {
-      return null;
-    }
-    
-    const containerProps = getContainerProps();
-    
-    return (
-      <Component 
-        {...containerProps} 
-        {...props} 
-        ref={ref}
-        style={{ 
-          ...containerProps.style,
-          ...props.style,
-        }}
-      >
-        {children}
-      </Component>
-    );
+const Container = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { getContainerProps, isOpen } = useBottomSheetContext();
+  
+  if (!isOpen) {
+    return null;
   }
-);
+  
+  const containerProps = getContainerProps();
+  
+  return (
+    <Component 
+      {...containerProps} 
+      {...restProps} 
+      ref={ref}
+      style={{ 
+        ...containerProps.style,
+        ...restProps.style,
+      }}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 Container.displayName = 'BottomSheetHeadless.Container';
 
@@ -237,31 +214,27 @@ export type DragHandleProps<C extends React.ElementType> = PolymorphicComponentP
 >;
 
 // DragHandle component
-const DragHandle = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: DragHandleProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getDragHandleProps } = useBottomSheetContext();
-    
-    const dragHandleProps = getDragHandleProps();
-    
-    return (
-      <Component 
-        {...dragHandleProps} 
-        {...props} 
-        ref={ref}
-        style={{ 
-          ...dragHandleProps.style,
-          ...props.style,
-        }}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const DragHandle = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { getDragHandleProps } = useBottomSheetContext();
+  
+  const dragHandleProps = getDragHandleProps();
+  
+  return (
+    <Component 
+      {...dragHandleProps} 
+      {...restProps} 
+      ref={ref}
+      style={{ 
+        ...dragHandleProps.style,
+        ...restProps.style,
+      }}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 DragHandle.displayName = 'BottomSheetHeadless.DragHandle';
 
@@ -277,32 +250,28 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getContentProps } = useBottomSheetContext();
-    
-    const contentProps = getContentProps();
-    
-    return (
-      <Component 
-        {...contentProps} 
-        {...props} 
-        ref={ref}
-        style={{ 
-          overflow: 'auto',
-          height: '100%',
-          ...props.style,
-        }}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Content = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { getContentProps } = useBottomSheetContext();
+  
+  const contentProps = getContentProps();
+  
+  return (
+    <Component 
+      {...contentProps} 
+      {...restProps} 
+      ref={ref}
+      style={{ 
+        overflow: 'auto',
+        height: '100%',
+        ...restProps.style,
+      }}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 Content.displayName = 'BottomSheetHeadless.Content';
 
@@ -318,23 +287,19 @@ export type HeaderProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Header component
-const Header = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: HeaderProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Header = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 Header.displayName = 'BottomSheetHeadless.Header';
 
@@ -350,28 +315,24 @@ export type BodyProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Body component
-const Body = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: BodyProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-        style={{ 
-          flex: 1,
-          overflow: 'auto',
-          ...props.style,
-        }}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Body = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+      style={{ 
+        flex: 1,
+        overflow: 'auto',
+        ...restProps.style,
+      }}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 Body.displayName = 'BottomSheetHeadless.Body';
 
@@ -387,23 +348,19 @@ export type FooterProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Footer component
-const Footer = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: FooterProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Footer = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 Footer.displayName = 'BottomSheetHeadless.Footer';
 
@@ -419,27 +376,23 @@ export type CloseProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Close component
-const Close = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: CloseProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getCloseButtonProps } = useBottomSheetContext();
-    
-    const closeProps = getCloseButtonProps();
-    
-    return (
-      <Component 
-        {...closeProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Close = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getCloseButtonProps } = useBottomSheetContext();
+  
+  const closeProps = getCloseButtonProps();
+  
+  return (
+    <Component 
+      {...closeProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 Close.displayName = 'BottomSheetHeadless.Close';
 
@@ -455,27 +408,23 @@ export type FullScreenToggleProps<C extends React.ElementType> = PolymorphicComp
 >;
 
 // FullScreenToggle component
-const FullScreenToggle = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: FullScreenToggleProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getFullScreenButtonProps, isFullScreen } = useBottomSheetContext();
-    
-    const fullScreenProps = getFullScreenButtonProps();
-    
-    return (
-      <Component 
-        {...fullScreenProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || (isFullScreen ? 'Exit Full Screen' : 'Full Screen')}
-      </Component>
-    );
-  }
-);
+const FullScreenToggle = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getFullScreenButtonProps } = useBottomSheetContext();
+  
+  const fullScreenToggleProps = getFullScreenButtonProps();
+  
+  return (
+    <Component 
+      {...fullScreenToggleProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 FullScreenToggle.displayName = 'BottomSheetHeadless.FullScreenToggle';
 

@@ -259,7 +259,7 @@ export interface UseLightboxReturn {
   getTriggerProps: () => {
     onClick: () => void;
     'aria-label': string;
-    'aria-haspopup': string;
+    'aria-haspopup': 'dialog';
     'aria-expanded': boolean;
   };
   /**
@@ -713,7 +713,7 @@ export function useLightbox(options: LightboxOptions = {}): UseLightboxReturn {
     return {
       onClick: modalProps.open,
       'aria-label': 'Open lightbox',
-      'aria-haspopup': 'dialog',
+      'aria-haspopup': 'dialog' as const,
       'aria-expanded': modalProps.isOpen,
     };
   }, [modalProps.open, modalProps.isOpen]);

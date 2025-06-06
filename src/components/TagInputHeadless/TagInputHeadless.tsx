@@ -2,7 +2,7 @@ import React, { createContext, useContext, forwardRef } from 'react';
 import { useTagInput, UseTagInputReturn, Tag } from './useTagInput';
 
 // Define the props for the TagInput component
-export interface TagInputProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface TagInputProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /**
    * Default tags (uncontrolled)
    */

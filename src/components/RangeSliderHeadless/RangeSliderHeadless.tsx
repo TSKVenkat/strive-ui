@@ -166,7 +166,11 @@ export type RangeSliderTooltipProps<C extends React.ElementType = 'div'> = Polym
 >;
 
 // Create a context to share the slider state
-interface RangeSliderContextValue extends UseRangeSliderReturn {}
+interface RangeSliderContextValue extends UseRangeSliderReturn {
+  orientation: 'horizontal' | 'vertical';
+  startValue: number;
+  endValue: number;
+}
 
 const RangeSliderContext = createContext<RangeSliderContextValue | null>(null);
 
@@ -245,7 +249,12 @@ export const RangeSliderHeadless = forwardRef(function RangeSliderHeadless<C ext
   const ElementType: React.ElementType = as || 'div';
 
   return (
-    <RangeSliderContext.Provider value={rangeSliderState}>
+    <RangeSliderContext.Provider value={{
+      ...rangeSliderState,
+      orientation: rangeSliderState.orientation || 'horizontal',
+      startValue: rangeSliderState.startValue || rangeSliderState.values[0],
+      endValue: rangeSliderState.endValue || rangeSliderState.values[1]
+    }}>
       <ElementType
         ref={ref}
         className={className}

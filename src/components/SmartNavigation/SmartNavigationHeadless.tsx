@@ -188,7 +188,7 @@ export const SmartNavigationHeadless = forwardRef(function SmartNavigationHeadle
     clickWeightBoost,
     contextRelevanceBoost,
     recencyWindow,
-    ariaLabel = 'Smart navigation',
+    ariaLabel = 'Smart navigation' as any,
     ...props 
   }: Omit<SmartNavigationHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>

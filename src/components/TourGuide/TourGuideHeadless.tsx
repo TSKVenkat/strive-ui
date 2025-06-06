@@ -57,11 +57,10 @@ export type MaskProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Mask component
-const Mask = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: MaskProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Mask = forwardRef<
+  HTMLDivElement,
+  MaskProps<React.ElementType>
+>(({ as, children, ...props }, ref) => {
     const Component = as || 'div';
     const { getMaskProps, showMask } = useTourGuideContext();
     
@@ -97,11 +96,10 @@ export type TooltipProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Tooltip component
-const Tooltip = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: TooltipProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Tooltip = forwardRef<
+  HTMLDivElement,
+  TooltipProps<React.ElementType>
+>(({ as, children, ...props }, ref) => {
     const Component = as || 'div';
     const { 
       getTooltipProps, 
@@ -251,11 +249,10 @@ export type ControlsProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Controls component
-const Controls = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ControlsProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Controls = forwardRef<
+  HTMLDivElement,
+  ControlsProps<React.ElementType>
+>(({ as, children, ...props }, ref) => {
     const Component = as || 'div';
     const { 
       currentStepIndex, 
@@ -297,11 +294,10 @@ export type ProgressProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Progress component
-const Progress = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ProgressProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Progress = forwardRef<
+  HTMLDivElement,
+  ProgressProps<React.ElementType>
+>(({ as, children, ...props }, ref) => {
     const Component = as || 'div';
     const { currentStepIndex, totalSteps } = useTourGuideContext();
     
@@ -334,11 +330,10 @@ export type BadgeProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Badge component
-const Badge = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: BadgeProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Badge = forwardRef<
+  HTMLDivElement,
+  BadgeProps<React.ElementType>
+>(({ as, children, ...props }, ref) => {
     const Component = as || 'div';
     const { currentStepIndex, totalSteps, showStepNumbers } = useTourGuideContext();
     

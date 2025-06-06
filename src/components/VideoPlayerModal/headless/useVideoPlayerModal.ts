@@ -371,10 +371,28 @@ export interface UseVideoPlayerModalReturn {
   /**
    * Get props for the playback rate control
    */
-  getPlaybackRateControlProps: () => {
+  getPlaybackRateControlProps: (rates?: number[]) => {
     value: number;
     onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     'aria-label': string;
+  };
+  /**
+   * Get props for the current time display
+   */
+  getCurrentTimeProps: (format?: (time: number) => string) => {
+    children: string;
+  };
+  /**
+   * Get props for the duration display
+   */
+  getDurationProps: (format?: (time: number) => string) => {
+    children: string;
+  };
+  /**
+   * Get props for the controls container
+   */
+  getControlsProps: () => {
+    role: string;
   };
 }
 
@@ -856,7 +874,7 @@ export function useVideoPlayerModal(options: VideoPlayerModalOptions = {}): UseV
   }, [togglePip, isPip]);
   
   // Get playback rate control props
-  const getPlaybackRateControlProps = useCallback(() => {
+  const getPlaybackRateControlProps = useCallback((rates?: number[]) => {
     return {
       value: playbackRate,
       onChange: (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -865,6 +883,29 @@ export function useVideoPlayerModal(options: VideoPlayerModalOptions = {}): UseV
       'aria-label': 'Playback Rate',
     };
   }, [playbackRate, handlePlaybackRateChange]);
+
+  // Get current time props
+  const getCurrentTimeProps = useCallback((format?: (time: number) => string) => {
+    const formatter = format || formatTime;
+    return {
+      children: formatter(currentTime),
+    };
+  }, [currentTime]);
+
+  // Get duration props
+  const getDurationProps = useCallback((format?: (time: number) => string) => {
+    const formatter = format || formatTime;
+    return {
+      children: formatter(duration),
+    };
+  }, [duration]);
+
+  // Get controls props
+  const getControlsProps = useCallback(() => {
+    return {
+      role: 'group',
+    };
+  }, []);
 
   return {
     isOpen: modalProps.isOpen,
@@ -914,6 +955,9 @@ export function useVideoPlayerModal(options: VideoPlayerModalOptions = {}): UseV
     getFullscreenButtonProps,
     getPipButtonProps,
     getPlaybackRateControlProps,
+    getCurrentTimeProps,
+    getDurationProps,
+    getControlsProps,
   };
 }
 

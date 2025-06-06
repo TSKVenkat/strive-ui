@@ -1,6 +1,8 @@
 export { default as BottomSheetHeadless } from './BottomSheetHeadless';
 export { 
-  useBottomSheet,
+  useBottomSheet
+} from './useBottomSheet';
+export type {
   UseBottomSheetReturn,
   BottomSheetOptions
 } from './useBottomSheet';

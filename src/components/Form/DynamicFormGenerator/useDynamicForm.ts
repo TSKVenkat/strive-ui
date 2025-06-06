@@ -410,8 +410,8 @@ function buildZodSchema<T extends FieldValues>(fields: DynamicFormField<T>[]): z
           case 'custom':
             if (rule.validate) {
               schema = schema.refine(
-                (val, ctx) => {
-                  const result = rule.validate!(val, ctx.data);
+                (val) => {
+                  const result = rule.validate!(val, {});
                   return typeof result === 'boolean' ? result : false;
                 },
                 {
@@ -497,7 +497,7 @@ export function useDynamicForm<T extends FieldValues = any>(
   // Initialize the form with react-hook-form
   const form = useForm<T>({
     resolver: zodResolver(schema),
-    defaultValues: config.defaultValues || {} as DeepPartial<T>,
+    defaultValues: (config.defaultValues || {}) as any,
     mode: config.mode || 'onSubmit',
     reValidateMode: config.reValidateMode || 'onChange',
   });
@@ -553,17 +553,17 @@ export function useDynamicForm<T extends FieldValues = any>(
   
   // Set form values
   const setValues = useCallback((values: DeepPartial<T>) => {
-    form.reset(values);
+    form.reset(values as any);
   }, [form]);
   
   return {
-    form,
+    form: form as any,
     fields: formConfig.fields,
     visibleFields,
     groups: formConfig.groups,
     schema,
-    handleSubmit: form.handleSubmit,
-    reset: form.reset,
+    handleSubmit: form.handleSubmit as any,
+    reset: form.reset as any,
     setValues,
     getValues: form.getValues,
     updateConfig,

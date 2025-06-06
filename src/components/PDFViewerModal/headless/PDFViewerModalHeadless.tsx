@@ -58,27 +58,21 @@ export type TriggerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Trigger component
-const Trigger = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: TriggerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Trigger = forwardRef(function Trigger<C extends React.ElementType = 'button'>(
+  { as, children, ...props }: Omit<TriggerProps<C>, 'ref'>,
+  ref: React.ForwardedRef<React.ElementRef<C>>
+) {
     const Component = as || 'button';
     const { getTriggerProps } = usePDFViewerModalContext();
     
     const triggerProps = getTriggerProps();
     
-    return (
-      <Component 
-        {...triggerProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+    return React.createElement(Component as any, {
+      ...triggerProps,
+      ...props,
+      ref: ref as any
+    }, children);
+  });
 
 Trigger.displayName = 'PDFViewerModalHeadless.Trigger';
 
@@ -145,6 +139,20 @@ const Portal: React.FC<PortalProps> = ({
 
 Portal.displayName = 'PDFViewerModalHeadless.Portal';
 
+// Helper function to create polymorphic components
+function createPolymorphicComponent<TDefaultElement extends React.ElementType, TProps = {}>(
+  displayName: string,
+  defaultElement: TDefaultElement,
+  render: (
+    props: any,
+    ref: any
+  ) => React.ReactElement | null
+) {
+  const Component = React.forwardRef(render);
+  Component.displayName = displayName;
+  return Component as any;
+}
+
 // Backdrop component props
 export type BackdropProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
   C,
@@ -157,11 +165,10 @@ export type BackdropProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Backdrop component
-const Backdrop = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: BackdropProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Backdrop = createPolymorphicComponent(
+  'PDFViewerModalHeadless.Backdrop',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { getBackdropProps, isOpen } = usePDFViewerModalContext();
     
@@ -171,19 +178,17 @@ const Backdrop = forwardRef(
     
     const backdropProps = getBackdropProps();
     
-    return (
-      <Component 
-        {...backdropProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...backdropProps,
+        ...props,
+        ref,
+      },
+      children
     );
   }
 );
-
-Backdrop.displayName = 'PDFViewerModalHeadless.Backdrop';
 
 // Container component props
 export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -197,11 +202,10 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Container = createPolymorphicComponent(
+  'PDFViewerModalHeadless.Container',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { getContainerProps, isOpen } = usePDFViewerModalContext();
     
@@ -211,19 +215,17 @@ const Container = forwardRef(
     
     const containerProps = getContainerProps();
     
-    return (
-      <Component 
-        {...containerProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...containerProps,
+        ...props,
+        ref,
+      },
+      children
     );
   }
 );
-
-Container.displayName = 'PDFViewerModalHeadless.Container';
 
 // Content component props
 export type ContentProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -237,29 +239,26 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Content = createPolymorphicComponent(
+  'PDFViewerModalHeadless.Content',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { getContentProps } = usePDFViewerModalContext();
     
     const contentProps = getContentProps();
     
-    return (
-      <Component 
-        {...contentProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...contentProps,
+        ...props,
+        ref,
+      },
+      children
     );
   }
 );
-
-Content.displayName = 'PDFViewerModalHeadless.Content';
 
 // Header component props
 export type HeaderProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -273,25 +272,22 @@ export type HeaderProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Header component
-const Header = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: HeaderProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Header = createPolymorphicComponent(
+  'PDFViewerModalHeadless.Header',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...props,
+        ref,
+      },
+      children
     );
   }
 );
-
-Header.displayName = 'PDFViewerModalHeadless.Header';
 
 // Body component props
 export type BodyProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -305,25 +301,22 @@ export type BodyProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Body component
-const Body = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: BodyProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Body = createPolymorphicComponent(
+  'PDFViewerModalHeadless.Body',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...props,
+        ref,
+      },
+      children
     );
   }
 );
-
-Body.displayName = 'PDFViewerModalHeadless.Body';
 
 // Footer component props
 export type FooterProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -337,25 +330,22 @@ export type FooterProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Footer component
-const Footer = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: FooterProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Footer = createPolymorphicComponent(
+  'PDFViewerModalHeadless.Footer',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...props,
+        ref,
+      },
+      children
     );
   }
 );
-
-Footer.displayName = 'PDFViewerModalHeadless.Footer';
 
 // Close component props
 export type CloseProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -369,29 +359,26 @@ export type CloseProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Close component
-const Close = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: CloseProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Close = createPolymorphicComponent(
+  'PDFViewerModalHeadless.Close',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getCloseButtonProps } = usePDFViewerModalContext();
     
     const closeProps = getCloseButtonProps();
     
-    return (
-      <Component 
-        {...closeProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...closeProps,
+        ...props,
+        ref,
+      },
+      children
     );
   }
 );
-
-Close.displayName = 'PDFViewerModalHeadless.Close';
 
 // Document component props
 export type DocumentProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -405,11 +392,10 @@ export type DocumentProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Document component
-const Document = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, src, ...props }: DocumentProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Document = createPolymorphicComponent(
+  'PDFViewerModalHeadless.Document',
+  'div',
+  ({ as, src, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { getDocumentProps, setSrc } = usePDFViewerModalContext();
     
@@ -422,21 +408,20 @@ const Document = forwardRef(
     
     const documentProps = getDocumentProps();
     
-    return (
-      <Component 
-        {...documentProps} 
-        {...props} 
-        ref={ref}
-        style={{
+    return React.createElement(
+      Component,
+      {
+        ...documentProps,
+        ...props,
+        ref,
+        style: {
           ...documentProps.style,
           ...props.style,
-        }}
-      />
+        },
+      }
     );
   }
 );
-
-Document.displayName = 'PDFViewerModalHeadless.Document';
 
 // Toolbar component props
 export type ToolbarProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -450,25 +435,22 @@ export type ToolbarProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Toolbar component
-const Toolbar = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ToolbarProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Toolbar = createPolymorphicComponent(
+  'PDFViewerModalHeadless.Toolbar',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...props,
+        ref,
+      },
+      children
     );
   }
 );
-
-Toolbar.displayName = 'PDFViewerModalHeadless.Toolbar';
 
 // Sidebar component props
 export type SidebarProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -482,11 +464,10 @@ export type SidebarProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Sidebar component
-const Sidebar = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: SidebarProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Sidebar = createPolymorphicComponent(
+  'PDFViewerModalHeadless.Sidebar',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { isSidebarOpen } = usePDFViewerModalContext();
     
@@ -494,18 +475,16 @@ const Sidebar = forwardRef(
       return null;
     }
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...props,
+        ref,
+      },
+      children
     );
   }
 );
-
-Sidebar.displayName = 'PDFViewerModalHeadless.Sidebar';
 
 // NextPageButton component props
 export type NextPageButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -519,29 +498,26 @@ export type NextPageButtonProps<C extends React.ElementType> = PolymorphicCompon
 >;
 
 // NextPageButton component
-const NextPageButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: NextPageButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const NextPageButton = createPolymorphicComponent(
+  'PDFViewerModalHeadless.NextPageButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getNextPageButtonProps } = usePDFViewerModalContext();
     
     const nextPageButtonProps = getNextPageButtonProps();
     
-    return (
-      <Component 
-        {...nextPageButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Next'}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...nextPageButtonProps,
+        ...props,
+        ref,
+      },
+      children || 'Next'
     );
   }
 );
-
-NextPageButton.displayName = 'PDFViewerModalHeadless.NextPageButton';
 
 // PrevPageButton component props
 export type PrevPageButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -555,29 +531,26 @@ export type PrevPageButtonProps<C extends React.ElementType> = PolymorphicCompon
 >;
 
 // PrevPageButton component
-const PrevPageButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: PrevPageButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const PrevPageButton = createPolymorphicComponent(
+  'PDFViewerModalHeadless.PrevPageButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getPrevPageButtonProps } = usePDFViewerModalContext();
     
     const prevPageButtonProps = getPrevPageButtonProps();
     
-    return (
-      <Component 
-        {...prevPageButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Previous'}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...prevPageButtonProps,
+        ...props,
+        ref,
+      },
+      children || 'Previous'
     );
   }
 );
-
-PrevPageButton.displayName = 'PDFViewerModalHeadless.PrevPageButton';
 
 // PageInput component props
 export type PageInputProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -591,31 +564,32 @@ export type PageInputProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // PageInput component
-const PageInput = forwardRef(
-  <C extends React.ElementType = 'input'>(
-    { as, label = 'Page', ...props }: PageInputProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const PageInput = createPolymorphicComponent(
+  'PDFViewerModalHeadless.PageInput',
+  'input',
+  ({ as, label, ...props }: any, ref: any) => {
     const Component = as || 'input';
     const { getPageInputProps, currentPage, numPages } = usePDFViewerModalContext();
     
     const pageInputProps = getPageInputProps();
+    const displayLabel = label !== undefined ? label : 'Page';
     
-    return (
-      <div>
-        {label && <label>{label}</label>}
-        <Component 
-          {...pageInputProps} 
-          {...props} 
-          ref={ref}
-        />
-        {numPages > 0 && <span> / {numPages}</span>}
-      </div>
+    return React.createElement(
+      'div',
+      {},
+      displayLabel && React.createElement('label', {}, displayLabel),
+      React.createElement(
+        Component,
+        {
+          ...pageInputProps,
+          ...props,
+          ref,
+        }
+      ),
+      numPages > 0 && React.createElement('span', {}, ` / ${numPages}`)
     );
   }
 );
-
-PageInput.displayName = 'PDFViewerModalHeadless.PageInput';
 
 // ZoomInButton component props
 export type ZoomInButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -629,29 +603,26 @@ export type ZoomInButtonProps<C extends React.ElementType> = PolymorphicComponen
 >;
 
 // ZoomInButton component
-const ZoomInButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ZoomInButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const ZoomInButton = createPolymorphicComponent(
+  'PDFViewerModalHeadless.ZoomInButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getZoomInButtonProps } = usePDFViewerModalContext();
     
     const zoomInButtonProps = getZoomInButtonProps();
     
-    return (
-      <Component 
-        {...zoomInButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Zoom In'}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...zoomInButtonProps,
+        ...props,
+        ref,
+      },
+      children || 'Zoom In'
     );
   }
 );
-
-ZoomInButton.displayName = 'PDFViewerModalHeadless.ZoomInButton';
 
 // ZoomOutButton component props
 export type ZoomOutButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -665,29 +636,26 @@ export type ZoomOutButtonProps<C extends React.ElementType> = PolymorphicCompone
 >;
 
 // ZoomOutButton component
-const ZoomOutButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ZoomOutButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const ZoomOutButton = createPolymorphicComponent(
+  'PDFViewerModalHeadless.ZoomOutButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getZoomOutButtonProps } = usePDFViewerModalContext();
     
     const zoomOutButtonProps = getZoomOutButtonProps();
     
-    return (
-      <Component 
-        {...zoomOutButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Zoom Out'}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...zoomOutButtonProps,
+        ...props,
+        ref,
+      },
+      children || 'Zoom Out'
     );
   }
 );
-
-ZoomOutButton.displayName = 'PDFViewerModalHeadless.ZoomOutButton';
 
 // ZoomResetButton component props
 export type ZoomResetButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -701,29 +669,26 @@ export type ZoomResetButtonProps<C extends React.ElementType> = PolymorphicCompo
 >;
 
 // ZoomResetButton component
-const ZoomResetButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ZoomResetButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const ZoomResetButton = createPolymorphicComponent(
+  'PDFViewerModalHeadless.ZoomResetButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getZoomResetButtonProps } = usePDFViewerModalContext();
     
     const zoomResetButtonProps = getZoomResetButtonProps();
     
-    return (
-      <Component 
-        {...zoomResetButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || '100%'}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...zoomResetButtonProps,
+        ...props,
+        ref,
+      },
+      children || '100%'
     );
   }
 );
-
-ZoomResetButton.displayName = 'PDFViewerModalHeadless.ZoomResetButton';
 
 // RotateLeftButton component props
 export type RotateLeftButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -737,29 +702,26 @@ export type RotateLeftButtonProps<C extends React.ElementType> = PolymorphicComp
 >;
 
 // RotateLeftButton component
-const RotateLeftButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: RotateLeftButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const RotateLeftButton = createPolymorphicComponent(
+  'PDFViewerModalHeadless.RotateLeftButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getRotateLeftButtonProps } = usePDFViewerModalContext();
     
     const rotateLeftButtonProps = getRotateLeftButtonProps();
     
-    return (
-      <Component 
-        {...rotateLeftButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Rotate Left'}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...rotateLeftButtonProps,
+        ...props,
+        ref,
+      },
+      children || 'Rotate Left'
     );
   }
 );
-
-RotateLeftButton.displayName = 'PDFViewerModalHeadless.RotateLeftButton';
 
 // RotateRightButton component props
 export type RotateRightButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -773,29 +735,26 @@ export type RotateRightButtonProps<C extends React.ElementType> = PolymorphicCom
 >;
 
 // RotateRightButton component
-const RotateRightButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: RotateRightButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const RotateRightButton = createPolymorphicComponent(
+  'PDFViewerModalHeadless.RotateRightButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getRotateRightButtonProps } = usePDFViewerModalContext();
     
     const rotateRightButtonProps = getRotateRightButtonProps();
     
-    return (
-      <Component 
-        {...rotateRightButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Rotate Right'}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...rotateRightButtonProps,
+        ...props,
+        ref,
+      },
+      children || 'Rotate Right'
     );
   }
 );
-
-RotateRightButton.displayName = 'PDFViewerModalHeadless.RotateRightButton';
 
 // DownloadButton component props
 export type DownloadButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -809,29 +768,26 @@ export type DownloadButtonProps<C extends React.ElementType> = PolymorphicCompon
 >;
 
 // DownloadButton component
-const DownloadButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: DownloadButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const DownloadButton = createPolymorphicComponent(
+  'PDFViewerModalHeadless.DownloadButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getDownloadButtonProps } = usePDFViewerModalContext();
     
     const downloadButtonProps = getDownloadButtonProps();
     
-    return (
-      <Component 
-        {...downloadButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Download'}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...downloadButtonProps,
+        ...props,
+        ref,
+      },
+      children || 'Download'
     );
   }
 );
-
-DownloadButton.displayName = 'PDFViewerModalHeadless.DownloadButton';
 
 // PrintButton component props
 export type PrintButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -845,29 +801,26 @@ export type PrintButtonProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // PrintButton component
-const PrintButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: PrintButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const PrintButton = createPolymorphicComponent(
+  'PDFViewerModalHeadless.PrintButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getPrintButtonProps } = usePDFViewerModalContext();
     
     const printButtonProps = getPrintButtonProps();
     
-    return (
-      <Component 
-        {...printButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Print'}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...printButtonProps,
+        ...props,
+        ref,
+      },
+      children || 'Print'
     );
   }
 );
-
-PrintButton.displayName = 'PDFViewerModalHeadless.PrintButton';
 
 // FullscreenButton component props
 export type FullscreenButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -881,29 +834,26 @@ export type FullscreenButtonProps<C extends React.ElementType> = PolymorphicComp
 >;
 
 // FullscreenButton component
-const FullscreenButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: FullscreenButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const FullscreenButton = createPolymorphicComponent(
+  'PDFViewerModalHeadless.FullscreenButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getFullscreenButtonProps, isFullscreen } = usePDFViewerModalContext();
     
     const fullscreenButtonProps = getFullscreenButtonProps();
     
-    return (
-      <Component 
-        {...fullscreenButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || (isFullscreen ? 'Exit Fullscreen' : 'Fullscreen')}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...fullscreenButtonProps,
+        ...props,
+        ref,
+      },
+      children || (isFullscreen ? 'Exit Fullscreen' : 'Fullscreen')
     );
   }
 );
-
-FullscreenButton.displayName = 'PDFViewerModalHeadless.FullscreenButton';
 
 // SidebarToggleButton component props
 export type SidebarToggleButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -917,29 +867,26 @@ export type SidebarToggleButtonProps<C extends React.ElementType> = PolymorphicC
 >;
 
 // SidebarToggleButton component
-const SidebarToggleButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: SidebarToggleButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const SidebarToggleButton = createPolymorphicComponent(
+  'PDFViewerModalHeadless.SidebarToggleButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getSidebarToggleButtonProps, isSidebarOpen } = usePDFViewerModalContext();
     
     const sidebarToggleButtonProps = getSidebarToggleButtonProps();
     
-    return (
-      <Component 
-        {...sidebarToggleButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || (isSidebarOpen ? 'Hide Sidebar' : 'Show Sidebar')}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...sidebarToggleButtonProps,
+        ...props,
+        ref,
+      },
+      children || (isSidebarOpen ? 'Hide Sidebar' : 'Show Sidebar')
     );
   }
 );
-
-SidebarToggleButton.displayName = 'PDFViewerModalHeadless.SidebarToggleButton';
 
 // SearchInput component props
 export type SearchInputProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -953,30 +900,31 @@ export type SearchInputProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // SearchInput component
-const SearchInput = forwardRef(
-  <C extends React.ElementType = 'input'>(
-    { as, label = 'Search', ...props }: SearchInputProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const SearchInput = createPolymorphicComponent(
+  'PDFViewerModalHeadless.SearchInput',
+  'input',
+  ({ as, label, ...props }: any, ref: any) => {
     const Component = as || 'input';
     const { getSearchInputProps } = usePDFViewerModalContext();
     
     const searchInputProps = getSearchInputProps();
+    const displayLabel = label !== undefined ? label : 'Search';
     
-    return (
-      <div>
-        {label && <label>{label}</label>}
-        <Component 
-          {...searchInputProps} 
-          {...props} 
-          ref={ref}
-        />
-      </div>
+    return React.createElement(
+      'div',
+      {},
+      displayLabel && React.createElement('label', {}, displayLabel),
+      React.createElement(
+        Component,
+        {
+          ...searchInputProps,
+          ...props,
+          ref,
+        }
+      )
     );
   }
 );
-
-SearchInput.displayName = 'PDFViewerModalHeadless.SearchInput';
 
 // SearchButton component props
 export type SearchButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -990,29 +938,26 @@ export type SearchButtonProps<C extends React.ElementType> = PolymorphicComponen
 >;
 
 // SearchButton component
-const SearchButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: SearchButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const SearchButton = createPolymorphicComponent(
+  'PDFViewerModalHeadless.SearchButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getSearchButtonProps } = usePDFViewerModalContext();
     
     const searchButtonProps = getSearchButtonProps();
     
-    return (
-      <Component 
-        {...searchButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Search'}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...searchButtonProps,
+        ...props,
+        ref,
+      },
+      children || 'Search'
     );
   }
 );
-
-SearchButton.displayName = 'PDFViewerModalHeadless.SearchButton';
 
 // Export all components
 export const PDFViewerModalHeadless = {

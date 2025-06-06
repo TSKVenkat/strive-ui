@@ -23,6 +23,19 @@ export interface AutocompleteOption {
   [key: string]: any;
 }
 
+// Add proper ref types
+type ElementRef<T> = T extends React.ElementType
+  ? React.ComponentPropsWithRef<T>['ref']
+  : never;
+
+type MergeElementProps<T extends React.ElementType, P> = Omit<React.ComponentPropsWithRef<T>, keyof P> & P;
+
+interface BaseProps<T extends React.ElementType> {
+  as?: T;
+}
+
+export type AutocompleteProps<T extends React.ElementType> = MergeElementProps<T, BaseProps<T>>;
+
 export interface UseAutocompleteProps<T extends AutocompleteOption = AutocompleteOption> {
   /**
    * Array of options to select from
@@ -665,6 +678,82 @@ export function useAutocomplete<T extends AutocompleteOption = AutocompleteOptio
     }
   }, [disabled, readOnly, close, onBlur]);
   
+  // Handle input change
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    if (disabled || readOnly) {
+      return;
+    }
+    setInputValueInternal(e.target.value);
+  }, [disabled, readOnly, setInputValueInternal]);
+
+  // Handle input focus
+  const handleInputFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+    if (disabled || readOnly) {
+      return;
+    }
+    
+    setFocused(true);
+    
+    if (openOnFocus) {
+      open();
+    }
+    
+    if (onFocus) {
+      onFocus(e);
+    }
+  }, [disabled, readOnly, openOnFocus, open, onFocus]);
+
+  // Handle input keydown
+  const handleInputKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (disabled || readOnly) {
+      return;
+    }
+    
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        if (!isOpen) {
+          open();
+        } else {
+          highlightNextOption();
+        }
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        if (!isOpen) {
+          open();
+        } else {
+          highlightPrevOption();
+        }
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (isOpen && highlightedOption) {
+          selectOption(highlightedOption);
+        }
+        break;
+      case 'Escape':
+        e.preventDefault();
+        close();
+        break;
+      case 'Tab':
+        if (isOpen) {
+          close();
+        }
+        break;
+    }
+  }, [
+    disabled,
+    readOnly,
+    isOpen,
+    open,
+    close,
+    highlightedOption,
+    highlightNextOption,
+    highlightPrevOption,
+    selectOption
+  ]);
+  
   // Helper function to merge refs
   const mergeRefs = <T,>(...refs: (React.Ref<T> | undefined)[]) => {
     return (value: T) => {
@@ -680,20 +769,64 @@ export function useAutocomplete<T extends AutocompleteOption = AutocompleteOptio
   
   // Get props for the input element
   const getInputProps = useCallback(<E extends HTMLInputElement = HTMLInputElement>(
+    props?: React.InputHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.InputHTMLAttributes<E> & { ref: React.Ref<E> } => {
+    const inputProps: React.InputHTMLAttributes<E> & { ref: React.Ref<E> } = {
+      ...props,
+      ref: mergeRefs(inputRef, props?.ref),
+      role: 'combobox',
+      'aria-expanded': isOpen,
+      'aria-controls': isOpen ? `${autocompleteId}-dropdown` : undefined,
+      'aria-activedescendant': highlightedOption ? `${autocompleteId}-option-${highlightedOption.value}` : undefined,
+      'aria-autocomplete': 'list',
+      'aria-owns': isOpen ? `${autocompleteId}-dropdown` : undefined,
+      id: autocompleteId,
+      disabled,
+      readOnly,
+      required,
+      value: inputValue,
+      placeholder,
+      autoComplete: 'off',
+      onChange: handleInputChange,
+      onFocus: handleInputFocus,
+      onBlur: handleInputBlur,
+      onKeyDown: handleInputKeyDown,
+      onClick: () => {
+        if (openOnFocus) {
           open();
+        }
+      },
       'data-loading': loading ? '' : undefined,
     };
-  }, [autocompleteId, isOpen, filteredOptions.length, loading]);
+    return inputProps;
+  }, [
+    autocompleteId,
+    isOpen,
+    highlightedOption,
+    disabled,
+    readOnly,
+    required,
+    inputValue,
+    placeholder,
+    loading,
+    handleInputChange,
+    handleInputFocus,
+    handleInputBlur,
+    handleInputKeyDown,
+    openOnFocus,
+    open,
+    inputRef
+  ]);
   
   // Get props for an option element
   const getOptionProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     option: T,
-    props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.HTMLAttributes<E> & { ref: React.Ref<E> } => {
     const isSelected = option.value === selectedValue;
     const isHighlighted = highlightedOption?.value === option.value;
     
-    return {
+    const optionProps: React.HTMLAttributes<E> & { ref: React.Ref<E> } = {
       ...props,
       ref: (node: E | null) => {
         if (node) {
@@ -741,29 +874,39 @@ export function useAutocomplete<T extends AutocompleteOption = AutocompleteOptio
         
         props?.onKeyDown?.(event);
       },
-      'data-disabled': option.disabled ? '' : undefined,
-      'data-selected': isSelected ? '' : undefined,
-      'data-highlighted': isHighlighted ? '' : undefined,
     };
+    return optionProps;
   }, [autocompleteId, selectedValue, highlightedOption, selectOption, highlightOption]);
   
   // Get props for the clear button
   const getClearButtonProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
-    props?: React.ButtonHTMLAttributes<E>
-  ): React.ButtonHTMLAttributes<E> => {
-    return {
+    props?: React.ButtonHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.ButtonHTMLAttributes<E> & { ref: React.Ref<E> } => {
+    const clearButtonProps: React.ButtonHTMLAttributes<E> & { ref: React.Ref<E> } = {
       ...props,
       type: 'button',
       'aria-label': 'Clear selection',
-      disabled: disabled || readOnly || !selectedValue || props?.disabled,
       onClick: (event: React.MouseEvent<E>) => {
-        event.stopPropagation();
         clearSelection();
         props?.onClick?.(event);
       },
-      'data-disabled': (disabled || readOnly || !selectedValue) ? '' : undefined,
     };
-  }, [disabled, readOnly, selectedValue, clearSelection]);
+    return clearButtonProps;
+  }, [clearSelection]);
+  
+  // Get props for the dropdown element
+  const getDropdownProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.HTMLAttributes<E> & { ref: React.Ref<E> } => {
+    const dropdownProps: React.HTMLAttributes<E> & { ref: React.Ref<E> } = {
+      ...props,
+      ref: mergeRefs(dropdownRef, props?.ref),
+      role: 'listbox',
+      id: `${autocompleteId}-dropdown`,
+      'aria-labelledby': autocompleteId,
+    };
+    return dropdownProps;
+  }, [autocompleteId, dropdownRef]);
   
   // Handle click outside to close the dropdown
   useEffect(() => {
@@ -824,7 +967,7 @@ export function useAutocomplete<T extends AutocompleteOption = AutocompleteOptio
     highlightNextOption,
     highlightPrevOption,
     setInputValue: setInputValueInternal,
-    focus,
+    focus: focusInput,
     blur,
     getInputProps,
     getDropdownProps,

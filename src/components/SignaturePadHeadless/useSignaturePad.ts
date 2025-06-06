@@ -151,6 +151,14 @@ export interface UseSignaturePadReturn {
    */
   strokeWidth: number;
   /**
+   * Minimum width of the stroke
+   */
+  minWidth: number;
+  /**
+   * Maximum width of the stroke
+   */
+  maxWidth: number;
+  /**
    * Background color of the canvas
    */
   backgroundColor: string;
@@ -194,28 +202,28 @@ export interface UseSignaturePadReturn {
    * Get props for the canvas element
    */
   getCanvasProps: <E extends HTMLCanvasElement = HTMLCanvasElement>(
-    props?: React.CanvasHTMLAttributes<E>
-  ) => React.CanvasHTMLAttributes<E>;
+    props?: React.CanvasHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ) => React.CanvasHTMLAttributes<E> & { ref?: any };
   /**
    * Get props for the clear button
    */
   getClearButtonProps: <E extends HTMLButtonElement = HTMLButtonElement>(
-    props?: React.ButtonHTMLAttributes<E>
-  ) => React.ButtonHTMLAttributes<E>;
+    props?: React.ButtonHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ) => React.ButtonHTMLAttributes<E> & { 'data-disabled'?: string; ref?: any };
   /**
    * Get props for the undo button
    */
   getUndoButtonProps: <E extends HTMLButtonElement = HTMLButtonElement>(
-    props?: React.ButtonHTMLAttributes<E>
-  ) => React.ButtonHTMLAttributes<E>;
+    props?: React.ButtonHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ) => React.ButtonHTMLAttributes<E> & { 'data-disabled'?: string; ref?: any };
   /**
    * Get props for the save button
    */
   getSaveButtonProps: <E extends HTMLButtonElement = HTMLButtonElement>(
-    props?: React.ButtonHTMLAttributes<E>,
-    type?: string,
-    encoderOptions?: number
-  ) => React.ButtonHTMLAttributes<E>;
+    props?: React.ButtonHTMLAttributes<E> & { ref?: React.Ref<E> },
+    type = 'image/png',
+    encoderOptions = 0.92
+  ) => React.ButtonHTMLAttributes<E> & { 'data-disabled'?: string; ref?: any };
 }
 
 /**
@@ -481,13 +489,19 @@ export function useSignaturePad({
     drawSignature();
   }, [disabled, readOnly, strokes, controlledStrokes, onChange, drawSignature]);
   
-  // Save the signature as a data URL
-  const toDataURL = useCallback((type = 'image/png', encoderOptions = 0.92) => {
+  // Export signature as data URL
+  const exportAsDataURL = useCallback((
+    type?: string,
+    encoderOptions?: number
+  ) => {
+    const typeToUse = type || 'image/png';
+    const encoderOptionsToUse = encoderOptions || 0.92;
+    
     const canvas = canvasRef.current;
     if (!canvas) return '';
     
     // Call onSave callback
-    const dataURL = canvas.toDataURL(type, encoderOptions);
+    const dataURL = canvas.toDataURL(typeToUse, encoderOptionsToUse);
     if (onSave) {
       onSave(dataURL);
     }
@@ -528,45 +542,46 @@ export function useSignaturePad({
   
   // Get props for the canvas element
   const getCanvasProps = useCallback(<E extends HTMLCanvasElement = HTMLCanvasElement>(
-    props?: React.CanvasHTMLAttributes<E>
-  ): React.CanvasHTMLAttributes<E> => {
+    props?: React.CanvasHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.CanvasHTMLAttributes<E> & { ref?: any } => {
+    const { ref: propsRef, ...restProps } = props || {};
     return {
-      ...props,
+      ...restProps,
       ref: canvasRef,
       id: `${signaturePadId}-canvas`,
       width,
       height,
       style: {
         touchAction: 'none',
-        ...props?.style,
+        ...restProps?.style,
       },
       onPointerDown: (event: React.PointerEvent<E>) => {
         handlePointerDown(event as unknown as React.PointerEvent<HTMLCanvasElement>);
-        props?.onPointerDown?.(event);
+        restProps?.onPointerDown?.(event);
       },
       onPointerMove: (event: React.PointerEvent<E>) => {
         handlePointerMove(event as unknown as React.PointerEvent<HTMLCanvasElement>);
-        props?.onPointerMove?.(event);
+        restProps?.onPointerMove?.(event);
       },
       onPointerUp: (event: React.PointerEvent<E>) => {
         handlePointerUp();
-        props?.onPointerUp?.(event);
+        restProps?.onPointerUp?.(event);
       },
       onPointerCancel: (event: React.PointerEvent<E>) => {
         handlePointerCancel();
-        props?.onPointerCancel?.(event);
+        restProps?.onPointerCancel?.(event);
       },
       onPointerLeave: (event: React.PointerEvent<E>) => {
         handlePointerUp();
-        props?.onPointerLeave?.(event);
+        restProps?.onPointerLeave?.(event);
       },
-      'aria-label': props?.['aria-label'] || 'Signature pad',
+      'aria-label': restProps?.['aria-label'] || 'Signature pad',
       'data-disabled': disabled ? '' : undefined,
       'data-readonly': readOnly ? '' : undefined,
       'data-required': required ? '' : undefined,
       'data-empty': isEmpty ? '' : undefined,
       'data-drawing': isDrawing ? '' : undefined,
-    };
+    } as any;
   }, [
     signaturePadId,
     width,
@@ -584,56 +599,62 @@ export function useSignaturePad({
   
   // Get props for the clear button
   const getClearButtonProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
-    props?: React.ButtonHTMLAttributes<E>
-  ): React.ButtonHTMLAttributes<E> => {
+    props?: React.ButtonHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.ButtonHTMLAttributes<E> & { 'data-disabled'?: string; ref?: any } => {
+    const { ref: propsRef, ...restProps } = props || {};
     return {
-      ...props,
+      ...restProps,
+      ref: propsRef,
       type: 'button',
-      'aria-label': props?.['aria-label'] || 'Clear signature',
-      disabled: disabled || readOnly || isEmpty || props?.disabled,
+      'aria-label': restProps?.['aria-label'] || 'Clear signature',
+      disabled: disabled || readOnly || isEmpty || restProps?.disabled,
       onClick: (event: React.MouseEvent<E>) => {
         clear();
-        props?.onClick?.(event);
+        restProps?.onClick?.(event);
       },
       'data-disabled': (disabled || readOnly || isEmpty) ? '' : undefined,
-    };
+    } as any;
   }, [disabled, readOnly, isEmpty, clear]);
   
   // Get props for the undo button
   const getUndoButtonProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
-    props?: React.ButtonHTMLAttributes<E>
-  ): React.ButtonHTMLAttributes<E> => {
+    props?: React.ButtonHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.ButtonHTMLAttributes<E> & { 'data-disabled'?: string; ref?: any } => {
+    const { ref: propsRef, ...restProps } = props || {};
     return {
-      ...props,
+      ...restProps,
+      ref: propsRef,
       type: 'button',
-      'aria-label': props?.['aria-label'] || 'Undo last stroke',
-      disabled: disabled || readOnly || strokes.length === 0 || props?.disabled,
+      'aria-label': restProps?.['aria-label'] || 'Undo last stroke',
+      disabled: disabled || readOnly || strokes.length === 0 || restProps?.disabled,
       onClick: (event: React.MouseEvent<E>) => {
         undo();
-        props?.onClick?.(event);
+        restProps?.onClick?.(event);
       },
       'data-disabled': (disabled || readOnly || strokes.length === 0) ? '' : undefined,
-    };
+    } as any;
   }, [disabled, readOnly, strokes.length, undo]);
   
   // Get props for the save button
   const getSaveButtonProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
-    props?: React.ButtonHTMLAttributes<E>,
+    props?: React.ButtonHTMLAttributes<E> & { ref?: React.Ref<E> },
     type = 'image/png',
     encoderOptions = 0.92
-  ): React.ButtonHTMLAttributes<E> => {
+  ): React.ButtonHTMLAttributes<E> & { 'data-disabled'?: string; ref?: any } => {
+    const { ref: propsRef, ...restProps } = props || {};
     return {
-      ...props,
+      ...restProps,
+      ref: propsRef,
       type: 'button',
-      'aria-label': props?.['aria-label'] || 'Save signature',
-      disabled: disabled || isEmpty || props?.disabled,
+      'aria-label': restProps?.['aria-label'] || 'Save signature',
+      disabled: disabled || isEmpty || restProps?.disabled,
       onClick: (event: React.MouseEvent<E>) => {
-        toDataURL(type, encoderOptions);
-        props?.onClick?.(event);
+        exportAsDataURL(type, encoderOptions);
+        restProps?.onClick?.(event);
       },
       'data-disabled': (disabled || isEmpty) ? '' : undefined,
-    };
-  }, [disabled, isEmpty, toDataURL]);
+    } as any;
+  }, [disabled, isEmpty, exportAsDataURL]);
   
   return {
     strokes,
@@ -646,13 +667,15 @@ export function useSignaturePad({
     name,
     color: currentColor,
     strokeWidth: currentStrokeWidth,
+    minWidth,
+    maxWidth,
     backgroundColor: currentBackgroundColor,
     width,
     height,
     canvasRef,
     clear,
     undo,
-    toDataURL,
+    toDataURL: exportAsDataURL,
     setColor,
     setStrokeWidth,
     setBackgroundColor,

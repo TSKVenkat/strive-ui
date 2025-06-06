@@ -126,15 +126,15 @@ export interface UseProgressReturn {
     role: string;
     'aria-valuemin': number;
     'aria-valuemax': number;
-    'aria-valuenow': number;
-    'aria-valuetext': string;
+    'aria-valuenow': number | undefined;
+    'aria-valuetext': string | undefined;
   };
   /**
    * Get props for the progress bar
    */
   getProgressBarProps: () => {
     style: {
-      width: string;
+      width: string | undefined;
     };
   };
   /**

@@ -127,7 +127,7 @@ export interface UseStatusAnimationReturn {
    */
   getContainerProps: () => {
     role: string;
-    'aria-live': string;
+    'aria-live': 'off' | 'polite' | 'assertive';
     'aria-atomic': boolean;
   };
   /**
@@ -259,7 +259,7 @@ export function useStatusAnimation(options: StatusAnimationOptions = {}): UseSta
   const getContainerProps = useCallback(() => {
     return {
       role: 'status',
-      'aria-live': 'polite',
+      'aria-live': 'polite' as const,
       'aria-atomic': true,
     };
   }, []);

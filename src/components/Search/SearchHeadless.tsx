@@ -11,7 +11,7 @@ const SearchContext = createContext<SearchContextValue | null>(null);
 export function useSearchContext<T = any>() {
   const context = useContext(SearchContext) as SearchContextValue<T> | null;
   if (!context) {
-    throw new Error('useSearchContext must be used within a SearchHeadless.Root component');
+    throw new globalThis.Error('useSearchContext must be used within a SearchHeadless.Root component');
   }
   return context;
 }
@@ -50,29 +50,30 @@ export type InputProps<C extends React.ElementType> = PolymorphicComponentPropsW
   }
 >;
 
-// Input component
-const Input = forwardRef(
-  <C extends React.ElementType = 'input'>(
-    { as, placeholder = 'Search...', children, ...props }: InputProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'input';
-    const { getInputProps } = useSearchContext();
-    
-    return (
-      <Component 
-        {...getInputProps()} 
-        placeholder={placeholder}
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+// Input component - Using type assertion approach to work around forwardRef limitations
+const InputComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'input', placeholder = 'Search...', children, ...restProps } = props;
+  const { getInputProps } = useSearchContext();
+  
+  const inputProps = getInputProps();
+  
+  return (
+    <Component 
+      {...inputProps} 
+      placeholder={placeholder}
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+});
 
-Input.displayName = 'SearchHeadless.Input';
+InputComponent.displayName = 'SearchHeadless.Input';
+
+const Input = InputComponent as <C extends React.ElementType = 'input'>(
+  props: InputProps<C>
+) => React.ReactElement | null;
 
 // Results component props
 export type ResultsProps<C extends React.ElementType, T = any> = PolymorphicComponentPropsWithRef<
@@ -90,27 +91,24 @@ export type ResultsProps<C extends React.ElementType, T = any> = PolymorphicComp
 >;
 
 // Results component
-function Results<T = any, C extends React.ElementType = 'div'>(
-  { as, children, ...props }: ResultsProps<C, T>,
-  ref: PolymorphicRef<C>
-) {
-  const Component = as || 'div';
-  const { results, isLoading, totalResults, getResultsContainerProps } = useSearchContext<T>();
+const ResultsComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  const { results, isLoading, totalResults, getResultsContainerProps } = useSearchContext();
   
   return (
-    <Component {...getResultsContainerProps()} {...props} ref={ref}>
+    <Component {...getResultsContainerProps()} {...restProps} ref={ref}>
       {typeof children === 'function' 
         ? children({ results, isLoading, totalResults }) 
         : children}
     </Component>
   );
-}
+});
 
-const ForwardedResults = forwardRef(Results) as <T = any, C extends React.ElementType = 'div'>(
-  props: ResultsProps<C, T> & { ref?: PolymorphicRef<C> }
-) => React.ReactElement;
+ResultsComponent.displayName = 'SearchHeadless.Results';
 
-ForwardedResults.displayName = 'SearchHeadless.Results';
+const Results = ResultsComponent as <T = any, C extends React.ElementType = 'div'>(
+  props: ResultsProps<C, T>
+) => React.ReactElement | null;
 
 // Result component props
 export type ResultProps<C extends React.ElementType, T = any> = PolymorphicComponentPropsWithRef<
@@ -131,28 +129,25 @@ export type ResultProps<C extends React.ElementType, T = any> = PolymorphicCompo
 >;
 
 // Result component
-function Result<T = any, C extends React.ElementType = 'div'>(
-  { as, result, children, ...props }: ResultProps<C, T>,
-  ref: PolymorphicRef<C>
-) {
-  const Component = as || 'div';
-  const { getResultItemProps, selectedResult } = useSearchContext<T>();
+const ResultComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', result, children, ...restProps } = props;
+  const { getResultItemProps, selectedResult } = useSearchContext();
   const isSelected = selectedResult?.id === result.id;
   
   return (
-    <Component {...getResultItemProps(result)} {...props} ref={ref}>
+    <Component {...getResultItemProps(result)} {...restProps} ref={ref}>
       {typeof children === 'function' 
         ? children({ result, isSelected }) 
         : children}
     </Component>
   );
-}
+});
 
-const ForwardedResult = forwardRef(Result) as <T = any, C extends React.ElementType = 'div'>(
-  props: ResultProps<C, T> & { ref?: PolymorphicRef<C> }
-) => React.ReactElement;
+ResultComponent.displayName = 'SearchHeadless.Result';
 
-ForwardedResult.displayName = 'SearchHeadless.Result';
+const Result = ResultComponent as <T = any, C extends React.ElementType = 'div'>(
+  props: ResultProps<C, T>
+) => React.ReactElement | null;
 
 // Highlight component props
 export interface HighlightProps {
@@ -242,25 +237,24 @@ export type FiltersProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Filters component
-const Filters = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: FiltersProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { filters, addFilter, removeFilter, clearFilters } = useSearchContext();
-    
-    return (
-      <Component {...props} ref={ref}>
-        {typeof children === 'function' 
-          ? children({ filters, addFilter, removeFilter, clearFilters }) 
-          : children}
-      </Component>
-    );
-  }
-);
+const FiltersComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  const { filters, addFilter, removeFilter, clearFilters } = useSearchContext();
+  
+  return (
+    <Component {...restProps} ref={ref}>
+      {typeof children === 'function' 
+        ? children({ filters, addFilter, removeFilter, clearFilters }) 
+        : children}
+    </Component>
+  );
+});
 
-Filters.displayName = 'SearchHeadless.Filters';
+FiltersComponent.displayName = 'SearchHeadless.Filters';
+
+const Filters = FiltersComponent as <C extends React.ElementType = 'div'>(
+  props: FiltersProps<C>
+) => React.ReactElement | null;
 
 // Facets component props
 export type FacetsProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -277,25 +271,24 @@ export type FacetsProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Facets component
-const Facets = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: FacetsProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { facets, addFilter } = useSearchContext();
-    
-    return (
-      <Component {...props} ref={ref}>
-        {typeof children === 'function' 
-          ? children({ facets, addFilter }) 
-          : children}
-      </Component>
-    );
-  }
-);
+const FacetsComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  const { facets, addFilter } = useSearchContext();
+  
+  return (
+    <Component {...restProps} ref={ref}>
+      {typeof children === 'function' 
+        ? children({ facets, addFilter }) 
+        : children}
+    </Component>
+  );
+});
 
-Facets.displayName = 'SearchHeadless.Facets';
+FacetsComponent.displayName = 'SearchHeadless.Facets';
+
+const Facets = FacetsComponent as <C extends React.ElementType = 'div'>(
+  props: FacetsProps<C>
+) => React.ReactElement | null;
 
 // Sort component props
 export type SortProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -313,25 +306,24 @@ export type SortProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Sort component
-const Sort = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: SortProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { sortField, sortDirection, setSort } = useSearchContext();
-    
-    return (
-      <Component {...props} ref={ref}>
-        {typeof children === 'function' 
-          ? children({ sortField, sortDirection, setSort }) 
-          : children}
-      </Component>
-    );
-  }
-);
+const SortComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  const { sortField, sortDirection, setSort } = useSearchContext();
+  
+  return (
+    <Component {...restProps} ref={ref}>
+      {typeof children === 'function' 
+        ? children({ sortField, sortDirection, setSort }) 
+        : children}
+    </Component>
+  );
+});
 
-Sort.displayName = 'SearchHeadless.Sort';
+SortComponent.displayName = 'SearchHeadless.Sort';
+
+const Sort = SortComponent as <C extends React.ElementType = 'div'>(
+  props: SortProps<C>
+) => React.ReactElement | null;
 
 // Empty component props
 export type EmptyProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -347,29 +339,28 @@ export type EmptyProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Empty component
-const Empty = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: EmptyProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { results, query, isLoading } = useSearchContext();
-    
-    if (results.length > 0 || isLoading || !query) {
-      return null;
-    }
-    
-    return (
-      <Component {...props} ref={ref}>
-        {typeof children === 'function' 
-          ? children({ query }) 
-          : children}
-      </Component>
-    );
+const EmptyComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  const { results, query, isLoading } = useSearchContext();
+  
+  if (results.length > 0 || isLoading || !query) {
+    return null;
   }
-);
+  
+  return (
+    <Component {...restProps} ref={ref}>
+      {typeof children === 'function' 
+        ? children({ query }) 
+        : children}
+    </Component>
+  );
+});
 
-Empty.displayName = 'SearchHeadless.Empty';
+EmptyComponent.displayName = 'SearchHeadless.Empty';
+
+const Empty = EmptyComponent as <C extends React.ElementType = 'div'>(
+  props: EmptyProps<C>
+) => React.ReactElement | null;
 
 // Loading component props
 export type LoadingProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -383,27 +374,26 @@ export type LoadingProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Loading component
-const Loading = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: LoadingProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { isLoading } = useSearchContext();
-    
-    if (!isLoading) {
-      return null;
-    }
-    
-    return (
-      <Component {...props} ref={ref}>
-        {children}
-      </Component>
-    );
+const LoadingComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  const { isLoading } = useSearchContext();
+  
+  if (!isLoading) {
+    return null;
   }
-);
+  
+  return (
+    <Component {...restProps} ref={ref}>
+      {children}
+    </Component>
+  );
+});
 
-Loading.displayName = 'SearchHeadless.Loading';
+LoadingComponent.displayName = 'SearchHeadless.Loading';
+
+const Loading = LoadingComponent as <C extends React.ElementType = 'div'>(
+  props: LoadingProps<C>
+) => React.ReactElement | null;
 
 // Error component props
 export type ErrorProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -419,43 +409,42 @@ export type ErrorProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Error component
-const Error = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ErrorProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { error } = useSearchContext();
-    
-    if (!error) {
-      return null;
-    }
-    
-    return (
-      <Component {...props} ref={ref}>
-        {typeof children === 'function' 
-          ? children({ error }) 
-          : children}
-      </Component>
-    );
+const ErrorComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  const { error } = useSearchContext();
+  
+  if (!error) {
+    return null;
   }
-);
+  
+  return (
+    <Component {...restProps} ref={ref}>
+      {typeof children === 'function' 
+        ? children({ error }) 
+        : children}
+    </Component>
+  );
+});
 
-Error.displayName = 'SearchHeadless.Error';
+ErrorComponent.displayName = 'SearchHeadless.Error';
+
+const SearchError = ErrorComponent as <C extends React.ElementType = 'div'>(
+  props: ErrorProps<C>
+) => React.ReactElement | null;
 
 // Export all components
 export const SearchHeadless = {
   Root,
   Input,
-  Results: ForwardedResults,
-  Result: ForwardedResult,
+  Results,
+  Result,
   Highlight,
   Filters,
   Facets,
   Sort,
   Empty,
   Loading,
-  Error,
+  Error: SearchError,
   useSearchContext,
 };
 

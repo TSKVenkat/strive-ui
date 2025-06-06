@@ -180,7 +180,8 @@ const HeaderCell = forwardRef(
   ) => {
     const Component = as || 'th';
     const table = useTableContext();
-    const { sortable, sortDirection, onSort } = table.getHeaderCellProps(column);
+    const { sortDirection, onSort } = table.getHeaderCellProps(column);
+    const sortable = column.sortable !== false;
     
     return React.createElement(
       Component,
@@ -450,7 +451,7 @@ const SelectionCell = forwardRef(
         React.createElement('input', {
           type: 'checkbox',
           checked: selected,
-          onChange: () => onSelect?.()
+          onChange: (e: React.ChangeEvent<HTMLInputElement>) => onSelect?.(e as any)
         })
       );
     }
@@ -517,7 +518,7 @@ const ExpandCell = forwardRef(
       React.createElement(
         'button',
         {
-          onClick: () => onExpand && onExpand(),
+          onClick: (e: React.MouseEvent<HTMLButtonElement>) => onExpand && onExpand(e),
           style: { background: 'none', border: 'none', cursor: 'pointer' }
         },
         expanded ? collapseIcon : expandIcon
@@ -726,6 +727,7 @@ export const TableHeadless = {
   ColumnToggle,
   Empty,
   Loading,
+  useTableContext,
 };
 
 export default TableHeadless;

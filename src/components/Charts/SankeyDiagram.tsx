@@ -18,6 +18,16 @@ export interface SankeyNode {
   color?: string;
 }
 
+// Extended node with computed properties
+interface ComputedSankeyNode extends SankeyNode {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  outValue?: number;
+  inValue?: number;
+}
+
 export interface SankeyLink {
   /**
    * Source node ID
@@ -200,7 +210,15 @@ export const SankeyDiagram: React.FC<SankeyDiagramProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   
   // Calculate Sankey layout
-  const calculateSankey = () => {
+  const calculateSankey = (): {
+    width: number;
+    height: number;
+    padding: { top: number; right: number; bottom: number; left: number };
+    diagramWidth: number;
+    diagramHeight: number;
+    nodes: ComputedSankeyNode[];
+    links: any[];
+  } | null => {
     if (!svgRef.current || !containerRef.current) return null;
     
     const svg = svgRef.current;
@@ -221,7 +239,7 @@ export const SankeyDiagram: React.FC<SankeyDiagramProps> = ({
     const diagramHeight = height - padding.top - padding.bottom;
     
     // Create a map of node IDs to node objects
-    const nodeMap = new Map(data.nodes.map(node => [node.id, { ...node }]));
+    const nodeMap = new Map(data.nodes.map(node => [node.id, { ...node, x: 0, y: 0, width: 0, height: 0 } as ComputedSankeyNode]));
     
     // Calculate node values (sum of incoming or outgoing links)
     data.links.forEach(link => {
@@ -409,7 +427,7 @@ export const SankeyDiagram: React.FC<SankeyDiagramProps> = ({
   };
   
   // Handle link hover
-  const handleLinkHover = (event: React.MouseEvent, link: ReturnType<typeof calculateSankey>['links'][0]) => {
+  const handleLinkHover = (event: React.MouseEvent, link: NonNullable<ReturnType<typeof calculateSankey>>['links'][0]) => {
     if (!showTooltips) return;
     
     setTooltipData({
@@ -629,7 +647,6 @@ export const SankeyDiagram: React.FC<SankeyDiagramProps> = ({
     <SankeyContainer ref={containerRef}>
       <Chart
         data={chartData}
-        type="sankey"
         {...chartProps}
       >
         {renderSankey()}

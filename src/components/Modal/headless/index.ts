@@ -1,6 +1,8 @@
 export { default as ModalHeadless } from './ModalHeadless';
 export { 
-  useModal,
+  useModal
+} from './useModal';
+export type {
   UseModalReturn,
   ModalOptions
 } from './useModal';

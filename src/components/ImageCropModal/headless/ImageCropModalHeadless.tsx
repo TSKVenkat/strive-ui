@@ -4,7 +4,7 @@ import {
   useImageCropModal, 
   UseImageCropModalReturn, 
   ImageCropModalOptions,
-  CropArea
+  type CropArea
 } from './useImageCropModal';
 import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../../types/polymorphic';
 
@@ -59,27 +59,23 @@ export type TriggerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Trigger component
-const Trigger = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: TriggerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getTriggerProps } = useImageCropModalContext();
-    
-    const triggerProps = getTriggerProps();
-    
-    return (
-      <Component 
-        {...triggerProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Trigger = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getTriggerProps } = useImageCropModalContext();
+  
+  const triggerProps = getTriggerProps();
+  
+  return (
+    <Component 
+      {...triggerProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 Trigger.displayName = 'ImageCropModalHeadless.Trigger';
 
@@ -158,31 +154,27 @@ export type BackdropProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Backdrop component
-const Backdrop = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: BackdropProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getBackdropProps, isOpen } = useImageCropModalContext();
-    
-    if (!isOpen) {
-      return null;
-    }
-    
-    const backdropProps = getBackdropProps();
-    
-    return (
-      <Component 
-        {...backdropProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
+const Backdrop = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { getBackdropProps, isOpen } = useImageCropModalContext();
+  
+  if (!isOpen) {
+    return null;
   }
-);
+  
+  const backdropProps = getBackdropProps();
+  
+  return (
+    <Component 
+      {...backdropProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 Backdrop.displayName = 'ImageCropModalHeadless.Backdrop';
 
@@ -198,31 +190,31 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getContainerProps, isOpen } = useImageCropModalContext();
-    
-    if (!isOpen) {
-      return null;
-    }
-    
-    const containerProps = getContainerProps();
-    
-    return (
-      <Component 
-        {...containerProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
+const Container = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { getContainerProps, isOpen } = useImageCropModalContext();
+  
+  if (!isOpen) {
+    return null;
   }
-);
+  
+  const containerProps = getContainerProps();
+  
+  return (
+    <Component 
+      {...containerProps} 
+      {...restProps} 
+      ref={ref}
+      style={{ 
+        ...containerProps.style,
+        ...restProps.style,
+      }}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 Container.displayName = 'ImageCropModalHeadless.Container';
 
@@ -238,27 +230,28 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getContentProps } = useImageCropModalContext();
-    
-    const contentProps = getContentProps();
-    
-    return (
-      <Component 
-        {...contentProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Content = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { getContentProps } = useImageCropModalContext();
+  
+  const contentProps = getContentProps();
+  
+  return (
+    <Component 
+      {...contentProps} 
+      {...restProps} 
+      ref={ref}
+      style={{ 
+        overflow: 'auto',
+        height: '100%',
+        ...restProps.style,
+      }}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 Content.displayName = 'ImageCropModalHeadless.Content';
 
@@ -274,23 +267,19 @@ export type HeaderProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Header component
-const Header = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: HeaderProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Header = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 Header.displayName = 'ImageCropModalHeadless.Header';
 
@@ -306,23 +295,24 @@ export type BodyProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Body component
-const Body = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: BodyProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Body = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+      style={{ 
+        flex: 1,
+        overflow: 'auto',
+        ...restProps.style,
+      }}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 Body.displayName = 'ImageCropModalHeadless.Body';
 
@@ -338,23 +328,19 @@ export type FooterProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Footer component
-const Footer = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: FooterProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Footer = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 Footer.displayName = 'ImageCropModalHeadless.Footer';
 
@@ -370,27 +356,23 @@ export type CloseProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Close component
-const Close = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: CloseProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getCloseButtonProps } = useImageCropModalContext();
-    
-    const closeProps = getCloseButtonProps();
-    
-    return (
-      <Component 
-        {...closeProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Close = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getCloseButtonProps } = useImageCropModalContext();
+  
+  const closeProps = getCloseButtonProps();
+  
+  return (
+    <Component 
+      {...closeProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 Close.displayName = 'ImageCropModalHeadless.Close';
 
@@ -410,36 +392,23 @@ export type ImageProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Image component
-const Image = forwardRef(
-  <C extends React.ElementType = 'img'>(
-    { as, src, alt = 'Image to crop', ...props }: ImageProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'img';
-    const { getImageProps, setSrc } = useImageCropModalContext();
-    
-    // Set the source if provided
-    React.useEffect(() => {
-      if (src) {
-        setSrc(src);
-      }
-    }, [src, setSrc]);
-    
-    const imageProps = getImageProps();
-    
-    return (
-      <Component 
-        {...imageProps} 
-        {...props} 
-        ref={ref}
-        style={{
-          ...imageProps.style,
-          ...props.style,
-        }}
-      />
-    );
-  }
-);
+const Image = forwardRef((props: any, ref: any) => {
+  const { as, src, alt, ...restProps } = props;
+  const Component = as || 'img';
+  const { getImageProps, imageSrc } = useImageCropModalContext();
+  
+  const imageProps = getImageProps();
+  
+  return (
+    <Component 
+      {...imageProps}
+      {...restProps} 
+      ref={ref}
+      src={src || imageSrc}
+      alt={alt || 'Crop image'}
+    />
+  );
+}) as any;
 
 Image.displayName = 'ImageCropModalHeadless.Image';
 
@@ -455,31 +424,23 @@ export type CropAreaProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // CropArea component
-const CropArea = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: CropAreaProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getCropAreaProps } = useImageCropModalContext();
-    
-    const cropAreaProps = getCropAreaProps();
-    
-    return (
-      <Component 
-        {...cropAreaProps} 
-        {...props} 
-        ref={ref}
-        style={{
-          ...cropAreaProps.style,
-          ...props.style,
-        }}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const CropArea = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { getCropAreaProps } = useImageCropModalContext();
+  
+  const cropAreaProps = getCropAreaProps();
+  
+  return (
+    <Component 
+      {...cropAreaProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 CropArea.displayName = 'ImageCropModalHeadless.CropArea';
 
@@ -495,27 +456,23 @@ export type CropButtonProps<C extends React.ElementType> = PolymorphicComponentP
 >;
 
 // CropButton component
-const CropButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: CropButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getCropButtonProps } = useImageCropModalContext();
-    
-    const cropButtonProps = getCropButtonProps();
-    
-    return (
-      <Component 
-        {...cropButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Crop'}
-      </Component>
-    );
-  }
-);
+const CropButton = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getCropButtonProps } = useImageCropModalContext();
+  
+  const cropButtonProps = getCropButtonProps();
+  
+  return (
+    <Component 
+      {...cropButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 CropButton.displayName = 'ImageCropModalHeadless.CropButton';
 
@@ -531,27 +488,23 @@ export type ResetButtonProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // ResetButton component
-const ResetButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ResetButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getResetButtonProps } = useImageCropModalContext();
-    
-    const resetButtonProps = getResetButtonProps();
-    
-    return (
-      <Component 
-        {...resetButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Reset'}
-      </Component>
-    );
-  }
-);
+const ResetButton = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getResetButtonProps } = useImageCropModalContext();
+  
+  const resetButtonProps = getResetButtonProps();
+  
+  return (
+    <Component 
+      {...resetButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 ResetButton.displayName = 'ImageCropModalHeadless.ResetButton';
 
@@ -567,27 +520,23 @@ export type RotateLeftButtonProps<C extends React.ElementType> = PolymorphicComp
 >;
 
 // RotateLeftButton component
-const RotateLeftButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: RotateLeftButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getRotateLeftButtonProps } = useImageCropModalContext();
-    
-    const rotateLeftButtonProps = getRotateLeftButtonProps();
-    
-    return (
-      <Component 
-        {...rotateLeftButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Rotate Left'}
-      </Component>
-    );
-  }
-);
+const RotateLeftButton = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getRotateLeftButtonProps } = useImageCropModalContext();
+  
+  const rotateLeftButtonProps = getRotateLeftButtonProps();
+  
+  return (
+    <Component 
+      {...rotateLeftButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 RotateLeftButton.displayName = 'ImageCropModalHeadless.RotateLeftButton';
 
@@ -603,27 +552,23 @@ export type RotateRightButtonProps<C extends React.ElementType> = PolymorphicCom
 >;
 
 // RotateRightButton component
-const RotateRightButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: RotateRightButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getRotateRightButtonProps } = useImageCropModalContext();
-    
-    const rotateRightButtonProps = getRotateRightButtonProps();
-    
-    return (
-      <Component 
-        {...rotateRightButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Rotate Right'}
-      </Component>
-    );
-  }
-);
+const RotateRightButton = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getRotateRightButtonProps } = useImageCropModalContext();
+  
+  const rotateRightButtonProps = getRotateRightButtonProps();
+  
+  return (
+    <Component 
+      {...rotateRightButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 RotateRightButton.displayName = 'ImageCropModalHeadless.RotateRightButton';
 
@@ -639,27 +584,23 @@ export type ZoomInButtonProps<C extends React.ElementType> = PolymorphicComponen
 >;
 
 // ZoomInButton component
-const ZoomInButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ZoomInButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getZoomInButtonProps } = useImageCropModalContext();
-    
-    const zoomInButtonProps = getZoomInButtonProps();
-    
-    return (
-      <Component 
-        {...zoomInButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Zoom In'}
-      </Component>
-    );
-  }
-);
+const ZoomInButton = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getZoomInButtonProps } = useImageCropModalContext();
+  
+  const zoomInButtonProps = getZoomInButtonProps();
+  
+  return (
+    <Component 
+      {...zoomInButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 ZoomInButton.displayName = 'ImageCropModalHeadless.ZoomInButton';
 
@@ -675,27 +616,23 @@ export type ZoomOutButtonProps<C extends React.ElementType> = PolymorphicCompone
 >;
 
 // ZoomOutButton component
-const ZoomOutButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ZoomOutButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getZoomOutButtonProps } = useImageCropModalContext();
-    
-    const zoomOutButtonProps = getZoomOutButtonProps();
-    
-    return (
-      <Component 
-        {...zoomOutButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Zoom Out'}
-      </Component>
-    );
-  }
-);
+const ZoomOutButton = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getZoomOutButtonProps } = useImageCropModalContext();
+  
+  const zoomOutButtonProps = getZoomOutButtonProps();
+  
+  return (
+    <Component 
+      {...zoomOutButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 ZoomOutButton.displayName = 'ImageCropModalHeadless.ZoomOutButton';
 
@@ -711,27 +648,23 @@ export type FlipHorizontalButtonProps<C extends React.ElementType> = Polymorphic
 >;
 
 // FlipHorizontalButton component
-const FlipHorizontalButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: FlipHorizontalButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getFlipHorizontalButtonProps } = useImageCropModalContext();
-    
-    const flipHorizontalButtonProps = getFlipHorizontalButtonProps();
-    
-    return (
-      <Component 
-        {...flipHorizontalButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Flip Horizontal'}
-      </Component>
-    );
-  }
-);
+const FlipHorizontalButton = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getFlipHorizontalButtonProps } = useImageCropModalContext();
+  
+  const flipHorizontalButtonProps = getFlipHorizontalButtonProps();
+  
+  return (
+    <Component 
+      {...flipHorizontalButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 FlipHorizontalButton.displayName = 'ImageCropModalHeadless.FlipHorizontalButton';
 
@@ -747,27 +680,23 @@ export type FlipVerticalButtonProps<C extends React.ElementType> = PolymorphicCo
 >;
 
 // FlipVerticalButton component
-const FlipVerticalButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: FlipVerticalButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getFlipVerticalButtonProps } = useImageCropModalContext();
-    
-    const flipVerticalButtonProps = getFlipVerticalButtonProps();
-    
-    return (
-      <Component 
-        {...flipVerticalButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Flip Vertical'}
-      </Component>
-    );
-  }
-);
+const FlipVerticalButton = forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getFlipVerticalButtonProps } = useImageCropModalContext();
+  
+  const flipVerticalButtonProps = getFlipVerticalButtonProps();
+  
+  return (
+    <Component 
+      {...flipVerticalButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 FlipVerticalButton.displayName = 'ImageCropModalHeadless.FlipVerticalButton';
 

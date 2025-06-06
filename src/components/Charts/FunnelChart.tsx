@@ -208,7 +208,14 @@ export const FunnelChart: React.FC<FunnelChartProps> = ({
     : [...funnelData].sort((a, b) => b.value - a.value);
   
   // Calculate funnel dimensions
-  const calculateFunnel = () => {
+  const calculateFunnel = (): {
+    width: number;
+    height: number;
+    padding: { top: number; right: number; bottom: number; left: number };
+    funnelWidth: number;
+    funnelHeight: number;
+    sections: any[];
+  } | null => {
     if (!svgRef.current || !containerRef.current) return null;
     
     const svg = svgRef.current;
@@ -271,7 +278,7 @@ export const FunnelChart: React.FC<FunnelChartProps> = ({
   };
   
   // Handle section hover
-  const handleSectionHover = (event: React.MouseEvent, section: ReturnType<typeof calculateFunnel>['sections'][0]) => {
+  const handleSectionHover = (event: React.MouseEvent, section: NonNullable<ReturnType<typeof calculateFunnel>>['sections'][0]) => {
     const containerRect = containerRef.current?.getBoundingClientRect();
     
     if (!containerRect) return;
@@ -294,7 +301,7 @@ export const FunnelChart: React.FC<FunnelChartProps> = ({
   };
   
   // Handle section click
-  const handleSectionClick = (section: ReturnType<typeof calculateFunnel>['sections'][0]) => {
+  const handleSectionClick = (section: NonNullable<ReturnType<typeof calculateFunnel>>['sections'][0]) => {
     if (!selectable) return;
     
     setSelectedSections(prev => {
@@ -320,7 +327,7 @@ export const FunnelChart: React.FC<FunnelChartProps> = ({
   };
   
   // Calculate label position
-  const calculateLabelPosition = (section: ReturnType<typeof calculateFunnel>['sections'][0]) => {
+  const calculateLabelPosition = (section: NonNullable<ReturnType<typeof calculateFunnel>>['sections'][0]) => {
     if (labelPosition === 'inside') {
       return {
         x: section.x + section.width / 2,
@@ -399,14 +406,14 @@ export const FunnelChart: React.FC<FunnelChartProps> = ({
                     <>
                       <LabelLine
                         d={`
-                          M ${calculateLabelPosition(section).anchorPoint.x},${calculateLabelPosition(section).anchorPoint.y}
-                          L ${calculateLabelPosition(section).labelPoint.x},${calculateLabelPosition(section).labelPoint.y}
+                          M ${calculateLabelPosition(section).anchorPoint?.x},${calculateLabelPosition(section).anchorPoint?.y}
+                          L ${calculateLabelPosition(section).labelPoint?.x},${calculateLabelPosition(section).labelPoint?.y}
                         `}
                         opacity={isActive ? 1 : 0.3}
                       />
                       <OuterLabel
-                        x={calculateLabelPosition(section).labelPoint.x}
-                        y={calculateLabelPosition(section).labelPoint.y}
+                        x={calculateLabelPosition(section).labelPoint?.x}
+                        y={calculateLabelPosition(section).labelPoint?.y}
                         textAnchor={calculateLabelPosition(section).textAnchor}
                         opacity={isActive ? 1 : 0.3}
                       >
@@ -453,7 +460,6 @@ export const FunnelChart: React.FC<FunnelChartProps> = ({
     <FunnelContainer ref={containerRef}>
       <Chart
         data={data}
-        type="funnel"
         {...chartProps}
       >
         {renderFunnel()}

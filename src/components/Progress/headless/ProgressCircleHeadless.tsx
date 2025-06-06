@@ -96,7 +96,7 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
+const Container = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: ContainerProps<C>,
     ref: PolymorphicRef<C>
@@ -138,7 +138,7 @@ export type SVGProps<C extends React.ElementType> = PolymorphicComponentPropsWit
 >;
 
 // SVG component
-const SVG = forwardRef(
+const SVG = forwardRef<any, any>(
   <C extends React.ElementType = 'svg'>(
     { as, children, ...props }: SVGProps<C>,
     ref: PolymorphicRef<C>
@@ -178,7 +178,7 @@ export type TrackProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Track component
-const Track = forwardRef(
+const Track = forwardRef<any, any>(
   <C extends React.ElementType = 'circle'>(
     { as, children, ...props }: TrackProps<C>,
     ref: PolymorphicRef<C>
@@ -216,7 +216,7 @@ export type IndicatorProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Indicator component
-const Indicator = forwardRef(
+const Indicator = forwardRef<any, any>(
   <C extends React.ElementType = 'circle'>(
     { as, children, ...props }: IndicatorProps<C>,
     ref: PolymorphicRef<C>
@@ -288,7 +288,7 @@ export type LabelProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Label component
-const Label = forwardRef(
+const Label = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: LabelProps<C>,
     ref: PolymorphicRef<C>

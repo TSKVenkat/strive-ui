@@ -285,7 +285,7 @@ export const SidebarItemHeadless = forwardRef(function SidebarItemHeadless<C ext
     style, 
     id, 
     parentId, 
-    disabled = false, 
+    disabled = false as any, 
     ...props 
   }: Omit<SidebarItemHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>
@@ -330,7 +330,7 @@ export const SidebarSectionHeadless = forwardRef(function SidebarSectionHeadless
     style, 
     id, 
     parentId, 
-    disabled = false, 
+    disabled = false as any, 
     ...props 
   }: Omit<SidebarSectionHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>

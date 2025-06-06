@@ -1,6 +1,8 @@
 export { default as SignatureCaptureHeadless } from './SignatureCaptureHeadless';
 export { 
-  useSignatureCapture,
+  useSignatureCapture
+} from './useSignatureCapture';
+export type {
   UseSignatureCaptureReturn,
   SignatureCaptureOptions,
   Point,

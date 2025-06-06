@@ -53,34 +53,30 @@ export type VideoProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Video component
-const Video = forwardRef(
-  <C extends React.ElementType = 'video'>(
-    { as, children, ...props }: VideoProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'video';
-    const { getVideoProps, mediaType } = useMediaCaptureContext();
-    
-    // Only render for camera or screen capture
-    if (mediaType !== 'camera' && mediaType !== 'screen' && mediaType !== 'screenWithAudio') {
-      return null;
-    }
-    
-    const videoProps = getVideoProps();
-    
-    return (
-      <Component 
-        {...videoProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
+const Video = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'video';
+  const { getVideoProps, mediaType } = useMediaCaptureContext();
+  
+  // Only render for camera or screen capture
+  if (mediaType !== 'camera' && mediaType !== 'screen' && mediaType !== 'screenWithAudio') {
+    return null;
   }
-);
+  
+  const videoProps = getVideoProps();
+  
+  return (
+    <Component 
+      {...videoProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
-Video.displayName = 'MediaCaptureHeadless.Video';
+(Video as any).displayName = 'MediaCaptureHeadless.Video';
 
 // Audio component props
 export type AudioProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -94,34 +90,30 @@ export type AudioProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Audio component
-const Audio = forwardRef(
-  <C extends React.ElementType = 'audio'>(
-    { as, children, ...props }: AudioProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'audio';
-    const { getAudioProps, mediaType } = useMediaCaptureContext();
-    
-    // Only render for audio capture
-    if (mediaType !== 'audio') {
-      return null;
-    }
-    
-    const audioProps = getAudioProps();
-    
-    return (
-      <Component 
-        {...audioProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
+const Audio = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'audio';
+  const { getAudioProps, mediaType } = useMediaCaptureContext();
+  
+  // Only render for audio capture
+  if (mediaType !== 'audio') {
+    return null;
   }
-);
+  
+  const audioProps = getAudioProps();
+  
+  return (
+    <Component 
+      {...audioProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
-Audio.displayName = 'MediaCaptureHeadless.Audio';
+(Audio as any).displayName = 'MediaCaptureHeadless.Audio';
 
 // Canvas component props
 export type CanvasProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -135,29 +127,25 @@ export type CanvasProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Canvas component
-const Canvas = forwardRef(
-  <C extends React.ElementType = 'canvas'>(
-    { as, children, ...props }: CanvasProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'canvas';
-    const { getCanvasProps } = useMediaCaptureContext();
-    
-    const canvasProps = getCanvasProps();
-    
-    return (
-      <Component 
-        {...canvasProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Canvas = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'canvas';
+  const { getCanvasProps } = useMediaCaptureContext();
+  
+  const canvasProps = getCanvasProps();
+  
+  return (
+    <Component 
+      {...canvasProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
-Canvas.displayName = 'MediaCaptureHeadless.Canvas';
+(Canvas as any).displayName = 'MediaCaptureHeadless.Canvas';
 
 // Controls component props
 export type ControlsProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -184,51 +172,47 @@ export type ControlsProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Controls component
-const Controls = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ControlsProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { 
-      startStream,
-      stopStream,
-      startRecording,
-      stopRecording,
-      pauseRecording,
-      resumeRecording,
-      captureFrame,
-      toggleCameraFacing,
-      toggleFlash,
-      recordingState,
-      recordingTime,
-      isProcessing
-    } = useMediaCaptureContext();
-    
-    return (
-      <Component {...props} ref={ref}>
-        {typeof children === 'function' 
-          ? children({ 
-              startStream,
-              stopStream,
-              startRecording,
-              stopRecording,
-              pauseRecording,
-              resumeRecording,
-              captureFrame,
-              toggleCameraFacing,
-              toggleFlash,
-              recordingState,
-              recordingTime,
-              isProcessing
-            }) 
-          : children}
-      </Component>
-    );
-  }
-);
+const Controls = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { 
+    startStream,
+    stopStream,
+    startRecording,
+    stopRecording,
+    pauseRecording,
+    resumeRecording,
+    captureFrame,
+    toggleCameraFacing,
+    toggleFlash,
+    recordingState,
+    recordingTime,
+    isProcessing,
+  } = useMediaCaptureContext();
+  
+  const renderProps = {
+    startStream,
+    stopStream,
+    startRecording,
+    stopRecording,
+    pauseRecording,
+    resumeRecording,
+    captureFrame,
+    toggleCameraFacing,
+    toggleFlash,
+    recordingState,
+    recordingTime,
+    isProcessing,
+  };
+  
+  return (
+    <Component {...restProps} ref={ref}>
+      {typeof children === 'function' ? children(renderProps) : children}
+    </Component>
+  );
+}) as any;
 
-Controls.displayName = 'MediaCaptureHeadless.Controls';
+(Controls as any).displayName = 'MediaCaptureHeadless.Controls';
 
 // Timer component props
 export type TimerProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -245,35 +229,32 @@ export type TimerProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Timer component
-const Timer = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: TimerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { recordingTime, recordingState } = useMediaCaptureContext();
-    
-    // Only render when recording
-    if (recordingState === 'inactive') {
-      return null;
-    }
-    
-    // Format time as MM:SS
-    const minutes = Math.floor(recordingTime / 60);
-    const seconds = recordingTime % 60;
-    const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    
-    return (
-      <Component {...props} ref={ref}>
-        {typeof children === 'function' 
-          ? children({ recordingTime, formattedTime }) 
-          : children || formattedTime}
-      </Component>
-    );
+const Timer = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { recordingTime, recordingState } = useMediaCaptureContext();
+  
+  if (recordingState !== 'recording' && recordingState !== 'paused') {
+    return null;
   }
-);
+  
+  const minutes = Math.floor(recordingTime / 60);
+  const seconds = recordingTime % 60;
+  const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  
+  const renderProps = {
+    recordingTime,
+    formattedTime,
+  };
+  
+  return (
+    <Component {...restProps} ref={ref}>
+      {typeof children === 'function' ? children(renderProps) : (children || formattedTime)}
+    </Component>
+  );
+}) as any;
 
-Timer.displayName = 'MediaCaptureHeadless.Timer';
+(Timer as any).displayName = 'MediaCaptureHeadless.Timer';
 
 // Error component props
 export type ErrorProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -289,29 +270,25 @@ export type ErrorProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Error component
-const Error = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ErrorProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { error } = useMediaCaptureContext();
-    
-    if (!error) {
-      return null;
-    }
-    
-    return (
-      <Component {...props} ref={ref}>
-        {typeof children === 'function' 
-          ? children({ error }) 
-          : children || error.message}
-      </Component>
-    );
-  }
-);
+const ErrorComponent = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { error } = useMediaCaptureContext();
+  
+  if (!error) return null;
+  
+  const renderProps = {
+    error,
+  };
+  
+  return (
+    <Component {...restProps} ref={ref}>
+      {typeof children === 'function' ? children(renderProps) : children}
+    </Component>
+  );
+}) as any;
 
-Error.displayName = 'MediaCaptureHeadless.Error';
+(ErrorComponent as any).displayName = 'MediaCaptureHeadless.Error';
 
 // Loading component props
 export type LoadingProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -325,27 +302,21 @@ export type LoadingProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Loading component
-const Loading = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: LoadingProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { isProcessing } = useMediaCaptureContext();
-    
-    if (!isProcessing) {
-      return null;
-    }
-    
-    return (
-      <Component {...props} ref={ref}>
-        {children}
-      </Component>
-    );
-  }
-);
+const Loading = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { isProcessing } = useMediaCaptureContext();
+  
+  if (!isProcessing) return null;
+  
+  return (
+    <Component {...restProps} ref={ref}>
+      {children || 'Processing...'}
+    </Component>
+  );
+}) as any;
 
-Loading.displayName = 'MediaCaptureHeadless.Loading';
+(Loading as any).displayName = 'MediaCaptureHeadless.Loading';
 
 // Export all components
 export const MediaCaptureHeadless = {
@@ -355,7 +326,7 @@ export const MediaCaptureHeadless = {
   Canvas,
   Controls,
   Timer,
-  Error,
+  Error: ErrorComponent,
   Loading,
   useMediaCaptureContext,
 };

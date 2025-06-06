@@ -2,7 +2,7 @@ import React, { createContext, useContext, forwardRef } from 'react';
 import { useMultiSelect, UseMultiSelectReturn, SelectOption } from './useMultiSelect';
 
 // Define the props for the MultiSelect component
-export interface MultiSelectProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface MultiSelectProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /**
    * Array of options to select from
    */
@@ -206,10 +206,10 @@ export interface MultiSelectTriggerProps extends React.ButtonHTMLAttributes<HTML
 export const MultiSelectTrigger = forwardRef<HTMLButtonElement, MultiSelectTriggerProps>(
   (props, ref) => {
     const { getTriggerProps, selectedOptions, placeholder } = useMultiSelectContext();
-    const triggerProps = getTriggerProps({ ...props, ref });
+    const triggerProps = getTriggerProps(props as any);
 
     return (
-      <button {...triggerProps}>
+      <button {...triggerProps} ref={ref}>
         {selectedOptions.length > 0 ? (
           <MultiSelectSelectedItems>
             {selectedOptions.map((option) => (
@@ -235,13 +235,13 @@ export interface MultiSelectDropdownProps extends React.HTMLAttributes<HTMLDivEl
 export const MultiSelectDropdown = forwardRef<HTMLDivElement, MultiSelectDropdownProps>(
   (props, ref) => {
     const { getDropdownProps, isOpen } = useMultiSelectContext();
-    const dropdownProps = getDropdownProps({ ...props, ref });
+    const dropdownProps = getDropdownProps(props as any);
 
     if (!isOpen) {
       return null;
     }
 
-    return <div {...dropdownProps} />;
+    return <div {...dropdownProps} ref={ref} />;
   }
 );
 
@@ -266,9 +266,9 @@ export interface MultiSelectOptionProps extends React.HTMLAttributes<HTMLDivElem
 export const MultiSelectOption = forwardRef<HTMLDivElement, MultiSelectOptionProps>(
   ({ option, children, ...props }, ref) => {
     const { getOptionProps } = useMultiSelectContext();
-    const optionProps = getOptionProps(option, { ...props, ref });
+    const { ref: _, ...optionProps } = getOptionProps(option, props);
 
-    return <div {...optionProps}>{children}</div>;
+    return <div {...optionProps} ref={ref}>{children}</div>;
   }
 );
 
@@ -280,9 +280,9 @@ export interface MultiSelectInputProps extends React.InputHTMLAttributes<HTMLInp
 export const MultiSelectInput = forwardRef<HTMLInputElement, MultiSelectInputProps>(
   (props, ref) => {
     const { getInputProps } = useMultiSelectContext();
-    const inputProps = getInputProps({ ...props, ref });
+    const { ref: _, ...inputProps } = getInputProps(props);
 
-    return <input {...inputProps} />;
+    return <input {...inputProps} ref={ref} />;
   }
 );
 
@@ -294,10 +294,10 @@ export interface MultiSelectClearButtonProps extends React.ButtonHTMLAttributes<
 export const MultiSelectClearButton = forwardRef<HTMLButtonElement, MultiSelectClearButtonProps>(
   (props, ref) => {
     const { getClearButtonProps } = useMultiSelectContext();
-    const clearButtonProps = getClearButtonProps({ ...props, ref });
+    const clearButtonProps = getClearButtonProps(props);
 
     return (
-      <button {...clearButtonProps}>
+      <button {...clearButtonProps} ref={ref}>
         {props.children || (
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
@@ -329,9 +329,9 @@ export interface MultiSelectSelectedItemProps extends React.HTMLAttributes<HTMLD
 export const MultiSelectSelectedItem = forwardRef<HTMLDivElement, MultiSelectSelectedItemProps>(
   ({ option, children, ...props }, ref) => {
     const { getSelectedItemProps } = useMultiSelectContext();
-    const selectedItemProps = getSelectedItemProps(option, { ...props, ref });
+    const selectedItemProps = getSelectedItemProps(option, props);
 
-    return <div {...selectedItemProps}>{children}</div>;
+    return <div {...selectedItemProps} ref={ref}>{children}</div>;
   }
 );
 
@@ -348,10 +348,10 @@ export const MultiSelectSelectedItemRemove = forwardRef<
   MultiSelectSelectedItemRemoveProps
 >(({ option, children, ...props }, ref) => {
   const { getSelectedItemRemoveProps } = useMultiSelectContext();
-  const selectedItemRemoveProps = getSelectedItemRemoveProps(option, { ...props, ref });
+  const selectedItemRemoveProps = getSelectedItemRemoveProps(option, props);
 
   return (
-    <button {...selectedItemRemoveProps}>
+    <button {...selectedItemRemoveProps} ref={ref}>
       {children || (
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
           <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
@@ -376,4 +376,9 @@ export const MultiSelectHeadless = Object.assign(MultiSelectRoot, {
   SelectedItemRemove: MultiSelectSelectedItemRemove,
 });
 
-export default MultiSelectHeadless;
+// Ensure the default export has correct typing that includes options property
+const MultiSelectWithCorrectTypes = MultiSelectHeadless as React.ForwardRefExoticComponent<
+  MultiSelectProps & React.RefAttributes<HTMLDivElement>
+>;
+
+export default MultiSelectWithCorrectTypes;

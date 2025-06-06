@@ -244,38 +244,38 @@ export interface UseComboboxReturn {
    */
   getComboboxProps: <E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { 'data-disabled'?: string, 'data-readonly'?: string, 'data-required'?: string, 'data-open'?: string, 'data-has-value'?: string };
   /**
    * Get props for the input element
    */
   getInputProps: <E extends HTMLInputElement = HTMLInputElement>(
     props?: React.InputHTMLAttributes<E>
-  ) => React.InputHTMLAttributes<E>;
+  ) => React.InputHTMLAttributes<E> & { ref?: React.Ref<E>, 'data-disabled'?: string, 'data-readonly'?: string, 'data-required'?: string, 'data-open'?: string, 'data-has-value'?: string };
   /**
    * Get props for the toggle button element
    */
   getToggleButtonProps: <E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ) => React.ButtonHTMLAttributes<E>;
+  ) => React.ButtonHTMLAttributes<E> & { 'data-disabled'?: string, 'data-readonly'?: string, 'data-open'?: string };
   /**
    * Get props for the clear button element
    */
   getClearButtonProps: <E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ) => React.ButtonHTMLAttributes<E>;
+  ) => React.ButtonHTMLAttributes<E> & { 'data-disabled'?: string, 'data-readonly'?: string, 'data-visible'?: string };
   /**
    * Get props for the listbox element
    */
   getListboxProps: <E extends HTMLUListElement = HTMLUListElement>(
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { ref?: React.Ref<E>, 'data-open'?: string, 'data-disabled'?: string, 'data-readonly'?: string };
   /**
    * Get props for an option element
    */
   getOptionProps: <E extends HTMLLIElement = HTMLLIElement>(
     option: ComboboxOption,
     props?: React.LiHTMLAttributes<E>
-  ) => React.LiHTMLAttributes<E>;
+  ) => React.LiHTMLAttributes<E> & { 'data-selected'?: string, 'data-highlighted'?: string, 'data-disabled'?: string };
   /**
    * Get props for a group element
    */
@@ -714,7 +714,7 @@ export function useCombobox({
   // Get props for the combobox container element
   const getComboboxProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { 'data-disabled'?: string, 'data-readonly'?: string, 'data-required'?: string, 'data-open'?: string, 'data-has-value'?: string } => {
     return {
       ...props,
       id: comboboxId,
@@ -727,16 +727,17 @@ export function useCombobox({
       'data-required': required ? '' : undefined,
       'data-open': isOpen ? '' : undefined,
       'data-has-value': value ? '' : undefined,
-    };
+    } as any;
   }, [comboboxId, listboxId, isOpen, disabled, readOnly, required, value]);
   
   // Get props for the input element
   const getInputProps = useCallback(<E extends HTMLInputElement = HTMLInputElement>(
     props?: React.InputHTMLAttributes<E>
-  ): React.InputHTMLAttributes<E> => {
+  ): React.InputHTMLAttributes<E> & { ref?: React.Ref<E>, 'data-disabled'?: string, 'data-readonly'?: string, 'data-required'?: string, 'data-open'?: string, 'data-has-value'?: string } => {
+    const { ref: propsRef, ...restProps } = (props as any) || {};
     return {
-      ...props,
-      ref: mergeRefs(inputRef, props?.ref),
+      ...restProps,
+      ref: mergeRefs(inputRef, propsRef),
       id: inputId,
       role: 'combobox',
       'aria-autocomplete': 'list',
@@ -774,7 +775,7 @@ export function useCombobox({
       'data-required': required ? '' : undefined,
       'data-open': isOpen ? '' : undefined,
       'data-has-value': value ? '' : undefined,
-    };
+    } as any;
   }, [
     inputId, 
     listboxId, 
@@ -796,7 +797,7 @@ export function useCombobox({
   // Get props for the toggle button element
   const getToggleButtonProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ): React.ButtonHTMLAttributes<E> => {
+  ): React.ButtonHTMLAttributes<E> & { 'data-disabled'?: string, 'data-readonly'?: string, 'data-open'?: string } => {
     return {
       ...props,
       type: 'button',
@@ -813,13 +814,13 @@ export function useCombobox({
       'data-disabled': disabled ? '' : undefined,
       'data-readonly': readOnly ? '' : undefined,
       'data-open': isOpen ? '' : undefined,
-    };
+    } as any;
   }, [listboxId, isOpen, disabled, readOnly, toggle]);
   
   // Get props for the clear button element
   const getClearButtonProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ): React.ButtonHTMLAttributes<E> => {
+  ): React.ButtonHTMLAttributes<E> & { 'data-disabled'?: string, 'data-readonly'?: string, 'data-visible'?: string } => {
     return {
       ...props,
       type: 'button',
@@ -834,16 +835,17 @@ export function useCombobox({
       'data-disabled': disabled ? '' : undefined,
       'data-readonly': readOnly ? '' : undefined,
       'data-visible': value ? '' : undefined,
-    };
+    } as any;
   }, [disabled, readOnly, value, clear]);
   
   // Get props for the listbox element
   const getListboxProps = useCallback(<E extends HTMLUListElement = HTMLUListElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { ref?: React.Ref<E>, 'data-open'?: string, 'data-disabled'?: string, 'data-readonly'?: string } => {
+    const { ref: propsRef, ...restProps } = (props as any) || {};
     return {
-      ...props,
-      ref: mergeRefs(listboxRef, props?.ref),
+      ...restProps,
+      ref: mergeRefs(listboxRef, propsRef),
       id: listboxId,
       role: 'listbox',
       'aria-labelledby': inputId,
@@ -854,14 +856,14 @@ export function useCombobox({
         ...props?.style,
         display: isOpen ? 'block' : 'none',
       },
-    };
+    } as any;
   }, [listboxId, inputId, isOpen, disabled, readOnly]);
   
   // Get props for an option element
   const getOptionProps = useCallback(<E extends HTMLLIElement = HTMLLIElement>(
     option: ComboboxOption,
     props?: React.LiHTMLAttributes<E>
-  ): React.LiHTMLAttributes<E> => {
+  ): React.LiHTMLAttributes<E> & { 'data-selected'?: string, 'data-highlighted'?: string, 'data-disabled'?: string } => {
     const isSelected = option.value === value;
     const isHighlighted = option === highlightedOption;
     
@@ -896,7 +898,7 @@ export function useCombobox({
       'data-selected': isSelected ? '' : undefined,
       'data-highlighted': isHighlighted ? '' : undefined,
       'data-disabled': option.disabled ? '' : undefined,
-    };
+    } as any;
   }, [listboxId, value, highlightedOption, selectOption, highlightOption]);
   
   // Get props for a group element

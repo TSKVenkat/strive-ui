@@ -55,27 +55,25 @@ export type TriggerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Trigger component
-const Trigger = forwardRef(
-  <C extends React.ElementType = 'span'>(
-    { as, children, ...props }: TriggerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Trigger = forwardRef(function Trigger<C extends React.ElementType = 'span'>(
+  { as, children, ...props }: Omit<TriggerProps<C>, 'ref'>,
+  ref: React.ForwardedRef<React.ElementRef<C>>
+) {
     const Component = as || 'span';
     const { getTriggerProps } = useTooltipContext();
     
     const triggerProps = getTriggerProps();
     
-    return (
-      <Component 
-        {...triggerProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component as any,
+      {
+        ...triggerProps,
+        ...props,
+        ref,
+      },
+      children
     );
-  }
-);
+  });
 
 Trigger.displayName = 'TooltipHeadless.Trigger';
 
@@ -154,11 +152,10 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Content = forwardRef(function Content<C extends React.ElementType = 'div'>(
+  { as, children, ...props }: Omit<ContentProps<C>, 'ref'>,
+  ref: React.ForwardedRef<React.ElementRef<C>>
+) {
     const Component = as || 'div';
     const { getContentProps, isOpen } = useTooltipContext();
     
@@ -168,21 +165,20 @@ const Content = forwardRef(
     
     const contentProps = getContentProps();
     
-    return (
-      <Component 
-        {...contentProps} 
-        {...props} 
-        ref={ref}
-        style={{ 
+    return React.createElement(
+      Component as any,
+      {
+        ...contentProps,
+        ...props,
+        ref,
+        style: {
           ...contentProps.style,
           ...props.style,
-        }}
-      >
-        {children}
-      </Component>
+        },
+      },
+      children
     );
-  }
-);
+  });
 
 Content.displayName = 'TooltipHeadless.Content';
 
@@ -198,11 +194,10 @@ export type ArrowProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Arrow component
-const Arrow = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ArrowProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Arrow = forwardRef(function Arrow<C extends React.ElementType = 'div'>(
+  { as, children, ...props }: Omit<ArrowProps<C>, 'ref'>,
+  ref: React.ForwardedRef<React.ElementRef<C>>
+) {
     const Component = as || 'div';
     const { getArrowProps, isOpen } = useTooltipContext();
     
@@ -212,21 +207,20 @@ const Arrow = forwardRef(
     
     const arrowProps = getArrowProps();
     
-    return (
-      <Component 
-        {...arrowProps} 
-        {...props} 
-        ref={ref}
-        style={{ 
+    return React.createElement(
+      Component as any,
+      {
+        ...arrowProps,
+        ...props,
+        ref,
+        style: {
           ...arrowProps.style,
           ...props.style,
-        }}
-      >
-        {children}
-      </Component>
+        },
+      },
+      children
     );
-  }
-);
+  });
 
 Arrow.displayName = 'TooltipHeadless.Arrow';
 

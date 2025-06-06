@@ -1,6 +1,8 @@
 export { default as PopoverHeadless } from './PopoverHeadless';
 export { 
-  usePopover,
+  usePopover
+} from './usePopover';
+export type {
   UsePopoverReturn,
   PopoverOptions,
   PopoverPlacement

@@ -16,7 +16,7 @@ const StatusAnimationContext = createContext<StatusAnimationContextValue | null>
 export function useStatusAnimationContext() {
   const context = useContext(StatusAnimationContext);
   if (!context) {
-    throw new Error('useStatusAnimationContext must be used within a StatusAnimationHeadless.Root component');
+    throw new globalThis.Error('useStatusAnimationContext must be used within a StatusAnimationHeadless.Root component');
   }
   return context;
 }
@@ -58,45 +58,44 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getContainerProps, visible, circle, backgroundColor, size } = useStatusAnimationContext();
-    
-    if (!visible) {
-      return null;
-    }
-    
-    const containerProps = getContainerProps();
-    
-    return (
-      <Component 
-        {...containerProps} 
-        {...props} 
-        ref={ref}
-        style={{
-          display: 'inline-flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          ...(circle ? {
-            borderRadius: '50%',
-            backgroundColor,
-            width: size,
-            height: size,
-          } : {}),
-          ...props.style,
-        }}
-      >
-        {children}
-      </Component>
-    );
+const ContainerComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  const { getContainerProps, visible, circle, backgroundColor, size } = useStatusAnimationContext();
+  
+  if (!visible) {
+    return null;
   }
-);
+  
+  const containerProps = getContainerProps();
+  
+  return (
+    <Component 
+      {...containerProps} 
+      {...restProps} 
+      ref={ref}
+      style={{
+        display: 'inline-flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        ...(circle ? {
+          borderRadius: '50%',
+          backgroundColor,
+          width: size,
+          height: size,
+        } : {}),
+        ...restProps.style,
+      }}
+    >
+      {children}
+    </Component>
+  );
+});
 
-Container.displayName = 'StatusAnimationHeadless.Container';
+ContainerComponent.displayName = 'StatusAnimationHeadless.Container';
+
+const Container = ContainerComponent as <C extends React.ElementType = 'div'>(
+  props: ContainerProps<C>
+) => React.ReactElement | null;
 
 // SVG component props
 export type SVGProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -110,29 +109,28 @@ export type SVGProps<C extends React.ElementType> = PolymorphicComponentPropsWit
 >;
 
 // SVG component
-const SVG = forwardRef(
-  <C extends React.ElementType = 'svg'>(
-    { as, children, ...props }: SVGProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'svg';
-    const { getSvgProps } = useStatusAnimationContext();
-    
-    const svgProps = getSvgProps();
-    
-    return (
-      <Component 
-        {...svgProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const SVGComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'svg', children, ...restProps } = props;
+  const { getSvgProps } = useStatusAnimationContext();
+  
+  const svgProps = getSvgProps();
+  
+  return (
+    <Component 
+      {...svgProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+});
 
-SVG.displayName = 'StatusAnimationHeadless.SVG';
+SVGComponent.displayName = 'StatusAnimationHeadless.SVG';
+
+const SVG = SVGComponent as <C extends React.ElementType = 'svg'>(
+  props: SVGProps<C>
+) => React.ReactElement | null;
 
 // Path component props
 export type PathProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -146,45 +144,44 @@ export type PathProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Path component
-const Path = forwardRef(
-  <C extends React.ElementType = 'path'>(
-    { as, children, ...props }: PathProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'path';
-    const { 
-      getPathData, 
-      getAnimationStyle, 
-      color, 
-      strokeWidth, 
-      type 
-    } = useStatusAnimationContext();
-    
-    const pathData = getPathData();
-    const animationStyle = getAnimationStyle();
-    
-    return (
-      <Component 
-        d={pathData}
-        fill={type === 'loading' ? 'none' : color}
-        stroke={type === 'loading' ? color : 'none'}
-        strokeWidth={strokeWidth}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        {...props} 
-        ref={ref}
-        style={{
-          ...animationStyle,
-          ...props.style,
-        }}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const PathComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'path', children, ...restProps } = props;
+  const { 
+    getPathData, 
+    getAnimationStyle, 
+    color, 
+    strokeWidth, 
+    type 
+  } = useStatusAnimationContext();
+  
+  const pathData = getPathData();
+  const animationStyle = getAnimationStyle();
+  
+  return (
+    <Component 
+      d={pathData}
+      fill={type === 'loading' ? 'none' : color}
+      stroke={type === 'loading' ? color : 'none'}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...restProps} 
+      ref={ref}
+      style={{
+        ...animationStyle,
+        ...restProps.style,
+      }}
+    >
+      {children}
+    </Component>
+  );
+});
 
-Path.displayName = 'StatusAnimationHeadless.Path';
+PathComponent.displayName = 'StatusAnimationHeadless.Path';
+
+const Path = PathComponent as <C extends React.ElementType = 'path'>(
+  props: PathProps<C>
+) => React.ReactElement | null;
 
 // Success component props
 export type SuccessProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -198,31 +195,30 @@ export type SuccessProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Success component
-const Success = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: SuccessProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        <SVG>
-          <Path />
-        </SVG>
-        {children}
-      </Component>
-    );
-  }
-);
+const SuccessComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      <SVG>
+        <Path />
+      </SVG>
+      {children}
+    </Component>
+  );
+});
 
-Success.displayName = 'StatusAnimationHeadless.Success';
+SuccessComponent.displayName = 'StatusAnimationHeadless.Success';
+
+const Success = SuccessComponent as <C extends React.ElementType = 'div'>(
+  props: SuccessProps<C>
+) => React.ReactElement | null;
 
 // Error component props
-export type ErrorProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
+export type StatusErrorProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
   C,
   {
     /**
@@ -233,28 +229,27 @@ export type ErrorProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Error component
-const Error = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ErrorProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        <SVG>
-          <Path />
-        </SVG>
-        {children}
-      </Component>
-    );
-  }
-);
+const StatusErrorComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      <SVG>
+        <Path />
+      </SVG>
+      {children}
+    </Component>
+  );
+});
 
-Error.displayName = 'StatusAnimationHeadless.Error';
+StatusErrorComponent.displayName = 'StatusAnimationHeadless.Error';
+
+const StatusError = StatusErrorComponent as <C extends React.ElementType = 'div'>(
+  props: StatusErrorProps<C>
+) => React.ReactElement | null;
 
 // Warning component props
 export type WarningProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -268,28 +263,27 @@ export type WarningProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Warning component
-const Warning = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: WarningProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        <SVG>
-          <Path />
-        </SVG>
-        {children}
-      </Component>
-    );
-  }
-);
+const WarningComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      <SVG>
+        <Path />
+      </SVG>
+      {children}
+    </Component>
+  );
+});
 
-Warning.displayName = 'StatusAnimationHeadless.Warning';
+WarningComponent.displayName = 'StatusAnimationHeadless.Warning';
+
+const Warning = WarningComponent as <C extends React.ElementType = 'div'>(
+  props: WarningProps<C>
+) => React.ReactElement | null;
 
 // Info component props
 export type InfoProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -303,28 +297,27 @@ export type InfoProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Info component
-const Info = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: InfoProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        <SVG>
-          <Path />
-        </SVG>
-        {children}
-      </Component>
-    );
-  }
-);
+const InfoComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      <SVG>
+        <Path />
+      </SVG>
+      {children}
+    </Component>
+  );
+});
 
-Info.displayName = 'StatusAnimationHeadless.Info';
+InfoComponent.displayName = 'StatusAnimationHeadless.Info';
+
+const Info = InfoComponent as <C extends React.ElementType = 'div'>(
+  props: InfoProps<C>
+) => React.ReactElement | null;
 
 // Loading component props
 export type LoadingProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -338,28 +331,27 @@ export type LoadingProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Loading component
-const Loading = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: LoadingProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        <SVG>
-          <Path />
-        </SVG>
-        {children}
-      </Component>
-    );
-  }
-);
+const LoadingComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      <SVG>
+        <Path />
+      </SVG>
+      {children}
+    </Component>
+  );
+});
 
-Loading.displayName = 'StatusAnimationHeadless.Loading';
+LoadingComponent.displayName = 'StatusAnimationHeadless.Loading';
+
+const Loading = LoadingComponent as <C extends React.ElementType = 'div'>(
+  props: LoadingProps<C>
+) => React.ReactElement | null;
 
 // Text component props
 export type TextProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -373,49 +365,48 @@ export type TextProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Text component
-const Text = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: TextProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { type, color } = useStatusAnimationContext();
-    
-    // Get default text based on type
-    const getDefaultText = () => {
-      switch (type) {
-        case 'success':
-          return 'Success!';
-        case 'error':
-          return 'Error!';
-        case 'warning':
-          return 'Warning!';
-        case 'info':
-          return 'Information';
-        case 'loading':
-          return 'Loading...';
-        default:
-          return '';
-      }
-    };
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-        style={{
-          color,
-          marginLeft: '8px',
-          ...props.style,
-        }}
-      >
-        {children || getDefaultText()}
-      </Component>
-    );
-  }
-);
+const TextComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  const { type, color } = useStatusAnimationContext();
+  
+  // Get default text based on type
+  const getDefaultText = () => {
+    switch (type) {
+      case 'success':
+        return 'Success!';
+      case 'error':
+        return 'Error!';
+      case 'warning':
+        return 'Warning!';
+      case 'info':
+        return 'Information';
+      case 'loading':
+        return 'Loading...';
+      default:
+        return '';
+    }
+  };
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+      style={{
+        color,
+        marginLeft: '8px',
+        ...restProps.style,
+      }}
+    >
+      {children || getDefaultText()}
+    </Component>
+  );
+});
 
-Text.displayName = 'StatusAnimationHeadless.Text';
+TextComponent.displayName = 'StatusAnimationHeadless.Text';
+
+const Text = TextComponent as <C extends React.ElementType = 'div'>(
+  props: TextProps<C>
+) => React.ReactElement | null;
 
 // Trigger component props
 export type TriggerProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -429,27 +420,26 @@ export type TriggerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Trigger component
-const Trigger = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: TriggerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { start } = useStatusAnimationContext();
-    
-    return (
-      <Component 
-        onClick={start}
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const TriggerComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'button', children, ...restProps } = props;
+  const { start } = useStatusAnimationContext();
+  
+  return (
+    <Component 
+      onClick={start}
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+});
 
-Trigger.displayName = 'StatusAnimationHeadless.Trigger';
+TriggerComponent.displayName = 'StatusAnimationHeadless.Trigger';
+
+const Trigger = TriggerComponent as <C extends React.ElementType = 'button'>(
+  props: TriggerProps<C>
+) => React.ReactElement | null;
 
 // Export all components
 export const StatusAnimationHeadless = {
@@ -458,7 +448,7 @@ export const StatusAnimationHeadless = {
   SVG,
   Path,
   Success,
-  Error,
+  Error: StatusError,
   Warning,
   Info,
   Loading,

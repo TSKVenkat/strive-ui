@@ -172,6 +172,14 @@ export interface UseTourGuideReturn {
    */
   totalSteps: number;
   /**
+   * Whether to show the mask
+   */
+  showMask: boolean;
+  /**
+   * Whether to show step numbers
+   */
+  showStepNumbers: boolean;
+  /**
    * Start the tour
    */
   start: (stepIndex?: number) => void;
@@ -199,7 +207,7 @@ export interface UseTourGuideReturn {
    * Get props for the tour container
    */
   getTourProps: () => {
-    'aria-live': string;
+    'aria-live': 'assertive' | 'polite' | 'off';
     role: string;
   };
   /**
@@ -214,7 +222,7 @@ export interface UseTourGuideReturn {
    */
   getMaskProps: () => {
     style: React.CSSProperties;
-    onClick: () => void;
+    onClick?: () => void;
   };
   /**
    * Get props for the tooltip
@@ -455,7 +463,7 @@ export function useTourGuide(options: TourOptions): UseTourGuideReturn {
   // Get props for the tour container
   const getTourProps = useCallback(() => {
     return {
-      'aria-live': 'assertive',
+      'aria-live': 'assertive' as const,
       role: 'dialog',
     };
   }, []);
@@ -474,14 +482,14 @@ export function useTourGuide(options: TourOptions): UseTourGuideReturn {
   const getMaskProps = useCallback(() => {
     return {
       style: {
-        position: 'fixed',
+        position: 'fixed' as const,
         top: 0,
         left: 0,
         width: '100%',
         height: '100%',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         zIndex: zIndex,
-        pointerEvents: 'auto',
+        pointerEvents: 'auto' as const,
       },
       onClick: closeOnClickOutside ? () => end(false) : undefined,
     };
@@ -491,7 +499,7 @@ export function useTourGuide(options: TourOptions): UseTourGuideReturn {
   const getTooltipProps = useCallback(() => {
     return {
       style: {
-        position: 'absolute',
+        position: 'absolute' as const,
         zIndex: zIndex + 1,
       },
       role: 'tooltip',
@@ -514,6 +522,8 @@ export function useTourGuide(options: TourOptions): UseTourGuideReturn {
     isActive,
     isCompleted,
     totalSteps,
+    showMask,
+    showStepNumbers,
     start,
     end,
     next,

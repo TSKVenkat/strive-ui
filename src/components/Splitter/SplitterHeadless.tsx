@@ -57,11 +57,8 @@ export type PaneProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Pane component
-const Pane = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, index, children, ...props }: PaneProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Pane = forwardRef<any, any>(
+  ({ as, index, children, ...props }, ref) => {
     const Component = as || 'div';
     const { getPaneProps, sizes } = useSplitterContext();
     const size = sizes[index] || 0;
@@ -93,17 +90,14 @@ export type GutterProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Gutter component
-const Gutter = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, index, children, ...props }: GutterProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Gutter = forwardRef<any, any>(
+  ({ as, index, children, ...props }, ref) => {
     const Component = as || 'div';
     const { getGutterProps, isDragging, draggedGutterIndex } = useSplitterContext();
     const isThisGutterDragging = isDragging && draggedGutterIndex === index;
     
     return (
-      <Component {...getGutterProps(index)} {...props} ref={ref}>
+      <Component {...getGutterProps(index) as any} {...props} ref={ref}>
         {children && (typeof children === 'function' 
           ? children({ isDragging: isThisGutterDragging }) 
           : children)}
@@ -131,11 +125,8 @@ export type ControlsProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Controls component
-const Controls = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ControlsProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Controls = forwardRef<any, any>(
+  ({ as, children, ...props }, ref) => {
     const Component = as || 'div';
     const { sizes, collapsePane, expandPane, resetSizes } = useSplitterContext();
     

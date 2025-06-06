@@ -261,7 +261,7 @@ export const Rating = ({
             filled={index < Math.floor(hoverValue !== null ? hoverValue : value)}
             halfFilled={
               allowHalf && 
-              !index < Math.floor(hoverValue !== null ? hoverValue : value) && 
+              !(index < Math.floor(hoverValue !== null ? hoverValue : value)) && 
               index < (hoverValue !== null ? hoverValue : value)
             }
             filledColor={filledColor}

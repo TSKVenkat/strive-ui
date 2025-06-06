@@ -201,6 +201,10 @@ export interface UseImageViewerReturn {
    */
   hasError: boolean;
   /**
+   * Error message if any
+   */
+  error: string | null;
+  /**
    * Reference to the container element
    */
   containerRef: React.RefObject<HTMLDivElement>;
@@ -348,6 +352,7 @@ export function useImageViewer(options: ImageViewerOptions = {}): UseImageViewer
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   
   // Refs
   const containerRef = useRef<HTMLDivElement>(null);
@@ -675,6 +680,7 @@ export function useImageViewer(options: ImageViewerOptions = {}): UseImageViewer
     setIsLoading(false);
     setIsLoaded(true);
     setHasError(false);
+    setError(null);
     
     onLoad?.(event);
   }, [onLoad]);
@@ -684,6 +690,7 @@ export function useImageViewer(options: ImageViewerOptions = {}): UseImageViewer
     setIsLoading(false);
     setIsLoaded(false);
     setHasError(true);
+    setError('Failed to load image');
     
     onError?.(event);
   }, [onError]);
@@ -827,6 +834,7 @@ export function useImageViewer(options: ImageViewerOptions = {}): UseImageViewer
     isLoading,
     isLoaded,
     hasError,
+    error,
     containerRef,
     imageRef,
     getContainerProps,

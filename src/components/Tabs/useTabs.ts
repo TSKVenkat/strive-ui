@@ -274,7 +274,7 @@ export function useTabs({
       onClick: handleClick,
       onKeyDown: handleKeyDown,
       onFocus: handleFocus,
-      'data-state': isActive ? 'active' : 'inactive',
+      'data-state': isActive ? 'active' as const : 'inactive' as const,
     };
   }, [activeTab, tabIds, setActiveTab, activateOnFocus, manual, getNextTab, getPrevTab, getFirstTab, getLastTab, focusTab]);
 
@@ -285,9 +285,9 @@ export function useTabs({
       id: `panel-${id}`,
       role: 'tabpanel',
       'aria-labelledby': `tab-${id}`,
-      tabIndex: 0,
+      tabIndex: 0 as const,
       hidden: !isActive,
-      'data-state': isActive ? 'active' : 'inactive',
+      'data-state': isActive ? 'active' as const : 'inactive' as const,
     };
   }, [activeTab]);
 

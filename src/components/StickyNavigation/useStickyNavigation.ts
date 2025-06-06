@@ -293,7 +293,7 @@ export function useStickyNavigation({
       ref: containerRef as React.RefObject<E>,
       style: {
         ...(isSticky ? {
-          position: 'fixed',
+          position: 'fixed' as const,
           top: stickyOffset,
           left: 0,
           right: 0,
@@ -325,12 +325,12 @@ export function useStickyNavigation({
       ref: sentinelRef as React.RefObject<E>,
       'aria-hidden': true,
       style: {
-        position: 'absolute',
+        position: 'absolute' as const,
         top: 0,
         left: 0,
         right: 0,
         height: '1px',
-        visibility: 'hidden',
+        visibility: 'hidden' as const,
         ...props?.style,
       },
     };

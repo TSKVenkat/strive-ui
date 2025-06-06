@@ -1,6 +1,8 @@
 export { default as DropdownMenuHeadless } from './DropdownMenuHeadless';
 export { 
-  useDropdownMenu,
+  useDropdownMenu
+} from './useDropdownMenu';
+export type {
   UseDropdownMenuReturn,
   DropdownMenuOptions,
   DropdownMenuItem

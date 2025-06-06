@@ -53,30 +53,26 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getPDFContainerProps } = usePDFAnnotatorContext();
-    
-    const containerProps = getPDFContainerProps();
-    
-    return (
-      <Component 
-        {...containerProps} 
-        {...props} 
-        ref={ref}
-        style={{ ...containerProps.style, ...props.style }}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Container = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { getPDFContainerProps } = usePDFAnnotatorContext();
+  
+  const containerProps = getPDFContainerProps();
+  
+  return (
+    <Component 
+      {...containerProps} 
+      {...restProps} 
+      ref={ref}
+      style={{ ...containerProps.style, ...restProps.style }}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
-Container.displayName = 'PDFAnnotatorHeadless.Container';
+(Container as any).displayName = 'PDFAnnotatorHeadless.Container';
 
 // Page component props
 export type PageProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -94,33 +90,29 @@ export type PageProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Page component
-const Page = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, pageNumber, children, ...props }: PageProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { scale } = usePDFAnnotatorContext();
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-        style={{ 
-          position: 'relative',
-          transform: `scale(${scale})`,
-          transformOrigin: 'top left',
-          ...props.style 
-        }}
-        data-page-number={pageNumber}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Page = forwardRef<any, any>((props, ref) => {
+  const { as, pageNumber, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { scale } = usePDFAnnotatorContext();
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+      style={{ 
+        position: 'relative',
+        transform: `scale(${scale})`,
+        transformOrigin: 'top left',
+        ...restProps.style 
+      }}
+      data-page-number={pageNumber}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
-Page.displayName = 'PDFAnnotatorHeadless.Page';
+(Page as any).displayName = 'PDFAnnotatorHeadless.Page';
 
 // AnnotationLayer component props
 export type AnnotationLayerProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -138,30 +130,26 @@ export type AnnotationLayerProps<C extends React.ElementType> = PolymorphicCompo
 >;
 
 // AnnotationLayer component
-const AnnotationLayer = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, pageNumber, children, ...props }: AnnotationLayerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getAnnotationLayerProps } = usePDFAnnotatorContext();
-    
-    const layerProps = getAnnotationLayerProps(pageNumber);
-    
-    return (
-      <Component 
-        {...layerProps} 
-        {...props} 
-        ref={ref}
-        style={{ ...layerProps.style, ...props.style }}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const AnnotationLayer = forwardRef<any, any>((props, ref) => {
+  const { as, pageNumber, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { getAnnotationLayerProps } = usePDFAnnotatorContext();
+  
+  const layerProps = getAnnotationLayerProps(pageNumber);
+  
+  return (
+    <Component 
+      {...layerProps} 
+      {...restProps} 
+      ref={ref}
+      style={{ ...layerProps.style, ...restProps.style }}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
-AnnotationLayer.displayName = 'PDFAnnotatorHeadless.AnnotationLayer';
+(AnnotationLayer as any).displayName = 'PDFAnnotatorHeadless.AnnotationLayer';
 
 // Annotations component props
 export type AnnotationsProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -185,39 +173,35 @@ export type AnnotationsProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // Annotations component
-const Annotations = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, pageNumber, children, ...props }: AnnotationsProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { 
-      getPageAnnotations, 
-      selectedAnnotation, 
-      selectAnnotation, 
-      updateAnnotation, 
-      deleteAnnotation 
-    } = usePDFAnnotatorContext();
-    
-    const annotations = getPageAnnotations(pageNumber);
-    
-    return (
-      <Component {...props} ref={ref}>
-        {typeof children === 'function' 
-          ? children({ 
-              annotations, 
-              selectedAnnotation, 
-              selectAnnotation, 
-              updateAnnotation, 
-              deleteAnnotation 
-            }) 
-          : children}
-      </Component>
-    );
-  }
-);
+const Annotations = forwardRef<any, any>((props, ref) => {
+  const { as, pageNumber, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { 
+    getPageAnnotations, 
+    selectedAnnotation, 
+    selectAnnotation, 
+    updateAnnotation, 
+    deleteAnnotation 
+  } = usePDFAnnotatorContext();
+  
+  const annotations = getPageAnnotations(pageNumber);
+  
+  const renderProps = {
+    annotations,
+    selectedAnnotation,
+    selectAnnotation,
+    updateAnnotation,
+    deleteAnnotation,
+  };
+  
+  return (
+    <Component {...restProps} ref={ref}>
+      {typeof children === 'function' ? children(renderProps) : children}
+    </Component>
+  );
+}) as any;
 
-Annotations.displayName = 'PDFAnnotatorHeadless.Annotations';
+(Annotations as any).displayName = 'PDFAnnotatorHeadless.Annotations';
 
 // Toolbar component props
 export type ToolbarProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -241,45 +225,41 @@ export type ToolbarProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Toolbar component
-const Toolbar = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ToolbarProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { 
-      currentTool, 
-      setCurrentTool, 
-      currentShapeType, 
-      setCurrentShapeType,
-      scale,
-      setScale,
-      currentPage,
-      numPages,
-      setCurrentPage
-    } = usePDFAnnotatorContext();
-    
-    return (
-      <Component {...props} ref={ref}>
-        {typeof children === 'function' 
-          ? children({ 
-              currentTool, 
-              setCurrentTool, 
-              currentShapeType, 
-              setCurrentShapeType,
-              scale,
-              setScale,
-              currentPage,
-              numPages,
-              setCurrentPage
-            }) 
-          : children}
-      </Component>
-    );
-  }
-);
+const Toolbar = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { 
+    currentTool, 
+    setCurrentTool, 
+    currentShapeType, 
+    setCurrentShapeType, 
+    scale, 
+    setScale, 
+    currentPage, 
+    numPages, 
+    setCurrentPage 
+  } = usePDFAnnotatorContext();
+  
+  const renderProps = {
+    currentTool,
+    setCurrentTool,
+    currentShapeType,
+    setCurrentShapeType,
+    scale,
+    setScale,
+    currentPage,
+    numPages,
+    setCurrentPage,
+  };
+  
+  return (
+    <Component {...restProps} ref={ref}>
+      {typeof children === 'function' ? children(renderProps) : children}
+    </Component>
+  );
+}) as any;
 
-Toolbar.displayName = 'PDFAnnotatorHeadless.Toolbar';
+(Toolbar as any).displayName = 'PDFAnnotatorHeadless.Toolbar';
 
 // Pagination component props
 export type PaginationProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -301,48 +281,44 @@ export type PaginationProps<C extends React.ElementType> = PolymorphicComponentP
 >;
 
 // Pagination component
-const Pagination = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: PaginationProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { currentPage, numPages, setCurrentPage } = usePDFAnnotatorContext();
-    
-    const goToNextPage = () => {
-      if (currentPage < numPages) {
-        setCurrentPage(currentPage + 1);
-      }
-    };
-    
-    const goToPreviousPage = () => {
-      if (currentPage > 1) {
-        setCurrentPage(currentPage - 1);
-      }
-    };
-    
-    const canGoToNextPage = currentPage < numPages;
-    const canGoToPreviousPage = currentPage > 1;
-    
-    return (
-      <Component {...props} ref={ref}>
-        {typeof children === 'function' 
-          ? children({ 
-              currentPage, 
-              numPages, 
-              setCurrentPage, 
-              goToNextPage, 
-              goToPreviousPage,
-              canGoToNextPage,
-              canGoToPreviousPage
-            }) 
-          : children}
-      </Component>
-    );
-  }
-);
+const Pagination = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { currentPage, numPages, setCurrentPage } = usePDFAnnotatorContext();
+  
+  const goToNextPage = () => {
+    if (currentPage < numPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+  
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  
+  const canGoToNextPage = currentPage < numPages;
+  const canGoToPreviousPage = currentPage > 1;
+  
+  const renderProps = {
+    currentPage,
+    numPages,
+    setCurrentPage,
+    goToNextPage,
+    goToPreviousPage,
+    canGoToNextPage,
+    canGoToPreviousPage,
+  };
+  
+  return (
+    <Component {...restProps} ref={ref}>
+      {typeof children === 'function' ? children(renderProps) : children}
+    </Component>
+  );
+}) as any;
 
-Pagination.displayName = 'PDFAnnotatorHeadless.Pagination';
+(Pagination as any).displayName = 'PDFAnnotatorHeadless.Pagination';
 
 // Error component props
 export type ErrorProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -358,29 +334,25 @@ export type ErrorProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Error component
-const Error = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ErrorProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { error } = usePDFAnnotatorContext();
-    
-    if (!error) {
-      return null;
-    }
-    
-    return (
-      <Component {...props} ref={ref}>
-        {typeof children === 'function' 
-          ? children({ error }) 
-          : children || error.message}
-      </Component>
-    );
-  }
-);
+const ErrorComponent = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { error } = usePDFAnnotatorContext();
+  
+  if (!error) return null;
+  
+  const renderProps = {
+    error,
+  };
+  
+  return (
+    <Component {...restProps} ref={ref}>
+      {typeof children === 'function' ? children(renderProps) : children}
+    </Component>
+  );
+}) as any;
 
-Error.displayName = 'PDFAnnotatorHeadless.Error';
+(ErrorComponent as any).displayName = 'PDFAnnotatorHeadless.Error';
 
 // Loading component props
 export type LoadingProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -394,27 +366,21 @@ export type LoadingProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Loading component
-const Loading = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: LoadingProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { isLoaded } = usePDFAnnotatorContext();
-    
-    if (isLoaded) {
-      return null;
-    }
-    
-    return (
-      <Component {...props} ref={ref}>
-        {children}
-      </Component>
-    );
-  }
-);
+const Loading = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { isLoaded } = usePDFAnnotatorContext();
+  
+  if (isLoaded) return null;
+  
+  return (
+    <Component {...restProps} ref={ref}>
+      {children || 'Loading PDF...'}
+    </Component>
+  );
+}) as any;
 
-Loading.displayName = 'PDFAnnotatorHeadless.Loading';
+(Loading as any).displayName = 'PDFAnnotatorHeadless.Loading';
 
 // Export all components
 export const PDFAnnotatorHeadless = {
@@ -425,7 +391,7 @@ export const PDFAnnotatorHeadless = {
   Annotations,
   Toolbar,
   Pagination,
-  Error,
+  Error: ErrorComponent,
   Loading,
   usePDFAnnotatorContext,
 };

@@ -67,11 +67,10 @@ export type TriggerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Trigger component
-const Trigger = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, image, index, ...props }: TriggerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Trigger = forwardRef(function TriggerComponent<C extends React.ElementType = 'button'>(
+  { as, children, image, index, ...props }: Omit<TriggerProps<C>, 'ref'>,
+  ref: React.ForwardedRef<React.ElementRef<C>>
+) {
     const Component = as || 'button';
     const { 
       getTriggerProps, 
@@ -103,16 +102,12 @@ const Trigger = forwardRef(
       }
     };
     
-    return (
-      <Component 
-        {...triggerProps} 
-        {...props} 
-        onClick={handleClick}
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
+    return React.createElement(Component as any, {
+      ...triggerProps,
+      ...props,
+      onClick: handleClick,
+      ref: ref as any
+    }, children);
   }
 );
 
@@ -181,6 +176,20 @@ const Portal: React.FC<PortalProps> = ({
 
 Portal.displayName = 'LightboxHeadless.Portal';
 
+// Helper function to create polymorphic components
+function createPolymorphicComponent<TDefaultElement extends React.ElementType, TProps = {}>(
+  displayName: string,
+  defaultElement: TDefaultElement,
+  render: (
+    props: any,
+    ref: any
+  ) => React.ReactElement | null
+) {
+  const Component = React.forwardRef(render);
+  Component.displayName = displayName;
+  return Component as any;
+}
+
 // Backdrop component props
 export type BackdropProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
   C,
@@ -193,11 +202,10 @@ export type BackdropProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Backdrop component
-const Backdrop = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: BackdropProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Backdrop = createPolymorphicComponent(
+  'LightboxHeadless.Backdrop',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { getBackdropProps, isOpen } = useLightboxContext();
     
@@ -207,19 +215,17 @@ const Backdrop = forwardRef(
     
     const backdropProps = getBackdropProps();
     
-    return (
-      <Component 
-        {...backdropProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...backdropProps,
+        ...props,
+        ref,
+      },
+      children
     );
   }
 );
-
-Backdrop.displayName = 'LightboxHeadless.Backdrop';
 
 // Container component props
 export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -233,11 +239,10 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Container = createPolymorphicComponent(
+  'LightboxHeadless.Container',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { getContainerProps, isOpen } = useLightboxContext();
     
@@ -247,19 +252,17 @@ const Container = forwardRef(
     
     const containerProps = getContainerProps();
     
-    return (
-      <Component 
-        {...containerProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...containerProps,
+        ...props,
+        ref,
+      },
+      children
     );
   }
 );
-
-Container.displayName = 'LightboxHeadless.Container';
 
 // Content component props
 export type ContentProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -273,29 +276,26 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Content = createPolymorphicComponent(
+  'LightboxHeadless.Content',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { getContentProps } = useLightboxContext();
     
     const contentProps = getContentProps();
     
-    return (
-      <Component 
-        {...contentProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...contentProps,
+        ...props,
+        ref,
+      },
+      children
     );
   }
 );
-
-Content.displayName = 'LightboxHeadless.Content';
 
 // Header component props
 export type HeaderProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -309,25 +309,22 @@ export type HeaderProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Header component
-const Header = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: HeaderProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Header = createPolymorphicComponent(
+  'LightboxHeadless.Header',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...props,
+        ref,
+      },
+      children
     );
   }
 );
-
-Header.displayName = 'LightboxHeadless.Header';
 
 // Body component props
 export type BodyProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -341,25 +338,22 @@ export type BodyProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Body component
-const Body = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: BodyProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Body = createPolymorphicComponent(
+  'LightboxHeadless.Body',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...props,
+        ref,
+      },
+      children
     );
   }
 );
-
-Body.displayName = 'LightboxHeadless.Body';
 
 // Footer component props
 export type FooterProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -373,25 +367,22 @@ export type FooterProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Footer component
-const Footer = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: FooterProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Footer = createPolymorphicComponent(
+  'LightboxHeadless.Footer',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...props,
+        ref,
+      },
+      children
     );
   }
 );
-
-Footer.displayName = 'LightboxHeadless.Footer';
 
 // Close component props
 export type CloseProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -405,29 +396,26 @@ export type CloseProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Close component
-const Close = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: CloseProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Close = createPolymorphicComponent(
+  'LightboxHeadless.Close',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getCloseButtonProps } = useLightboxContext();
     
     const closeProps = getCloseButtonProps();
     
-    return (
-      <Component 
-        {...closeProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...closeProps,
+        ...props,
+        ref,
+      },
+      children
     );
   }
 );
-
-Close.displayName = 'LightboxHeadless.Close';
 
 // Image component props
 export type ImageProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -441,33 +429,30 @@ export type ImageProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Image component
-const Image = forwardRef(
-  <C extends React.ElementType = 'img'>(
-    { as, children, ...props }: ImageProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Image = createPolymorphicComponent(
+  'LightboxHeadless.Image',
+  'img',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'img';
     const { getImageProps } = useLightboxContext();
     
     const imageProps = getImageProps();
     
-    return (
-      <Component 
-        {...imageProps} 
-        {...props} 
-        ref={ref}
-        style={{
+    return React.createElement(
+      Component,
+      {
+        ...imageProps,
+        ...props,
+        ref,
+        style: {
           ...imageProps.style,
           ...props.style,
-        }}
-      >
-        {children}
-      </Component>
+        },
+      },
+      children
     );
   }
 );
-
-Image.displayName = 'LightboxHeadless.Image';
 
 // Caption component props
 export type CaptionProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -481,26 +466,23 @@ export type CaptionProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Caption component
-const Caption = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: CaptionProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Caption = createPolymorphicComponent(
+  'LightboxHeadless.Caption',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { currentImage } = useLightboxContext();
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children || currentImage?.caption}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...props,
+        ref,
+      },
+      children || currentImage?.caption
     );
   }
 );
-
-Caption.displayName = 'LightboxHeadless.Caption';
 
 // NextButton component props
 export type NextButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -514,29 +496,26 @@ export type NextButtonProps<C extends React.ElementType> = PolymorphicComponentP
 >;
 
 // NextButton component
-const NextButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: NextButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const NextButton = createPolymorphicComponent(
+  'LightboxHeadless.NextButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getNextButtonProps } = useLightboxContext();
     
     const nextButtonProps = getNextButtonProps();
     
-    return (
-      <Component 
-        {...nextButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Next'}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...nextButtonProps,
+        ...props,
+        ref,
+      },
+      children || 'Next'
     );
   }
 );
-
-NextButton.displayName = 'LightboxHeadless.NextButton';
 
 // PrevButton component props
 export type PrevButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -550,29 +529,26 @@ export type PrevButtonProps<C extends React.ElementType> = PolymorphicComponentP
 >;
 
 // PrevButton component
-const PrevButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: PrevButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const PrevButton = createPolymorphicComponent(
+  'LightboxHeadless.PrevButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getPrevButtonProps } = useLightboxContext();
     
     const prevButtonProps = getPrevButtonProps();
     
-    return (
-      <Component 
-        {...prevButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Previous'}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...prevButtonProps,
+        ...props,
+        ref,
+      },
+      children || 'Previous'
     );
   }
 );
-
-PrevButton.displayName = 'LightboxHeadless.PrevButton';
 
 // ZoomInButton component props
 export type ZoomInButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -586,29 +562,26 @@ export type ZoomInButtonProps<C extends React.ElementType> = PolymorphicComponen
 >;
 
 // ZoomInButton component
-const ZoomInButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ZoomInButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const ZoomInButton = createPolymorphicComponent(
+  'LightboxHeadless.ZoomInButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getZoomInButtonProps } = useLightboxContext();
     
     const zoomInButtonProps = getZoomInButtonProps();
     
-    return (
-      <Component 
-        {...zoomInButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Zoom In'}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...zoomInButtonProps,
+        ...props,
+        ref,
+      },
+      children || 'Zoom In'
     );
   }
 );
-
-ZoomInButton.displayName = 'LightboxHeadless.ZoomInButton';
 
 // ZoomOutButton component props
 export type ZoomOutButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -622,29 +595,26 @@ export type ZoomOutButtonProps<C extends React.ElementType> = PolymorphicCompone
 >;
 
 // ZoomOutButton component
-const ZoomOutButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ZoomOutButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const ZoomOutButton = createPolymorphicComponent(
+  'LightboxHeadless.ZoomOutButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getZoomOutButtonProps } = useLightboxContext();
     
     const zoomOutButtonProps = getZoomOutButtonProps();
     
-    return (
-      <Component 
-        {...zoomOutButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Zoom Out'}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...zoomOutButtonProps,
+        ...props,
+        ref,
+      },
+      children || 'Zoom Out'
     );
   }
 );
-
-ZoomOutButton.displayName = 'LightboxHeadless.ZoomOutButton';
 
 // ZoomResetButton component props
 export type ZoomResetButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -658,29 +628,26 @@ export type ZoomResetButtonProps<C extends React.ElementType> = PolymorphicCompo
 >;
 
 // ZoomResetButton component
-const ZoomResetButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ZoomResetButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const ZoomResetButton = createPolymorphicComponent(
+  'LightboxHeadless.ZoomResetButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getZoomResetButtonProps } = useLightboxContext();
     
     const zoomResetButtonProps = getZoomResetButtonProps();
     
-    return (
-      <Component 
-        {...zoomResetButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || '100%'}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...zoomResetButtonProps,
+        ...props,
+        ref,
+      },
+      children || '100%'
     );
   }
 );
-
-ZoomResetButton.displayName = 'LightboxHeadless.ZoomResetButton';
 
 // FullscreenButton component props
 export type FullscreenButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -694,29 +661,26 @@ export type FullscreenButtonProps<C extends React.ElementType> = PolymorphicComp
 >;
 
 // FullscreenButton component
-const FullscreenButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: FullscreenButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const FullscreenButton = createPolymorphicComponent(
+  'LightboxHeadless.FullscreenButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getFullscreenButtonProps, isFullscreen } = useLightboxContext();
     
     const fullscreenButtonProps = getFullscreenButtonProps();
     
-    return (
-      <Component 
-        {...fullscreenButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || (isFullscreen ? 'Exit Fullscreen' : 'Fullscreen')}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...fullscreenButtonProps,
+        ...props,
+        ref,
+      },
+      children || (isFullscreen ? 'Exit Fullscreen' : 'Fullscreen')
     );
   }
 );
-
-FullscreenButton.displayName = 'LightboxHeadless.FullscreenButton';
 
 // SlideshowButton component props
 export type SlideshowButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -730,29 +694,26 @@ export type SlideshowButtonProps<C extends React.ElementType> = PolymorphicCompo
 >;
 
 // SlideshowButton component
-const SlideshowButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: SlideshowButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const SlideshowButton = createPolymorphicComponent(
+  'LightboxHeadless.SlideshowButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getSlideshowButtonProps, isSlideshowActive } = useLightboxContext();
     
     const slideshowButtonProps = getSlideshowButtonProps();
     
-    return (
-      <Component 
-        {...slideshowButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || (isSlideshowActive ? 'Pause' : 'Play')}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...slideshowButtonProps,
+        ...props,
+        ref,
+      },
+      children || (isSlideshowActive ? 'Stop Slideshow' : 'Start Slideshow')
     );
   }
 );
-
-SlideshowButton.displayName = 'LightboxHeadless.SlideshowButton';
 
 // DownloadButton component props
 export type DownloadButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -766,29 +727,26 @@ export type DownloadButtonProps<C extends React.ElementType> = PolymorphicCompon
 >;
 
 // DownloadButton component
-const DownloadButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: DownloadButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const DownloadButton = createPolymorphicComponent(
+  'LightboxHeadless.DownloadButton',
+  'button',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'button';
     const { getDownloadButtonProps } = useLightboxContext();
     
     const downloadButtonProps = getDownloadButtonProps();
     
-    return (
-      <Component 
-        {...downloadButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Download'}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...downloadButtonProps,
+        ...props,
+        ref,
+      },
+      children || 'Download'
     );
   }
 );
-
-DownloadButton.displayName = 'LightboxHeadless.DownloadButton';
 
 // Thumbnails component props
 export type ThumbnailsProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -802,30 +760,27 @@ export type ThumbnailsProps<C extends React.ElementType> = PolymorphicComponentP
 >;
 
 // Thumbnails component
-const Thumbnails = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ThumbnailsProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Thumbnails = createPolymorphicComponent(
+  'LightboxHeadless.Thumbnails',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { images } = useLightboxContext();
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children || (
-          images.map((_, index) => (
-            <Thumbnail key={index} index={index} />
-          ))
-        )}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...props,
+        ref,
+      },
+      children || (
+        images.map((_, index) => (
+          <Thumbnail key={index} index={index} />
+        ))
+      )
     );
   }
 );
-
-Thumbnails.displayName = 'LightboxHeadless.Thumbnails';
 
 // Thumbnail component props
 export type ThumbnailProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -843,38 +798,45 @@ export type ThumbnailProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Thumbnail component
-const Thumbnail = forwardRef(
-  <C extends React.ElementType = 'img'>(
-    { as, children, index, ...props }: ThumbnailProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Thumbnail = createPolymorphicComponent(
+  'LightboxHeadless.Thumbnail',
+  'img',
+  ({ as, children, index, ...props }: any, ref: any) => {
     const Component = as || 'img';
-    const { getThumbnailProps, images, currentIndex } = useLightboxContext();
+    const { 
+      getThumbnailProps, 
+      images, 
+      currentIndex, 
+      goToImage 
+    } = useLightboxContext();
     
-    if (index < 0 || index >= images.length) {
+    const image = images[index];
+    
+    if (!image) {
       return null;
     }
     
     const thumbnailProps = getThumbnailProps(index);
     
-    return (
-      <Component 
-        {...thumbnailProps} 
-        {...props} 
-        ref={ref}
-        style={{
-          ...props.style,
+    return React.createElement(
+      Component,
+      {
+        ...thumbnailProps,
+        ...props,
+        ref,
+        src: image.thumbnail || image.src,
+        alt: image.alt || `Thumbnail ${index + 1}`,
+        onClick: () => goToImage(index),
+        style: {
           cursor: 'pointer',
-          border: index === currentIndex ? '2px solid #0070f3' : 'none',
-        }}
-      >
-        {children}
-      </Component>
+          opacity: currentIndex === index ? 1 : 0.6,
+          ...props.style,
+        },
+      },
+      children
     );
   }
 );
-
-Thumbnail.displayName = 'LightboxHeadless.Thumbnail';
 
 // Counter component props
 export type CounterProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -888,26 +850,23 @@ export type CounterProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Counter component
-const Counter = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: CounterProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Counter = createPolymorphicComponent(
+  'LightboxHeadless.Counter',
+  'div',
+  ({ as, children, ...props }: any, ref: any) => {
     const Component = as || 'div';
     const { currentIndex, images } = useLightboxContext();
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children || `${currentIndex + 1} / ${images.length}`}
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ...props,
+        ref,
+      },
+      children || `${currentIndex + 1} / ${images.length}`
     );
   }
 );
-
-Counter.displayName = 'LightboxHeadless.Counter';
 
 // Export all components
 export const LightboxHeadless = {

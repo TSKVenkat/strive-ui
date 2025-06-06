@@ -83,7 +83,7 @@ export interface UseAudioUploadProps {
   uploadFn?: (files: File[]) => Promise<string[]>;
 }
 
-export interface AudioFile {
+export interface AudioFile extends File {
   /**
    * Preview URL
    */
@@ -188,19 +188,19 @@ export interface UseAudioUploadReturn {
    */
   getContainerProps: <E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & Record<string, any>;
   /**
    * Get props for the input element
    */
   getInputProps: <E extends HTMLInputElement = HTMLInputElement>(
-    props?: React.InputHTMLAttributes<E>
-  ) => React.InputHTMLAttributes<E>;
+    props?: React.InputHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ) => React.InputHTMLAttributes<E> & { ref?: React.Ref<E> };
   /**
    * Get props for the drop zone element
    */
   getDropZoneProps: <E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ) => React.HTMLAttributes<E> & { ref?: React.Ref<E> } & Record<string, any>;
 }
 
 /**
@@ -598,7 +598,7 @@ export function useAudioUpload({
   // Get props for the container element
   const getContainerProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & Record<string, any> => {
     return {
       ...props,
       id: uploadId,
@@ -610,11 +610,12 @@ export function useAudioUpload({
   
   // Get props for the input element
   const getInputProps = useCallback(<E extends HTMLInputElement = HTMLInputElement>(
-    props?: React.InputHTMLAttributes<E>
-  ): React.InputHTMLAttributes<E> => {
+    props?: React.InputHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.InputHTMLAttributes<E> & { ref?: React.Ref<E> } => {
+    const { ref: propsRef, ...restProps } = props || {};
     return {
-      ...props,
-      ref: mergeRefs(inputRef, props?.ref),
+      ...restProps,
+      ref: mergeRefs(inputRef, propsRef),
       type: 'file',
       id: `${uploadId}-input`,
       name,
@@ -622,23 +623,24 @@ export function useAudioUpload({
       multiple,
       disabled: disabled || readOnly,
       required,
-      style: { display: 'none', ...props?.style },
+      style: { display: 'none', ...restProps?.style },
       onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
         handleInputChange(event);
-        if (props?.onChange) {
-          (props.onChange as any)(event);
+        if (restProps?.onChange) {
+          (restProps.onChange as any)(event);
         }
       },
-    } as React.InputHTMLAttributes<E>;
+    };
   }, [uploadId, name, accept, multiple, disabled, readOnly, required, handleInputChange]);
   
   // Get props for the drop zone element
   const getDropZoneProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.HTMLAttributes<E> & { ref?: React.Ref<E> } & Record<string, any> => {
+    const { ref: propsRef, ...restProps } = props || {};
     return {
-      ...props,
-      ref: mergeRefs(dropZoneRef, props?.ref),
+      ...restProps,
+      ref: mergeRefs(dropZoneRef, propsRef),
       role: 'button',
       tabIndex: disabled || readOnly ? -1 : 0,
       'aria-disabled': disabled ? true : undefined,
@@ -649,8 +651,8 @@ export function useAudioUpload({
         if (!disabled && !readOnly) {
           openFileDialog();
         }
-        if (props?.onClick) {
-          (props.onClick as any)(event);
+        if (restProps?.onClick) {
+          (restProps.onClick as any)(event);
         }
       },
       onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -658,35 +660,35 @@ export function useAudioUpload({
           event.preventDefault();
           openFileDialog();
         }
-        if (props?.onKeyDown) {
-          (props.onKeyDown as any)(event);
+        if (restProps?.onKeyDown) {
+          (restProps.onKeyDown as any)(event);
         }
       },
       onDragEnter: (event: React.DragEvent<HTMLDivElement>) => {
         handleDragEnter(event);
-        if (props?.onDragEnter) {
-          (props.onDragEnter as any)(event);
+        if (restProps?.onDragEnter) {
+          (restProps.onDragEnter as any)(event);
         }
       },
       onDragOver: (event: React.DragEvent<HTMLDivElement>) => {
         handleDragOver(event);
-        if (props?.onDragOver) {
-          (props.onDragOver as any)(event);
+        if (restProps?.onDragOver) {
+          (restProps.onDragOver as any)(event);
         }
       },
       onDragLeave: (event: React.DragEvent<HTMLDivElement>) => {
         handleDragLeave(event);
-        if (props?.onDragLeave) {
-          (props.onDragLeave as any)(event);
+        if (restProps?.onDragLeave) {
+          (restProps.onDragLeave as any)(event);
         }
       },
       onDrop: (event: React.DragEvent<HTMLDivElement>) => {
         handleDrop(event);
-        if (props?.onDrop) {
-          (props.onDrop as any)(event);
+        if (restProps?.onDrop) {
+          (restProps.onDrop as any)(event);
         }
       },
-    } as React.HTMLAttributes<E>;
+    };
   }, [
     disabled, 
     readOnly, 

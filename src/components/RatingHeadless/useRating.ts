@@ -113,7 +113,7 @@ export interface UseRatingReturn {
    */
   getRootProps: <E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { 'data-disabled': string | undefined };
   /**
    * Get props for an item element
    */
@@ -122,7 +122,7 @@ export interface UseRatingReturn {
       value: number;
       half?: boolean;
     } & React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { 'data-value': number };
   /**
    * Get props for the hidden input element
    */
@@ -198,7 +198,7 @@ export function useRating({
   // Get props for the root element
   const getRootProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { 'data-disabled': string | undefined } => {
     return {
       ...props,
       role: 'radiogroup',
@@ -214,7 +214,7 @@ export function useRating({
         }
         props?.onMouseLeave?.(event);
       },
-    };
+    } as any;
   }, [disabled, readOnly, required, direction, resetHoverValue]);
   
   // Get props for an item element
@@ -223,7 +223,7 @@ export function useRating({
       value: number;
       half?: boolean;
     } & React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { 'data-value': number } => {
     const { value: itemValue, half = false, ...restProps } = props;
     
     // Determine if the item is active based on value and hover value
@@ -325,7 +325,7 @@ export function useRating({
         setValue(newValue);
         props.onKeyDown?.(event);
       },
-    };
+    } as any;
   }, [
     value, 
     hoverValue, 

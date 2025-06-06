@@ -54,11 +54,11 @@ export interface UseShimmerReturn {
   /**
    * Width of the shimmer
    */
-  width: string | number;
+  width: string | number | undefined;
   /**
    * Height of the shimmer
    */
-  height: string | number;
+  height: string | number | undefined;
   /**
    * Whether the shimmer is visible
    */
@@ -70,7 +70,7 @@ export interface UseShimmerReturn {
   /**
    * Border radius of the shimmer
    */
-  borderRadius: string | number;
+  borderRadius: string | number | undefined;
   /**
    * Duration of the shimmer animation in seconds
    */

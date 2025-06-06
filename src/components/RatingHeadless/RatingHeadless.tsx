@@ -174,7 +174,7 @@ export const RatingItem = forwardRef(function RatingItem<C extends React.Element
     className, 
     style, 
     value,
-    half = false,
+    half = false as any,
     activeIcon,
     inactiveIcon,
     ...props 

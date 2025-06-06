@@ -329,7 +329,7 @@ export function useTreeNavigation({
     // Auto expand parents
     if (autoExpandParent) {
       const parentIds = getParentIds(nodeId);
-      const newExpandedIds = [...new Set([...expandedIds, ...parentIds])];
+      const newExpandedIds = Array.from(new Set([...expandedIds, ...parentIds]));
       
       if (onExpandedChange) {
         onExpandedChange(newExpandedIds);
@@ -435,7 +435,7 @@ export function useTreeNavigation({
           let found = false;
           let nextNodeId: string | null = null;
           
-          function findNextNode(nodes: TreeNode[], afterId: string): string | null {
+          const findNextNode = (nodes: TreeNode[], afterId: string): string | null => {
             for (let i = 0; i < nodes.length; i++) {
               if (found) {
                 return nodes[i].id;
@@ -445,8 +445,8 @@ export function useTreeNavigation({
                 found = true;
                 
                 // If this node is expanded and has children, return the first child
-                if (isExpanded(nodes[i].id) && nodes[i].children && nodes[i].children.length > 0) {
-                  return nodes[i].children[0].id;
+                if (isExpanded(nodes[i].id) && nodes[i].children && nodes[i].children!.length > 0) {
+                  return nodes[i].children![0].id;
                 }
                 
                 // Otherwise, continue to the next sibling
@@ -454,14 +454,14 @@ export function useTreeNavigation({
               }
               
               // Recursively search in children if expanded
-              if (isExpanded(nodes[i].id) && nodes[i].children && nodes[i].children.length > 0) {
-                const result = findNextNode(nodes[i].children, afterId);
+              if (isExpanded(nodes[i].id) && nodes[i].children && nodes[i].children!.length > 0) {
+                const result = findNextNode(nodes[i].children!, afterId);
                 if (result) return result;
               }
             }
             
             return null;
-          }
+          };
           
           nextNodeId = findNextNode(nodes, nodeId);
           
@@ -478,15 +478,15 @@ export function useTreeNavigation({
           let previousNodeId: string | null = null;
           let previousNodes: string[] = [];
           
-          function collectVisibleNodes(nodes: TreeNode[]): void {
+          const collectVisibleNodes = (nodes: TreeNode[]): void => {
             for (let i = 0; i < nodes.length; i++) {
               previousNodes.push(nodes[i].id);
               
-              if (isExpanded(nodes[i].id) && nodes[i].children && nodes[i].children.length > 0) {
-                collectVisibleNodes(nodes[i].children);
+              if (isExpanded(nodes[i].id) && nodes[i].children && nodes[i].children!.length > 0) {
+                collectVisibleNodes(nodes[i].children!);
               }
             }
-          }
+          };
           
           collectVisibleNodes(nodes);
           const currentIndex = previousNodes.indexOf(nodeId);
@@ -517,7 +517,7 @@ export function useTreeNavigation({
           // Find the last visible node
           let lastNodeId: string | null = null;
           
-          function findLastVisibleNode(nodes: TreeNode[]): string {
+          const findLastVisibleNode = (nodes: TreeNode[]): string => {
             const lastNode = nodes[nodes.length - 1];
             
             if (isExpanded(lastNode.id) && lastNode.children && lastNode.children.length > 0) {
@@ -525,7 +525,7 @@ export function useTreeNavigation({
             }
             
             return lastNode.id;
-          }
+          };
           
           if (nodes.length > 0) {
             lastNodeId = findLastVisibleNode(nodes);

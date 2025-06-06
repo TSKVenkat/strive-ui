@@ -278,7 +278,7 @@ export function useResizable(options: ResizableOptions = {}): UseResizableReturn
   const getResizableProps = useCallback(() => {
     return {
       style: {
-        position: 'relative',
+        position: 'relative' as const,
         width: `${size.width}px`,
         height: `${size.height}px`,
       },
@@ -293,8 +293,8 @@ export function useResizable(options: ResizableOptions = {}): UseResizableReturn
       return {
         onMouseDown: () => {},
         onTouchStart: () => {},
-        style: { display: 'none' },
-        'data-resize-handle': direction,
+        style: { display: 'none' as const },
+        'data-resize-handle': direction as string,
         'aria-label': `Resize ${direction}`,
       };
     }
@@ -342,12 +342,12 @@ export function useResizable(options: ResizableOptions = {}): UseResizableReturn
       onMouseDown: (e: React.MouseEvent) => handleResizeStart(e.nativeEvent, direction),
       onTouchStart: (e: React.TouchEvent) => handleResizeStart(e.nativeEvent, direction),
       style: {
-        position: 'absolute',
+        position: 'absolute' as const,
         ...position,
         cursor: disabled ? 'default' : cursor,
         zIndex: 1,
       },
-      'data-resize-handle': direction,
+      'data-resize-handle': direction as string,
       'aria-label': `Resize ${direction}`,
     };
   }, [directions, disabled, handleResizeStart]);

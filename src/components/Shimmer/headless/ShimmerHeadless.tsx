@@ -59,11 +59,8 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Container = forwardRef<any, any>(
+  ({ as, children, ...props }, ref) => {
     const Component = as || 'div';
     const { getContainerProps, visible } = useShimmerContext();
     
@@ -115,19 +112,16 @@ export type ItemProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Item component
-const Item = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { 
-      as, 
-      children, 
-      shape: itemShape,
-      width: itemWidth,
-      height: itemHeight,
-      borderRadius: itemBorderRadius,
-      ...props 
-    }: ItemProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Item = forwardRef<any, any>(
+  ({ 
+    as, 
+    children, 
+    shape: itemShape,
+    width: itemWidth,
+    height: itemHeight,
+    borderRadius: itemBorderRadius,
+    ...props 
+  }, ref) => {
     const Component = as || 'div';
     const { 
       getShimmerProps, 
@@ -180,11 +174,8 @@ export type EffectProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Effect component
-const Effect = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: EffectProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Effect = forwardRef<any, any>(
+  ({ as, children, ...props }, ref) => {
     const Component = as || 'div';
     const { 
       getEffectProps, 
@@ -278,18 +269,15 @@ export type TextProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Text component
-const Text = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { 
-      as, 
-      width: textWidth,
-      height: textHeight = '16px',
-      lines = 3,
-      gap = '8px',
-      ...props 
-    }: TextProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Text = forwardRef<any, any>(
+  ({ 
+    as, 
+    width: textWidth,
+    height: textHeight = '16px',
+    lines = 3,
+    gap = '8px',
+    ...props 
+  }, ref) => {
     const Component = as || 'div';
     const { fullWidth } = useShimmerContext();
     
@@ -338,15 +326,12 @@ export type CircleProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Circle component
-const Circle = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { 
-      as, 
-      size = '50px',
-      ...props 
-    }: CircleProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Circle = forwardRef<any, any>(
+  ({ 
+    as, 
+    size = '50px',
+    ...props 
+  }, ref) => {
     const Component = as || 'div';
     
     return (
@@ -380,16 +365,13 @@ export type RectangleProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Rectangle component
-const Rectangle = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { 
-      as, 
-      width,
-      height = '100px',
-      ...props 
-    }: RectangleProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Rectangle = forwardRef<any, any>(
+  ({ 
+    as, 
+    width,
+    height = '100px',
+    ...props 
+  }, ref) => {
     const Component = as || 'div';
     const { fullWidth } = useShimmerContext();
     
@@ -428,17 +410,14 @@ export type RoundedProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Rounded component
-const Rounded = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { 
-      as, 
-      width,
-      height = '40px',
-      borderRadius = '8px',
-      ...props 
-    }: RoundedProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Rounded = forwardRef<any, any>(
+  ({ 
+    as, 
+    width,
+    height = '40px',
+    borderRadius = '8px',
+    ...props 
+  }, ref) => {
     const Component = as || 'div';
     const { fullWidth } = useShimmerContext();
     

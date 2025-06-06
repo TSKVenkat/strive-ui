@@ -221,7 +221,7 @@ export const AdaptiveNavigationHeadless = forwardRef(function AdaptiveNavigation
     onOpenChange,
     collapseToIcons,
     storageKey,
-    ariaLabel = 'Adaptive navigation',
+    ariaLabel = 'Adaptive navigation' as any,
     ...props 
   }: Omit<AdaptiveNavigationHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>
@@ -396,7 +396,7 @@ export const AdaptiveNavigationLabelHeadless = forwardRef(function AdaptiveNavig
     className, 
     style, 
     item,
-    hideInIconsMode = true,
+    hideInIconsMode = true as any,
     ...props 
   }: Omit<AdaptiveNavigationLabelHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>

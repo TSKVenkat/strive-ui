@@ -1,6 +1,7 @@
-export { default as ResizableHeadless } from './ResizableHeadless';
-export { 
-  useResizable,
+export { ResizableHeadless } from './ResizableHeadless';
+export { useResizable } from './useResizable';
+
+export type {
   UseResizableReturn,
   ResizableOptions,
   ResizeDirection,

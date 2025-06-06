@@ -272,7 +272,7 @@ export const ProgressiveNavigationHeadless = forwardRef(function ProgressiveNavi
         {...getContainerProps({
           className,
           style,
-          'aria-label': ariaLabel,
+          'aria-label': ariaLabel as any,
           ...props,
         })}
         ref={ref}

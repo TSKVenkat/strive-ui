@@ -1,6 +1,8 @@
 export { default as ImageCropModalHeadless } from './ImageCropModalHeadless';
 export { 
-  useImageCropModal,
+  useImageCropModal
+} from './useImageCropModal';
+export type {
   UseImageCropModalReturn,
   ImageCropModalOptions,
   CropArea

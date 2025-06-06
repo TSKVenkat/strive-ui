@@ -59,7 +59,7 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
+const Container = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: ContainerProps<C>,
     ref: PolymorphicRef<C>
@@ -134,16 +134,16 @@ export type ItemProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Item component
-const Item = forwardRef(
+const Item = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
-    { 
-      as, 
-      children, 
+    {
+      as,
+      children,
       shape: itemShape,
       width: itemWidth,
       height: itemHeight,
       borderRadius: itemBorderRadius,
-      ...props 
+      ...props
     }: ItemProps<C>,
     ref: PolymorphicRef<C>
   ) => {
@@ -205,14 +205,14 @@ export type EffectProps<C extends React.ElementType> = PolymorphicComponentProps
      */
     children?: React.ReactNode;
     /**
-     * Index of the effect
+     * Index of the effect for animation delay
      */
     index: number;
   }
 >;
 
 // Effect component
-const Effect = forwardRef(
+const Effect = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, index, ...props }: EffectProps<C>,
     ref: PolymorphicRef<C>
@@ -276,7 +276,7 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
+const Content = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: ContentProps<C>,
     ref: PolymorphicRef<C>

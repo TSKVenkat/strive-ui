@@ -6,6 +6,18 @@ import {
 } from './useMaintenancePage';
 import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../../types/polymorphic';
 
+// Helper function to create polymorphic components
+function createPolymorphicComponent<TDefaultElement extends React.ElementType>(
+  displayName: string,
+  defaultElement: TDefaultElement
+) {
+  return forwardRef<any, any>((props: any, ref: any) => {
+    const { as, children, ...restProps } = props;
+    const Component = as || defaultElement;
+    return React.createElement(Component as any, { ...restProps, ref }, children);
+  }) as any;
+}
+
 // Context for the MaintenancePage component
 interface MaintenancePageContextValue extends UseMaintenancePageReturn {}
 
@@ -57,22 +69,22 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Container = forwardRef(function Container<C extends React.ElementType = 'div'>(
+  { as, children, ...props }: Omit<ContainerProps<C>, 'ref'>,
+  ref: React.ForwardedRef<React.ElementRef<C>>
+) {
     const Component = as || 'div';
     const { getContainerProps } = useMaintenancePageContext();
     
     const containerProps = getContainerProps();
     
-    return (
-      <Component 
-        {...containerProps} 
-        {...props} 
-        ref={ref}
-        style={{
+    return React.createElement(
+      Component as any,
+      {
+        ...containerProps,
+        ...props,
+        ref,
+        style: {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -81,13 +93,11 @@ const Container = forwardRef(
           textAlign: 'center',
           minHeight: '100vh',
           ...props.style,
-        }}
-      >
-        {children}
-      </Component>
+        },
+      },
+      children
     );
-  }
-);
+  });
 
 Container.displayName = 'MaintenancePageHeadless.Container';
 
@@ -103,29 +113,27 @@ export type IconProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Icon component
-const Icon = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: IconProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Icon = forwardRef(function Icon<C extends React.ElementType = 'div'>(
+  { as, children, ...props }: Omit<IconProps<C>, 'ref'>,
+  ref: React.ForwardedRef<React.ElementRef<C>>
+) {
     const Component = as || 'div';
     const { icon } = useMaintenancePageContext();
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-        style={{
+    return React.createElement(
+      Component as any,
+      {
+        ...props,
+        ref,
+        style: {
           fontSize: '72px',
           marginBottom: '24px',
           ...props.style,
-        }}
-      >
-        {children || icon || '🔧'}
-      </Component>
+        },
+      },
+      children || icon || '🔧'
     );
-  }
-);
+  });
 
 Icon.displayName = 'MaintenancePageHeadless.Icon';
 
@@ -141,30 +149,28 @@ export type TitleProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Title component
-const Title = forwardRef(
-  <C extends React.ElementType = 'h1'>(
-    { as, children, ...props }: TitleProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Title = forwardRef(function Title<C extends React.ElementType = 'h1'>(
+  { as, children, ...props }: Omit<TitleProps<C>, 'ref'>,
+  ref: React.ForwardedRef<React.ElementRef<C>>
+) {
     const Component = as || 'h1';
     const { title } = useMaintenancePageContext();
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-        style={{
+    return React.createElement(
+      Component as any,
+      {
+        ...props,
+        ref,
+        style: {
           margin: '0 0 16px 0',
           fontSize: '32px',
           fontWeight: 'bold',
           ...props.style,
-        }}
-      >
-        {children || title}
-      </Component>
+        },
+      },
+      children || title
     );
-  }
-);
+  });
 
 Title.displayName = 'MaintenancePageHeadless.Title';
 
@@ -180,31 +186,29 @@ export type DescriptionProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // Description component
-const Description = forwardRef(
-  <C extends React.ElementType = 'p'>(
-    { as, children, ...props }: DescriptionProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Description = forwardRef(function Description<C extends React.ElementType = 'p'>(
+  { as, children, ...props }: Omit<DescriptionProps<C>, 'ref'>,
+  ref: React.ForwardedRef<React.ElementRef<C>>
+) {
     const Component = as || 'p';
     const { description } = useMaintenancePageContext();
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-        style={{
+    return React.createElement(
+      Component as any,
+      {
+        ...props,
+        ref,
+        style: {
           margin: '0 0 32px 0',
           fontSize: '18px',
           color: '#666',
           maxWidth: '600px',
           ...props.style,
-        }}
-      >
-        {children || description}
-      </Component>
+        },
+      },
+      children || description
     );
-  }
-);
+  });
 
 Description.displayName = 'MaintenancePageHeadless.Description';
 
@@ -220,11 +224,10 @@ export type CountdownProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Countdown component
-const Countdown = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: CountdownProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Countdown = forwardRef(function Countdown<C extends React.ElementType = 'div'>(
+  { as, children, ...props }: Omit<CountdownProps<C>, 'ref'>,
+  ref: React.ForwardedRef<React.ElementRef<C>>
+) {
     const Component = as || 'div';
     const { showCountdown, timeRemaining, estimatedCompletion } = useMaintenancePageContext();
     
@@ -241,44 +244,87 @@ const Countdown = forwardRef(
       return new Date(date).toLocaleString();
     };
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-        style={{
+    return React.createElement(
+      Component as any,
+      {
+        ...props,
+        ref,
+        style: {
           marginBottom: '32px',
           ...props.style,
-        }}
-      >
-        {children || (
-          <>
-            <div style={{ marginBottom: '16px', fontSize: '16px', color: '#666' }}>
-              Estimated completion: {estimatedCompletion ? formatDate(estimatedCompletion) : 'Soon'}
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '16px' }}>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '32px', fontWeight: 'bold' }}>{days}</div>
-                <div style={{ fontSize: '14px', color: '#666' }}>Days</div>
-              </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '32px', fontWeight: 'bold' }}>{hours}</div>
-                <div style={{ fontSize: '14px', color: '#666' }}>Hours</div>
-              </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '32px', fontWeight: 'bold' }}>{minutes}</div>
-                <div style={{ fontSize: '14px', color: '#666' }}>Minutes</div>
-              </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '32px', fontWeight: 'bold' }}>{seconds}</div>
-                <div style={{ fontSize: '14px', color: '#666' }}>Seconds</div>
-              </div>
-            </div>
-          </>
-        )}
-      </Component>
+        },
+      },
+      children || React.createElement(
+        React.Fragment,
+        null,
+        React.createElement(
+          'div',
+          { style: { marginBottom: '16px', fontSize: '16px', color: '#666' } },
+          `Estimated completion: ${estimatedCompletion ? formatDate(estimatedCompletion) : 'Soon'}`
+        ),
+        React.createElement(
+          'div',
+          { style: { display: 'flex', justifyContent: 'center', gap: '16px' } },
+          React.createElement(
+            'div',
+            { style: { textAlign: 'center' } },
+            React.createElement(
+              'div',
+              { style: { fontSize: '32px', fontWeight: 'bold' } },
+              days
+            ),
+            React.createElement(
+              'div',
+              { style: { fontSize: '14px', color: '#666' } },
+              'Days'
+            )
+          ),
+          React.createElement(
+            'div',
+            { style: { textAlign: 'center' } },
+            React.createElement(
+              'div',
+              { style: { fontSize: '32px', fontWeight: 'bold' } },
+              hours
+            ),
+            React.createElement(
+              'div',
+              { style: { fontSize: '14px', color: '#666' } },
+              'Hours'
+            )
+          ),
+          React.createElement(
+            'div',
+            { style: { textAlign: 'center' } },
+            React.createElement(
+              'div',
+              { style: { fontSize: '32px', fontWeight: 'bold' } },
+              minutes
+            ),
+            React.createElement(
+              'div',
+              { style: { fontSize: '14px', color: '#666' } },
+              'Minutes'
+            )
+          ),
+          React.createElement(
+            'div',
+            { style: { textAlign: 'center' } },
+            React.createElement(
+              'div',
+              { style: { fontSize: '32px', fontWeight: 'bold' } },
+              seconds
+            ),
+            React.createElement(
+              'div',
+              { style: { fontSize: '14px', color: '#666' } },
+              'Seconds'
+            )
+          )
+        )
+      )
     );
-  }
-);
+  });
 
 Countdown.displayName = 'MaintenancePageHeadless.Countdown';
 
@@ -294,11 +340,10 @@ export type ActionProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Action component
-const Action = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ActionProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Action = forwardRef(function Action<C extends React.ElementType = 'button'>(
+  { as, children, ...props }: Omit<ActionProps<C>, 'ref'>,
+  ref: React.ForwardedRef<React.ElementRef<C>>
+) {
     const Component = as || 'button';
     const { actionText, getActionProps, showAction } = useMaintenancePageContext();
     
@@ -308,24 +353,23 @@ const Action = forwardRef(
     
     const actionProps = getActionProps();
     
-    return (
-      <Component 
-        {...actionProps}
-        {...props} 
-        ref={ref}
-        style={{
+    return React.createElement(
+      Component as any,
+      {
+        ...actionProps,
+        ...props,
+        ref,
+        style: {
           padding: '12px 24px',
           fontSize: '16px',
           fontWeight: 'bold',
           cursor: 'pointer',
           ...props.style,
-        }}
-      >
-        {children || actionText}
-      </Component>
+        },
+      },
+      children || actionText
     );
-  }
-);
+  });
 
 Action.displayName = 'MaintenancePageHeadless.Action';
 
@@ -341,11 +385,10 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Content = forwardRef(function Content<C extends React.ElementType = 'div'>(
+  { as, children, ...props }: Omit<ContentProps<C>, 'ref'>,
+  ref: React.ForwardedRef<React.ElementRef<C>>
+) {
     const Component = as || 'div';
     const { content } = useMaintenancePageContext();
     
@@ -353,20 +396,19 @@ const Content = forwardRef(
       return null;
     }
     
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-        style={{
+    return React.createElement(
+      Component as any,
+      {
+        ...props,
+        ref,
+        style: {
           marginTop: '32px',
           ...props.style,
-        }}
-      >
-        {children || content}
-      </Component>
+        },
+      },
+      children || content
     );
-  }
-);
+  });
 
 Content.displayName = 'MaintenancePageHeadless.Content';
 
@@ -382,12 +424,11 @@ export type NewsletterProps<C extends React.ElementType> = PolymorphicComponentP
 >;
 
 // Newsletter component
-const Newsletter = forwardRef(
-  <C extends React.ElementType = 'form'>(
-    { as, children, ...props }: NewsletterProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'form';
+const Newsletter = forwardRef(function Newsletter<C extends React.ElementType = 'form'>(
+  { as, children, ...props }: Omit<NewsletterProps<C>, 'ref'>,
+  ref: React.ForwardedRef<React.ElementRef<C>>
+) {
+    const Component = (as || 'form') as React.ElementType;
     const { 
       showNewsletter, 
       getNewsletterFormProps, 
@@ -447,8 +488,7 @@ const Newsletter = forwardRef(
         {children}
       </Component>
     );
-  }
-);
+  });
 
 Newsletter.displayName = 'MaintenancePageHeadless.Newsletter';
 
@@ -464,12 +504,11 @@ export type SocialProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Social component
-const Social = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: SocialProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
+const Social = forwardRef(function Social<C extends React.ElementType = 'div'>(
+  { as, children, ...props }: Omit<SocialProps<C>, 'ref'>,
+  ref: React.ForwardedRef<React.ElementRef<C>>
+) {
+    const Component = (as || 'div') as React.ElementType;
     const { showSocial, socialLinks } = useMaintenancePageContext();
     
     if (!showSocial || socialLinks.length === 0) {
@@ -479,7 +518,7 @@ const Social = forwardRef(
     return (
       <Component 
         {...props} 
-        ref={ref}
+        ref={ref as any}
         style={{
           marginTop: '32px',
           ...props.style,
@@ -512,8 +551,7 @@ const Social = forwardRef(
         {children}
       </Component>
     );
-  }
-);
+  });
 
 Social.displayName = 'MaintenancePageHeadless.Social';
 
@@ -529,12 +567,11 @@ export type RefreshInfoProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // RefreshInfo component
-const RefreshInfo = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: RefreshInfoProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
+const RefreshInfo = forwardRef(function RefreshInfo<C extends React.ElementType = 'div'>(
+  { as, children, ...props }: Omit<RefreshInfoProps<C>, 'ref'>,
+  ref: React.ForwardedRef<React.ElementRef<C>>
+) {
+    const Component = (as || 'div') as React.ElementType;
     const { autoRefresh, refreshCountdown } = useMaintenancePageContext();
     
     if (!autoRefresh) {
@@ -544,7 +581,7 @@ const RefreshInfo = forwardRef(
     return (
       <Component 
         {...props} 
-        ref={ref}
+        ref={ref as any}
         style={{
           marginTop: '32px',
           fontSize: '14px',
@@ -559,8 +596,7 @@ const RefreshInfo = forwardRef(
         )}
       </Component>
     );
-  }
-);
+  });
 
 RefreshInfo.displayName = 'MaintenancePageHeadless.RefreshInfo';
 

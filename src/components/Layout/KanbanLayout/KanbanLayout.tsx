@@ -106,7 +106,7 @@ export const KanbanLayout = forwardRef<HTMLDivElement, KanbanLayoutProps>(
       
       // Clone the column with additional props for drag and drop
       if (draggable) {
-        return React.cloneElement(child, {
+        return React.cloneElement(child as any, {
           draggable,
           onCardMove,
           draggedCard,
@@ -135,7 +135,7 @@ export const KanbanLayout = forwardRef<HTMLDivElement, KanbanLayoutProps>(
 
 KanbanLayout.displayName = 'KanbanLayout';
 
-export interface KanbanColumnProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface KanbanColumnProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /**
    * The kanban cards to render
    */
@@ -295,7 +295,7 @@ export const KanbanColumn = forwardRef<HTMLDivElement, KanbanColumnProps>(
       e.preventDefault();
       
       // Increment drag counter for this column
-      if (dragCounter.current) {
+      if (dragCounter?.current) {
         dragCounter.current[id] = (dragCounter.current[id] || 0) + 1;
       }
       
@@ -306,7 +306,7 @@ export const KanbanColumn = forwardRef<HTMLDivElement, KanbanColumnProps>(
       if (!draggable) return;
       
       // Decrement drag counter for this column
-      if (dragCounter.current) {
+      if (dragCounter?.current) {
         dragCounter.current[id] = (dragCounter.current[id] || 0) - 1;
         
         // Only set isDragOver to false if counter reaches 0
@@ -322,7 +322,7 @@ export const KanbanColumn = forwardRef<HTMLDivElement, KanbanColumnProps>(
       e.preventDefault();
       
       // Reset drag counter for this column
-      if (dragCounter.current) {
+      if (dragCounter?.current) {
         dragCounter.current[id] = 0;
       }
       
@@ -343,7 +343,7 @@ export const KanbanColumn = forwardRef<HTMLDivElement, KanbanColumnProps>(
       
       // Clone the card with additional props for drag and drop
       if (draggable) {
-        return React.cloneElement(child, {
+        return React.cloneElement(child as any, {
           draggable,
           columnId: id,
           index,
@@ -379,7 +379,7 @@ export const KanbanColumn = forwardRef<HTMLDivElement, KanbanColumnProps>(
 
 KanbanColumn.displayName = 'KanbanColumn';
 
-export interface KanbanCardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface KanbanCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /**
    * The content of the kanban card
    */

@@ -123,7 +123,7 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
+const Container = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: ContainerProps<C>,
     ref: PolymorphicRef<C>
@@ -198,6 +198,7 @@ const Container = forwardRef(
           ...getPositionStyles(),
           ...props.style,
         }}
+        aria-live="polite"
       >
         {children}
       </Component>
@@ -219,7 +220,7 @@ export type ContentProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Content component
-const Content = forwardRef(
+const Content = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: ContentProps<C>,
     ref: PolymorphicRef<C>
@@ -251,7 +252,7 @@ export type ActionProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Action component
-const Action = forwardRef(
+const Action = forwardRef<any, any>(
   <C extends React.ElementType = 'button'>(
     { as, children, ...props }: ActionProps<C>,
     ref: PolymorphicRef<C>
@@ -291,7 +292,7 @@ export type CloseProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Close component
-const Close = forwardRef(
+const Close = forwardRef<any, any>(
   <C extends React.ElementType = 'button'>(
     { as, children, ...props }: CloseProps<C>,
     ref: PolymorphicRef<C>

@@ -27,10 +27,10 @@ export type StarRatingHeadlessProps<C extends React.ElementType = 'div'> = Polym
  */
 export const StarRatingHeadless = forwardRef(function StarRatingHeadless<C extends React.ElementType = 'div'>(
   { 
-    size = 'md', 
-    activeColor = 'currentColor',
-    inactiveColor = 'currentColor',
-    showValue = false,
+    size = 'md' as any, 
+    activeColor = 'currentColor' as any,
+    inactiveColor = 'currentColor' as any,
+    showValue = false as any,
     formatValue,
     ...props 
   }: Omit<StarRatingHeadlessProps<C>, 'ref'>,
@@ -59,8 +59,8 @@ export const StarRatingHeadless = forwardRef(function StarRatingHeadless<C exten
 
   return (
     <Rating
-      ref={ref}
       {...props}
+      ref={ref as any}
     >
       <div style={{ display: 'flex', alignItems: 'center' }}>
         {props.label && (

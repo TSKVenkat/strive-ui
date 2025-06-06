@@ -173,7 +173,6 @@ export function useRadio({
     return {
       ...props,
       id: radioId,
-      ref: inputRef as React.RefObject<E>,
       type: 'radio',
       checked,
       onChange: handleChange as unknown as React.ChangeEventHandler<E>,
@@ -186,7 +185,7 @@ export function useRadio({
       'aria-checked': checked,
       'aria-disabled': disabled ? true : undefined,
       'aria-required': required ? true : undefined,
-    };
+    } as any;
   }, [
     radioId,
     checked,

@@ -246,25 +246,25 @@ export interface UseDrawingCanvasReturn {
    */
   getCanvasProps: <E extends HTMLCanvasElement = HTMLCanvasElement>(
     props?: React.CanvasHTMLAttributes<E>
-  ) => React.CanvasHTMLAttributes<E>;
+  ) => React.CanvasHTMLAttributes<E> & { ref: React.RefObject<HTMLCanvasElement> } & Record<string, any>;
   /**
    * Get props for the clear button
    */
   getClearButtonProps: <E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ) => React.ButtonHTMLAttributes<E>;
+  ) => React.ButtonHTMLAttributes<E> & Record<string, any>;
   /**
    * Get props for the undo button
    */
   getUndoButtonProps: <E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ) => React.ButtonHTMLAttributes<E>;
+  ) => React.ButtonHTMLAttributes<E> & Record<string, any>;
   /**
    * Get props for the redo button
    */
   getRedoButtonProps: <E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ) => React.ButtonHTMLAttributes<E>;
+  ) => React.ButtonHTMLAttributes<E> & Record<string, any>;
   /**
    * Get props for the save button
    */
@@ -272,19 +272,19 @@ export interface UseDrawingCanvasReturn {
     props?: React.ButtonHTMLAttributes<E>,
     type?: string,
     encoderOptions?: number
-  ) => React.ButtonHTMLAttributes<E>;
+  ) => React.ButtonHTMLAttributes<E> & Record<string, any>;
   /**
    * Get props for the brush tool button
    */
   getBrushButtonProps: <E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ) => React.ButtonHTMLAttributes<E>;
+  ) => React.ButtonHTMLAttributes<E> & Record<string, any>;
   /**
    * Get props for the eraser tool button
    */
   getEraserButtonProps: <E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ) => React.ButtonHTMLAttributes<E>;
+  ) => React.ButtonHTMLAttributes<E> & Record<string, any>;
 }
 
 /**
@@ -374,20 +374,20 @@ export function useDrawingCanvas({
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         
         // Draw all strokes after the image is loaded
-        drawStrokes();
+        drawStrokes(ctx);
       };
       img.src = history.backgroundImage;
     } else {
       // Draw all strokes
-      drawStrokes();
+      drawStrokes(ctx);
     }
     
-    function drawStrokes() {
+    function drawStrokes(context: CanvasRenderingContext2D) {
       [...history.strokes, currentStroke].filter(Boolean).forEach((stroke) => {
         if (!stroke || stroke.points.length === 0) return;
         
-        ctx.beginPath();
-        ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
+        context.beginPath();
+        context.moveTo(stroke.points[0].x, stroke.points[0].y);
         
         for (let i = 1; i < stroke.points.length; i++) {
           const p1 = stroke.points[i - 1];
@@ -398,29 +398,29 @@ export function useDrawingCanvas({
           const cy = (p1.y + p2.y) / 2;
           
           // Draw a quadratic curve
-          ctx.quadraticCurveTo(p1.x, p1.y, cx, cy);
+          context.quadraticCurveTo(p1.x, p1.y, cx, cy);
         }
         
         // If there's only one point, draw a dot
         if (stroke.points.length === 1) {
-          ctx.lineTo(stroke.points[0].x + 0.1, stroke.points[0].y + 0.1);
+          context.lineTo(stroke.points[0].x + 0.1, stroke.points[0].y + 0.1);
         }
         
         if (stroke.type === 'eraser') {
-          ctx.globalCompositeOperation = 'destination-out';
-          ctx.strokeStyle = 'rgba(0,0,0,1)';
+          context.globalCompositeOperation = 'destination-out';
+          context.strokeStyle = 'rgba(0,0,0,1)';
         } else {
-          ctx.globalCompositeOperation = 'source-over';
-          ctx.strokeStyle = stroke.color;
+          context.globalCompositeOperation = 'source-over';
+          context.strokeStyle = stroke.color;
         }
         
-        ctx.lineWidth = stroke.width;
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-        ctx.stroke();
+        context.lineWidth = stroke.width;
+        context.lineCap = 'round';
+        context.lineJoin = 'round';
+        context.stroke();
         
         // Reset composite operation
-        ctx.globalCompositeOperation = 'source-over';
+        context.globalCompositeOperation = 'source-over';
       });
     }
   }, [history, currentStroke]);
@@ -748,7 +748,7 @@ export function useDrawingCanvas({
   // Get props for the canvas element
   const getCanvasProps = useCallback(<E extends HTMLCanvasElement = HTMLCanvasElement>(
     props?: React.CanvasHTMLAttributes<E>
-  ): React.CanvasHTMLAttributes<E> => {
+  ): React.CanvasHTMLAttributes<E> & { ref: React.RefObject<HTMLCanvasElement> } & Record<string, any> => {
     return {
       ...props,
       ref: canvasRef,
@@ -806,7 +806,7 @@ export function useDrawingCanvas({
   // Get props for the clear button
   const getClearButtonProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ): React.ButtonHTMLAttributes<E> => {
+  ): React.ButtonHTMLAttributes<E> & Record<string, any> => {
     return {
       ...props,
       type: 'button',
@@ -823,7 +823,7 @@ export function useDrawingCanvas({
   // Get props for the undo button
   const getUndoButtonProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ): React.ButtonHTMLAttributes<E> => {
+  ): React.ButtonHTMLAttributes<E> & Record<string, any> => {
     return {
       ...props,
       type: 'button',
@@ -840,7 +840,7 @@ export function useDrawingCanvas({
   // Get props for the redo button
   const getRedoButtonProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ): React.ButtonHTMLAttributes<E> => {
+  ): React.ButtonHTMLAttributes<E> & Record<string, any> => {
     return {
       ...props,
       type: 'button',
@@ -859,7 +859,7 @@ export function useDrawingCanvas({
     props?: React.ButtonHTMLAttributes<E>,
     type = 'image/png',
     encoderOptions = 0.92
-  ): React.ButtonHTMLAttributes<E> => {
+  ): React.ButtonHTMLAttributes<E> & Record<string, any> => {
     return {
       ...props,
       type: 'button',
@@ -876,7 +876,7 @@ export function useDrawingCanvas({
   // Get props for the brush tool button
   const getBrushButtonProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ): React.ButtonHTMLAttributes<E> => {
+  ): React.ButtonHTMLAttributes<E> & Record<string, any> => {
     return {
       ...props,
       type: 'button',
@@ -895,7 +895,7 @@ export function useDrawingCanvas({
   // Get props for the eraser tool button
   const getEraserButtonProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ): React.ButtonHTMLAttributes<E> => {
+  ): React.ButtonHTMLAttributes<E> & Record<string, any> => {
     return {
       ...props,
       type: 'button',

@@ -1,6 +1,8 @@
 export { default as SearchHeadless } from './SearchHeadless';
 export { 
-  useSearch,
+  useSearch
+} from './useSearch';
+export type {
   UseSearchReturn,
   SearchOptions,
   SearchResult,

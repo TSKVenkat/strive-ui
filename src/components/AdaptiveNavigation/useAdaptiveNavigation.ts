@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 
 export type NavigationLayout = 'horizontal' | 'vertical' | 'bottom' | 'floating' | 'sidebar' | 'drawer';
 

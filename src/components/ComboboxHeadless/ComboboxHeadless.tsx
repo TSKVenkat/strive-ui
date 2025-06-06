@@ -1,12 +1,12 @@
 import React, { createContext, useContext, forwardRef } from 'react';
-import { useCombobox, UseComboboxReturn, ComboboxOption } from './useCombobox';
+import { useCombobox, UseComboboxReturn, type ComboboxOption as ComboboxOptionType } from './useCombobox';
 
 // Define the props for the Combobox component
-export interface ComboboxProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ComboboxProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /**
    * Options for the combobox
    */
-  options: ComboboxOption[];
+  options: ComboboxOptionType[];
   /**
    * Default value (uncontrolled)
    */
@@ -26,7 +26,7 @@ export interface ComboboxProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Callback when value changes
    */
-  onChange?: (value: string, option: ComboboxOption | null) => void;
+  onChange?: (value: string, option: ComboboxOptionType | null) => void;
   /**
    * Callback when input value changes
    */
@@ -78,7 +78,7 @@ export interface ComboboxProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Custom filter function
    */
-  filterFunction?: (option: ComboboxOption, inputValue: string) => boolean;
+  filterFunction?: (option: ComboboxOptionType, inputValue: string) => boolean;
   /**
    * Callback when dropdown is opened
    */
@@ -90,7 +90,7 @@ export interface ComboboxProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Callback when an option is highlighted
    */
-  onHighlight?: (option: ComboboxOption | null) => void;
+  onHighlight?: (option: ComboboxOptionType | null) => void;
   /**
    * Callback when the input is focused
    */
@@ -181,11 +181,11 @@ export const ComboboxRoot = forwardRef<HTMLDivElement, ComboboxProps>(
     });
 
     // Get combobox props
-    const comboboxProps = combobox.getComboboxProps({ ...props, ref });
+    const comboboxProps = combobox.getComboboxProps(props);
 
     return (
       <ComboboxContext.Provider value={combobox}>
-        <div {...comboboxProps}>
+        <div {...comboboxProps} ref={ref}>
           {children || (
             <>
               <ComboboxInput />
@@ -206,109 +206,95 @@ export const ComboboxRoot = forwardRef<HTMLDivElement, ComboboxProps>(
 
 ComboboxRoot.displayName = 'Combobox';
 
-// Input component
-export interface ComboboxInputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+// Export interfaces that extend React HTML element interfaces but omit ref
+export interface ComboboxInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'ref'> {}
 
+// Input component
 export const ComboboxInput = forwardRef<HTMLInputElement, ComboboxInputProps>(
   (props, ref) => {
     const { getInputProps } = useComboboxContext();
-    const inputProps = getInputProps({ ...props, ref });
-
-    return <input {...inputProps} />;
+    const inputProps = getInputProps(props);
+    return <input {...inputProps} ref={ref} />;
   }
 );
 
-ComboboxInput.displayName = 'Combobox.Input';
+ComboboxInput.displayName = 'ComboboxInput';
 
-// Toggle button component
-export interface ComboboxToggleButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+// Toggle button interface and component
+export interface ComboboxToggleButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'ref'> {
   children?: React.ReactNode;
 }
 
 export const ComboboxToggleButton = forwardRef<HTMLButtonElement, ComboboxToggleButtonProps>(
   ({ children, ...props }, ref) => {
-    const { getToggleButtonProps, isOpen } = useComboboxContext();
-    const toggleButtonProps = getToggleButtonProps({ ...props, ref });
+    const { getToggleButtonProps } = useComboboxContext();
+    const toggleButtonProps = getToggleButtonProps(props);
 
     return (
-      <button {...toggleButtonProps}>
-        {children || (
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
-          >
-            <path d="M7 10l5 5 5-5z" />
-          </svg>
-        )}
+      <button {...toggleButtonProps} ref={ref}>
+        {children || '▼'}
       </button>
     );
   }
 );
 
-ComboboxToggleButton.displayName = 'Combobox.ToggleButton';
+ComboboxToggleButton.displayName = 'ComboboxToggleButton';
 
-// Clear button component
-export interface ComboboxClearButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+// Clear button interface and component  
+export interface ComboboxClearButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'ref'> {
   children?: React.ReactNode;
 }
 
 export const ComboboxClearButton = forwardRef<HTMLButtonElement, ComboboxClearButtonProps>(
   ({ children, ...props }, ref) => {
     const { getClearButtonProps } = useComboboxContext();
-    const clearButtonProps = getClearButtonProps({ ...props, ref });
+    const clearButtonProps = getClearButtonProps(props);
 
     return (
-      <button {...clearButtonProps}>
-        {children || (
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-          </svg>
-        )}
+      <button {...clearButtonProps} ref={ref}>
+        {children || '✕'}
       </button>
     );
   }
 );
 
-ComboboxClearButton.displayName = 'Combobox.ClearButton';
+ComboboxClearButton.displayName = 'ComboboxClearButton';
 
-// Listbox component
-export interface ComboboxListboxProps extends React.HTMLAttributes<HTMLUListElement> {
+// Listbox interface and component
+export interface ComboboxListboxProps extends Omit<React.HTMLAttributes<HTMLUListElement>, 'ref'> {
   children?: React.ReactNode;
 }
 
 export const ComboboxListbox = forwardRef<HTMLUListElement, ComboboxListboxProps>(
   ({ children, ...props }, ref) => {
     const { getListboxProps } = useComboboxContext();
-    const listboxProps = getListboxProps({ ...props, ref });
+    const listboxProps = getListboxProps(props);
 
-    return <ul {...listboxProps}>{children}</ul>;
+    return <ul {...listboxProps} ref={ref}>{children}</ul>;
   }
 );
 
-ComboboxListbox.displayName = 'Combobox.Listbox';
+ComboboxListbox.displayName = 'ComboboxListbox';
 
-// Option component
-export interface ComboboxOptionProps extends React.LiHTMLAttributes<HTMLLIElement> {
-  option: ComboboxOption;
+// Option interface and component
+export interface ComboboxOptionProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'ref'> {
+  option: ComboboxOptionType;
   children?: React.ReactNode;
 }
 
 export const ComboboxOption = forwardRef<HTMLLIElement, ComboboxOptionProps>(
   ({ option, children, ...props }, ref) => {
     const { getOptionProps } = useComboboxContext();
-    const optionProps = getOptionProps(option, { ...props, ref });
+    const optionProps = getOptionProps(option, props);
 
-    return <li {...optionProps}>{children || option.label}</li>;
+    return <li {...optionProps} ref={ref}>{children || option.label}</li>;
   }
 );
 
-ComboboxOption.displayName = 'Combobox.Option';
+ComboboxOption.displayName = 'ComboboxOption';
 
-// Group component
-export interface ComboboxGroupProps extends React.HTMLAttributes<HTMLDivElement> {
+// Group interface and component
+export interface ComboboxGroupProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'ref'> {
   label: string;
   children?: React.ReactNode;
 }
@@ -316,21 +302,23 @@ export interface ComboboxGroupProps extends React.HTMLAttributes<HTMLDivElement>
 export const ComboboxGroup = forwardRef<HTMLDivElement, ComboboxGroupProps>(
   ({ label, children, ...props }, ref) => {
     const { getGroupProps } = useComboboxContext();
-    const groupProps = getGroupProps(label, { ...props, ref });
+    const groupProps = getGroupProps(label, props);
 
     return (
-      <div {...groupProps}>
-        <div role="presentation">{label}</div>
+      <div {...groupProps} ref={ref}>
+        <div role="group" aria-label={label}>
+          {label}
+        </div>
         {children}
       </div>
     );
   }
 );
 
-ComboboxGroup.displayName = 'Combobox.Group';
+ComboboxGroup.displayName = 'ComboboxGroup';
 
-// Empty component
-export interface ComboboxEmptyProps extends React.HTMLAttributes<HTMLDivElement> {
+// Empty state interface and component
+export interface ComboboxEmptyProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'ref'> {
   children?: React.ReactNode;
 }
 
@@ -338,19 +326,17 @@ export const ComboboxEmpty = forwardRef<HTMLDivElement, ComboboxEmptyProps>(
   ({ children, ...props }, ref) => {
     const { filteredOptions } = useComboboxContext();
 
-    if (filteredOptions.length > 0) {
-      return null;
-    }
+    if (filteredOptions.length > 0) return null;
 
     return (
-      <div role="presentation" {...props} ref={ref}>
+      <div {...props} ref={ref}>
         {children || 'No options found'}
       </div>
     );
   }
 );
 
-ComboboxEmpty.displayName = 'Combobox.Empty';
+ComboboxEmpty.displayName = 'ComboboxEmpty';
 
 // Create the Combobox component with all its subcomponents
 export const ComboboxHeadless = Object.assign(ComboboxRoot, {

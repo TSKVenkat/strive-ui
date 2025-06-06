@@ -1,6 +1,8 @@
 export { default as SplitterHeadless } from './SplitterHeadless';
 export { 
-  useSplitter,
+  useSplitter
+} from './useSplitter';
+export type {
   UseSplitterReturn,
   SplitterOptions,
   SplitDirection

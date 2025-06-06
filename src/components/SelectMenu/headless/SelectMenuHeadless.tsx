@@ -12,7 +12,7 @@ const SelectMenuContext = createContext<SelectMenuContextValue | null>(null);
 export function useSelectMenuContext() {
   const context = useContext(SelectMenuContext);
   if (!context) {
-    throw new Error('useSelectMenuContext must be used within a SelectMenuHeadless.Root component');
+    throw new globalThis.Error('useSelectMenuContext must be used within a SelectMenuHeadless.Root component');
   }
   return context;
 }
@@ -54,29 +54,28 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getContainerProps } = useSelectMenuContext();
-    
-    const containerProps = getContainerProps();
-    
-    return (
-      <Component 
-        {...containerProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const ContainerComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  const { getContainerProps } = useSelectMenuContext();
+  
+  const { ref: _, ...containerProps } = getContainerProps();
+  
+  return (
+    <Component 
+      {...containerProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+});
 
-Container.displayName = 'SelectMenuHeadless.Container';
+ContainerComponent.displayName = 'SelectMenuHeadless.Container';
+
+const Container = ContainerComponent as <C extends React.ElementType = 'div'>(
+  props: ContainerProps<C>
+) => React.ReactElement | null;
 
 // Trigger component props
 export type TriggerProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -90,29 +89,28 @@ export type TriggerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Trigger component
-const Trigger = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: TriggerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getTriggerProps, getDisplayValue } = useSelectMenuContext();
-    
-    const triggerProps = getTriggerProps();
-    
-    return (
-      <Component 
-        {...triggerProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || getDisplayValue()}
-      </Component>
-    );
-  }
-);
+const TriggerComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'button', children, ...restProps } = props;
+  const { getTriggerProps, getDisplayValue } = useSelectMenuContext();
+  
+  const { ref: _, ...triggerProps } = getTriggerProps();
+  
+  return (
+    <Component 
+      {...triggerProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || getDisplayValue()}
+    </Component>
+  );
+});
 
-Trigger.displayName = 'SelectMenuHeadless.Trigger';
+TriggerComponent.displayName = 'SelectMenuHeadless.Trigger';
+
+const Trigger = TriggerComponent as <C extends React.ElementType = 'button'>(
+  props: TriggerProps<C>
+) => React.ReactElement | null;
 
 // Portal component props
 export type PortalProps = {
@@ -189,37 +187,36 @@ export type MenuProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Menu component
-const Menu = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: MenuProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getMenuProps, isOpen } = useSelectMenuContext();
-    
-    if (!isOpen) {
-      return null;
-    }
-    
-    const menuProps = getMenuProps();
-    
-    return (
-      <Component 
-        {...menuProps} 
-        {...props} 
-        ref={ref}
-        style={{ 
-          ...menuProps.style,
-          ...props.style,
-        }}
-      >
-        {children}
-      </Component>
-    );
+const MenuComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  const { getMenuProps, isOpen } = useSelectMenuContext();
+  
+  if (!isOpen) {
+    return null;
   }
-);
+  
+  const menuProps = getMenuProps();
+  
+  return (
+    <Component 
+      {...menuProps} 
+      {...restProps} 
+      ref={ref}
+      style={{ 
+        ...menuProps.style,
+        ...restProps.style,
+      }}
+    >
+      {children}
+    </Component>
+  );
+});
 
-Menu.displayName = 'SelectMenuHeadless.Menu';
+MenuComponent.displayName = 'SelectMenuHeadless.Menu';
+
+const Menu = MenuComponent as <C extends React.ElementType = 'div'>(
+  props: MenuProps<C>
+) => React.ReactElement | null;
 
 // Search component props
 export type SearchProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -233,36 +230,35 @@ export type SearchProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Search component
-const Search = forwardRef(
-  <C extends React.ElementType = 'input'>(
-    { as, placeholder, ...props }: SearchProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'input';
-    const { getSearchInputProps } = useSelectMenuContext();
-    
-    const searchProps = getSearchInputProps();
-    
-    return (
-      <Component 
-        type="text"
-        {...searchProps} 
-        placeholder={placeholder || searchProps.placeholder}
-        {...props} 
-        ref={ref}
-        onClick={(e: React.MouseEvent) => {
-          // Prevent closing the select menu when clicking the search input
-          e.stopPropagation();
-          if (props.onClick) {
-            props.onClick(e);
-          }
-        }}
-      />
-    );
-  }
-);
+const SearchComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'input', placeholder, ...restProps } = props;
+  const { getSearchInputProps } = useSelectMenuContext();
+  
+  const { ref: _, ...searchProps } = getSearchInputProps();
+  
+  return (
+    <Component 
+      type="text"
+      {...searchProps} 
+      placeholder={placeholder || searchProps.placeholder}
+      {...restProps} 
+      ref={ref}
+      onClick={(e: React.MouseEvent) => {
+        // Prevent closing the select menu when clicking the search input
+        e.stopPropagation();
+        if (restProps.onClick) {
+          restProps.onClick(e);
+        }
+      }}
+    />
+  );
+});
 
-Search.displayName = 'SelectMenuHeadless.Search';
+SearchComponent.displayName = 'SelectMenuHeadless.Search';
+
+const Search = SearchComponent as <C extends React.ElementType = 'input'>(
+  props: SearchProps<C>
+) => React.ReactElement | null;
 
 // Option component props
 export type OptionProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -284,40 +280,39 @@ export type OptionProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Option component
-const Option = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, option, index, children, ...props }: OptionProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getOptionProps, value, highlightedIndex } = useSelectMenuContext();
-    
-    const optionProps = getOptionProps(option, index);
-    const isSelected = Array.isArray(value) 
-      ? value.includes(option.value) 
-      : value === option.value;
-    const isHighlighted = index === highlightedIndex;
-    
-    return (
-      <Component 
-        {...optionProps} 
-        {...props} 
-        ref={ref}
-        data-highlighted={isHighlighted}
-        data-selected={isSelected}
-        style={{ 
-          cursor: option.disabled ? 'not-allowed' : 'pointer',
-          opacity: option.disabled ? 0.5 : 1,
-          ...props.style,
-        }}
-      >
-        {children || option.label}
-      </Component>
-    );
-  }
-);
+const OptionComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', option, index, children, ...restProps } = props;
+  const { getOptionProps, value, highlightedIndex } = useSelectMenuContext();
+  
+  const optionProps = getOptionProps(option, index);
+  const isSelected = Array.isArray(value) 
+    ? value.includes(option.value) 
+    : value === option.value;
+  const isHighlighted = index === highlightedIndex;
+  
+  return (
+    <Component 
+      {...optionProps} 
+      {...restProps} 
+      ref={ref}
+      data-highlighted={isHighlighted}
+      data-selected={isSelected}
+      style={{ 
+        cursor: option.disabled ? 'not-allowed' : 'pointer',
+        opacity: option.disabled ? 0.5 : 1,
+        ...restProps.style,
+      }}
+    >
+      {children || option.label}
+    </Component>
+  );
+});
 
-Option.displayName = 'SelectMenuHeadless.Option';
+OptionComponent.displayName = 'SelectMenuHeadless.Option';
+
+const Option = OptionComponent as <C extends React.ElementType = 'div'>(
+  props: OptionProps<C>
+) => React.ReactElement | null;
 
 // Group component props
 export type GroupProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -335,29 +330,28 @@ export type GroupProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Group component
-const Group = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, name, children, ...props }: GroupProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getGroupProps } = useSelectMenuContext();
-    
-    const groupProps = getGroupProps(name);
-    
-    return (
-      <Component 
-        {...groupProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const GroupComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', name, children, ...restProps } = props;
+  const { getGroupProps } = useSelectMenuContext();
+  
+  const groupProps = getGroupProps(name);
+  
+  return (
+    <Component 
+      {...groupProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+});
 
-Group.displayName = 'SelectMenuHeadless.Group';
+GroupComponent.displayName = 'SelectMenuHeadless.Group';
+
+const Group = GroupComponent as <C extends React.ElementType = 'div'>(
+  props: GroupProps<C>
+) => React.ReactElement | null;
 
 // GroupLabel component props
 export type GroupLabelProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -375,29 +369,28 @@ export type GroupLabelProps<C extends React.ElementType> = PolymorphicComponentP
 >;
 
 // GroupLabel component
-const GroupLabel = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, name, children, ...props }: GroupLabelProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getGroupLabelProps } = useSelectMenuContext();
-    
-    const groupLabelProps = getGroupLabelProps(name);
-    
-    return (
-      <Component 
-        {...groupLabelProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || name}
-      </Component>
-    );
-  }
-);
+const GroupLabelComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', name, children, ...restProps } = props;
+  const { getGroupLabelProps } = useSelectMenuContext();
+  
+  const groupLabelProps = getGroupLabelProps(name);
+  
+  return (
+    <Component 
+      {...groupLabelProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || name}
+    </Component>
+  );
+});
 
-GroupLabel.displayName = 'SelectMenuHeadless.GroupLabel';
+GroupLabelComponent.displayName = 'SelectMenuHeadless.GroupLabel';
+
+const GroupLabel = GroupLabelComponent as <C extends React.ElementType = 'div'>(
+  props: GroupLabelProps<C>
+) => React.ReactElement | null;
 
 // SelectAll component props
 export type SelectAllProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -411,29 +404,28 @@ export type SelectAllProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // SelectAll component
-const SelectAll = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: SelectAllProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getSelectAllProps } = useSelectMenuContext();
-    
-    const selectAllProps = getSelectAllProps();
-    
-    return (
-      <Component 
-        {...selectAllProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Select All'}
-      </Component>
-    );
-  }
-);
+const SelectAllComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  const { getSelectAllProps } = useSelectMenuContext();
+  
+  const selectAllProps = getSelectAllProps();
+  
+  return (
+    <Component 
+      {...selectAllProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || 'Select All'}
+    </Component>
+  );
+});
 
-SelectAll.displayName = 'SelectMenuHeadless.SelectAll';
+SelectAllComponent.displayName = 'SelectMenuHeadless.SelectAll';
+
+const SelectAll = SelectAllComponent as <C extends React.ElementType = 'div'>(
+  props: SelectAllProps<C>
+) => React.ReactElement | null;
 
 // ClearButton component props
 export type ClearButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -447,29 +439,28 @@ export type ClearButtonProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // ClearButton component
-const ClearButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ClearButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getClearButtonProps } = useSelectMenuContext();
-    
-    const clearButtonProps = getClearButtonProps();
-    
-    return (
-      <Component 
-        {...clearButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || '×'}
-      </Component>
-    );
-  }
-);
+const ClearButtonComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'button', children, ...restProps } = props;
+  const { getClearButtonProps } = useSelectMenuContext();
+  
+  const clearButtonProps = getClearButtonProps();
+  
+  return (
+    <Component 
+      {...clearButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || '×'}
+    </Component>
+  );
+});
 
-ClearButton.displayName = 'SelectMenuHeadless.ClearButton';
+ClearButtonComponent.displayName = 'SelectMenuHeadless.ClearButton';
+
+const ClearButton = ClearButtonComponent as <C extends React.ElementType = 'button'>(
+  props: ClearButtonProps<C>
+) => React.ReactElement | null;
 
 // CreateOption component props
 export type CreateOptionProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -483,37 +474,36 @@ export type CreateOptionProps<C extends React.ElementType> = PolymorphicComponen
 >;
 
 // CreateOption component
-const CreateOption = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: CreateOptionProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { createNewOption, searchValue, filteredOptions } = useSelectMenuContext();
-    
-    // Only show if we have a search value and no matching options
-    if (!searchValue || filteredOptions.length > 0) {
-      return null;
-    }
-    
-    return (
-      <Component 
-        role="option"
-        onClick={() => createNewOption()}
-        {...props} 
-        ref={ref}
-        style={{ 
-          cursor: 'pointer',
-          ...props.style,
-        }}
-      >
-        {children || `Create "${searchValue}"`}
-      </Component>
-    );
+const CreateOptionComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  const { createNewOption, searchValue, filteredOptions } = useSelectMenuContext();
+  
+  // Only show if we have a search value and no matching options
+  if (!searchValue || filteredOptions.length > 0) {
+    return null;
   }
-);
+  
+  return (
+    <Component 
+      role="option"
+      onClick={() => createNewOption()}
+      {...restProps} 
+      ref={ref}
+      style={{ 
+        cursor: 'pointer',
+        ...restProps.style,
+      }}
+    >
+      {children || `Create "${searchValue}"`}
+    </Component>
+  );
+});
 
-CreateOption.displayName = 'SelectMenuHeadless.CreateOption';
+CreateOptionComponent.displayName = 'SelectMenuHeadless.CreateOption';
+
+const CreateOption = CreateOptionComponent as <C extends React.ElementType = 'div'>(
+  props: CreateOptionProps<C>
+) => React.ReactElement | null;
 
 // NoOptions component props
 export type NoOptionsProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -535,32 +525,31 @@ export type NoOptionsProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // NoOptions component
-const NoOptions = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, noOptionsText = 'No options available', noResultsText = 'No results found', ...props }: NoOptionsProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { filteredOptions, searchValue } = useSelectMenuContext();
-    
-    // Only show if we have no options
-    if (filteredOptions.length > 0) {
-      return null;
-    }
-    
-    return (
-      <Component 
-        role="presentation"
-        {...props} 
-        ref={ref}
-      >
-        {children || (searchValue ? noResultsText : noOptionsText)}
-      </Component>
-    );
+const NoOptionsComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, noOptionsText = 'No options available', noResultsText = 'No results found', ...restProps } = props;
+  const { filteredOptions, searchValue } = useSelectMenuContext();
+  
+  // Only show if we have no options
+  if (filteredOptions.length > 0) {
+    return null;
   }
-);
+  
+  return (
+    <Component 
+      role="presentation"
+      {...restProps} 
+      ref={ref}
+    >
+      {children || (searchValue ? noResultsText : noOptionsText)}
+    </Component>
+  );
+});
 
-NoOptions.displayName = 'SelectMenuHeadless.NoOptions';
+NoOptionsComponent.displayName = 'SelectMenuHeadless.NoOptions';
+
+const NoOptions = NoOptionsComponent as <C extends React.ElementType = 'div'>(
+  props: NoOptionsProps<C>
+) => React.ReactElement | null;
 
 // Loading component props
 export type LoadingProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -574,32 +563,31 @@ export type LoadingProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Loading component
-const Loading = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: LoadingProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { loading } = useSelectMenuContext();
-    
-    // Only show if loading
-    if (!loading) {
-      return null;
-    }
-    
-    return (
-      <Component 
-        role="presentation"
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Loading...'}
-      </Component>
-    );
+const LoadingComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  const { loading } = useSelectMenuContext();
+  
+  // Only show if loading
+  if (!loading) {
+    return null;
   }
-);
+  
+  return (
+    <Component 
+      role="presentation"
+      {...restProps} 
+      ref={ref}
+    >
+      {children || 'Loading...'}
+    </Component>
+  );
+});
 
-Loading.displayName = 'SelectMenuHeadless.Loading';
+LoadingComponent.displayName = 'SelectMenuHeadless.Loading';
+
+const Loading = LoadingComponent as <C extends React.ElementType = 'div'>(
+  props: LoadingProps<C>
+) => React.ReactElement | null;
 
 // Error component props
 export type ErrorProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -613,32 +601,31 @@ export type ErrorProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Error component
-const Error = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ErrorProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { hasError, error } = useSelectMenuContext();
-    
-    // Only show if there's an error
-    if (!hasError) {
-      return null;
-    }
-    
-    return (
-      <Component 
-        role="alert"
-        {...props} 
-        ref={ref}
-      >
-        {children || error}
-      </Component>
-    );
+const ErrorComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  const { hasError, error } = useSelectMenuContext();
+  
+  // Only show if there's an error
+  if (!hasError) {
+    return null;
   }
-);
+  
+  return (
+    <Component 
+      role="alert"
+      {...restProps} 
+      ref={ref}
+    >
+      {children || error}
+    </Component>
+  );
+});
 
-Error.displayName = 'SelectMenuHeadless.Error';
+ErrorComponent.displayName = 'SelectMenuHeadless.Error';
+
+const SelectError = ErrorComponent as <C extends React.ElementType = 'div'>(
+  props: ErrorProps<C>
+) => React.ReactElement | null;
 
 // Value component props
 export type ValueProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -652,26 +639,25 @@ export type ValueProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Value component
-const Value = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ValueProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getDisplayValue } = useSelectMenuContext();
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children || getDisplayValue()}
-      </Component>
-    );
-  }
-);
+const ValueComponent = React.forwardRef((props: any, ref: any) => {
+  const { as: Component = 'div', children, ...restProps } = props;
+  const { getDisplayValue } = useSelectMenuContext();
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || getDisplayValue()}
+    </Component>
+  );
+});
 
-Value.displayName = 'SelectMenuHeadless.Value';
+ValueComponent.displayName = 'SelectMenuHeadless.Value';
+
+const Value = ValueComponent as <C extends React.ElementType = 'div'>(
+  props: ValueProps<C>
+) => React.ReactElement | null;
 
 // Export all components
 export const SelectMenuHeadless = {
@@ -689,7 +675,7 @@ export const SelectMenuHeadless = {
   CreateOption,
   NoOptions,
   Loading,
-  Error,
+  Error: SelectError,
   Value,
   useSelectMenuContext,
 };

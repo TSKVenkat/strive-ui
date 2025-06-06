@@ -59,7 +59,7 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
+const Container = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: ContainerProps<C>,
     ref: PolymorphicRef<C>
@@ -125,7 +125,7 @@ export type SpinnerElementProps<C extends React.ElementType> = PolymorphicCompon
 >;
 
 // Spinner component
-const SpinnerElement = forwardRef(
+const SpinnerElement = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: SpinnerElementProps<C>,
     ref: PolymorphicRef<C>
@@ -223,7 +223,7 @@ export type DotProps<C extends React.ElementType> = PolymorphicComponentPropsWit
 >;
 
 // Dot component
-const Dot = forwardRef(
+const Dot = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, index = 0, ...props }: DotProps<C>,
     ref: PolymorphicRef<C>
@@ -280,7 +280,7 @@ export type RippleProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Ripple component
-const Ripple = forwardRef(
+const Ripple = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, index = 0, ...props }: RippleProps<C>,
     ref: PolymorphicRef<C>
@@ -328,7 +328,7 @@ export type RingProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Ring component
-const Ring = forwardRef(
+const Ring = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, outer = false, ...props }: RingProps<C>,
     ref: PolymorphicRef<C>
@@ -381,7 +381,7 @@ export type LabelProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Label component
-const Label = forwardRef(
+const Label = forwardRef<any, any>(
   <C extends React.ElementType = 'span'>(
     { as, children, srOnly = true, ...props }: LabelProps<C>,
     ref: PolymorphicRef<C>

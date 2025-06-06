@@ -545,7 +545,7 @@ export function useImageCropModal(options: ImageCropModalOptions = {}): UseImage
   const getCropAreaProps = useCallback(() => {
     return {
       style: {
-        position: 'absolute',
+        position: 'absolute' as const,
         left: `${cropArea.x}px`,
         top: `${cropArea.y}px`,
         width: `${cropArea.width}px`,

@@ -129,7 +129,7 @@ export const TabsHeadless = forwardRef(function TabsHeadless<C extends React.Ele
     defaultTab, 
     activeTab, 
     onChange, 
-    orientation = 'horizontal',
+    orientation = 'horizontal' as any,
     activateOnFocus,
     manual,
     ...props 
@@ -192,7 +192,7 @@ export const TabListHeadless = forwardRef(function TabListHeadless<C extends Rea
  * A headless Tab component that provides all the functionality without any styling.
  */
 export const TabHeadless = forwardRef(function TabHeadless<C extends React.ElementType = 'button'>(
-  { as, children, className, style, id, disabled = false, ...props }: Omit<TabHeadlessProps<C>, 'ref'>,
+  { as, children, className, style, id, disabled = false as any, ...props }: Omit<TabHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>
 ) {
   const { getTabProps, registerTab, unregisterTab } = useTabsContext();

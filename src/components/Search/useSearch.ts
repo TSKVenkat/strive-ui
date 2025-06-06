@@ -680,7 +680,7 @@ export function useSearch<T = any>(options: SearchOptions<T> = {}): UseSearchRet
         }
       },
       'aria-label': 'Search',
-      'aria-autocomplete': 'list',
+      'aria-autocomplete': 'list' as const,
       'aria-controls': 'search-results',
       'aria-expanded': results.length > 0,
       role: 'combobox',

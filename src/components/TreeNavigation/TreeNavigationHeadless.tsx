@@ -189,7 +189,7 @@ export const TreeNavigationHeadless = forwardRef(function TreeNavigationHeadless
     onSelectedChange,
     autoExpandParent,
     collapseSiblings,
-    ariaLabel = 'Tree navigation',
+    ariaLabel = 'Tree navigation' as any,
     ...props 
   }: Omit<TreeNavigationHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>
@@ -264,7 +264,7 @@ export const TreeItemHeadless = forwardRef(function TreeItemHeadless<C extends R
     className, 
     style, 
     node,
-    level = 0,
+    level = 0 as any,
     ...props 
   }: Omit<TreeItemHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>
@@ -331,7 +331,7 @@ export const TreeItemContentHeadless = forwardRef(function TreeItemContentHeadle
     className, 
     style, 
     node,
-    level = 0,
+    level = 0 as any,
     ...props 
   }: Omit<TreeItemContentHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>

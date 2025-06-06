@@ -6,6 +6,14 @@ import {
 } from './useImageViewer';
 import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../../types/polymorphic';
 
+// Helper type for polymorphic forwardRef
+type PolymorphicForwardRefExoticComponent<
+  DefaultElement extends React.ElementType,
+  Props = {}
+> = <C extends React.ElementType = DefaultElement>(
+  props: PolymorphicComponentPropsWithRef<C, Props>
+) => React.ReactElement | null;
+
 // Context for the ImageViewer component
 interface ImageViewerContextValue extends UseImageViewerReturn {}
 
@@ -57,33 +65,29 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getContainerProps } = useImageViewerContext();
-    
-    const containerProps = getContainerProps();
-    
-    return (
-      <Component 
-        {...containerProps} 
-        {...props} 
-        ref={ref}
-        style={{
-          ...containerProps.style,
-          ...props.style,
-        }}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Container = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { getContainerProps } = useImageViewerContext();
+  
+  const containerProps = getContainerProps();
+  
+  return (
+    <Component 
+      {...containerProps} 
+      {...restProps} 
+      ref={ref}
+      style={{
+        ...containerProps.style,
+        ...restProps.style,
+      }}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
-Container.displayName = 'ImageViewerHeadless.Container';
+(Container as any).displayName = 'ImageViewerHeadless.Container';
 
 // Image component props
 export type ImageProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -101,41 +105,37 @@ export type ImageProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Image component
-const Image = forwardRef(
-  <C extends React.ElementType = 'img'>(
-    { as, src, alt, ...props }: ImageProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'img';
-    const { getImageProps, setSrc, setAlt } = useImageViewerContext();
-    
-    // Set the source and alt if provided
-    React.useEffect(() => {
-      if (src) {
-        setSrc(src);
-      }
-      if (alt) {
-        setAlt(alt);
-      }
-    }, [src, alt, setSrc, setAlt]);
-    
-    const imageProps = getImageProps();
-    
-    return (
-      <Component 
-        {...imageProps} 
-        {...props} 
-        ref={ref}
-        style={{
-          ...imageProps.style,
-          ...props.style,
-        }}
-      />
-    );
-  }
-);
+const Image = forwardRef<any, any>((props, ref) => {
+  const { as, src, alt, ...restProps } = props;
+  const Component = as || 'img';
+  const { getImageProps, setSrc, setAlt } = useImageViewerContext();
+  
+  // Set the source and alt if provided
+  React.useEffect(() => {
+    if (src) {
+      setSrc(src);
+    }
+    if (alt) {
+      setAlt(alt);
+    }
+  }, [src, alt, setSrc, setAlt]);
+  
+  const imageProps = getImageProps();
+  
+  return (
+    <Component 
+      {...imageProps} 
+      {...restProps} 
+      ref={ref}
+      style={{
+        ...imageProps.style,
+        ...restProps.style,
+      }}
+    />
+  );
+}) as any;
 
-Image.displayName = 'ImageViewerHeadless.Image';
+(Image as any).displayName = 'ImageViewerHeadless.Image';
 
 // Toolbar component props
 export type ToolbarProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -149,25 +149,21 @@ export type ToolbarProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Toolbar component
-const Toolbar = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ToolbarProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Toolbar = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
-Toolbar.displayName = 'ImageViewerHeadless.Toolbar';
+(Toolbar as any).displayName = 'ImageViewerHeadless.Toolbar';
 
 // ZoomInButton component props
 export type ZoomInButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -181,29 +177,25 @@ export type ZoomInButtonProps<C extends React.ElementType> = PolymorphicComponen
 >;
 
 // ZoomInButton component
-const ZoomInButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ZoomInButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getZoomInButtonProps } = useImageViewerContext();
-    
-    const zoomInButtonProps = getZoomInButtonProps();
-    
-    return (
-      <Component 
-        {...zoomInButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Zoom In'}
-      </Component>
-    );
-  }
-);
+const ZoomInButton = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getZoomInButtonProps } = useImageViewerContext();
+  
+  const zoomInButtonProps = getZoomInButtonProps();
+  
+  return (
+    <Component 
+      {...zoomInButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || 'Zoom In'}
+    </Component>
+  );
+}) as PolymorphicForwardRefExoticComponent<'button', { children?: React.ReactNode }>;
 
-ZoomInButton.displayName = 'ImageViewerHeadless.ZoomInButton';
+(ZoomInButton as any).displayName = 'ImageViewerHeadless.ZoomInButton';
 
 // ZoomOutButton component props
 export type ZoomOutButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -217,29 +209,25 @@ export type ZoomOutButtonProps<C extends React.ElementType> = PolymorphicCompone
 >;
 
 // ZoomOutButton component
-const ZoomOutButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ZoomOutButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getZoomOutButtonProps } = useImageViewerContext();
-    
-    const zoomOutButtonProps = getZoomOutButtonProps();
-    
-    return (
-      <Component 
-        {...zoomOutButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Zoom Out'}
-      </Component>
-    );
-  }
-);
+const ZoomOutButton = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getZoomOutButtonProps } = useImageViewerContext();
+  
+  const zoomOutButtonProps = getZoomOutButtonProps();
+  
+  return (
+    <Component 
+      {...zoomOutButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || 'Zoom Out'}
+    </Component>
+  );
+}) as PolymorphicForwardRefExoticComponent<'button', { children?: React.ReactNode }>;
 
-ZoomOutButton.displayName = 'ImageViewerHeadless.ZoomOutButton';
+(ZoomOutButton as any).displayName = 'ImageViewerHeadless.ZoomOutButton';
 
 // ResetZoomButton component props
 export type ResetZoomButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -253,29 +241,25 @@ export type ResetZoomButtonProps<C extends React.ElementType> = PolymorphicCompo
 >;
 
 // ResetZoomButton component
-const ResetZoomButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ResetZoomButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getResetZoomButtonProps, zoom } = useImageViewerContext();
-    
-    const resetZoomButtonProps = getResetZoomButtonProps();
-    
-    return (
-      <Component 
-        {...resetZoomButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || `${Math.round(zoom * 100)}%`}
-      </Component>
-    );
-  }
-);
+const ResetZoomButton = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getResetZoomButtonProps } = useImageViewerContext();
+  
+  const resetZoomButtonProps = getResetZoomButtonProps();
+  
+  return (
+    <Component 
+      {...resetZoomButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || 'Reset Zoom'}
+    </Component>
+  );
+}) as PolymorphicForwardRefExoticComponent<'button', { children?: React.ReactNode }>;
 
-ResetZoomButton.displayName = 'ImageViewerHeadless.ResetZoomButton';
+(ResetZoomButton as any).displayName = 'ImageViewerHeadless.ResetZoomButton';
 
 // RotateLeftButton component props
 export type RotateLeftButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -289,29 +273,25 @@ export type RotateLeftButtonProps<C extends React.ElementType> = PolymorphicComp
 >;
 
 // RotateLeftButton component
-const RotateLeftButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: RotateLeftButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getRotateLeftButtonProps } = useImageViewerContext();
-    
-    const rotateLeftButtonProps = getRotateLeftButtonProps();
-    
-    return (
-      <Component 
-        {...rotateLeftButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Rotate Left'}
-      </Component>
-    );
-  }
-);
+const RotateLeftButton = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getRotateLeftButtonProps } = useImageViewerContext();
+  
+  const rotateLeftButtonProps = getRotateLeftButtonProps();
+  
+  return (
+    <Component 
+      {...rotateLeftButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || 'Rotate Left'}
+    </Component>
+  );
+}) as PolymorphicForwardRefExoticComponent<'button', { children?: React.ReactNode }>;
 
-RotateLeftButton.displayName = 'ImageViewerHeadless.RotateLeftButton';
+(RotateLeftButton as any).displayName = 'ImageViewerHeadless.RotateLeftButton';
 
 // RotateRightButton component props
 export type RotateRightButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -325,29 +305,25 @@ export type RotateRightButtonProps<C extends React.ElementType> = PolymorphicCom
 >;
 
 // RotateRightButton component
-const RotateRightButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: RotateRightButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getRotateRightButtonProps } = useImageViewerContext();
-    
-    const rotateRightButtonProps = getRotateRightButtonProps();
-    
-    return (
-      <Component 
-        {...rotateRightButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Rotate Right'}
-      </Component>
-    );
-  }
-);
+const RotateRightButton = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getRotateRightButtonProps } = useImageViewerContext();
+  
+  const rotateRightButtonProps = getRotateRightButtonProps();
+  
+  return (
+    <Component 
+      {...rotateRightButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || 'Rotate Right'}
+    </Component>
+  );
+}) as PolymorphicForwardRefExoticComponent<'button', { children?: React.ReactNode }>;
 
-RotateRightButton.displayName = 'ImageViewerHeadless.RotateRightButton';
+(RotateRightButton as any).displayName = 'ImageViewerHeadless.RotateRightButton';
 
 // ResetRotationButton component props
 export type ResetRotationButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -361,29 +337,25 @@ export type ResetRotationButtonProps<C extends React.ElementType> = PolymorphicC
 >;
 
 // ResetRotationButton component
-const ResetRotationButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ResetRotationButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getResetRotationButtonProps, rotation } = useImageViewerContext();
-    
-    const resetRotationButtonProps = getResetRotationButtonProps();
-    
-    return (
-      <Component 
-        {...resetRotationButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || `${rotation}°`}
-      </Component>
-    );
-  }
-);
+const ResetRotationButton = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getResetRotationButtonProps } = useImageViewerContext();
+  
+  const resetRotationButtonProps = getResetRotationButtonProps();
+  
+  return (
+    <Component 
+      {...resetRotationButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || 'Reset Rotation'}
+    </Component>
+  );
+}) as PolymorphicForwardRefExoticComponent<'button', { children?: React.ReactNode }>;
 
-ResetRotationButton.displayName = 'ImageViewerHeadless.ResetRotationButton';
+(ResetRotationButton as any).displayName = 'ImageViewerHeadless.ResetRotationButton';
 
 // FullscreenButton component props
 export type FullscreenButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -397,29 +369,25 @@ export type FullscreenButtonProps<C extends React.ElementType> = PolymorphicComp
 >;
 
 // FullscreenButton component
-const FullscreenButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: FullscreenButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getFullscreenButtonProps, isFullscreen } = useImageViewerContext();
-    
-    const fullscreenButtonProps = getFullscreenButtonProps();
-    
-    return (
-      <Component 
-        {...fullscreenButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || (isFullscreen ? 'Exit Fullscreen' : 'Fullscreen')}
-      </Component>
-    );
-  }
-);
+const FullscreenButton = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getFullscreenButtonProps } = useImageViewerContext();
+  
+  const fullscreenButtonProps = getFullscreenButtonProps();
+  
+  return (
+    <Component 
+      {...fullscreenButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || 'Fullscreen'}
+    </Component>
+  );
+}) as PolymorphicForwardRefExoticComponent<'button', { children?: React.ReactNode }>;
 
-FullscreenButton.displayName = 'ImageViewerHeadless.FullscreenButton';
+(FullscreenButton as any).displayName = 'ImageViewerHeadless.FullscreenButton';
 
 // DownloadButton component props
 export type DownloadButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -433,29 +401,25 @@ export type DownloadButtonProps<C extends React.ElementType> = PolymorphicCompon
 >;
 
 // DownloadButton component
-const DownloadButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: DownloadButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getDownloadButtonProps } = useImageViewerContext();
-    
-    const downloadButtonProps = getDownloadButtonProps();
-    
-    return (
-      <Component 
-        {...downloadButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Download'}
-      </Component>
-    );
-  }
-);
+const DownloadButton = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getDownloadButtonProps } = useImageViewerContext();
+  
+  const downloadButtonProps = getDownloadButtonProps();
+  
+  return (
+    <Component 
+      {...downloadButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || 'Download'}
+    </Component>
+  );
+}) as PolymorphicForwardRefExoticComponent<'button', { children?: React.ReactNode }>;
 
-DownloadButton.displayName = 'ImageViewerHeadless.DownloadButton';
+(DownloadButton as any).displayName = 'ImageViewerHeadless.DownloadButton';
 
 // ResetAllButton component props
 export type ResetAllButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -469,29 +433,25 @@ export type ResetAllButtonProps<C extends React.ElementType> = PolymorphicCompon
 >;
 
 // ResetAllButton component
-const ResetAllButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: ResetAllButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getResetAllButtonProps } = useImageViewerContext();
-    
-    const resetAllButtonProps = getResetAllButtonProps();
-    
-    return (
-      <Component 
-        {...resetAllButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Reset'}
-      </Component>
-    );
-  }
-);
+const ResetAllButton = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getResetAllButtonProps } = useImageViewerContext();
+  
+  const resetAllButtonProps = getResetAllButtonProps();
+  
+  return (
+    <Component 
+      {...resetAllButtonProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || 'Reset All'}
+    </Component>
+  );
+}) as PolymorphicForwardRefExoticComponent<'button', { children?: React.ReactNode }>;
 
-ResetAllButton.displayName = 'ImageViewerHeadless.ResetAllButton';
+(ResetAllButton as any).displayName = 'ImageViewerHeadless.ResetAllButton';
 
 // ZoomIndicator component props
 export type ZoomIndicatorProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -505,28 +465,22 @@ export type ZoomIndicatorProps<C extends React.ElementType> = PolymorphicCompone
 >;
 
 // ZoomIndicator component
-const ZoomIndicator = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ZoomIndicatorProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { zoom } = useImageViewerContext();
-    
-    const zoomPercentage = Math.round(zoom * 100);
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children || `${zoomPercentage}%`}
-      </Component>
-    );
-  }
-);
+const ZoomIndicator = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { zoom } = useImageViewerContext();
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || `${Math.round(zoom * 100)}%`}
+    </Component>
+  );
+}) as PolymorphicForwardRefExoticComponent<'div', { children?: React.ReactNode }>;
 
-ZoomIndicator.displayName = 'ImageViewerHeadless.ZoomIndicator';
+(ZoomIndicator as any).displayName = 'ImageViewerHeadless.ZoomIndicator';
 
 // RotationIndicator component props
 export type RotationIndicatorProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -540,26 +494,22 @@ export type RotationIndicatorProps<C extends React.ElementType> = PolymorphicCom
 >;
 
 // RotationIndicator component
-const RotationIndicator = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: RotationIndicatorProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { rotation } = useImageViewerContext();
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children || `${rotation}°`}
-      </Component>
-    );
-  }
-);
+const RotationIndicator = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { rotation } = useImageViewerContext();
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || `${rotation}°`}
+    </Component>
+  );
+}) as PolymorphicForwardRefExoticComponent<'div', { children?: React.ReactNode }>;
 
-RotationIndicator.displayName = 'ImageViewerHeadless.RotationIndicator';
+(RotationIndicator as any).displayName = 'ImageViewerHeadless.RotationIndicator';
 
 // LoadingIndicator component props
 export type LoadingIndicatorProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -573,30 +523,24 @@ export type LoadingIndicatorProps<C extends React.ElementType> = PolymorphicComp
 >;
 
 // LoadingIndicator component
-const LoadingIndicator = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: LoadingIndicatorProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { isLoading } = useImageViewerContext();
-    
-    if (!isLoading) {
-      return null;
-    }
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Loading...'}
-      </Component>
-    );
-  }
-);
+const LoadingIndicator = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { isLoading } = useImageViewerContext();
+  
+  if (!isLoading) return null;
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || 'Loading...'}
+    </Component>
+  );
+}) as PolymorphicForwardRefExoticComponent<'div', { children?: React.ReactNode }>;
 
-LoadingIndicator.displayName = 'ImageViewerHeadless.LoadingIndicator';
+(LoadingIndicator as any).displayName = 'ImageViewerHeadless.LoadingIndicator';
 
 // ErrorIndicator component props
 export type ErrorIndicatorProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -610,30 +554,24 @@ export type ErrorIndicatorProps<C extends React.ElementType> = PolymorphicCompon
 >;
 
 // ErrorIndicator component
-const ErrorIndicator = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ErrorIndicatorProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { hasError } = useImageViewerContext();
-    
-    if (!hasError) {
-      return null;
-    }
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children || 'Failed to load image'}
-      </Component>
-    );
-  }
-);
+const ErrorIndicator = forwardRef<any, any>((props, ref) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { hasError, error } = useImageViewerContext();
+  
+  if (!hasError) return null;
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      {children || error}
+    </Component>
+  );
+}) as PolymorphicForwardRefExoticComponent<'div', { children?: React.ReactNode }>;
 
-ErrorIndicator.displayName = 'ImageViewerHeadless.ErrorIndicator';
+(ErrorIndicator as any).displayName = 'ImageViewerHeadless.ErrorIndicator';
 
 // Export all components
 export const ImageViewerHeadless = {

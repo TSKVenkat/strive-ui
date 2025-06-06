@@ -59,7 +59,7 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
+const Container = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: ContainerProps<C>,
     ref: PolymorphicRef<C>
@@ -115,7 +115,7 @@ export type ItemProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Item component
-const Item = forwardRef(
+const Item = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { 
       as, 
@@ -237,7 +237,7 @@ export type TextProps<C extends React.ElementType> = PolymorphicComponentPropsWi
 >;
 
 // Text component
-const Text = forwardRef(
+const Text = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { 
       as, 
@@ -298,7 +298,7 @@ export type CircleProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Circle component
-const Circle = forwardRef(
+const Circle = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { 
       as, 
@@ -344,7 +344,7 @@ export type RectangleProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Rectangle component
-const Rectangle = forwardRef(
+const Rectangle = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { 
       as, 
@@ -394,7 +394,7 @@ export type RoundedProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Rounded component
-const Rounded = forwardRef(
+const Rounded = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { 
       as, 

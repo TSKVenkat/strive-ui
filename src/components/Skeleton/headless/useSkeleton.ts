@@ -50,11 +50,11 @@ export interface UseSkeletonReturn {
   /**
    * Width of the skeleton
    */
-  width: string | number;
+  width: string | number | undefined;
   /**
    * Height of the skeleton
    */
-  height: string | number;
+  height: string | number | undefined;
   /**
    * Whether the skeleton is visible
    */
@@ -66,7 +66,7 @@ export interface UseSkeletonReturn {
   /**
    * Border radius of the skeleton
    */
-  borderRadius: string | number;
+  borderRadius: string | number | undefined;
   /**
    * Number of lines for text variant
    */

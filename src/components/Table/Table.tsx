@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { TableHeadless, TableColumn } from './TableHeadless';
+import TableHeadless, { useTableContext } from './TableHeadless';
+import { TableColumn } from './hooks/useTable';
 import { Box } from '../Box/Box';
 import { Icon } from '../Icon/Icon';
 
@@ -390,28 +391,27 @@ export function Table<T extends object = any>({
   };
   
   return (
-    <TableHeadless.Root
-      data={data}
-      columns={enhancedColumns}
-      initialState={{
-        pageSize: defaultPageSize,
-      }}
-      onRowClick={onRowClick}
-      onRowSelect={onSelectionChange}
-      onRowExpand={onExpandChange}
-      onSort={onSortChange}
-      onPageChange={onPageChange}
-      onPageSizeChange={onPageSizeChange}
-      onFilterChange={onFilterChange}
-      disableSelection={!selectable}
-      disableExpanding={!expandable}
-      disablePagination={!pagination}
-      disableFilters={!filterable}
-      disableSortBy={!sortable}
-      disableColumnHiding={!toggleableColumns}
-      className={className}
-      style={style}
-    >
+    <div className={className} style={style}>
+      <TableHeadless.Root
+        data={data}
+        columns={enhancedColumns}
+        initialState={{
+          pageSize: defaultPageSize,
+        }}
+        onRowClick={onRowClick}
+        onRowSelect={onSelectionChange}
+        onRowExpand={onExpandChange}
+        onSort={onSortChange}
+        onPageChange={onPageChange}
+        onPageSizeChange={onPageSizeChange}
+        onFilterChange={onFilterChange}
+        disableSelection={!selectable}
+        disableExpanding={!expandable}
+        disablePagination={!pagination}
+        disableFilters={!filterable}
+        disableSortBy={!sortable}
+        disableColumnHiding={!toggleableColumns}
+      >
       <TableContainer>
         <StyledTable>
           <StyledHeader>
@@ -447,6 +447,7 @@ export function Table<T extends object = any>({
                   <td key={column.id}>
                     <StyledFilter
                       column={column}
+                      className=""
                       placeholder={`Filter ${String(column.header)}...`}
                     />
                   </td>
@@ -459,7 +460,8 @@ export function Table<T extends object = any>({
             <TableHeadless.Empty message={emptyMessage} />
             
             {data.map((row, rowIndex) => {
-              const { selected, expanded } = TableHeadless.useTableContext<T>().getRowProps(row, rowIndex);
+              const table = useTableContext<T>();
+              const { selected, expanded } = table.getRowProps(row, rowIndex);
               
               const RowComponent = selected ? StyledSelectedRow : expanded ? StyledExpandedRow : StyledRow;
               
@@ -535,7 +537,8 @@ export function Table<T extends object = any>({
           pageSizeLabel="Rows per page:"
         />
       )}
-    </TableHeadless.Root>
+      </TableHeadless.Root>
+    </div>
   );
 }
 

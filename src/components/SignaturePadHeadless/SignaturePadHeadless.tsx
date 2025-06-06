@@ -1,8 +1,9 @@
-import React, { createContext, useContext, forwardRef } from 'react';
+import React, { createContext, useContext, forwardRef, useCallback } from 'react';
 import { useSignaturePad, UseSignaturePadReturn, Stroke } from './useSignaturePad';
+import { mergeRefs } from 'react-merge-refs';
 
 // Define the props for the SignaturePad component
-export interface SignaturePadProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface SignaturePadProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /**
    * Default strokes (uncontrolled)
    */
@@ -171,9 +172,9 @@ export interface SignaturePadCanvasProps extends React.CanvasHTMLAttributes<HTML
 export const SignaturePadCanvas = forwardRef<HTMLCanvasElement, SignaturePadCanvasProps>(
   (props, ref) => {
     const { getCanvasProps } = useSignaturePadContext();
-    const canvasProps = getCanvasProps({ ...props, ref });
+    const canvasProps = getCanvasProps({ ...props });
 
-    return <canvas {...canvasProps} />;
+    return <canvas {...canvasProps} ref={ref} />;
   }
 );
 
@@ -185,10 +186,10 @@ export interface SignaturePadClearButtonProps extends React.ButtonHTMLAttributes
 export const SignaturePadClearButton = forwardRef<HTMLButtonElement, SignaturePadClearButtonProps>(
   (props, ref) => {
     const { getClearButtonProps } = useSignaturePadContext();
-    const clearButtonProps = getClearButtonProps({ ...props, ref });
+    const clearButtonProps = getClearButtonProps({ ...props });
 
     return (
-      <button {...clearButtonProps}>
+      <button {...clearButtonProps} ref={ref}>
         {props.children || 'Clear'}
       </button>
     );
@@ -203,10 +204,10 @@ export interface SignaturePadUndoButtonProps extends React.ButtonHTMLAttributes<
 export const SignaturePadUndoButton = forwardRef<HTMLButtonElement, SignaturePadUndoButtonProps>(
   (props, ref) => {
     const { getUndoButtonProps } = useSignaturePadContext();
-    const undoButtonProps = getUndoButtonProps({ ...props, ref });
+    const undoButtonProps = getUndoButtonProps({ ...props });
 
     return (
-      <button {...undoButtonProps}>
+      <button {...undoButtonProps} ref={ref}>
         {props.children || 'Undo'}
       </button>
     );
@@ -216,7 +217,7 @@ export const SignaturePadUndoButton = forwardRef<HTMLButtonElement, SignaturePad
 SignaturePadUndoButton.displayName = 'SignaturePad.UndoButton';
 
 // Save button component
-export interface SignaturePadSaveButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface SignaturePadSaveButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
   /**
    * Type of the image
    */
@@ -230,10 +231,10 @@ export interface SignaturePadSaveButtonProps extends React.ButtonHTMLAttributes<
 export const SignaturePadSaveButton = forwardRef<HTMLButtonElement, SignaturePadSaveButtonProps>(
   ({ type, encoderOptions, ...props }, ref) => {
     const { getSaveButtonProps } = useSignaturePadContext();
-    const saveButtonProps = getSaveButtonProps({ ...props, ref }, type, encoderOptions);
+    const saveButtonProps = getSaveButtonProps({ ...props }, type, encoderOptions);
 
     return (
-      <button {...saveButtonProps}>
+      <button {...saveButtonProps} ref={ref}>
         {props.children || 'Save'}
       </button>
     );

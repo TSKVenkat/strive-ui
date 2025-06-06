@@ -244,18 +244,18 @@ export const MobileLayout = forwardRef<HTMLDivElement, MobileLayoutProps>(
     useEffect(() => {
       if (!hideAddressBar) return;
       
-      const hideAddressBar = () => {
+      const hideAddressBarHandler = () => {
         if (document.documentElement.scrollHeight > window.innerHeight) {
           setTimeout(() => window.scrollTo(0, 1), 0);
         }
       };
       
-      window.addEventListener('load', hideAddressBar);
-      window.addEventListener('orientationchange', hideAddressBar);
+      window.addEventListener('load', hideAddressBarHandler);
+      window.addEventListener('orientationchange', hideAddressBarHandler);
       
       return () => {
-        window.removeEventListener('load', hideAddressBar);
-        window.removeEventListener('orientationchange', hideAddressBar);
+        window.removeEventListener('load', hideAddressBarHandler);
+        window.removeEventListener('orientationchange', hideAddressBarHandler);
       };
     }, [hideAddressBar]);
     
@@ -288,7 +288,7 @@ export const MobileLayout = forwardRef<HTMLDivElement, MobileLayoutProps>(
     useEffect(() => {
       if (!preventOverscroll) return;
       
-      const preventOverscroll = (e: TouchEvent) => {
+      const preventOverscrollHandler = (e: TouchEvent) => {
         e.preventDefault();
       };
       
@@ -297,7 +297,7 @@ export const MobileLayout = forwardRef<HTMLDivElement, MobileLayoutProps>(
       document.body.style.width = '100%';
       document.body.style.height = '100%';
       
-      document.addEventListener('touchmove', preventOverscroll, { passive: false });
+      document.addEventListener('touchmove', preventOverscrollHandler, { passive: false });
       
       return () => {
         document.body.style.overflow = '';
@@ -305,7 +305,7 @@ export const MobileLayout = forwardRef<HTMLDivElement, MobileLayoutProps>(
         document.body.style.width = '';
         document.body.style.height = '';
         
-        document.removeEventListener('touchmove', preventOverscroll);
+        document.removeEventListener('touchmove', preventOverscrollHandler);
       };
     }, [preventOverscroll]);
     

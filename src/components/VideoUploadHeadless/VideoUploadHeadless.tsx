@@ -2,7 +2,7 @@ import React, { createContext, useContext, forwardRef } from 'react';
 import { useVideoUpload, UseVideoUploadReturn, VideoFile } from './useVideoUpload';
 
 // Define the props for the VideoUpload component
-export interface VideoUploadProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface VideoUploadProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /**
    * Default files (uncontrolled)
    */
@@ -261,9 +261,9 @@ export interface VideoUploadInputProps extends React.InputHTMLAttributes<HTMLInp
 export const VideoUploadInput = forwardRef<HTMLInputElement, VideoUploadInputProps>(
   (props, ref) => {
     const { getInputProps } = useVideoUploadContext();
-    const inputProps = getInputProps({ ...props, ref });
+    const inputProps = getInputProps(props);
 
-    return <input {...inputProps} />;
+          return <input {...inputProps} ref={ref} />;
   }
 );
 
@@ -277,10 +277,10 @@ export interface VideoUploadDropZoneProps extends React.HTMLAttributes<HTMLDivEl
 export const VideoUploadDropZone = forwardRef<HTMLDivElement, VideoUploadDropZoneProps>(
   ({ children, ...props }, ref) => {
     const { getDropZoneProps, disabled, readOnly } = useVideoUploadContext();
-    const dropZoneProps = getDropZoneProps({ ...props, ref });
+    const dropZoneProps = getDropZoneProps(props);
 
     return (
-      <div {...dropZoneProps}>
+      <div {...dropZoneProps} ref={ref}>
         {children || (
           <div>
             <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
@@ -303,7 +303,7 @@ export const VideoUploadDropZone = forwardRef<HTMLDivElement, VideoUploadDropZon
 VideoUploadDropZone.displayName = 'VideoUpload.DropZone';
 
 // Preview component
-export interface VideoUploadPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface VideoUploadPreviewProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   children?: ((context: VideoUploadContextValue) => React.ReactNode) | React.ReactNode;
 }
 

@@ -104,6 +104,10 @@ export interface UseMediaCaptureReturn {
    */
   error: Error | null;
   /**
+   * Type of media being captured
+   */
+  mediaType: MediaType;
+  /**
    * Start media stream
    */
   startStream: () => Promise<void>;
@@ -657,6 +661,7 @@ export function useMediaCapture(options: MediaCaptureOptions = {}): UseMediaCapt
     recordingTime,
     isProcessing,
     error,
+    mediaType,
     startStream,
     stopStream,
     startRecording,

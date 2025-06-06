@@ -6,7 +6,7 @@ import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../../types
 // Context for the DynamicFormGenerator
 interface DynamicFormContextValue<T extends FieldValues = any> extends UseDynamicFormReturn<T> {}
 
-const DynamicFormContext = createContext<DynamicFormContextValue | null>(null);
+const DynamicFormContext = createContext<DynamicFormContextValue<any> | null>(null);
 
 // Hook to use DynamicForm context
 export function useDynamicFormContext<T extends FieldValues = any>() {
@@ -43,7 +43,7 @@ const Root = <T extends FieldValues = any>({
   const dynamicForm = useDynamicForm<T>(config);
   
   return (
-    <DynamicFormContext.Provider value={dynamicForm}>
+    <DynamicFormContext.Provider value={dynamicForm as any}>
       <div className={className} style={style}>
         {children}
       </div>
@@ -80,7 +80,7 @@ export type FormProps<C extends React.ElementType, T extends FieldValues = any> 
 
 // Form component
 const Form = forwardRef(
-  <C extends React.ElementType = 'form', T extends FieldValues = any>(
+  (
     {
       as,
       onSubmit,
@@ -89,11 +89,11 @@ const Form = forwardRef(
       style,
       children,
       ...props
-    }: FormProps<C, T>,
-    ref: PolymorphicRef<C>
+    }: any,
+    ref: any
   ) => {
     const Component = as || 'form';
-    const { handleSubmit } = useDynamicFormContext<T>();
+    const { handleSubmit } = useDynamicFormContext();
     
     return (
       <Component
@@ -107,7 +107,7 @@ const Form = forwardRef(
       </Component>
     );
   }
-);
+) as any;
 
 // Fields container props
 export type FieldsContainerProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -138,7 +138,7 @@ export type FieldsContainerProps<C extends React.ElementType> = PolymorphicCompo
 
 // Fields container component
 const FieldsContainer = forwardRef(
-  <C extends React.ElementType = 'div'>(
+  (
     {
       as,
       className,
@@ -147,8 +147,8 @@ const FieldsContainer = forwardRef(
       filter,
       groupId,
       ...props
-    }: FieldsContainerProps<C>,
-    ref: PolymorphicRef<C>
+    }: any,
+    ref: any
   ) => {
     const Component = as || 'div';
     const { visibleFields } = useDynamicFormContext();
@@ -157,7 +157,7 @@ const FieldsContainer = forwardRef(
     let fieldsToRender = visibleFields;
     
     if (groupId) {
-      fieldsToRender = fieldsToRender.filter((field) => field.group === groupId);
+      fieldsToRender = fieldsToRender.filter((field: any) => field.group === groupId);
     }
     
     if (filter) {
@@ -165,7 +165,7 @@ const FieldsContainer = forwardRef(
     }
     
     // Sort fields by order if specified
-    fieldsToRender = [...fieldsToRender].sort((a, b) => {
+    fieldsToRender = [...fieldsToRender].sort((a: any, b: any) => {
       if (a.order !== undefined && b.order !== undefined) {
         return a.order - b.order;
       }
@@ -185,7 +185,7 @@ const FieldsContainer = forwardRef(
         style={style}
         {...props}
       >
-        {fieldsToRender.map((field, index) => (
+        {fieldsToRender.map((field: any, index: number) => (
           renderField ? (
             renderField(field, index)
           ) : (
@@ -195,7 +195,7 @@ const FieldsContainer = forwardRef(
       </Component>
     );
   }
-);
+) as any;
 
 // Field props
 export interface FieldProps<T extends FieldValues = any> {
@@ -268,7 +268,8 @@ const Field = <T extends FieldValues = any>({
         
         // Use custom render function if provided
         if (render) {
-          return render(fieldConfig, fieldProps);
+          const result = render(fieldConfig, fieldProps);
+          return result as React.ReactElement;
         }
         
         // Use custom component if provided
@@ -381,31 +382,21 @@ export type ActionsProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Actions component
-const Actions = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
-      as,
-      className,
-      style,
-      children,
-      ...props
-    }: ActionsProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component
-        ref={ref}
-        className={className}
-        style={style}
-        {...props}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const Actions = forwardRef((props: any, ref: any) => {
+  const { as, className, style, children, ...restProps } = props;
+  const Component = as || 'div';
+  
+  return (
+    <Component
+      ref={ref}
+      className={className}
+      style={style}
+      {...restProps}
+    >
+      {children}
+    </Component>
+  );
+}) as any;
 
 // Submit button props
 export type SubmitButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -427,34 +418,24 @@ export type SubmitButtonProps<C extends React.ElementType> = PolymorphicComponen
 >;
 
 // Submit button component
-const SubmitButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    {
-      as,
-      text = 'Submit',
-      className,
-      style,
-      ...props
-    }: SubmitButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { isSubmitting } = useDynamicFormContext();
-    
-    return (
-      <Component
-        ref={ref}
-        type="submit"
-        disabled={isSubmitting}
-        className={className}
-        style={style}
-        {...props}
-      >
-        {isSubmitting ? 'Submitting...' : text}
-      </Component>
-    );
-  }
-);
+const SubmitButton = forwardRef((props: any, ref: any) => {
+  const { as, text = 'Submit', className, style, ...restProps } = props;
+  const Component = as || 'button';
+  const { isSubmitting } = useDynamicFormContext();
+  
+  return (
+    <Component
+      ref={ref}
+      type="submit"
+      disabled={isSubmitting}
+      className={className}
+      style={style}
+      {...restProps}
+    >
+      {isSubmitting ? 'Submitting...' : text}
+    </Component>
+  );
+}) as any;
 
 // Reset button props
 export type ResetButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -476,34 +457,24 @@ export type ResetButtonProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // Reset button component
-const ResetButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    {
-      as,
-      text = 'Reset',
-      className,
-      style,
-      ...props
-    }: ResetButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { reset } = useDynamicFormContext();
-    
-    return (
-      <Component
-        ref={ref}
-        type="button"
-        onClick={() => reset()}
-        className={className}
-        style={style}
-        {...props}
-      >
-        {text}
-      </Component>
-    );
-  }
-);
+const ResetButton = forwardRef((props: any, ref: any) => {
+  const { as, text = 'Reset', className, style, ...restProps } = props;
+  const Component = as || 'button';
+  const { reset } = useDynamicFormContext();
+  
+  return (
+    <Component
+      ref={ref}
+      type="button"
+      onClick={() => reset()}
+      className={className}
+      style={style}
+      {...restProps}
+    >
+      {text}
+    </Component>
+  );
+}) as any;
 
 // Error summary props
 export type ErrorSummaryProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -525,17 +496,14 @@ export type ErrorSummaryProps<C extends React.ElementType> = PolymorphicComponen
 >;
 
 // Error summary component
-const ErrorSummary = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    {
-      as,
-      title = 'Please fix the following errors:',
-      className,
-      style,
-      ...props
-    }: ErrorSummaryProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const ErrorSummary = forwardRef((props: any, ref: any) => {
+  const {
+    as,
+    title = 'Please fix the following errors:',
+    className,
+    style,
+    ...restProps
+  } = props;
     const Component = as || 'div';
     const { errors, fields } = useDynamicFormContext();
     
@@ -555,11 +523,11 @@ const ErrorSummary = forwardRef(
       return Object.entries(obj).reduce((acc: Array<{ field: string; message: string }>, [key, value]) => {
         const fieldKey = prefix ? `${prefix}.${key}` : key;
         
-        if (value && typeof value === 'object' && !value.message) {
-          return [...acc, ...flattenErrors(value, fieldKey)];
+        if (value && typeof value === 'object' && !(value as any).message) {
+          return [...acc, ...flattenErrors(value as any, fieldKey)];
         }
         
-        return [...acc, { field: fieldKey, message: value.message }];
+        return [...acc, { field: fieldKey, message: (value as any).message || String(value) }];
       }, []);
     };
     
@@ -574,7 +542,7 @@ const ErrorSummary = forwardRef(
           marginBottom: '1rem',
           ...style,
         }}
-        {...props}
+        {...restProps}
       >
         <h4>{title}</h4>
         <ul>
@@ -586,8 +554,7 @@ const ErrorSummary = forwardRef(
         </ul>
       </Component>
     );
-  }
-);
+}) as any;
 
 // Debug props
 export type DebugProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -605,57 +572,48 @@ export type DebugProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Debug component
-const Debug = forwardRef(
-  <C extends React.ElementType = 'pre'>(
-    {
-      as,
-      className,
-      style,
-      ...props
-    }: DebugProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'pre';
-    const { getValues, errors, isValid, isDirty, isSubmitting } = useDynamicFormContext();
-    
-    return (
-      <Component
-        ref={ref}
-        className={className}
-        style={{
-          backgroundColor: '#f5f5f5',
-          padding: '1rem',
-          borderRadius: '4px',
-          overflow: 'auto',
-          fontSize: '0.875rem',
-          ...style,
-        }}
-        {...props}
-      >
+const Debug = forwardRef((props: any, ref: any) => {
+  const { as, className, style, ...restProps } = props;
+  const Component = as || 'pre';
+  const { getValues, errors, isValid, isDirty, isSubmitting } = useDynamicFormContext();
+  
+  return (
+    <Component
+      ref={ref}
+      className={className}
+      style={{
+        backgroundColor: '#f5f5f5',
+        padding: '1rem',
+        borderRadius: '4px',
+        overflow: 'auto',
+        fontSize: '0.875rem',
+        ...style,
+      }}
+      {...restProps}
+    >
+      <div>
+        <strong>Form State:</strong>
+        <ul>
+          <li>Valid: {isValid ? 'Yes' : 'No'}</li>
+          <li>Dirty: {isDirty ? 'Yes' : 'No'}</li>
+          <li>Submitting: {isSubmitting ? 'Yes' : 'No'}</li>
+        </ul>
+      </div>
+      
+      <div>
+        <strong>Values:</strong>
+        <div>{JSON.stringify(getValues(), null, 2)}</div>
+      </div>
+      
+      {Object.keys(errors).length > 0 && (
         <div>
-          <strong>Form State:</strong>
-          <ul>
-            <li>Valid: {isValid ? 'Yes' : 'No'}</li>
-            <li>Dirty: {isDirty ? 'Yes' : 'No'}</li>
-            <li>Submitting: {isSubmitting ? 'Yes' : 'No'}</li>
-          </ul>
+          <strong>Errors:</strong>
+          <div>{JSON.stringify(errors, null, 2)}</div>
         </div>
-        
-        <div>
-          <strong>Values:</strong>
-          <div>{JSON.stringify(getValues(), null, 2)}</div>
-        </div>
-        
-        {Object.keys(errors).length > 0 && (
-          <div>
-            <strong>Errors:</strong>
-            <div>{JSON.stringify(errors, null, 2)}</div>
-          </div>
-        )}
-      </Component>
-    );
-  }
-);
+      )}
+    </Component>
+  );
+}) as any;
 
 // Export all components
 export const DynamicFormGeneratorHeadless = {

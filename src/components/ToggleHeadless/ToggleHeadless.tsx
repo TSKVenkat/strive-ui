@@ -2,7 +2,7 @@ import React, { createContext, useContext, forwardRef } from 'react';
 import { useToggle, UseToggleReturn } from './useToggle';
 
 // Define the props for the Toggle component
-export interface ToggleProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ToggleProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onChange'> {
   /**
    * Default toggle state (uncontrolled)
    */
@@ -95,11 +95,11 @@ export const ToggleRoot = forwardRef<HTMLButtonElement, ToggleProps>(
     });
 
     // Get toggle props
-    const toggleProps = toggle.getToggleProps({ ...props, ref });
+    const toggleProps = toggle.getToggleProps({ ...props });
 
     return (
       <ToggleContext.Provider value={toggle}>
-        <button {...toggleProps}>
+        <button {...toggleProps} ref={ref}>
           {children || (
             <>
               <ToggleTrack>
@@ -123,9 +123,9 @@ export interface ToggleLabelProps extends React.LabelHTMLAttributes<HTMLLabelEle
 export const ToggleLabel = forwardRef<HTMLLabelElement, ToggleLabelProps>(
   ({ children, ...props }, ref) => {
     const { getLabelProps } = useToggleContext();
-    const labelProps = getLabelProps({ ...props, ref });
+    const labelProps = getLabelProps({ ...props });
 
-    return <label {...labelProps}>{children}</label>;
+    return <label {...labelProps} ref={ref}>{children}</label>;
   }
 );
 
@@ -139,9 +139,9 @@ export interface ToggleTrackProps extends React.HTMLAttributes<HTMLDivElement> {
 export const ToggleTrack = forwardRef<HTMLDivElement, ToggleTrackProps>(
   ({ children, ...props }, ref) => {
     const { getTrackProps } = useToggleContext();
-    const trackProps = getTrackProps({ ...props, ref });
+    const trackProps = getTrackProps({ ...props });
 
-    return <div {...trackProps}>{children}</div>;
+    return <div {...trackProps} ref={ref}>{children}</div>;
   }
 );
 
@@ -155,9 +155,9 @@ export interface ToggleThumbProps extends React.HTMLAttributes<HTMLDivElement> {
 export const ToggleThumb = forwardRef<HTMLDivElement, ToggleThumbProps>(
   ({ children, ...props }, ref) => {
     const { getThumbProps } = useToggleContext();
-    const thumbProps = getThumbProps({ ...props, ref });
+    const thumbProps = getThumbProps({ ...props });
 
-    return <div {...thumbProps}>{children}</div>;
+    return <div {...thumbProps} ref={ref}>{children}</div>;
   }
 );
 

@@ -195,27 +195,27 @@ export interface UseTagInputReturn {
    * Get props for the tag input container element
    */
   getContainerProps: <E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ) => React.HTMLAttributes<E> & { ref: React.RefCallback<E> };
   /**
    * Get props for the input element
    */
   getInputProps: <E extends HTMLInputElement = HTMLInputElement>(
-    props?: React.InputHTMLAttributes<E>
-  ) => React.InputHTMLAttributes<E>;
+    props?: React.InputHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ) => React.InputHTMLAttributes<E> & { ref: React.RefCallback<E> };
   /**
    * Get props for a tag element
    */
   getTagProps: <E extends HTMLDivElement = HTMLDivElement>(
     tagOrIndex: Tag | number,
-    props?: React.HTMLAttributes<E>
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
   ) => React.HTMLAttributes<E>;
   /**
    * Get props for a tag remove button
    */
   getTagRemoveProps: <E extends HTMLButtonElement = HTMLButtonElement>(
     tagOrIndex: Tag | number,
-    props?: React.ButtonHTMLAttributes<E>
+    props?: React.ButtonHTMLAttributes<E> & { ref?: React.Ref<E> }
   ) => React.ButtonHTMLAttributes<E>;
 }
 
@@ -324,6 +324,20 @@ export function useTagInput({
     
     return transformedValue;
   }, [transformTag]);
+  
+  // Focus the input
+  const focus = useCallback(() => {
+    if (inputRef.current && !disabled) {
+      inputRef.current.focus();
+    }
+  }, [disabled]);
+  
+  // Blur the input
+  const blur = useCallback(() => {
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
+  }, []);
   
   // Add a tag
   const addTag = useCallback((value: string): boolean => {
@@ -441,20 +455,6 @@ export function useTagInput({
     // Focus the input
     focus();
   }, [disabled, readOnly, controlledTags, onChange, focus]);
-  
-  // Focus the input
-  const focus = useCallback(() => {
-    if (inputRef.current && !disabled) {
-      inputRef.current.focus();
-    }
-  }, [disabled]);
-  
-  // Blur the input
-  const blur = useCallback(() => {
-    if (inputRef.current) {
-      inputRef.current.blur();
-    }
-  }, []);
   
   // Handle input focus
   const handleFocus = useCallback((event: React.FocusEvent<HTMLInputElement>) => {
@@ -617,8 +617,8 @@ export function useTagInput({
   
   // Get props for the tag input container element
   const getContainerProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.HTMLAttributes<E> & { ref: React.RefCallback<E> } => {
     return {
       ...props,
       ref: mergeRefs(containerRef, props?.ref),
@@ -633,11 +633,11 @@ export function useTagInput({
         }
         props?.onClick?.(event as any);
       },
-      'data-disabled': disabled ? '' : undefined,
-      'data-readonly': readOnly ? '' : undefined,
-      'data-required': required ? '' : undefined,
-      'data-focused': focused ? '' : undefined,
-      'data-empty': tags.length === 0 ? '' : undefined,
+      ...(disabled && { 'data-disabled': '' }),
+      ...(readOnly && { 'data-readonly': '' }),
+      ...(required && { 'data-required': '' }),
+      ...(focused && { 'data-focused': '' }),
+      ...(tags.length === 0 && { 'data-empty': '' }),
     };
   }, [
     tagInputId, 
@@ -651,8 +651,8 @@ export function useTagInput({
   
   // Get props for the input element
   const getInputProps = useCallback(<E extends HTMLInputElement = HTMLInputElement>(
-    props?: React.InputHTMLAttributes<E>
-  ): React.InputHTMLAttributes<E> => {
+    props?: React.InputHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.InputHTMLAttributes<E> & { ref: React.RefCallback<E> } => {
     return {
       ...props,
       ref: mergeRefs(inputRef, props?.ref),
@@ -684,10 +684,10 @@ export function useTagInput({
         props?.onPaste?.(event);
       },
       'aria-autocomplete': 'list',
-      'data-disabled': disabled ? '' : undefined,
-      'data-readonly': readOnly ? '' : undefined,
-      'data-required': required ? '' : undefined,
-      'data-focused': focused ? '' : undefined,
+      ...(disabled && { 'data-disabled': '' }),
+      ...(readOnly && { 'data-readonly': '' }),
+      ...(required && { 'data-required': '' }),
+      ...(focused && { 'data-focused': '' }),
     };
   }, [
     tagInputId, 
@@ -709,7 +709,7 @@ export function useTagInput({
   // Get props for a tag element
   const getTagProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     tagOrIndex: Tag | number,
-    props?: React.HTMLAttributes<E>
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
   ): React.HTMLAttributes<E> => {
     // Get the tag and index
     const tag = typeof tagOrIndex === 'number' ? tags[tagOrIndex] : tagOrIndex;
@@ -738,15 +738,15 @@ export function useTagInput({
         setFocusedTagIndex(-1);
         props?.onBlur?.(event);
       },
-      'data-disabled': tag.disabled ? '' : undefined,
-      'data-focused': focusedTagIndex === index ? '' : undefined,
-    };
+      ...(tag.disabled && { 'data-disabled': '' }),
+      ...(focusedTagIndex === index && { 'data-focused': '' }),
+    } as React.HTMLAttributes<E>;
   }, [tagInputId, tags, focusedTagIndex, handleTagKeyDown]);
   
   // Get props for a tag remove button
   const getTagRemoveProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
     tagOrIndex: Tag | number,
-    props?: React.ButtonHTMLAttributes<E>
+    props?: React.ButtonHTMLAttributes<E> & { ref?: React.Ref<E> }
   ): React.ButtonHTMLAttributes<E> => {
     // Get the tag and index
     const tag = typeof tagOrIndex === 'number' ? tags[tagOrIndex] : tagOrIndex;
@@ -775,8 +775,8 @@ export function useTagInput({
         }
         props?.onKeyDown?.(event);
       },
-      'data-disabled': (disabled || readOnly || tag.disabled) ? '' : undefined,
-    };
+      ...((disabled || readOnly || tag.disabled) && { 'data-disabled': '' }),
+    } as React.ButtonHTMLAttributes<E>;
   }, [tags, disabled, readOnly, removeTag]);
   
   return {

@@ -93,7 +93,7 @@ export interface UseSwitchReturn {
    */
   getInputProps: <E extends HTMLInputElement = HTMLInputElement>(
     props?: React.InputHTMLAttributes<E>
-  ) => React.InputHTMLAttributes<E>;
+  ) => React.InputHTMLAttributes<E> & { ref?: any };
   /**
    * Get props for the label element
    */
@@ -105,13 +105,13 @@ export interface UseSwitchReturn {
    */
   getSwitchProps: <E extends HTMLElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { 'data-state'?: string };
   /**
    * Get props for the thumb element (the moving part of the switch)
    */
   getThumbProps: <E extends HTMLElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { 'data-state'?: string };
 }
 
 /**
@@ -234,11 +234,11 @@ export function useSwitch({
   // Get props for the input element
   const getInputProps = useCallback(<E extends HTMLInputElement = HTMLInputElement>(
     props?: React.InputHTMLAttributes<E>
-  ): React.InputHTMLAttributes<E> => {
+  ): React.InputHTMLAttributes<E> & { ref?: any } => {
     return {
       ...props,
       id: switchId,
-      ref: inputRef as React.RefObject<E>,
+      ref: inputRef as any,
       type: 'checkbox',
       role: 'switch',
       checked,
@@ -252,7 +252,7 @@ export function useSwitch({
       'aria-checked': checked,
       'aria-disabled': disabled || loading ? true : undefined,
       'aria-required': required ? true : undefined,
-    };
+    } as any;
   }, [
     switchId,
     checked,
@@ -290,12 +290,12 @@ export function useSwitch({
   // Get props for the switch element (the visual toggle)
   const getSwitchProps = useCallback(<E extends HTMLElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { 'data-state'?: string } => {
     return {
       ...props,
       role: 'presentation',
       'aria-hidden': true,
-      'data-state': checked ? 'checked' : 'unchecked',
+      'data-state': (checked ? 'checked' : 'unchecked') as any,
       'data-disabled': disabled || loading ? '' : undefined,
       'data-focused': focused ? '' : undefined,
       'data-loading': loading ? '' : undefined,
@@ -312,20 +312,20 @@ export function useSwitch({
         
         props?.onClick?.(event as any);
       },
-    };
+    } as any;
   }, [checked, disabled, focused, loading, size, toggle]);
   
   // Get props for the thumb element (the moving part of the switch)
   const getThumbProps = useCallback(<E extends HTMLElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { 'data-state'?: string } => {
     return {
       ...props,
-      'data-state': checked ? 'checked' : 'unchecked',
+      'data-state': (checked ? 'checked' : 'unchecked') as any,
       'data-disabled': disabled || loading ? '' : undefined,
       'data-loading': loading ? '' : undefined,
       'data-size': size,
-    };
+    } as any;
   }, [checked, disabled, loading, size]);
   
   return {

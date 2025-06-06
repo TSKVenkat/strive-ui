@@ -1,6 +1,8 @@
 export { default as QRCodeScannerHeadless } from './QRCodeScannerHeadless';
 export { 
-  useQRCodeScanner,
+  useQRCodeScanner
+} from './useQRCodeScanner';
+export type {
   UseQRCodeScannerReturn,
   QRCodeScannerOptions,
   QRCodeResult

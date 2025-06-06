@@ -309,11 +309,11 @@ export function useSidebar({
       id: `sidebar-item-${id}`,
       role: 'menuitem',
       tabIndex: isActive ? 0 : -1,
-      'aria-current': isActive ? 'page' : false,
+      'aria-current': (isActive ? 'page' : false) as boolean | 'page' | 'step' | 'location' | 'date' | 'time',
       'aria-disabled': disabled,
       disabled,
       onClick: handleClick,
-      'data-state': isActive ? 'active' : 'inactive',
+      'data-state': (isActive ? 'active' : 'inactive') as 'active' | 'inactive',
     };
   }, [activeItem, setActiveItem]);
 
@@ -337,7 +337,7 @@ export function useSidebar({
       'aria-disabled': disabled,
       disabled,
       onClick: handleClick,
-      'data-state': isExpanded ? 'expanded' : 'collapsed',
+      'data-state': (isExpanded ? 'expanded' : 'collapsed') as 'expanded' | 'collapsed',
     };
   }, [expandedSections, toggleSection]);
 

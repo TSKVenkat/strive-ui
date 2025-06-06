@@ -1,7 +1,9 @@
-export { default as FormWizard, FormWizardProps } from './FormWizard';
 export { default as FormWizardHeadless } from './FormWizardHeadless';
 export { 
-  useFormWizard, 
+  useFormWizard
+} from './useFormWizard';
+export type {
+  FormWizardProps,
   UseFormWizardOptions, 
   UseFormWizardReturn,
   FormWizardStep,
@@ -10,3 +12,4 @@ export {
   FormWizardSize,
   FormWizardTransition
 } from './useFormWizard';
+export { default as FormWizard } from './FormWizard';

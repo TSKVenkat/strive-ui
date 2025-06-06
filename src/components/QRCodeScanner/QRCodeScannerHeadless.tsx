@@ -11,7 +11,7 @@ const QRCodeScannerContext = createContext<QRCodeScannerContextValue | null>(nul
 export function useQRCodeScannerContext() {
   const context = useContext(QRCodeScannerContext);
   if (!context) {
-    throw new Error('useQRCodeScannerContext must be used within a QRCodeScannerHeadless.Root component');
+    throw new globalThis.Error('useQRCodeScannerContext must be used within a QRCodeScannerHeadless.Root component');
   }
   return context;
 }
@@ -53,7 +53,7 @@ export type ScannerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Scanner component
-const Scanner = forwardRef(
+const Scanner = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: ScannerProps<C>,
     ref: PolymorphicRef<C>
@@ -93,7 +93,7 @@ export type ControlsProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Controls component
-const Controls = forwardRef(
+const Controls = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: ControlsProps<C>,
     ref: PolymorphicRef<C>
@@ -128,7 +128,7 @@ export type ResultProps<C extends React.ElementType> = PolymorphicComponentProps
 >;
 
 // Result component
-const Result = forwardRef(
+const Result = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: ResultProps<C>,
     ref: PolymorphicRef<C>
@@ -162,7 +162,7 @@ export type ErrorProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Error component
-const Error = forwardRef(
+const ErrorComponent = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: ErrorProps<C>,
     ref: PolymorphicRef<C>
@@ -184,7 +184,7 @@ const Error = forwardRef(
   }
 );
 
-Error.displayName = 'QRCodeScannerHeadless.Error';
+ErrorComponent.displayName = 'QRCodeScannerHeadless.Error';
 
 // Overlay component props
 export type OverlayProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -200,7 +200,7 @@ export type OverlayProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Overlay component
-const Overlay = forwardRef(
+const Overlay = forwardRef<any, any>(
   <C extends React.ElementType = 'div'>(
     { as, children, ...props }: OverlayProps<C>,
     ref: PolymorphicRef<C>
@@ -238,7 +238,7 @@ export const QRCodeScannerHeadless = {
   Scanner,
   Controls,
   Result,
-  Error,
+  Error: ErrorComponent,
   Overlay,
   useQRCodeScannerContext,
 };

@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import { DynamicFormGenerator } from './DynamicFormGenerator';
 import { DynamicFormGeneratorHeadless } from './DynamicFormGeneratorHeadless';
-import { Box } from '../../Box';
 import { Card } from '../../Card';
-import { Text } from '../../Text';
 import { Button } from '../../Button';
-import { Flex } from '../../Flex';
+
+// Create simple placeholder components for missing ones
+const Box = styled.div``;
+const Text = styled.span``;
+const Flex = styled.div`
+  display: flex;
+`;
 import styled from 'styled-components';
 
 const meta: Meta<typeof DynamicFormGenerator> = {
@@ -406,8 +410,8 @@ export const HeadlessUsage: Story = {
           { name: 'message', type: 'textarea', label: 'Message', helperText: 'Enter your message here' },
         ]}
       >
-        <Card padding="lg">
-          <Text variant="h4" mb={4}>Contact Form</Text>
+        <div style={{ padding: '24px', border: '1px solid #ddd', borderRadius: '8px' }}>
+          <Text style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px', display: 'block' }}>Contact Form</Text>
           
           <DynamicFormGeneratorHeadless.Form
             onSubmit={(data) => {
@@ -455,7 +459,7 @@ export const HeadlessUsage: Story = {
               )}
             />
             
-            <Flex justifyContent="flex-end" mt={4}>
+            <Flex style={{ justifyContent: 'flex-end', marginTop: '16px' }}>
               <DynamicFormGeneratorHeadless.ResetButton
                 as={StyledButton}
                 text="Reset"
@@ -467,7 +471,7 @@ export const HeadlessUsage: Story = {
               />
             </Flex>
           </DynamicFormGeneratorHeadless.Form>
-        </Card>
+        </div>
       </DynamicFormGeneratorHeadless.Root>
     </Box>
   ),

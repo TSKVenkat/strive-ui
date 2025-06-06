@@ -1,5 +1,6 @@
 import React, { forwardRef, createContext, useContext } from 'react';
-import { useSelect, UseSelectProps, UseSelectReturn, SelectOption, SelectGroup } from './useSelect';
+import { useSelect, UseSelectProps, UseSelectReturn } from './useSelect';
+import type { SelectOption, SelectGroup } from './useSelect';
 import { PolymorphicComponentPropsWithRef } from '../../types/polymorphic';
 
 /**
@@ -229,12 +230,14 @@ export const SelectTrigger = forwardRef(function SelectTrigger<C extends React.E
   }: Omit<SelectTriggerProps<C>, 'ref'>,
   ref: React.Ref<any>
 ) {
+  const selectContext = useSelectContext();
   const { 
     getTriggerProps, 
     selectedOption, 
     isOpen,
-    placeholder = 'Select an option',
-  } = useSelectContext();
+  } = selectContext;
+  
+  const placeholder = 'Select an option';
   
   // Get props for the trigger
   const triggerProps = getTriggerProps({
@@ -306,7 +309,7 @@ export const SelectSearch = forwardRef(function SelectSearch<C extends React.Ele
     as, 
     className, 
     style, 
-    placeholder = 'Search...',
+    placeholder: propPlaceholder = 'Search...' as any,
     ...props 
   }: Omit<SelectSearchProps<C>, 'ref'>,
   ref: React.Ref<any>
@@ -317,9 +320,9 @@ export const SelectSearch = forwardRef(function SelectSearch<C extends React.Ele
   const searchInputProps = getSearchInputProps({
     className,
     style,
-    placeholder,
+    placeholder: propPlaceholder,
     ...props,
-  });
+  } as any);
 
   // Use the 'as' prop or default to 'input'
   const ElementType: React.ElementType = as || 'input';

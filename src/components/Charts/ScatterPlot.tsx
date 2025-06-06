@@ -264,7 +264,7 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({
     const yAxisValues = Array.from({ length: yAxisTicks + 1 }, (_, i) => minY + i * yAxisStep);
     
     // Calculate trend line if needed
-    let trendLine = null;
+    let trendLine: { x1: number; y1: number; x2: number; y2: number } | null = null;
     if (showTrendLine && scatterData.length > 1) {
       // Simple linear regression
       let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
@@ -314,7 +314,7 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({
   };
   
   // Handle point hover
-  const handlePointHover = (event: React.MouseEvent, point: ReturnType<typeof calculateChart>['scatterData'][0], chart: ReturnType<typeof calculateChart>) => {
+  const handlePointHover = (event: React.MouseEvent, point: NonNullable<ReturnType<typeof calculateChart>>['scatterData'][0], chart: NonNullable<ReturnType<typeof calculateChart>>) => {
     if (!chart) return;
     
     const { xScale, yScale } = chart;
@@ -503,7 +503,6 @@ export const ScatterPlot: React.FC<ScatterPlotProps> = ({
     <div ref={containerRef} style={{ width: '100%', height: '100%', position: 'relative' }}>
       <Chart
         data={data}
-        type="scatter"
         {...chartProps}
       >
         {renderChart()}

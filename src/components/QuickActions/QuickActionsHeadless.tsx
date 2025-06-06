@@ -299,7 +299,7 @@ export const QuickActionsHeadless = forwardRef(function QuickActionsHeadless<C e
     enableSearch,
     initialSearchQuery,
     onActionTriggered,
-    ariaLabel = 'Quick actions',
+    ariaLabel = 'Quick actions' as any,
     ...props 
   }: Omit<QuickActionsHeadlessProps<C>, 'ref'>,
   ref: React.Ref<any>

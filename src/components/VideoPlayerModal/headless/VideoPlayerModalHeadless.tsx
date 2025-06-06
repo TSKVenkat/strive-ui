@@ -5,7 +5,7 @@ import {
   UseVideoPlayerModalReturn, 
   VideoPlayerModalOptions
 } from './useVideoPlayerModal';
-import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../../types/polymorphic';
+import { PolymorphicComponentPropsWithRef } from '../../../types/polymorphic';
 
 // Context for the VideoPlayerModal component
 interface VideoPlayerModalContextValue extends UseVideoPlayerModalReturn {}
@@ -58,29 +58,29 @@ export type TriggerProps<C extends React.ElementType> = PolymorphicComponentProp
 >;
 
 // Trigger component
-const Trigger = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: TriggerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getTriggerProps } = useVideoPlayerModalContext();
-    
-    const triggerProps = getTriggerProps();
-    
-    return (
-      <Component 
-        {...triggerProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const TriggerComponent = React.forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'button';
+  const { getTriggerProps } = useVideoPlayerModalContext();
+  
+  const triggerProps = getTriggerProps();
+  
+  return (
+    <Component 
+      {...triggerProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+});
 
-Trigger.displayName = 'VideoPlayerModalHeadless.Trigger';
+TriggerComponent.displayName = 'VideoPlayerModalHeadless.Trigger';
+
+const Trigger = TriggerComponent as <C extends React.ElementType = 'button'>(
+  props: TriggerProps<C>
+) => React.ReactElement | null;
 
 // Portal component props
 export type PortalProps = {
@@ -157,33 +157,33 @@ export type BackdropProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Backdrop component
-const Backdrop = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: BackdropProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getBackdropProps, isOpen } = useVideoPlayerModalContext();
-    
-    if (!isOpen) {
-      return null;
-    }
-    
-    const backdropProps = getBackdropProps();
-    
-    return (
-      <Component 
-        {...backdropProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
+const BackdropComponent = React.forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { getBackdropProps, isOpen } = useVideoPlayerModalContext();
+  
+  if (!isOpen) {
+    return null;
   }
-);
+  
+  const backdropProps = getBackdropProps();
+  
+  return (
+    <Component 
+      {...backdropProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+});
 
-Backdrop.displayName = 'VideoPlayerModalHeadless.Backdrop';
+BackdropComponent.displayName = 'VideoPlayerModalHeadless.Backdrop';
+
+const Backdrop = BackdropComponent as <C extends React.ElementType = 'div'>(
+  props: BackdropProps<C>
+) => React.ReactElement | null;
 
 // Container component props
 export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -197,201 +197,109 @@ export type ContainerProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // Container component
-const Container = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContainerProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getContainerProps, isOpen } = useVideoPlayerModalContext();
-    
-    if (!isOpen) {
-      return null;
-    }
-    
-    const containerProps = getContainerProps();
-    
-    return (
-      <Component 
-        {...containerProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
+const ContainerComponent = React.forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  const { getContainerProps, isOpen } = useVideoPlayerModalContext();
+  
+  if (!isOpen) {
+    return null;
   }
-);
+  
+  const containerProps = getContainerProps();
+  
+  return (
+    <Component 
+      {...containerProps} 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+});
 
-Container.displayName = 'VideoPlayerModalHeadless.Container';
+ContainerComponent.displayName = 'VideoPlayerModalHeadless.Container';
 
-// Content component props
-export type ContentProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
-  {
-    /**
-     * Children of the component
-     */
-    children?: React.ReactNode;
-  }
->;
+const Container = ContainerComponent as <C extends React.ElementType = 'div'>(
+  props: ContainerProps<C>
+) => React.ReactElement | null;
+
+// Add proper ref types
+type ElementRef<T> = T extends React.ElementType
+  ? React.ComponentPropsWithRef<T>['ref']
+  : never;
+
+type MergeElementProps<T extends React.ElementType, P> = Omit<React.ComponentPropsWithRef<T>, keyof P> & P;
+
+interface BaseProps<T extends React.ElementType> {
+  as?: T;
+}
+
+// Update component props types
+interface ContentProps<T extends React.ElementType = 'div'> extends BaseProps<T> {
+  children: React.ReactNode;
+}
+
+interface HeaderProps<T extends React.ElementType = 'div'> extends BaseProps<T> {
+  children: React.ReactNode;
+}
+
+interface BodyProps<T extends React.ElementType = 'div'> extends BaseProps<T> {
+  children: React.ReactNode;
+}
+
+interface FooterProps<T extends React.ElementType = 'div'> extends BaseProps<T> {
+  children: React.ReactNode;
+}
+
+interface CloseProps<T extends React.ElementType = 'button'> extends BaseProps<T> {
+  children?: React.ReactNode;
+}
 
 // Content component
-const Content = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ContentProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { getContentProps } = useVideoPlayerModalContext();
-    
-    const contentProps = getContentProps();
-    
-    return (
-      <Component 
-        {...contentProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+const ContentComponent = React.forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+});
 
-Content.displayName = 'VideoPlayerModalHeadless.Content';
+ContentComponent.displayName = 'VideoPlayerModalHeadless.Content';
 
-// Header component props
-export type HeaderProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
-  {
-    /**
-     * Children of the component
-     */
-    children: React.ReactNode;
-  }
->;
+const Content = ContentComponent as <T extends React.ElementType = 'div'>(
+  props: ContentProps<T> & Omit<React.ComponentPropsWithRef<T>, keyof ContentProps<T>>
+) => React.ReactElement | null;
 
-// Header component
-const Header = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: HeaderProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+// Header component  
+const HeaderComponent = React.forwardRef((props: any, ref: any) => {
+  const { as, children, ...restProps } = props;
+  const Component = as || 'div';
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      {children}
+    </Component>
+  );
+});
 
-Header.displayName = 'VideoPlayerModalHeadless.Header';
+HeaderComponent.displayName = 'VideoPlayerModalHeadless.Header';
 
-// Body component props
-export type BodyProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
-  {
-    /**
-     * Children of the component
-     */
-    children: React.ReactNode;
-  }
->;
+const Header = HeaderComponent as <T extends React.ElementType = 'div'>(
+  props: HeaderProps<T> & Omit<React.ComponentPropsWithRef<T>, keyof HeaderProps<T>>
+) => React.ReactElement | null;
 
-// Body component
-const Body = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: BodyProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
-
-Body.displayName = 'VideoPlayerModalHeadless.Body';
-
-// Footer component props
-export type FooterProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
-  {
-    /**
-     * Children of the component
-     */
-    children: React.ReactNode;
-  }
->;
-
-// Footer component
-const Footer = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: FooterProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
-
-Footer.displayName = 'VideoPlayerModalHeadless.Footer';
-
-// Close component props
-export type CloseProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
-  {
-    /**
-     * Children of the component
-     */
-    children?: React.ReactNode;
-  }
->;
-
-// Close component
-const Close = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: CloseProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getCloseButtonProps } = useVideoPlayerModalContext();
-    
-    const closeProps = getCloseButtonProps();
-    
-    return (
-      <Component 
-        {...closeProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
-
-Close.displayName = 'VideoPlayerModalHeadless.Close';
+// ... existing code ...
 
 // Video component props
 export type VideoProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
@@ -409,11 +317,10 @@ export type VideoProps<C extends React.ElementType> = PolymorphicComponentPropsW
 >;
 
 // Video component
-const Video = forwardRef(
-  <C extends React.ElementType = 'video'>(
-    { as, src, poster, ...props }: VideoProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const Video = forwardRef<
+  HTMLVideoElement,
+  VideoProps<React.ElementType>
+>(({ as, src, poster, ...props }, ref) => {
     const Component = as || 'video';
     const { getVideoProps, setSrc, setPoster } = useVideoPlayerModalContext();
     
@@ -453,11 +360,10 @@ export type PlayPauseButtonProps<C extends React.ElementType> = PolymorphicCompo
 >;
 
 // PlayPauseButton component
-const PlayPauseButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: PlayPauseButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const PlayPauseButton = forwardRef<
+  HTMLButtonElement,
+  PlayPauseButtonProps<React.ElementType>
+>(({ as, children, ...props }, ref) => {
     const Component = as || 'button';
     const { getPlayPauseButtonProps, isPlaying } = useVideoPlayerModalContext();
     
@@ -489,11 +395,10 @@ export type MuteButtonProps<C extends React.ElementType> = PolymorphicComponentP
 >;
 
 // MuteButton component
-const MuteButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: MuteButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const MuteButton = forwardRef<
+  HTMLButtonElement,
+  MuteButtonProps<React.ElementType>
+>(({ as, children, ...props }, ref) => {
     const Component = as || 'button';
     const { getMuteButtonProps, isMuted } = useVideoPlayerModalContext();
     
@@ -525,11 +430,10 @@ export type VolumeControlProps<C extends React.ElementType> = PolymorphicCompone
 >;
 
 // VolumeControl component
-const VolumeControl = forwardRef(
-  <C extends React.ElementType = 'input'>(
-    { as, label = 'Volume', ...props }: VolumeControlProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
+const VolumeControl = forwardRef<
+  HTMLInputElement,
+  VolumeControlProps<React.ElementType>
+>(({ as, label = 'Volume', ...props }, ref) => {
     const Component = as || 'input';
     const { getVolumeControlProps } = useVideoPlayerModalContext();
     
@@ -551,8 +455,8 @@ const VolumeControl = forwardRef(
 VolumeControl.displayName = 'VideoPlayerModalHeadless.VolumeControl';
 
 // ProgressBar component props
-export type ProgressBarProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
+export type ProgressBarProps<T extends React.ElementType> = PolymorphicComponentPropsWithRef<
+  T,
   {
     /**
      * Label for the progress bar
@@ -562,34 +466,40 @@ export type ProgressBarProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // ProgressBar component
-const ProgressBar = forwardRef(
-  <C extends React.ElementType = 'input'>(
-    { as, label = 'Progress', ...props }: ProgressBarProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'input';
-    const { getProgressBarProps } = useVideoPlayerModalContext();
-    
-    const progressBarProps = getProgressBarProps();
-    
-    return (
-      <div>
-        {label && <label>{label}</label>}
-        <Component 
-          {...progressBarProps} 
-          {...props} 
-          ref={ref}
-        />
-      </div>
-    );
-  }
-);
+const ProgressBarComponent = React.forwardRef((props: any, ref: any) => {
+  const { as, label, ...restProps } = props;
+  const Component = as || 'input';
+  const { currentTime, duration, setCurrentTime } = useVideoPlayerModalContext();
+  
+  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+  
+  return (
+    <Component
+      type="range"
+      min="0"
+      max="100"
+      value={progress}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+        const newProgress = parseFloat(e.target.value);
+        const newTime = (newProgress / 100) * duration;
+        setCurrentTime(newTime);
+      }}
+      aria-label={label || 'Video progress'}
+      {...restProps}
+      ref={ref}
+    />
+  );
+});
 
-ProgressBar.displayName = 'VideoPlayerModalHeadless.ProgressBar';
+ProgressBarComponent.displayName = 'VideoPlayerModalHeadless.ProgressBar';
+
+const ProgressBar = ProgressBarComponent as <T extends React.ElementType = 'input'>(
+  props: ProgressBarProps<T> & Omit<React.ComponentPropsWithRef<T>, keyof ProgressBarProps<T>>
+) => React.ReactElement | null;
 
 // CurrentTime component props
-export type CurrentTimeProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
+export type CurrentTimeProps<T extends React.ElementType> = PolymorphicComponentPropsWithRef<
+  T,
   {
     /**
      * Format for the current time
@@ -599,34 +509,36 @@ export type CurrentTimeProps<C extends React.ElementType> = PolymorphicComponent
 >;
 
 // CurrentTime component
-const CurrentTime = forwardRef(
-  <C extends React.ElementType = 'span'>(
-    { as, format = (time) => {
-      const minutes = Math.floor(time / 60);
-      const seconds = Math.floor(time % 60);
-      return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    }, ...props }: CurrentTimeProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'span';
-    const { currentTime } = useVideoPlayerModalContext();
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {format(currentTime)}
-      </Component>
-    );
-  }
-);
+const CurrentTimeComponent = React.forwardRef((props: any, ref: any) => {
+  const { as, format, ...restProps } = props;
+  const Component = as || 'span';
+  const { currentTime } = useVideoPlayerModalContext();
+  
+  const formatTime = format || ((time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  });
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      {formatTime(currentTime)}
+    </Component>
+  );
+});
 
-CurrentTime.displayName = 'VideoPlayerModalHeadless.CurrentTime';
+CurrentTimeComponent.displayName = 'VideoPlayerModalHeadless.CurrentTime';
+
+const CurrentTime = CurrentTimeComponent as <T extends React.ElementType = 'span'>(
+  props: CurrentTimeProps<T> & Omit<React.ComponentPropsWithRef<T>, keyof CurrentTimeProps<T>>
+) => React.ReactElement | null;
 
 // Duration component props
-export type DurationProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
+export type DurationProps<T extends React.ElementType> = PolymorphicComponentPropsWithRef<
+  T,
   {
     /**
      * Format for the duration
@@ -636,34 +548,36 @@ export type DurationProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Duration component
-const Duration = forwardRef(
-  <C extends React.ElementType = 'span'>(
-    { as, format = (time) => {
-      const minutes = Math.floor(time / 60);
-      const seconds = Math.floor(time % 60);
-      return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    }, ...props }: DurationProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'span';
-    const { duration } = useVideoPlayerModalContext();
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {format(duration)}
-      </Component>
-    );
-  }
-);
+const DurationComponent = React.forwardRef((props: any, ref: any) => {
+  const { as, format, ...restProps } = props;
+  const Component = as || 'span';
+  const { duration } = useVideoPlayerModalContext();
+  
+  const formatTime = format || ((time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  });
+  
+  return (
+    <Component 
+      {...restProps} 
+      ref={ref}
+    >
+      {formatTime(duration)}
+    </Component>
+  );
+});
 
-Duration.displayName = 'VideoPlayerModalHeadless.Duration';
+DurationComponent.displayName = 'VideoPlayerModalHeadless.Duration';
+
+const Duration = DurationComponent as <T extends React.ElementType = 'span'>(
+  props: DurationProps<T> & Omit<React.ComponentPropsWithRef<T>, keyof DurationProps<T>>
+) => React.ReactElement | null;
 
 // FullscreenButton component props
-export type FullscreenButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
+export type FullscreenButtonProps<T extends React.ElementType> = PolymorphicComponentPropsWithRef<
+  T,
   {
     /**
      * Children of the component
@@ -673,33 +587,18 @@ export type FullscreenButtonProps<C extends React.ElementType> = PolymorphicComp
 >;
 
 // FullscreenButton component
-const FullscreenButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: FullscreenButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getFullscreenButtonProps, isFullscreen } = useVideoPlayerModalContext();
-    
-    const fullscreenButtonProps = getFullscreenButtonProps();
-    
-    return (
-      <Component 
-        {...fullscreenButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || (isFullscreen ? 'Exit Fullscreen' : 'Fullscreen')}
-      </Component>
-    );
+export const FullscreenButton = forwardRef<HTMLButtonElement, FullscreenButtonProps<'button'>>(
+  ({ as, children, ...props }, ref) => {
+    const Component = (as || 'button') as 'button';
+    const { getFullscreenButtonProps } = useVideoPlayerModalContext();
+    const buttonProps = getFullscreenButtonProps();
+    return <Component ref={ref} {...buttonProps} {...props}>{children}</Component>;
   }
 );
 
-FullscreenButton.displayName = 'VideoPlayerModalHeadless.FullscreenButton';
-
 // PipButton component props
-export type PipButtonProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
+export type PipButtonProps<T extends React.ElementType> = PolymorphicComponentPropsWithRef<
+  T,
   {
     /**
      * Children of the component
@@ -709,33 +608,18 @@ export type PipButtonProps<C extends React.ElementType> = PolymorphicComponentPr
 >;
 
 // PipButton component
-const PipButton = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: PipButtonProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { getPipButtonProps, isPip } = useVideoPlayerModalContext();
-    
-    const pipButtonProps = getPipButtonProps();
-    
-    return (
-      <Component 
-        {...pipButtonProps} 
-        {...props} 
-        ref={ref}
-      >
-        {children || (isPip ? 'Exit PiP' : 'PiP')}
-      </Component>
-    );
+export const PipButton = forwardRef<HTMLButtonElement, PipButtonProps<'button'>>(
+  ({ as, children, ...props }, ref) => {
+    const Component = (as || 'button') as 'button';
+    const { getPipButtonProps } = useVideoPlayerModalContext();
+    const buttonProps = getPipButtonProps();
+    return <Component ref={ref} {...buttonProps} {...props}>{children}</Component>;
   }
 );
 
-PipButton.displayName = 'VideoPlayerModalHeadless.PipButton';
-
 // PlaybackRateControl component props
-export type PlaybackRateControlProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
+export type PlaybackRateControlProps<T extends React.ElementType> = PolymorphicComponentPropsWithRef<
+  T,
   {
     /**
      * Label for the playback rate control
@@ -749,45 +633,18 @@ export type PlaybackRateControlProps<C extends React.ElementType> = PolymorphicC
 >;
 
 // PlaybackRateControl component
-const PlaybackRateControl = forwardRef(
-  <C extends React.ElementType = 'select'>(
-    { 
-      as, 
-      label = 'Speed', 
-      rates = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
-      ...props 
-    }: PlaybackRateControlProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'select';
+export const PlaybackRateControl = forwardRef<HTMLSelectElement, PlaybackRateControlProps<'select'>>(
+  ({ as, label = 'Playback Rate', rates = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2], ...props }, ref) => {
+    const Component = (as || 'select') as 'select';
     const { getPlaybackRateControlProps } = useVideoPlayerModalContext();
-    
-    const playbackRateControlProps = getPlaybackRateControlProps();
-    
-    return (
-      <div>
-        {label && <label>{label}</label>}
-        <Component 
-          {...playbackRateControlProps} 
-          {...props} 
-          ref={ref}
-        >
-          {rates.map((rate) => (
-            <option key={rate} value={rate}>
-              {rate}x
-            </option>
-          ))}
-        </Component>
-      </div>
-    );
+    const controlProps = getPlaybackRateControlProps(rates);
+    return <Component ref={ref} {...controlProps} {...props} aria-label={label} />;
   }
 );
 
-PlaybackRateControl.displayName = 'VideoPlayerModalHeadless.PlaybackRateControl';
-
 // Controls component props
-export type ControlsProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
+export type ControlsProps<T extends React.ElementType> = PolymorphicComponentPropsWithRef<
+  T,
   {
     /**
      * Children of the component
@@ -797,25 +654,37 @@ export type ControlsProps<C extends React.ElementType> = PolymorphicComponentPro
 >;
 
 // Controls component
-const Controls = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ControlsProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    
-    return (
-      <Component 
-        {...props} 
-        ref={ref}
-      >
-        {children}
-      </Component>
-    );
+export const Controls = forwardRef<HTMLDivElement, ControlsProps<'div'>>(
+  ({ as, children, ...props }, ref) => {
+    const Component = (as || 'div') as 'div';
+    const { getControlsProps } = useVideoPlayerModalContext();
+    const controlsProps = getControlsProps();
+    return <Component ref={ref} {...controlsProps} {...props}>{children}</Component>;
   }
 );
 
-Controls.displayName = 'VideoPlayerModalHeadless.Controls';
+// Body component
+export const Body = forwardRef<HTMLDivElement, { children: React.ReactNode } & React.HTMLAttributes<HTMLDivElement>>(
+  ({ children, ...props }, ref) => {
+    return <div ref={ref} {...props}>{children}</div>;
+  }
+);
+
+// Footer component
+export const Footer = forwardRef<HTMLDivElement, { children: React.ReactNode } & React.HTMLAttributes<HTMLDivElement>>(
+  ({ children, ...props }, ref) => {
+    return <div ref={ref} {...props}>{children}</div>;
+  }
+);
+
+// Close component
+export const Close = forwardRef<HTMLButtonElement, { children?: React.ReactNode } & React.ButtonHTMLAttributes<HTMLButtonElement>>(
+  ({ children, ...props }, ref) => {
+    const { getCloseButtonProps } = useVideoPlayerModalContext();
+    const closeProps = getCloseButtonProps();
+    return <button ref={ref} {...closeProps} {...props}>{children}</button>;
+  }
+);
 
 // Export all components
 export const VideoPlayerModalHeadless = {

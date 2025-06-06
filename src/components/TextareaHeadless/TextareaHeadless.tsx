@@ -269,7 +269,7 @@ export const TextareaCount = forwardRef(function TextareaCount<C extends React.E
     as, 
     className, 
     style, 
-    type = 'characters',
+    type = 'characters' as any,
     format,
     ...props 
   }: Omit<TextareaCountProps<C>, 'ref'>,

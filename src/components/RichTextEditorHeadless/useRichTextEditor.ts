@@ -178,20 +178,20 @@ export interface UseRichTextEditorReturn {
    * Get props for the container element
    */
   getContainerProps: <E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ) => React.HTMLAttributes<E> & { ref?: any };
   /**
    * Get props for the toolbar element
    */
   getToolbarProps: <E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ) => React.HTMLAttributes<E> & { ref?: any };
   /**
    * Get props for the editor element
    */
   getEditorProps: <E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ) => React.HTMLAttributes<E> & { ref?: any };
   /**
    * Get props for a toolbar button
    */
@@ -200,7 +200,7 @@ export interface UseRichTextEditorReturn {
       format: string;
       value?: any;
     } & React.ButtonHTMLAttributes<E>
-  ) => React.ButtonHTMLAttributes<E>;
+  ) => React.ButtonHTMLAttributes<E> & { 'data-active'?: string };
 }
 
 /**
@@ -348,55 +348,58 @@ export function useRichTextEditor({
   
   // Get props for the container element
   const getContainerProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.HTMLAttributes<E> & { ref?: any } => {
+    const { ref: propsRef, ...restProps } = props || {};
     return {
-      ...props,
-      ref: mergeRefs(containerRef, props?.ref),
+      ...restProps,
+      ref: mergeRefs(containerRef, propsRef),
       id: editorId,
       'data-disabled': disabled ? '' : undefined,
       'data-readonly': readOnly ? '' : undefined,
       'data-required': required ? '' : undefined,
-    };
+    } as any;
   }, [editorId, disabled, readOnly, required]);
   
   // Get props for the toolbar element
   const getToolbarProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.HTMLAttributes<E> & { ref?: any } => {
+    const { ref: propsRef, ...restProps } = props || {};
     return {
-      ...props,
-      ref: mergeRefs(toolbarRef, props?.ref),
+      ...restProps,
+      ref: mergeRefs(toolbarRef, propsRef),
       role: 'toolbar',
       'aria-label': 'Formatting options',
       'aria-disabled': disabled || readOnly ? true : undefined,
-    };
+    } as any;
   }, [disabled, readOnly]);
   
   // Get props for the editor element
   const getEditorProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
-    props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+    props?: React.HTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.HTMLAttributes<E> & { ref?: any } => {
+    const { ref: propsRef, ...restProps } = props || {};
     return {
-      ...props,
-      ref: mergeRefs(editorRef, props?.ref),
+      ...restProps,
+      ref: mergeRefs(editorRef, propsRef),
       role: 'textbox',
       'aria-multiline': true,
-      'aria-label': props?.['aria-label'] || 'Rich text editor',
+      'aria-label': restProps?.['aria-label'] || 'Rich text editor',
       'aria-disabled': disabled ? true : undefined,
       'aria-readonly': readOnly ? true : undefined,
       'aria-required': required ? true : undefined,
       onFocus: (event: React.FocusEvent<E>) => {
         setFocused(true);
-        props?.onFocus?.(event);
+        restProps?.onFocus?.(event);
         onFocus?.(event);
       },
       onBlur: (event: React.FocusEvent<E>) => {
         setFocused(false);
-        props?.onBlur?.(event);
+        restProps?.onBlur?.(event);
         onBlur?.(event);
       },
-    };
+    } as any;
   }, [disabled, readOnly, required, onFocus, onBlur]);
   
   // Get props for a toolbar button
@@ -405,7 +408,7 @@ export function useRichTextEditor({
       format: string;
       value?: any;
     } & React.ButtonHTMLAttributes<E>
-  ): React.ButtonHTMLAttributes<E> => {
+  ): React.ButtonHTMLAttributes<E> & { 'data-active'?: string } => {
     const { format, value, ...restProps } = props;
     
     // Get the current format to determine if the button is active
@@ -423,7 +426,7 @@ export function useRichTextEditor({
         formatText(format, value);
         restProps.onClick?.(event);
       },
-    };
+    } as any;
   }, [disabled, readOnly, getFormat, formatText]);
   
   return {

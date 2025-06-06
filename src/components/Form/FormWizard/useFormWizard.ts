@@ -42,7 +42,7 @@ export type FormWizardStep = {
 export type FormWizardDirection = 'horizontal' | 'vertical';
 export type FormWizardVariant = 'default' | 'numbered' | 'dots' | 'progress';
 export type FormWizardSize = 'sm' | 'md' | 'lg';
-export type FormWizardTransition = 'fade' | 'slide' | 'none';
+export type FormWizardTransition = 'fade' | 'slide' | 'scale' | 'none';
 
 export interface UseFormWizardOptions {
   /**
@@ -160,6 +160,26 @@ export interface UseFormWizardReturn {
    * Set the steps configuration
    */
   setSteps: (steps: FormWizardStep[]) => void;
+  /**
+   * Get the status of a specific step
+   */
+  getStepStatus: (stepIndex: number) => 'pending' | 'current' | 'completed' | 'error';
+  /**
+   * Check if we can go to the previous step
+   */
+  canGoToPreviousStep: boolean;
+  /**
+   * Check if we can go to the next step
+   */
+  canGoToNextStep: boolean;
+  /**
+   * Go to the previous step (alias for prevStep)
+   */
+  goToPreviousStep: () => void;
+  /**
+   * Go to the next step (alias for nextStep)
+   */
+  goToNextStep: () => Promise<boolean>;
 }
 
 /**
@@ -476,5 +496,21 @@ export function useFormWizard({
     complete,
     validateCurrentStep,
     setSteps,
+    getStepStatus: (stepIndex: number) => {
+      if (stepIndex < 0 || stepIndex >= steps.length) {
+        return 'error';
+      }
+      if (stepIndex === activeStep) {
+        return 'current';
+      }
+      if (steps[stepIndex].completed) {
+        return 'completed';
+      }
+      return 'pending';
+    },
+    canGoToPreviousStep: !isFirstStep,
+    canGoToNextStep: !isLastStep,
+    goToPreviousStep: prevStep,
+    goToNextStep: nextStep,
   };
 }

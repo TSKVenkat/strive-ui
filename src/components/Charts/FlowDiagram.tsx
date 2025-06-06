@@ -664,8 +664,8 @@ export const FlowDiagram: React.FC<FlowDiagramProps> = ({
     const width = svgRef.current.clientWidth;
     const height = svgRef.current.clientHeight;
     
-    const horizontalLines = [];
-    const verticalLines = [];
+    const horizontalLines: React.ReactElement[] = [];
+    const verticalLines: React.ReactElement[] = [];
     
     for (let x = 0; x <= width; x += gridSize) {
       verticalLines.push(
@@ -863,7 +863,7 @@ export const FlowDiagram: React.FC<FlowDiagramProps> = ({
   return (
     <Chart
       data={chartData}
-      type="flow"
+      type="area"
       {...chartProps}
     >
       {renderFlow()}

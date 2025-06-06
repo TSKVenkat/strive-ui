@@ -117,6 +117,10 @@ export interface UseTextareaReturn {
    */
   wordCount: number;
   /**
+   * Maximum length
+   */
+  maxLength?: number;
+  /**
    * Input ID
    */
   id: string;
@@ -325,7 +329,7 @@ export function useTextarea({
     return {
       ...props,
       id: textareaId,
-      ref: textareaRef as React.RefObject<E>,
+
       value,
       onChange: handleChange as unknown as React.ChangeEventHandler<E>,
       onFocus: handleFocus as unknown as React.FocusEventHandler<E>,
@@ -379,6 +383,7 @@ export function useTextarea({
     focused,
     charCount,
     wordCount,
+    maxLength,
     id: textareaId,
     textareaRef,
     setValue,

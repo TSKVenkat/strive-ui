@@ -219,19 +219,19 @@ export interface UseSelectReturn {
    */
   getTriggerProps: <E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ) => React.ButtonHTMLAttributes<E>;
+  ) => React.ButtonHTMLAttributes<E> & { ref?: any };
   /**
    * Get props for the dropdown element
    */
   getDropdownProps: <E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { ref?: any };
   /**
    * Get props for the search input element
    */
   getSearchInputProps: <E extends HTMLInputElement = HTMLInputElement>(
     props?: React.InputHTMLAttributes<E>
-  ) => React.InputHTMLAttributes<E>;
+  ) => React.InputHTMLAttributes<E> & { ref?: any };
   /**
    * Get props for an option element
    */
@@ -239,7 +239,7 @@ export interface UseSelectReturn {
     option: SelectOption,
     index: number,
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { ref?: any };
   /**
    * Get props for the clear button
    */
@@ -589,7 +589,7 @@ export function useSelect({
   // Get props for the trigger element
   const getTriggerProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
     props?: React.ButtonHTMLAttributes<E>
-  ): React.ButtonHTMLAttributes<E> => {
+  ): React.ButtonHTMLAttributes<E> & { ref?: any } => {
     return {
       ...props,
       id: selectId,
@@ -612,7 +612,7 @@ export function useSelect({
         }
         props?.onClick?.(event as any);
       },
-    };
+    } as any;
   }, [
     selectId,
     isOpen,
@@ -627,7 +627,7 @@ export function useSelect({
   // Get props for the dropdown element
   const getDropdownProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { ref?: any } => {
     return {
       ...props,
       id: `${selectId}-dropdown`,
@@ -640,13 +640,13 @@ export function useSelect({
         width: matchWidth && triggerRef.current ? `${triggerRef.current.offsetWidth}px` : undefined,
       },
       onKeyDown: handleKeyDown as unknown as React.KeyboardEventHandler<E>,
-    };
+    } as any;
   }, [selectId, maxHeight, matchWidth, handleKeyDown]);
   
   // Get props for the search input element
   const getSearchInputProps = useCallback(<E extends HTMLInputElement = HTMLInputElement>(
     props?: React.InputHTMLAttributes<E>
-  ): React.InputHTMLAttributes<E> => {
+  ): React.InputHTMLAttributes<E> & { ref?: any } => {
     return {
       ...props,
       ref: searchInputRef as React.RefObject<E>,
@@ -673,7 +673,7 @@ export function useSelect({
         
         props?.onKeyDown?.(event as any);
       },
-    };
+    } as any;
   }, [selectId, searchQuery, handleKeyDown]);
   
   // Get props for an option element
@@ -681,7 +681,7 @@ export function useSelect({
     option: SelectOption,
     index: number,
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { ref?: any } => {
     const isSelected = option.value === value;
     const isHighlighted = index === highlightedIndex;
     
@@ -711,7 +711,7 @@ export function useSelect({
         }
         props?.onMouseEnter?.(event as any);
       },
-    };
+    } as any;
   }, [selectId, value, highlightedIndex, selectOption, highlightOption]);
   
   // Get props for the clear button

@@ -1,6 +1,8 @@
 export { default as TooltipHeadless } from './TooltipHeadless';
 export { 
-  useTooltip,
+  useTooltip
+} from './useTooltip';
+export type {
   UseTooltipReturn,
   TooltipOptions
 } from './useTooltip';

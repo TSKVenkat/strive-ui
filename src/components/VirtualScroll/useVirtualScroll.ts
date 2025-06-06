@@ -244,7 +244,7 @@ export function useVirtualScroll<T>({
     const visibleEndIndex = Math.min(items.length - 1, endIndex);
 
     // Create virtual items
-    const virtualItems = [];
+    const virtualItems: VirtualItem<T>[] = [];
     for (let i = startIndex; i <= endIndex; i++) {
       const { offset, size } = itemSizeAndOffsetMap.get(i) || { offset: 0, size: 0 };
       virtualItems.push({
@@ -341,9 +341,9 @@ export function useVirtualScroll<T>({
         ref: containerRef as React.RefObject<E>,
         style: {
           ...props.style,
-          position: 'relative',
-          overflow: 'auto',
-          WebkitOverflowScrolling: 'touch',
+          position: 'relative' as const,
+          overflow: 'auto' as const,
+          WebkitOverflowScrolling: 'touch' as const,
           [sizeKey]: height,
           ...(width ? { width } : {}),
         },
@@ -366,7 +366,7 @@ export function useVirtualScroll<T>({
           ...props.style,
           height: horizontal ? '100%' : totalSize,
           width: horizontal ? totalSize : '100%',
-          position: 'relative',
+          position: 'relative' as const,
         },
         role: 'presentation',
       };
@@ -384,7 +384,7 @@ export function useVirtualScroll<T>({
         ...props,
         style: {
           ...props.style,
-          position: 'absolute',
+          position: 'absolute' as const,
           [offsetKey]: virtualItem.offset,
           [sizeKey]: virtualItem.size,
           ...(horizontal ? { height: '100%' } : { width: '100%' }),

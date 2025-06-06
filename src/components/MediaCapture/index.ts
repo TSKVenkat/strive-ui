@@ -1,6 +1,8 @@
 export { default as MediaCaptureHeadless } from './MediaCaptureHeadless';
 export { 
-  useMediaCapture,
+  useMediaCapture
+} from './useMediaCapture';
+export type {
   UseMediaCaptureReturn,
   MediaCaptureOptions,
   MediaType,

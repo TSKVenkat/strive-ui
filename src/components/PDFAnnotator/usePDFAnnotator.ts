@@ -223,7 +223,7 @@ export interface UsePDFAnnotatorReturn {
    * Get props for the annotation layer
    */
   getAnnotationLayerProps: (pageNumber: number) => {
-    ref: React.RefObject<HTMLDivElement>;
+    ref: (el: HTMLDivElement | null) => void;
     style: React.CSSProperties;
     onMouseDown: (e: React.MouseEvent) => void;
     onMouseMove: (e: React.MouseEvent) => void;

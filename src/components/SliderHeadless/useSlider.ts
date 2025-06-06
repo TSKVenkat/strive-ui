@@ -101,6 +101,10 @@ export interface UseSliderReturn {
    */
   step: number;
   /**
+   * Orientation of the slider
+   */
+  orientation: 'horizontal' | 'vertical';
+  /**
    * Slider ID
    */
   id: string;
@@ -141,19 +145,19 @@ export interface UseSliderReturn {
    */
   getRootProps: <E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { 'data-orientation'?: string };
   /**
    * Get props for the track element
    */
   getTrackProps: <E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { ref?: React.RefObject<E> };
   /**
    * Get props for the thumb element
    */
   getThumbProps: <E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { ref?: React.RefObject<E> };
   /**
    * Get props for the input element
    */
@@ -364,20 +368,20 @@ export function useSlider({
   // Get props for the root element
   const getRootProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { 'data-orientation'?: string } => {
     return {
       ...props,
       role: 'presentation',
       'data-orientation': orientation,
       'data-disabled': disabled ? '' : undefined,
       'data-readonly': readOnly ? '' : undefined,
-    };
+    } as any;
   }, [orientation, disabled, readOnly]);
   
   // Get props for the track element
   const getTrackProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { ref?: React.RefObject<E> } => {
     return {
       ...props,
       ref: trackRef as React.RefObject<E>,
@@ -386,13 +390,13 @@ export function useSlider({
         handleTrackMouseDown(event as unknown as React.MouseEvent<HTMLDivElement>);
         props?.onMouseDown?.(event);
       },
-    };
+    } as any;
   }, [handleTrackMouseDown]);
   
   // Get props for the thumb element
   const getThumbProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { ref?: React.RefObject<E> } => {
     return {
       ...props,
       ref: thumbRef as React.RefObject<E>,
@@ -432,7 +436,7 @@ export function useSlider({
         
         props?.onMouseDown?.(event);
       },
-    };
+    } as any;
   }, [
     min,
     max,
@@ -490,6 +494,7 @@ export function useSlider({
     min,
     max,
     step,
+    orientation,
     id: sliderId,
     marks: normalizedMarks,
     trackRef,

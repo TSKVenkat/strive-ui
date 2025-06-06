@@ -1,360 +1,235 @@
 import React, { createContext, useContext, forwardRef } from 'react';
-import { useVoiceSearch, UseVoiceSearchReturn, VoiceSearchOptions, SpeechRecognitionResult } from './useVoiceSearch';
-import { PolymorphicComponentPropsWithRef, PolymorphicRef } from '../../types/polymorphic';
+import { useVoiceSearch, UseVoiceSearchReturn, SpeechRecognitionResult } from './useVoiceSearch';
 
-// Context for the VoiceSearch component
-interface VoiceSearchContextValue extends UseVoiceSearchReturn {}
+// Create context
+const VoiceSearchContext = createContext<UseVoiceSearchReturn | null>(null);
 
-const VoiceSearchContext = createContext<VoiceSearchContextValue | null>(null);
-
-// Hook to use VoiceSearch context
-export function useVoiceSearchContext() {
+// Custom hook to use voice search context
+const useVoiceSearchContext = () => {
   const context = useContext(VoiceSearchContext);
   if (!context) {
     throw new Error('useVoiceSearchContext must be used within a VoiceSearchHeadless.Root component');
   }
   return context;
-}
+};
 
 // Root component props
-export interface RootProps extends VoiceSearchOptions {
-  /**
-   * Children of the component
-   */
+interface RootProps {
+  children: React.ReactNode;
+  lang?: string;
+  continuous?: boolean;
+  interimResults?: boolean;
+  maxAlternatives?: number;
+  onStart?: () => void;
+  onEnd?: () => void;
+  onError?: (error: Error) => void;
+  onResult?: (results: SpeechRecognitionResult[]) => void;
+  onInterimResult?: (results: SpeechRecognitionResult[]) => void;
+}
+
+// Component props with polymorphic as prop
+type ElementRef<T> = T extends React.ElementType
+  ? React.ComponentPropsWithRef<T>['ref']
+  : never;
+
+type MergeElementProps<T extends React.ElementType, P> = Omit<React.ComponentPropsWithRef<T>, keyof P> & P;
+
+interface BaseProps<T extends React.ElementType> {
+  as?: T;
+}
+
+interface MicrophoneProps<T extends React.ElementType = 'button'> extends BaseProps<T> {
+  children?: React.ReactNode;
+}
+
+interface TranscriptProps<T extends React.ElementType = 'div'> extends BaseProps<T> {
+  children?: React.ReactNode;
+  showInterim?: boolean;
+}
+
+interface ResultsProps<T extends React.ElementType = 'div'> extends BaseProps<T> {
+  children: React.ReactNode | ((props: {
+    results: SpeechRecognitionResult[];
+    resetResults: () => void;
+  }) => React.ReactNode);
+}
+
+interface StatusProps<T extends React.ElementType = 'div'> extends BaseProps<T> {
+  children: React.ReactNode | ((props: {
+    isListening: boolean;
+    isSupported: boolean;
+    error: Error | null;
+  }) => React.ReactNode);
+}
+
+interface ErrorProps<T extends React.ElementType = 'div'> extends BaseProps<T> {
+  children: React.ReactNode | ((props: {
+    error: Error;
+  }) => React.ReactNode);
+}
+
+interface NotSupportedProps<T extends React.ElementType = 'div'> extends BaseProps<T> {
   children: React.ReactNode;
 }
 
-// Root component
-const Root = forwardRef<HTMLDivElement, RootProps>(
-  ({ children, ...options }, ref) => {
-    const voiceSearchProps = useVoiceSearch(options);
-    
+interface ListeningProps<T extends React.ElementType = 'div'> extends BaseProps<T> {
+  children: React.ReactNode;
+}
+
+interface NotListeningProps<T extends React.ElementType = 'div'> extends BaseProps<T> {
+  children: React.ReactNode;
+}
+
+// Component implementations
+const Root = ({ children, ...options }: RootProps) => {
+  const voiceSearch = useVoiceSearch(options);
+  return (
+    <VoiceSearchContext.Provider value={voiceSearch}>
+      {children}
+    </VoiceSearchContext.Provider>
+  );
+};
+
+const Microphone = forwardRef<HTMLButtonElement, MicrophoneProps<'button'>>(
+  ({ as, children, ...props }, ref) => {
+    const Component = (as || 'button') as 'button';
+    const { isListening, isSupported, start, stop } = useVoiceSearchContext();
+
     return (
-      <VoiceSearchContext.Provider value={voiceSearchProps}>
-        <div ref={ref}>
-          {children}
-        </div>
-      </VoiceSearchContext.Provider>
-    );
-  }
-);
-
-Root.displayName = 'VoiceSearchHeadless.Root';
-
-// Microphone component props
-export type MicrophoneProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
-  {
-    /**
-     * Children of the component
-     */
-    children?: React.ReactNode | ((props: {
-      isListening: boolean;
-      isSupported: boolean;
-      startListening: () => void;
-      stopListening: () => void;
-    }) => React.ReactNode);
-  }
->;
-
-// Microphone component
-const Microphone = forwardRef(
-  <C extends React.ElementType = 'button'>(
-    { as, children, ...props }: MicrophoneProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'button';
-    const { 
-      isListening, 
-      isSupported, 
-      startListening, 
-      stopListening,
-      getMicrophoneProps
-    } = useVoiceSearchContext();
-    
-    const microphoneProps = getMicrophoneProps();
-    
-    return (
-      <Component 
-        {...microphoneProps} 
-        {...props} 
+      <Component
         ref={ref}
+        onClick={() => (isListening ? stop() : start())}
+        disabled={!isSupported}
+        aria-pressed={isListening}
+        {...props}
       >
-        {typeof children === 'function' 
-          ? children({ isListening, isSupported, startListening, stopListening }) 
-          : children}
+        {children}
       </Component>
     );
   }
 );
 
-Microphone.displayName = 'VoiceSearchHeadless.Microphone';
+const Transcript = forwardRef<HTMLDivElement, TranscriptProps<'div'>>(
+  ({ as, showInterim = true, children, ...props }, ref) => {
+    const Component = (as || 'div') as 'div';
+    const { results, interimResults } = useVoiceSearchContext();
 
-// Transcript component props
-export type TranscriptProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
-  {
-    /**
-     * Whether to show interim results
-     */
-    showInterim?: boolean;
-    /**
-     * Children of the component
-     */
-    children?: React.ReactNode | ((props: {
-      transcript: string;
-      finalTranscript: string;
-      interimTranscript: string;
-    }) => React.ReactNode);
-  }
->;
+    const transcript = [
+      ...results.map(r => r.transcript),
+      ...(showInterim ? interimResults.map(r => r.transcript) : []),
+    ].join(' ');
 
-// Transcript component
-const Transcript = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, showInterim = true, children, ...props }: TranscriptProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
-    const { transcript, finalTranscript, interimTranscript } = useVoiceSearchContext();
-    
-    const displayTranscript = showInterim ? transcript : finalTranscript;
-    
     return (
-      <Component {...props} ref={ref}>
-        {typeof children === 'function' 
-          ? children({ transcript, finalTranscript, interimTranscript }) 
-          : displayTranscript}
+      <Component ref={ref} {...props}>
+        {children || transcript}
       </Component>
     );
   }
 );
 
-Transcript.displayName = 'VoiceSearchHeadless.Transcript';
-
-// Results component props
-export type ResultsProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
-  {
-    /**
-     * Children of the component
-     */
-    children: React.ReactNode | ((props: {
-      results: SpeechRecognitionResult[];
-      resetResults: () => void;
-    }) => React.ReactNode);
-  }
->;
-
-// Results component
-const Results = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ResultsProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
+const Results = forwardRef<HTMLDivElement, ResultsProps<'div'>>(
+  ({ as, children, ...props }, ref) => {
+    const Component = (as || 'div') as 'div';
     const { results, resetResults } = useVoiceSearchContext();
-    
+
     return (
-      <Component {...props} ref={ref}>
-        {typeof children === 'function' 
-          ? children({ results, resetResults }) 
+      <Component ref={ref} {...props}>
+        {typeof children === 'function'
+          ? children({ results, resetResults })
           : children}
       </Component>
     );
   }
 );
 
-Results.displayName = 'VoiceSearchHeadless.Results';
-
-// Status component props
-export type StatusProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
-  {
-    /**
-     * Children of the component
-     */
-    children: React.ReactNode | ((props: {
-      isListening: boolean;
-      isSupported: boolean;
-      error: Error | null;
-    }) => React.ReactNode);
-  }
->;
-
-// Status component
-const Status = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: StatusProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
+const Status = forwardRef<HTMLDivElement, StatusProps<'div'>>(
+  ({ as, children, ...props }, ref) => {
+    const Component = (as || 'div') as 'div';
     const { isListening, isSupported, error } = useVoiceSearchContext();
-    
+
     return (
-      <Component {...props} ref={ref}>
-        {typeof children === 'function' 
-          ? children({ isListening, isSupported, error }) 
+      <Component ref={ref} {...props}>
+        {typeof children === 'function'
+          ? children({ isListening, isSupported, error })
           : children}
       </Component>
     );
   }
 );
 
-Status.displayName = 'VoiceSearchHeadless.Status';
-
-// Error component props
-export type ErrorProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
-  {
-    /**
-     * Children of the component
-     */
-    children: React.ReactNode | ((props: {
-      error: Error;
-    }) => React.ReactNode);
-  }
->;
-
-// Error component
-const Error = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ErrorProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
+const ErrorComponent = forwardRef<HTMLDivElement, ErrorProps<'div'>>(
+  ({ as, children, ...props }, ref) => {
+    const Component = (as || 'div') as 'div';
     const { error } = useVoiceSearchContext();
-    
-    if (!error) {
-      return null;
-    }
-    
+
+    if (!error) return null;
+
     return (
-      <Component {...props} ref={ref}>
-        {typeof children === 'function' 
-          ? children({ error }) 
-          : children || error.message}
+      <Component ref={ref} {...props}>
+        {typeof children === 'function'
+          ? children({ error })
+          : children}
       </Component>
     );
   }
 );
 
-Error.displayName = 'VoiceSearchHeadless.Error';
-
-// NotSupported component props
-export type NotSupportedProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
-  {
-    /**
-     * Children of the component
-     */
-    children: React.ReactNode;
-  }
->;
-
-// NotSupported component
-const NotSupported = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: NotSupportedProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
+const NotSupported = forwardRef<HTMLDivElement, NotSupportedProps<'div'>>(
+  ({ as, children, ...props }, ref) => {
+    const Component = (as || 'div') as 'div';
     const { isSupported } = useVoiceSearchContext();
-    
-    if (isSupported) {
-      return null;
-    }
-    
+
+    if (isSupported) return null;
+
     return (
-      <Component {...props} ref={ref}>
+      <Component ref={ref} {...props}>
         {children}
       </Component>
     );
   }
 );
 
-NotSupported.displayName = 'VoiceSearchHeadless.NotSupported';
-
-// Listening component props
-export type ListeningProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
-  {
-    /**
-     * Children of the component
-     */
-    children: React.ReactNode;
-  }
->;
-
-// Listening component
-const Listening = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: ListeningProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
+const Listening = forwardRef<HTMLDivElement, ListeningProps<'div'>>(
+  ({ as, children, ...props }, ref) => {
+    const Component = (as || 'div') as 'div';
     const { isListening } = useVoiceSearchContext();
-    
-    if (!isListening) {
-      return null;
-    }
-    
+
+    if (!isListening) return null;
+
     return (
-      <Component {...props} ref={ref}>
+      <Component ref={ref} {...props}>
         {children}
       </Component>
     );
   }
 );
 
-Listening.displayName = 'VoiceSearchHeadless.Listening';
-
-// NotListening component props
-export type NotListeningProps<C extends React.ElementType> = PolymorphicComponentPropsWithRef<
-  C,
-  {
-    /**
-     * Children of the component
-     */
-    children: React.ReactNode;
-  }
->;
-
-// NotListening component
-const NotListening = forwardRef(
-  <C extends React.ElementType = 'div'>(
-    { as, children, ...props }: NotListeningProps<C>,
-    ref: PolymorphicRef<C>
-  ) => {
-    const Component = as || 'div';
+const NotListening = forwardRef<HTMLDivElement, NotListeningProps<'div'>>(
+  ({ as, children, ...props }, ref) => {
+    const Component = (as || 'div') as 'div';
     const { isListening } = useVoiceSearchContext();
-    
-    if (isListening) {
-      return null;
-    }
-    
+
+    if (isListening) return null;
+
     return (
-      <Component {...props} ref={ref}>
+      <Component ref={ref} {...props}>
         {children}
       </Component>
     );
   }
 );
 
-NotListening.displayName = 'VoiceSearchHeadless.NotListening';
-
-// Export all components
+// Export compound component
 export const VoiceSearchHeadless = {
   Root,
   Microphone,
   Transcript,
   Results,
   Status,
-  Error,
+  Error: ErrorComponent,
   NotSupported,
   Listening,
   NotListening,
-  useVoiceSearchContext,
 };
 
 export default VoiceSearchHeadless;

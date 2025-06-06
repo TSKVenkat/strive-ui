@@ -212,7 +212,7 @@ export const SortableList = forwardRef(<T extends SortableItem = SortableItem>(
         <SortableListHeadless.DragPreview>
           {(item) => (
             <StyledDragPreview>
-              {renderDragPreview ? renderDragPreview(item) : renderItem(item, -1)}
+              {renderDragPreview ? renderDragPreview(item as T) : renderItem(item as T, -1)}
             </StyledDragPreview>
           )}
         </SortableListHeadless.DragPreview>

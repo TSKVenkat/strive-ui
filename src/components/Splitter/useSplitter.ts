@@ -292,11 +292,11 @@ export function useSplitter(options: SplitterOptions = {}): UseSplitterReturn {
   const getContainerProps = useCallback(() => {
     return {
       style: {
-        display: 'flex',
-        flexDirection: direction === 'horizontal' ? 'row' : 'column',
+        display: 'flex' as const,
+        flexDirection: direction === 'horizontal' ? ('row' as const) : ('column' as const),
         width: '100%',
         height: '100%',
-        overflow: 'hidden',
+        overflow: 'hidden' as const,
       },
       ref: containerRef,
     };
@@ -309,7 +309,7 @@ export function useSplitter(options: SplitterOptions = {}): UseSplitterReturn {
     return {
       style: {
         flex: isCollapsed ? '0 0 0px' : `1 1 ${sizes[index]}%`,
-        overflow: 'auto',
+        overflow: 'auto' as const,
       },
       'data-pane-index': index,
     };
@@ -324,7 +324,7 @@ export function useSplitter(options: SplitterOptions = {}): UseSplitterReturn {
       style: {
         flex: `0 0 ${gutterSize}px`,
         cursor: disabled ? 'default' : direction === 'horizontal' ? 'ew-resize' : 'ns-resize',
-        userSelect: 'none',
+        userSelect: 'none' as const,
         display: isLeftPaneCollapsed || isRightPaneCollapsed ? 'none' : 'block',
       },
       onMouseDown: (e: React.MouseEvent) => handleDragStart(e.nativeEvent, index),
@@ -335,7 +335,7 @@ export function useSplitter(options: SplitterOptions = {}): UseSplitterReturn {
       'aria-valuenow': sizes[index],
       'aria-valuemin': minSizes[index] || 0,
       'aria-valuemax': maxSizes[index] || 100,
-      'aria-orientation': direction === 'horizontal' ? 'vertical' : 'horizontal',
+      'aria-orientation': direction === 'horizontal' ? ('vertical' as const) : ('horizontal' as const),
     };
   }, [gutterSize, disabled, direction, sizes, minSizes, maxSizes, handleDragStart]);
 

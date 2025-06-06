@@ -78,11 +78,11 @@ export interface UsePulseReturn {
   /**
    * Width of the pulse
    */
-  width: string | number;
+  width: string | number | undefined;
   /**
    * Height of the pulse
    */
-  height: string | number;
+  height: string | number | undefined;
   /**
    * Whether the pulse is visible
    */
@@ -94,7 +94,7 @@ export interface UsePulseReturn {
   /**
    * Border radius of the pulse
    */
-  borderRadius: string | number;
+  borderRadius: string | number | undefined;
   /**
    * Duration of the pulse animation in seconds
    */

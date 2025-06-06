@@ -161,13 +161,13 @@ export interface UseRangeSliderReturn {
    */
   getRootProps: <E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { 'data-orientation': string };
   /**
    * Get props for the track element
    */
   getTrackProps: <E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { ref: React.RefObject<E> };
   /**
    * Get props for the range element
    */
@@ -179,13 +179,13 @@ export interface UseRangeSliderReturn {
    */
   getStartThumbProps: <E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { ref: React.RefObject<E> };
   /**
    * Get props for the end thumb element
    */
   getEndThumbProps: <E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ) => React.HTMLAttributes<E>;
+  ) => React.HTMLAttributes<E> & { ref: React.RefObject<E> };
   /**
    * Get props for the start input element
    */
@@ -506,20 +506,20 @@ export function useRangeSlider({
   // Get props for the root element
   const getRootProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { 'data-orientation': string } => {
     return {
       ...props,
       role: 'presentation',
       'data-orientation': orientation,
       'data-disabled': disabled ? '' : undefined,
       'data-readonly': readOnly ? '' : undefined,
-    };
+    } as any;
   }, [orientation, disabled, readOnly]);
   
   // Get props for the track element
   const getTrackProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { ref: React.RefObject<E> } => {
     return {
       ...props,
       ref: trackRef as React.RefObject<E>,
@@ -528,7 +528,7 @@ export function useRangeSlider({
         handleTrackMouseDown(event as unknown as React.MouseEvent<HTMLDivElement>);
         props?.onMouseDown?.(event);
       },
-    };
+    } as any;
   }, [handleTrackMouseDown]);
   
   // Get props for the range element
@@ -549,7 +549,7 @@ export function useRangeSlider({
   // Get props for the start thumb element
   const getStartThumbProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { ref: React.RefObject<E> } => {
     return {
       ...props,
       ref: startThumbRef as React.RefObject<E>,
@@ -590,7 +590,7 @@ export function useRangeSlider({
         
         props?.onMouseDown?.(event);
       },
-    };
+    } as any;
   }, [
     min,
     max,
@@ -608,7 +608,7 @@ export function useRangeSlider({
   // Get props for the end thumb element
   const getEndThumbProps = useCallback(<E extends HTMLDivElement = HTMLDivElement>(
     props?: React.HTMLAttributes<E>
-  ): React.HTMLAttributes<E> => {
+  ): React.HTMLAttributes<E> & { ref: React.RefObject<E> } => {
     return {
       ...props,
       ref: endThumbRef as React.RefObject<E>,
@@ -649,7 +649,7 @@ export function useRangeSlider({
         
         props?.onMouseDown?.(event);
       },
-    };
+    } as any;
   }, [
     min,
     max,

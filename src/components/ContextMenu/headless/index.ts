@@ -1,6 +1,8 @@
 export { default as ContextMenuHeadless } from './ContextMenuHeadless';
 export { 
-  useContextMenu,
+  useContextMenu
+} from './useContextMenu';
+export type {
   UseContextMenuReturn,
   ContextMenuOptions
 } from './useContextMenu';

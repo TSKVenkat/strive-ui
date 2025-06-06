@@ -1,6 +1,8 @@
 export { default as DrawingBoardHeadless } from './DrawingBoardHeadless';
 export { 
-  useDrawingBoard,
+  useDrawingBoard
+} from './useDrawingBoard';
+export type {
   UseDrawingBoardReturn,
   DrawingBoardOptions,
   DrawingTool,

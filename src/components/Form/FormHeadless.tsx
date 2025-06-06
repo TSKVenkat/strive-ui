@@ -1,10 +1,18 @@
 import React, { createContext, useContext } from 'react';
 import { PolymorphicComponentPropsWithRef } from '../../types/polymorphic';
-import useForm, { FormConfig, FieldProps, ValidationRule } from './hooks/useForm';
+import useForm, { UseFormOptions, ValidationRule, UseFormReturn } from './hooks/useForm';
 
 // Context to share form state and methods
 interface FormContextValue {
-  register: (name: string, validation?: ValidationRule) => FieldProps;
+  register: (name: string, validation?: ValidationRule) => {
+    name: string;
+    value: any;
+    onChange: (e: React.ChangeEvent<any>) => void;
+    onBlur: (e: React.FocusEvent<any>) => void;
+    required?: boolean;
+    id?: string;
+    checked?: boolean;
+  };
   setValue: (name: string, value: any, shouldValidate?: boolean) => void;
   getValue: (name: string) => any;
   getValues: () => Record<string, any>;
@@ -30,11 +38,11 @@ export const useFormContext = () => {
 };
 
 // Form component props
-export interface FormHeadlessProps extends Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'> {
+export interface FormHeadlessProps extends Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit' | 'onError'> {
   /**
    * Form configuration
    */
-  config?: FormConfig;
+  config?: UseFormOptions;
   /**
    * Callback when form is submitted and validation passes
    */
@@ -56,9 +64,11 @@ export const FormHeadless = React.forwardRef<HTMLFormElement, FormHeadlessProps>
   ({ config, onSubmit, onError, preventDefault = true, children, ...props }, ref) => {
     const form = useForm(config);
     
-    const handleSubmit = form.handleSubmit((values) => {
-      return onSubmit(values);
-    });
+    // Create a simple error map from fieldStates
+    const errors = Object.keys(form.fieldStates).reduce((acc, key) => {
+      acc[key] = form.fieldStates[key].error;
+      return acc;
+    }, {} as Record<string, string | null>);
     
     const contextValue: FormContextValue = {
       register: (name, validation) => form.register(name, { validation }),
@@ -67,26 +77,31 @@ export const FormHeadless = React.forwardRef<HTMLFormElement, FormHeadlessProps>
       getValues: form.getValues,
       setError: form.setError,
       getError: form.getError,
-      errors: form.errors,
-      isValid: form.isValid,
-      isDirty: form.isDirty,
-      isSubmitting: form.isSubmitting,
-      isSubmitted: form.isSubmitted,
-      isSubmitSuccessful: form.isSubmitSuccessful,
+      errors,
+      isValid: form.formState.isValid,
+      isDirty: form.formState.isDirty,
+      isSubmitting: form.formState.isSubmitting,
+      isSubmitted: form.formState.isSubmitted,
+      isSubmitSuccessful: form.formState.isSubmitSuccessful,
     };
     
     return (
       <FormContext.Provider value={contextValue}>
         <form
           ref={ref}
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             if (preventDefault) {
               e.preventDefault();
             }
-            handleSubmit(e);
             
-            if (!form.isValid && onError) {
-              onError(form.errors);
+            try {
+              await form.handleSubmit(e);
+              const values = form.getValues();
+              await onSubmit(values);
+            } catch (error) {
+              if (onError) {
+                onError(errors);
+              }
             }
           }}
           noValidate
@@ -142,7 +157,6 @@ export const InputHeadless = React.forwardRef<HTMLInputElement, InputHeadlessPro
     const inputProps = {
       ref,
       id: id || `form-field-${name}`,
-      name,
       onChange,
       onBlur,
       value: value ?? '',
@@ -150,7 +164,8 @@ export const InputHeadless = React.forwardRef<HTMLInputElement, InputHeadlessPro
       'aria-invalid': !!error,
       'aria-describedby': error ? `${name}-error` : undefined,
       ...fieldProps,
-      ...props
+      ...props,
+      name,
     };
     
     if (render) {
@@ -204,7 +219,6 @@ export const CheckboxHeadless = React.forwardRef<HTMLInputElement, CheckboxHeadl
     const checkboxProps = {
       ref,
       id: id || `form-field-${name}`,
-      name,
       type: 'checkbox',
       onChange,
       onBlur,
@@ -213,7 +227,8 @@ export const CheckboxHeadless = React.forwardRef<HTMLInputElement, CheckboxHeadl
       'aria-invalid': !!error,
       'aria-describedby': error ? `${name}-error` : undefined,
       ...fieldProps,
-      ...props
+      ...props,
+      name,
     };
     
     if (render) {
@@ -279,7 +294,6 @@ export const SelectHeadless = React.forwardRef<HTMLSelectElement, SelectHeadless
     const selectProps = {
       ref,
       id: id || `form-field-${name}`,
-      name,
       onChange,
       onBlur,
       value: value ?? '',
@@ -288,6 +302,7 @@ export const SelectHeadless = React.forwardRef<HTMLSelectElement, SelectHeadless
       'aria-describedby': error ? `${name}-error` : undefined,
       ...fieldProps,
       ...props,
+      name,
       children: selectOptions
     };
     
@@ -342,7 +357,6 @@ export const TextareaHeadless = React.forwardRef<HTMLTextAreaElement, TextareaHe
     const textareaProps = {
       ref,
       id: id || `form-field-${name}`,
-      name,
       onChange,
       onBlur,
       value: value ?? '',
@@ -350,7 +364,8 @@ export const TextareaHeadless = React.forwardRef<HTMLTextAreaElement, TextareaHe
       'aria-invalid': !!error,
       'aria-describedby': error ? `${name}-error` : undefined,
       ...fieldProps,
-      ...props
+      ...props,
+      name,
     };
     
     if (render) {

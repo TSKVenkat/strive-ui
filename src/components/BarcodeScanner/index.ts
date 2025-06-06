@@ -1,6 +1,8 @@
 export { default as BarcodeScannerHeadless } from './BarcodeScannerHeadless';
 export { 
-  useBarcodeScanner,
+  useBarcodeScanner
+} from './useBarcodeScanner';
+export type {
   UseBarcodeScannerReturn,
   BarcodeScannerOptions,
   BarcodeResult,

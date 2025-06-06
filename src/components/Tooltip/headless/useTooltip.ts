@@ -52,8 +52,8 @@ export interface UseTooltipReturn {
   /**
    * Get props for the tooltip trigger
    */
-  getTriggerProps: <T extends HTMLElement = HTMLElement>() => {
-    ref: React.RefObject<T>;
+  getTriggerProps: () => {
+    ref: React.RefObject<HTMLElement>;
     onMouseEnter: (e: React.MouseEvent) => void;
     onMouseLeave: (e: React.MouseEvent) => void;
     onFocus: (e: React.FocusEvent) => void;
@@ -63,8 +63,8 @@ export interface UseTooltipReturn {
   /**
    * Get props for the tooltip content
    */
-  getContentProps: <T extends HTMLElement = HTMLElement>() => {
-    ref: React.RefObject<T>;
+  getContentProps: () => {
+    ref: React.RefObject<HTMLElement>;
     style: React.CSSProperties;
     role: string;
     id: string;
@@ -72,8 +72,8 @@ export interface UseTooltipReturn {
   /**
    * Get props for the tooltip arrow
    */
-  getArrowProps: <T extends HTMLElement = HTMLElement>() => {
-    ref: React.RefObject<T>;
+  getArrowProps: () => {
+    ref: React.RefObject<HTMLElement>;
     style: React.CSSProperties;
   };
 }

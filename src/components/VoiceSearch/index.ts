@@ -1,6 +1,6 @@
 export { default as VoiceSearchHeadless } from './VoiceSearchHeadless';
-export { 
-  useVoiceSearch,
+export { useVoiceSearch } from './useVoiceSearch';
+export type {
   UseVoiceSearchReturn,
   VoiceSearchOptions,
   SpeechRecognitionResult

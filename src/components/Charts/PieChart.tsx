@@ -271,7 +271,25 @@ export const PieChart: React.FC<PieChartProps> = ({
   }).filter(item => item.value > 0);
   
   // Calculate chart dimensions and angles
-  const calculateChart = () => {
+  const calculateChart = (): {
+    width: number;
+    height: number;
+    centerX: number;
+    centerY: number;
+    radius: number;
+    innerRadius: number;
+    slices: {
+      startAngle: number;
+      endAngle: number;
+      value: number;
+      percentage: number;
+      label: string;
+      color: string;
+      index: number;
+      seriesIndex: number;
+      valueIndex: number;
+    }[];
+  } | null => {
     if (!svgRef.current || !containerRef.current) return null;
     
     const svg = svgRef.current;
@@ -328,7 +346,7 @@ export const PieChart: React.FC<PieChartProps> = ({
   };
   
   // Generate SVG path for a slice
-  const generateSlicePath = (slice: ReturnType<typeof calculateChart>['slices'][0], chart: ReturnType<typeof calculateChart>) => {
+  const generateSlicePath = (slice: NonNullable<ReturnType<typeof calculateChart>>['slices'][0], chart: NonNullable<ReturnType<typeof calculateChart>>) => {
     const { centerX, centerY, radius, innerRadius } = chart;
     
     const startX = centerX + Math.cos(slice.startAngle) * radius;
@@ -366,7 +384,7 @@ export const PieChart: React.FC<PieChartProps> = ({
   };
   
   // Calculate label position
-  const calculateLabelPosition = (slice: ReturnType<typeof calculateChart>['slices'][0], chart: ReturnType<typeof calculateChart>) => {
+  const calculateLabelPosition = (slice: NonNullable<ReturnType<typeof calculateChart>>['slices'][0], chart: NonNullable<ReturnType<typeof calculateChart>>) => {
     const { centerX, centerY, radius, innerRadius } = chart;
     
     const midAngle = (slice.startAngle + slice.endAngle) / 2;
@@ -404,7 +422,7 @@ export const PieChart: React.FC<PieChartProps> = ({
   };
   
   // Handle slice hover
-  const handleSliceHover = (event: React.MouseEvent, slice: ReturnType<typeof calculateChart>['slices'][0], chart: ReturnType<typeof calculateChart>) => {
+  const handleSliceHover = (event: React.MouseEvent, slice: NonNullable<ReturnType<typeof calculateChart>>['slices'][0], chart: NonNullable<ReturnType<typeof calculateChart>>) => {
     const containerRect = containerRef.current?.getBoundingClientRect();
     
     if (!containerRect) return;
@@ -430,7 +448,7 @@ export const PieChart: React.FC<PieChartProps> = ({
   };
   
   // Handle slice click
-  const handleSliceClick = (slice: ReturnType<typeof calculateChart>['slices'][0]) => {
+  const handleSliceClick = (slice: NonNullable<ReturnType<typeof calculateChart>>['slices'][0]) => {
     if (!selectable) return;
     
     setSelectedSlices(prev => {
@@ -528,14 +546,14 @@ export const PieChart: React.FC<PieChartProps> = ({
                   <>
                     <LabelLine
                       d={`
-                        M ${calculateLabelPosition(slice, chart).anchorPoint.x},${calculateLabelPosition(slice, chart).anchorPoint.y}
-                        L ${calculateLabelPosition(slice, chart).labelPoint.x},${calculateLabelPosition(slice, chart).labelPoint.y}
+                        M ${calculateLabelPosition(slice, chart).anchorPoint?.x},${calculateLabelPosition(slice, chart).anchorPoint?.y}
+                        L ${calculateLabelPosition(slice, chart).labelPoint?.x},${calculateLabelPosition(slice, chart).labelPoint?.y}
                       `}
                       opacity={isActive ? 1 : 0.3}
                     />
                     <OuterLabel
-                      x={calculateLabelPosition(slice, chart).labelPoint.x + (Math.cos(slice.startAngle) > 0 ? 5 : -5)}
-                      y={calculateLabelPosition(slice, chart).labelPoint.y}
+                      x={(calculateLabelPosition(slice, chart).labelPoint?.x || 0) + (Math.cos(slice.startAngle) > 0 ? 5 : -5)}
+                      y={calculateLabelPosition(slice, chart).labelPoint?.y}
                       textAnchor={calculateLabelPosition(slice, chart).textAnchor}
                       opacity={isActive ? 1 : 0.3}
                     >

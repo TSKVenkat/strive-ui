@@ -1,6 +1,8 @@
 export { default as SelectMenuHeadless } from './SelectMenuHeadless';
 export { 
-  useSelectMenu,
+  useSelectMenu
+} from './useSelectMenu';
+export type {
   UseSelectMenuReturn,
   SelectMenuOptions,
   SelectOption

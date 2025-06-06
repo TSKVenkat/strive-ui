@@ -1,5 +1,25 @@
 import React, { forwardRef, useRef, useEffect, useState, ChangeEvent, KeyboardEvent } from 'react';
-import { useChatMessagesContext } from './ChatMessages';
+import { 
+  useChatMessagesContext,
+  ChatMessagesContentProps,
+  ChatMessagesAttachmentsProps,
+  ChatMessagesAttachmentProps,
+  ChatMessagesReactionsProps,
+  ChatMessagesReactionProps,
+  ChatMessagesTimestampProps,
+  ChatMessagesStatusProps,
+  ChatMessagesReplyToProps,
+  ChatMessagesActionsProps,
+  ChatMessagesActionProps,
+  ChatMessagesTypingIndicatorProps,
+  ChatMessagesInputProps,
+  ChatMessagesAttachButtonProps,
+  ChatMessagesSendButtonProps,
+  ChatMessagesLoadMoreProps,
+  ChatMessagesEmptyProps,
+  ChatMessagesLoadingProps
+} from './ChatMessages';
+import { UseChatMessagesReturn } from './useChatMessages';
 
 // Content component
 const Content = forwardRef<HTMLDivElement, ChatMessagesContentProps>(
@@ -522,10 +542,12 @@ const Input = forwardRef<HTMLTextAreaElement, ChatMessagesInputProps>(
         if (typeof ref === 'function') {
           ref(element);
         } else {
-          ref.current = element;
+          (ref as React.MutableRefObject<HTMLTextAreaElement | null>).current = element;
         }
       }
-      inputRef.current = element;
+      if (inputRef.current !== element) {
+        inputRef.current = element;
+      }
     };
     
     return (
@@ -541,7 +563,10 @@ const Input = forwardRef<HTMLTextAreaElement, ChatMessagesInputProps>(
             <button 
               type="button" 
               className="strive-chat-messages-input-reply-to-cancel"
-              onClick={() => setReplyingTo(null)}
+              onClick={() => {
+                const { setReplyingTo } = useChatMessagesContext();
+                setReplyingTo(null);
+              }}
             >
               ×
             </button>
@@ -790,3 +815,4 @@ export {
   Loading,
   Consumer
 };
+

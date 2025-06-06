@@ -270,8 +270,8 @@ export function useToggle({
   
   // Get props for the toggle element
   const getToggleProps = useCallback(<E extends HTMLButtonElement = HTMLButtonElement>(
-    props?: React.ButtonHTMLAttributes<E>
-  ): React.ButtonHTMLAttributes<E> => {
+    props?: React.ButtonHTMLAttributes<E> & { ref?: React.Ref<E> }
+  ): React.ButtonHTMLAttributes<E> & { ref: React.RefCallback<E> } => {
     return {
       ...props,
       ref: mergeRefs(ref, props?.ref),
@@ -323,13 +323,14 @@ export function useToggle({
         handleMouseUp();
         props?.onMouseUp?.(event as any);
       },
-      'data-state': toggled ? 'on' : 'off',
-      'data-disabled': disabled ? '' : undefined,
-      'data-readonly': readOnly ? '' : undefined,
-      'data-required': required ? '' : undefined,
-      'data-focused': focused ? '' : undefined,
-      'data-hovered': hovered ? '' : undefined,
-      'data-pressed': pressed ? '' : undefined,
+      ...(toggled && { 'data-state': 'on' }),
+      ...(!toggled && { 'data-state': 'off' }),
+      ...(disabled && { 'data-disabled': '' }),
+      ...(readOnly && { 'data-readonly': '' }),
+      ...(required && { 'data-required': '' }),
+      ...(focused && { 'data-focused': '' }),
+      ...(hovered && { 'data-hovered': '' }),
+      ...(pressed && { 'data-pressed': '' }),
     };
   }, [
     toggleId,
@@ -367,8 +368,8 @@ export function useToggle({
         }
         props?.onClick?.(event as any);
       },
-      'data-disabled': disabled ? '' : undefined,
-      'data-readonly': readOnly ? '' : undefined,
+      ...(disabled && { 'data-disabled': '' }),
+      ...(readOnly && { 'data-readonly': '' }),
     };
   }, [toggleId, disabled, readOnly, toggle, focus]);
   
@@ -378,9 +379,10 @@ export function useToggle({
   ): React.HTMLAttributes<E> => {
     return {
       ...props,
-      'data-state': toggled ? 'on' : 'off',
-      'data-disabled': disabled ? '' : undefined,
-      'data-readonly': readOnly ? '' : undefined,
+      ...(toggled && { 'data-state': 'on' }),
+      ...(!toggled && { 'data-state': 'off' }),
+      ...(disabled && { 'data-disabled': '' }),
+      ...(readOnly && { 'data-readonly': '' }),
     };
   }, [toggled, disabled, readOnly]);
   
@@ -390,9 +392,10 @@ export function useToggle({
   ): React.HTMLAttributes<E> => {
     return {
       ...props,
-      'data-state': toggled ? 'on' : 'off',
-      'data-disabled': disabled ? '' : undefined,
-      'data-readonly': readOnly ? '' : undefined,
+      ...(toggled && { 'data-state': 'on' }),
+      ...(!toggled && { 'data-state': 'off' }),
+      ...(disabled && { 'data-disabled': '' }),
+      ...(readOnly && { 'data-readonly': '' }),
     };
   }, [toggled, disabled, readOnly]);
   
