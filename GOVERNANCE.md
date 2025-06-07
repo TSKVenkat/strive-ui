@@ -1,61 +1,53 @@
-# Strive UI Governance
+# Pulse UI Governance
 
-## Project Ownership and Leadership
+## Project Leadership
 
-**Strive UI** is owned and maintained by [Venkataraman T S K](https://github.com/TSKVenkat). This governance model ensures focused development, consistent vision, and quality control similar to successful libraries like Material-UI.
+**Pulse UI** is solely owned and maintained by **Venkataraman T S K** ([@TSKVenkat](https://github.com/TSKVenkat)).
 
-## Decision Making Authority
+## Decision Making
 
-### Final Authority
-- All architectural decisions rest with the project owner
-- Breaking changes require owner approval
-- Library direction and roadmap are determined by the owner
-- Component API design and standards are set by the owner
+All major decisions regarding the direction, architecture, and features of Pulse UI are made by the project maintainer. This includes:
 
-### Contribution Process
-- All contributions are welcome but must align with project vision
-- Pull requests require owner review and approval
-- Contributors retain copyright of their contributions but grant usage rights to the project
-- No external contributor can make breaking changes without explicit approval
+- Component design and API decisions
+- Breaking changes and version releases
+- Roadmap planning and priority setting
+- Code review and merge decisions
+- Security and maintenance policies
 
-## Core Principles
+## Contributing
 
-1. **Quality First**: All code must meet high standards for performance, accessibility, and maintainability
-2. **Consistency**: Components must follow established patterns and design principles
-3. **Stability**: Breaking changes are minimized and carefully planned
-4. **Documentation**: All features must be properly documented
+While the project is maintained by a single person, contributions from the community are welcomed and encouraged. All contributions must:
 
-## Contribution Guidelines
+- Follow the established code style and patterns
+- Include comprehensive tests
+- Maintain backward compatibility when possible
+- Follow accessibility best practices
+- Include proper documentation
 
-### Accepted Contributions
-- Bug fixes with proper test coverage
-- Performance improvements
-- Accessibility enhancements
-- Documentation improvements
-- New components that fit the library's scope
-- TypeScript type improvements
+## Communication
 
-### Restricted Areas
-- Core architecture modifications require pre-approval
-- Build system changes require owner review
-- Package configuration changes require owner approval
-- Breaking API changes require detailed RFC process
+- **Issues**: Use GitHub Issues for bug reports and feature requests
+- **Discussions**: Use GitHub Discussions for questions and general discussion
+- **Email**: Contact tskv.0411@gmail.com for direct communication
+- **Security**: Report security issues privately via email
 
-## Support and Funding
+## Release Process
 
-This project is maintained in personal time. If you find value in Strive UI, consider supporting development:
+Releases are managed exclusively by the project maintainer:
 
-- GitHub Sponsors
-- GPay/UPI donations for Indian contributors
-- Corporate sponsorship opportunities available
+1. All changes are reviewed and approved by the maintainer
+2. Semantic versioning is strictly followed
+3. Automated releases are handled via semantic-release
+4. Breaking changes are clearly documented and communicated
 
-## License and Rights
+## Code of Conduct
 
-- Project remains under its original license
-- Owner retains full rights to project direction
-- Contributors cannot fork and compete using contributed code without permission
-- Commercial usage requires adherence to license terms
+This project follows the [Contributor Covenant Code of Conduct](./CODE_OF_CONDUCT.md). All participants are expected to uphold this code.
+
+## License
+
+Pulse UI is released under the MIT License, ensuring it remains free and open-source software.
 
 ---
 
-*This governance model ensures Strive UI maintains its quality and vision while remaining open to community contributions.*
+*This governance model ensures Pulse UI maintains its quality and vision while remaining open to community contributions.*

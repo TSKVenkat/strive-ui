@@ -1,5 +1,5 @@
 /**
- * Dark theme for StriveUI
+ * Dark theme for Pulse UI
  */
 import { createTheme } from './base';
 import { colors } from '../tokens';

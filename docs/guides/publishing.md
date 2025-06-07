@@ -1,16 +1,16 @@
-# Publishing Guide for Strive UI
+# Publishing Guide for Pulse UI
 
-This guide provides comprehensive instructions for publishing the Strive UI library to npm, ensuring a smooth and consistent release process.
+This guide provides comprehensive instructions for publishing the Pulse UI library to npm, ensuring a smooth and consistent release process.
 
 ## Package Structure
 
-Strive UI follows a modern package structure:
+Pulse UI follows a modern package structure:
 
 ```
-@strive-ui/core         # Main package with core components
-@strive-ui/hooks        # Reusable hooks for headless components
-@strive-ui/utils        # Utility functions
-@strive-ui/theme        # Theming system
+@pulse-ui/core         # Main package with core components
+@pulse-ui/hooks        # Reusable hooks for headless components
+@pulse-ui/utils        # Utility functions
+@pulse-ui/theme        # Theming system
 ```
 
 ## Prerequisites
@@ -147,8 +147,8 @@ npm publish --access public
 
 After publishing, verify that:
 
-1. The package is available on npm: `npm view @strive-ui/core`
-2. The package can be installed: `npm install @strive-ui/core`
+1. The package is available on npm: `npm view @pulse-ui/core`
+2. The package can be installed: `npm install @pulse-ui/core`
 3. The package works correctly in a test project
 4. The documentation site is updated with the latest version
 
@@ -194,13 +194,13 @@ Users can install pre-release versions with:
 
 ```bash
 # Alpha version
-npm install @strive-ui/core@alpha
+npm install @pulse-ui/core@alpha
 
 # Beta version
-npm install @strive-ui/core@beta
+npm install @pulse-ui/core@beta
 
 # Release candidate
-npm install @strive-ui/core@rc
+npm install @pulse-ui/core@rc
 ```
 
 ## Post-Publication Tasks
@@ -233,7 +233,7 @@ After publishing:
 If you need to deprecate a version:
 
 ```bash
-npm deprecate @strive-ui/core@"<1.0.0" "This version is no longer supported, please upgrade to v1.x"
+npm deprecate @pulse-ui/core@"<1.0.0" "This version is no longer supported, please upgrade to v1.x"
 ```
 
 For deprecating features within the code, use JSDoc annotations and console warnings:
@@ -265,7 +265,7 @@ For major versions with breaking changes, provide migration guides in the docume
 
 1. **Authentication failures**: Make sure you're logged in with `npm login` and have the correct permissions for the @strive-ui organization
 
-2. **Version conflicts**: Ensure the version hasn't been published before. Check with `npm view @strive-ui/core versions`
+2. **Version conflicts**: Ensure the version hasn't been published before. Check with `npm view @pulse-ui/core versions`
 
 3. **Missing files**: Check your `.npmignore` and `files` field in package.json to ensure all necessary files are included
 

@@ -109,18 +109,18 @@ function FAQExample() {
           animation="both"
         >
           <p>You can install Strive UI using npm or yarn:</p>
-          <pre>npm install @strive-ui/core</pre>
+          <pre>npm install @pulse-ui/core</pre>
           <p>or</p>
-          <pre>yarn add @strive-ui/core</pre>
+          <pre>yarn add @pulse-ui/core</pre>
         </CollapsiblePanel>
         
         <CollapsiblePanel 
-          header={<h3 style={{ margin: 0, fontSize: '1rem' }}>Is Strive UI accessible?</h3>}
+          header={<h3 style={{ margin: 0, fontSize: '1rem' }}>Is Pulse UI accessible?</h3>}
           bordered
           rounded
           animation="both"
         >
-          <p>Yes, Strive UI is designed with accessibility in mind. All components follow WAI-ARIA guidelines and are tested with screen readers.</p>
+          <p>Yes, Pulse UI is designed with accessibility in mind. All components follow WAI-ARIA guidelines and are tested with screen readers.</p>
         </CollapsiblePanel>
       </CollapsibleGroup>
     </div>

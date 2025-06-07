@@ -1,5 +1,5 @@
 /**
- * Base theme definition for StriveUI
+ * Base theme definition for Pulse UI
  * This serves as the foundation for all other themes
  */
 import { colors, typography, spacing, borderRadius, shadows, zIndex, animation } from '../tokens';

@@ -1,5 +1,5 @@
 /**
- * Advanced motion utilities for StriveUI components
+ * Advanced motion utilities for Pulse UI components
  * This file provides animation primitives that can be used with or without framer-motion
  */
 

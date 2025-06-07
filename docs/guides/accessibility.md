@@ -2,13 +2,13 @@
 
 ## Introduction
 
-Strive UI is built with accessibility as a core principle, following WAI-ARIA guidelines and WCAG 2.1 standards to ensure that applications built with our components are usable by everyone, including people with disabilities.
+Pulse UI is built with accessibility as a core principle, following WAI-ARIA guidelines and WCAG 2.1 standards to ensure that applications built with our components are usable by everyone, including people with disabilities.
 
 Our headless component architecture makes accessibility easier to implement while giving you complete control over styling and behavior.
 
 ## Accessibility Principles
 
-All Strive UI components adhere to these key accessibility principles:
+All Pulse UI components adhere to these key accessibility principles:
 
 1. **Semantic HTML**: We use proper HTML elements for their intended purpose and support polymorphic components that can render as appropriate semantic elements.
 
@@ -89,7 +89,7 @@ function CustomButton({ children, ...props }) {
 
 ## Accessibility Best Practices
 
-When using Strive UI components, follow these best practices:
+When using Pulse UI components, follow these best practices:
 
 ### 1. Always provide accessible labels
 
@@ -181,4 +181,4 @@ We recommend a comprehensive testing approach:
 
 ## Feedback and Contributions
 
-We're committed to continuously improving accessibility in Strive UI. If you encounter any accessibility issues or have suggestions for improvements, please [open an issue](https://github.com/TSKVenkat/strive-ui/issues/new?labels=accessibility) on our GitHub repository.
+We're committed to continuously improving accessibility in Pulse UI. If you encounter any accessibility issues or have suggestions for improvements, please [open an issue](https://github.com/TSKVenkat/pulse-ui/issues/new?labels=accessibility) on our GitHub repository.

@@ -1,5 +1,5 @@
 /**
- * Animation hooks for StriveUI components
+ * Animation hooks for Pulse UI components
  * These hooks provide animation capabilities that can be used across components
  */
 import { useRef, useState, useEffect, useCallback } from 'react';

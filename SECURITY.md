@@ -1,52 +1,96 @@
 # Security Policy
 
-## Overview
-
-Strive UI is committed to maintaining the security of our component library. This document outlines our security practices and how to report vulnerabilities.
-
 ## Supported Versions
 
-| Version | Security Updates |
-| ------- | ---------------- |
-| 1.0.x   | ✅               |
-| < 1.0   | ❌               |
+We actively support and provide security updates for the following versions of Pulse UI:
 
-## Reporting Vulnerabilities
+| Version | Supported          |
+| ------- | ------------------ |
+| 1.x.x   | :white_check_mark: |
+| 0.x.x   | :x:                |
 
-If you discover a security vulnerability, please:
+## Reporting a Vulnerability
 
-1. **DO NOT** disclose it publicly
-2. Email directly to **tskv.0411@gmail.com** with:
-   - Clear description of the issue
-   - Steps to reproduce
-   - Potential impact
-   - Suggested fix (if available)
+The security of Pulse UI is taken seriously. If you discover a security vulnerability, please report it by sending an email to:
 
-## Response Timeline
+**tskv.0411@gmail.com**
 
-- **Acknowledgment**: Within 48 hours
-- **Initial assessment**: Within 7 days
-- **Regular updates**: Throughout the resolution process
-- **Public disclosure**: After a fix is available
+### Please include the following information:
 
-## Security Considerations for UI Components
+- A description of the vulnerability
+- Steps to reproduce the issue
+- Potential impact of the vulnerability
+- Any proposed solutions (if available)
 
-### For Library Users
+### What to expect:
 
-1. **Sanitize user input**: Never pass unsanitized user input to component props
-2. **Avoid `dangerouslySetInnerHTML`**: If necessary, use a sanitization library
-3. **Keep dependencies updated**: Run regular security audits
-4. **Implement CSP**: Protect against XSS attacks
+- **Response Time**: You will receive an acknowledgment within 48 hours
+- **Investigation**: We will investigate and assess the vulnerability
+- **Resolution**: Critical vulnerabilities will be addressed within 7 days
+- **Disclosure**: Security advisories will be published after fixes are available
 
-### For Contributors
+## Security Considerations
 
-1. **No secrets in components**: Never embed API keys or credentials
-2. **Validate props**: Implement prop validation and type checking
-3. **Safe event handling**: Be careful with event handlers that modify DOM
-4. **Accessibility**: Security and accessibility often overlap
+### Client-Side Security
 
-## Commitment
+Pulse UI is a client-side library. When using our components:
 
-We take all security reports seriously and will prioritize fixes for confirmed vulnerabilities.
+- Always validate and sanitize user inputs
+- Be cautious with dynamic content rendering
+- Follow React security best practices
+- Use HTTPS in production environments
 
-Thank you for helping keep Strive UI secure.
+### Dependencies
+
+We regularly:
+
+- Monitor dependencies for known vulnerabilities
+- Update dependencies to secure versions
+- Use automated security scanning tools
+- Minimize the dependency footprint
+
+### Accessibility & Security
+
+Our accessibility features are designed with security in mind:
+
+- ARIA attributes are properly escaped
+- Focus management prevents focus trapping attacks
+- Screen reader announcements are sanitized
+
+## Best Practices for Users
+
+When using Pulse UI in your applications:
+
+1. **Keep Updated**: Always use the latest stable version
+2. **Audit Dependencies**: Regularly audit your project dependencies
+3. **Content Security Policy**: Implement appropriate CSP headers
+4. **Input Validation**: Validate all user inputs before passing to components
+5. **HTTPS**: Always serve your application over HTTPS
+
+## Security Features
+
+Pulse UI includes several security considerations:
+
+- **XSS Prevention**: Components properly escape dynamic content
+- **Safe Defaults**: Secure configurations are the default
+- **No Eval**: No use of `eval()` or similar dangerous functions
+- **Minimal Attack Surface**: Headless architecture reduces attack vectors
+
+## Responsible Disclosure
+
+We practice responsible disclosure and request that security researchers:
+
+- Allow reasonable time for investigation and patching
+- Do not publicly disclose vulnerabilities until patches are available
+- Provide clear steps for reproduction
+- Work with us to minimize user impact
+
+## Recognition
+
+We appreciate security researchers who help keep Pulse UI safe. With your permission, we will:
+
+- Credit you in our security advisories
+
+---
+
+Thank you for helping keep Pulse UI and its users safe!

@@ -1,8 +1,8 @@
-# Strive UI Documentation
+# Pulse UI Documentation
 
 ## Overview
 
-This directory contains official documentation for the Strive UI component library, a headless React UI library that prioritizes flexibility, accessibility, and developer experience.
+This directory contains official documentation for the Pulse UI component library, a headless React UI library that prioritizes flexibility, accessibility, and developer experience.
 
 ## Documentation Structure
 
@@ -23,11 +23,11 @@ docs/
 
 ### Getting Started
 
-Start here if you're new to Strive UI. These guides will help you install the library, understand its architecture, and implement your first components.
+Start here if you're new to Pulse UI. These guides will help you install the library, understand its architecture, and implement your first components.
 
 ### Component Patterns
 
-Strive UI implements three powerful component patterns:
+Pulse UI implements three powerful component patterns:
 
 1. **Headless Components** - Separate logic from presentation for complete styling freedom
 2. **Compound Components** - Flexible composition with context-based state sharing
@@ -35,7 +35,7 @@ Strive UI implements three powerful component patterns:
 
 ### Accessibility
 
-All Strive UI components are built with accessibility in mind, following WCAG guidelines and WAI-ARIA patterns. The accessibility guide provides details on how we implement accessibility features and how you can maintain them in your implementations.
+All Pulse UI components are built with accessibility in mind, following WCAG guidelines and WAI-ARIA patterns. The accessibility guide provides details on how we implement accessibility features and how you can maintain them in your implementations.
 
 ## Documentation Standards
 

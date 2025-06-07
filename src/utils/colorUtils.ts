@@ -1,5 +1,5 @@
 /**
- * Color utility functions for the StriveUI library
+ * Color utility functions for the Pulse UI library
  */
 
 /**

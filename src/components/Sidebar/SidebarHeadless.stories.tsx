@@ -449,7 +449,7 @@ export const ModernStyled: Story = {
     <Container>
       <ModernSidebar defaultActiveItem="dashboard" nested autoExpandParent {...args}>
         <SidebarHeader>
-          <Logo>Strive UI</Logo>
+          <Logo>Pulse UI</Logo>
         </SidebarHeader>
         <ModernContent>
           <ModernItem id="dashboard">

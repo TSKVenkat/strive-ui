@@ -1,5 +1,5 @@
 /**
- * Animation variants for StriveUI components
+ * Animation variants for Pulse UI components
  * These variants define the states for animations and can be used with or without framer-motion
  */
 import { MotionVariant } from './motion';

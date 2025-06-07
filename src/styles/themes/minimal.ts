@@ -1,5 +1,5 @@
 /**
- * Minimal theme for StriveUI
+ * Minimal theme for Pulse UI
  * A clean, minimalist theme with subtle styling
  */
 import { createTheme } from './base';

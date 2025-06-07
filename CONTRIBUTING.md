@@ -1,8 +1,8 @@
-# Contributing to Strive UI
+# Contributing to Pulse UI
 
 ## Overview
 
-Thank you for considering contributing to Strive UI! This document provides guidelines for contributing to the project maintained by [Venkataraman T S K](https://github.com/TSKVenkat).
+Thank you for considering contributing to Pulse UI! This document provides guidelines for contributing to the project maintained by [Venkataraman T S K](https://github.com/TSKVenkat).
 
 ## Code of Conduct
 
@@ -12,8 +12,8 @@ Please read our [Code of Conduct](./CODE_OF_CONDUCT.md) before participating in 
 
 ```bash
 # Clone repository
-git clone https://github.com/TSKVenkat/strive-ui.git
-cd strive-ui
+git clone https://github.com/TSKVenkat/pulse-ui.git
+cd pulse-ui
 
 # Install dependencies
 npm install
@@ -129,7 +129,7 @@ Use component or area names as scopes:
 
 ### Headless Component Pattern
 
-Strive UI uses a headless approach that separates logic from presentation:
+Pulse UI uses a headless approach that separates logic from presentation:
 
 1. **Logic Hook** - Contains state management and behavior
 2. **Component** - Uses the hook and provides a base implementation

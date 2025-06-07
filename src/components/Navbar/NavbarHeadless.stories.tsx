@@ -309,7 +309,7 @@ const ModernNavItem = styled(Navbar.Item)`
 export const ModernStyled: Story = {
   render: (args) => (
     <ModernNavbar defaultActiveItem="home" collapsible defaultExpanded={false} {...args}>
-      <ModernBrand>Strive UI</ModernBrand>
+              <ModernBrand>Pulse UI</ModernBrand>
       <ModernToggle>☰</ModernToggle>
       <ModernContent>
         <ModernNavItem id="home">Home</ModernNavItem>

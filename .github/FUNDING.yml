@@ -1,5 +1,8 @@
-# Funding platforms for Strive UI
+# Funding platforms for Pulse UI
 # Support the development and maintenance of this library
 
-github: [TSKVenkat]
-custom: ["https://pay.google.com/gp/p/ui/pay?pa=tskv.0411@okicici&pn=Venkataraman%20TSK"]
+# GitHub Sponsors
+github: TSKVenkat
+
+# Support Pulse UI development
+custom: ["https://www.buymeacoffee.com/tskvenkat", "https://ko-fi.com/tskvenkat"]

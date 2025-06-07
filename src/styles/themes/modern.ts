@@ -1,5 +1,5 @@
 /**
- * Modern theme for StriveUI
+ * Modern theme for Pulse UI
  * A sleek, contemporary theme with rounded corners and subtle shadows
  */
 import { createTheme } from './base';

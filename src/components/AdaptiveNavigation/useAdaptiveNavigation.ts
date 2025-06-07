@@ -291,7 +291,7 @@ export function useAdaptiveNavigation({
   isOpen: controlledIsOpen,
   onOpenChange,
   collapseToIcons = true,
-  storageKey = 'strive-ui-adaptive-navigation',
+      storageKey = 'pulse-ui-adaptive-navigation',
 }: UseAdaptiveNavigationProps): UseAdaptiveNavigationReturn {
   // State for active item
   const [internalActiveId, setInternalActiveId] = useState<string | null>(defaultActiveId || (items.length > 0 ? items[0].id : null));

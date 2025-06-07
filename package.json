@@ -1,12 +1,12 @@
 {
-    "name": "@strive-ui/core",
+    "name": "@pulse-ui/core",
     "version": "1.0.0",
-    "description": "A professional, accessible, and customizable React UI component library with headless components for maximum styling flexibility",
+    "description": "A production-ready, headless React UI component library offering maximum styling flexibility with robust TypeScript support and comprehensive accessibility features",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
     "types": "dist/types/index.d.ts",
-    "unpkg": "dist/umd/strive-ui.min.js",
-    "jsdelivr": "dist/umd/strive-ui.min.js",
+    "unpkg": "dist/umd/pulse-ui.min.js",
+    "jsdelivr": "dist/umd/pulse-ui.min.js",
     "files": [
         "dist",
         "README.md",
@@ -124,17 +124,26 @@
         "typescript",
         "accessible",
         "a11y",
-        "styled-components"
+        "styled-components",
+        "pulse-ui",
+        "production-ready",
+        "tree-shakeable",
+        "polymorphic",
+        "compound-components",
+        "wcag",
+        "aria",
+        "theming",
+        "dark-mode"
     ],
     "author": "Venkatarama T S K <tskv.0411@gmail.com>",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/TSKVenkat/strive-ui.git"
+        "url": "https://github.com/TSKVenkat/pulse-ui.git"
     },
-    "homepage": "https://github.com/TSKVenkat/strive-ui#readme",
+    "homepage": "https://github.com/TSKVenkat/pulse-ui#readme",
     "bugs": {
-        "url": "https://github.com/TSKVenkat/strive-ui/issues"
+        "url": "https://github.com/TSKVenkat/pulse-ui/issues"
     },
     "size-limit": [
         {
@@ -146,7 +155,7 @@
             "limit": "50 KB"
         },
         {
-            "path": "dist/umd/strive-ui.min.js",
+            "path": "dist/umd/pulse-ui.min.js",
             "limit": "60 KB"
         },
         {

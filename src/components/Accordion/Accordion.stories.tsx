@@ -26,24 +26,24 @@ export default {
 export const Basic = () => (
   <Accordion>
     <Accordion.Item id="item1">
-      <Accordion.Header>What is StriveUI?</Accordion.Header>
+      <Accordion.Header>What is Pulse UI?</Accordion.Header>
       <Accordion.Panel>
-        <p>StriveUI is a modern React component library designed to help developers build beautiful and accessible user interfaces with ease.</p>
+        <p>Pulse UI is a modern React component library designed to help developers build beautiful and accessible user interfaces with ease.</p>
       </Accordion.Panel>
     </Accordion.Item>
     <Accordion.Item id="item2">
-      <Accordion.Header>How do I install StriveUI?</Accordion.Header>
+      <Accordion.Header>How do I install Pulse UI?</Accordion.Header>
       <Accordion.Panel>
-        <p>You can install StriveUI using npm or yarn:</p>
-        <pre>npm install strive-ui</pre>
+        <p>You can install Pulse UI using npm or yarn:</p>
+        <pre>npm install @pulse-ui/core</pre>
         <p>or</p>
-        <pre>yarn add strive-ui</pre>
+        <pre>yarn add @pulse-ui/core</pre>
       </Accordion.Panel>
     </Accordion.Item>
     <Accordion.Item id="item3">
-      <Accordion.Header>Is StriveUI accessible?</Accordion.Header>
+      <Accordion.Header>Is Pulse UI accessible?</Accordion.Header>
       <Accordion.Panel>
-        <p>Yes! StriveUI is built with accessibility in mind. All components follow WAI-ARIA guidelines and are thoroughly tested for keyboard navigation, screen reader support, and other accessibility requirements.</p>
+        <p>Yes! Pulse UI is built with accessibility in mind. All components follow WAI-ARIA guidelines and are thoroughly tested for keyboard navigation, screen reader support, and other accessibility requirements.</p>
       </Accordion.Panel>
     </Accordion.Item>
   </Accordion>

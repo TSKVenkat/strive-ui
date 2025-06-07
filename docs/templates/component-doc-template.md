@@ -1,6 +1,6 @@
 # ComponentName
 
-Brief description of the component's purpose, main use cases, and how it fits into the headless architecture of Strive UI.
+Brief description of the component's purpose, main use cases, and how it fits into the headless architecture of Pulse UI.
 
 ## Overview
 
@@ -9,17 +9,17 @@ A more detailed explanation of the component, its design philosophy, and how it 
 ## Installation
 
 ```bash
-npm install @strive-ui/core
+npm install @pulse-ui/core
 ```
 
 ## Import
 
 ```jsx
 // Import the component
-import { ComponentName } from '@strive-ui/core';
+import { ComponentName } from '@pulse-ui/core';
 
 // Import the hook (for headless usage)
-import { useComponentName } from '@strive-ui/core';
+import { useComponentName } from '@pulse-ui/core';
 ```
 
 ## Features
@@ -198,36 +198,70 @@ function FormExample() {
   
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <ComponentName {...register('fieldName')} />
-      <Button type="submit">Submit</Button>
+      <ComponentName {...register('fieldName')}>
+        Form content
+      </ComponentName>
     </form>
   );
 }
 ```
 
-### Custom Styling Example
+### With Theme
 
 ```jsx
-import { createTheme, ThemeProvider } from '@strive-ui/core';
+import { createTheme, ThemeProvider } from '@pulse-ui/core';
 
-const customTheme = createTheme({
-  components: {
-    ComponentName: {
-      baseStyle: {
-        backgroundColor: '#f5f5f5',
-        borderRadius: '4px',
-      },
-      variants: {
-        primary: {
-          color: 'white',
-          backgroundColor: 'blue',
-        },
-      },
-    },
+const theme = createTheme({
+  colors: {
+    primary: '#007bff',
+    secondary: '#6c757d',
   },
 });
 
-<ThemeProvider theme={customTheme}>
-  <ComponentName variant="primary">Themed Component</ComponentName>
-</ThemeProvider>
+function ThemedComponent() {
+  return (
+    <ThemeProvider theme={theme}>
+      <ComponentName>Themed content</ComponentName>
+    </ThemeProvider>
+  );
+}
 ```
+
+### Advanced Usage
+
+```jsx
+function AdvancedExample() {
+  const [value, setValue] = useState('');
+  
+  const { state, getProps } = useComponentName({
+    value,
+    onChange: setValue,
+    disabled: false,
+  });
+  
+  return (
+    <div>
+      <ComponentName {...getProps()}>
+        Advanced usage
+      </ComponentName>
+      <p>Current state: {JSON.stringify(state)}</p>
+    </div>
+  );
+}
+```
+
+## Troubleshooting
+
+Common issues and solutions:
+
+- **Issue 1**: Description and solution
+- **Issue 2**: Description and solution
+- **Issue 3**: Description and solution
+
+## Related Components
+
+List related components that work well together:
+
+- [ComponentA](./ComponentA.md) - For similar functionality
+- [ComponentB](./ComponentB.md) - For composition patterns
+- [ComponentC](./ComponentC.md) - For form integration

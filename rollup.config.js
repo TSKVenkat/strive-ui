@@ -6,7 +6,7 @@ import babel from '@rollup/plugin-babel';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import { visualizer } from 'rollup-plugin-visualizer';
-import pkg from './package.json';
+import pkg from './package.json' with { type: 'json' };
 
 // Shared plugins for all formats
 const basePlugins = [
@@ -21,6 +21,11 @@ const basePlugins = [
     babelHelpers: 'bundled',
     exclude: 'node_modules/**',
     extensions: ['.ts', '.tsx'],
+    presets: [
+      '@babel/preset-env',
+      '@babel/preset-react',
+      '@babel/preset-typescript'
+    ],
   }),
 ];
 
@@ -34,12 +39,6 @@ const cssPlugin = postcss({
   autoModules: true,
   minimize: true,
   sourceMap: true,
-  plugins: [
-    require('postcss-import'),
-    require('postcss-nested'),
-    require('autoprefixer'),
-    require('cssnano')({ preset: 'default' }),
-  ],
 });
 
 export default [
@@ -75,9 +74,9 @@ export default [
   {
     input: 'src/index.ts',
     output: {
-      file: 'dist/umd/strive-ui.min.js',
+      file: 'dist/umd/pulse-ui.min.js',
       format: 'umd',
-      name: 'StriveUI',
+      name: 'PulseUI',
       globals: {
         react: 'React',
         'react-dom': 'ReactDOM',
@@ -91,7 +90,7 @@ export default [
       terser(),
       visualizer({
         filename: 'bundle-analysis.html',
-        title: 'Strive UI Bundle Analysis',
+        title: 'Pulse UI Bundle Analysis',
         open: true,
         gzipSize: true,
         brotliSize: true

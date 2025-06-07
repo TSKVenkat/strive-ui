@@ -2,14 +2,14 @@
 
 ## Overview
 
-Strive UI provides a flexible theming system that works with its headless architecture, allowing complete customization of component styling while maintaining consistent design tokens.
+Pulse UI provides a flexible theming system that works with its headless architecture, allowing complete customization of component styling while maintaining consistent design tokens.
 
 ## Default Theme
 
 The default theme includes a comprehensive set of design tokens for colors, typography, spacing, and more. It's automatically applied when using the `ThemeProvider`:
 
 ```jsx
-import { ThemeProvider } from '@strive-ui/core';
+import { ThemeProvider } from '@pulse-ui/core';
 
 function App() {
   return (

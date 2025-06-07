@@ -1,5 +1,5 @@
 /**
- * Animation transitions for StriveUI components
+ * Animation transitions for Pulse UI components
  * These transitions can be used with or without framer-motion
  */
 import { MotionTransition } from './motion';
