@@ -17,13 +17,13 @@ The `EmailLayout` component provides a layout optimized for creating email templ
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { EmailLayout, EmailSection, EmailButton } from '@strive-ui/layout';
+import { EmailLayout, EmailSection, EmailButton } from '@pulseui/layout';
 
 function BasicEmailTemplate() {
   return (
@@ -135,7 +135,7 @@ function BasicEmailTemplate() {
 ### Promotional Email
 
 ```tsx
-import { EmailLayout, EmailSection, EmailButton } from '@strive-ui/layout';
+import { EmailLayout, EmailSection, EmailButton } from '@pulseui/layout';
 
 function PromotionalEmail() {
   return (
@@ -328,7 +328,7 @@ function PromotionalEmail() {
 ### Newsletter Email
 
 ```tsx
-import { EmailLayout, EmailSection, EmailButton } from '@strive-ui/layout';
+import { EmailLayout, EmailSection, EmailButton } from '@pulseui/layout';
 
 function NewsletterEmail() {
   return (

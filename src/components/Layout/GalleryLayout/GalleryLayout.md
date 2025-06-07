@@ -14,13 +14,13 @@ The `GalleryLayout` component provides a flexible way to create various image ga
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { GalleryLayout } from '@strive-ui/layout';
+import { GalleryLayout } from '@pulseui/layout';
 
 function BasicGallery() {
   const images = [
@@ -47,7 +47,7 @@ function BasicGallery() {
 ### Different Layout Variants
 
 ```tsx
-import { GalleryLayout } from '@strive-ui/layout';
+import { GalleryLayout } from '@pulseui/layout';
 import { useState } from 'react';
 
 function LayoutVariantsExample() {
@@ -85,7 +85,7 @@ function LayoutVariantsExample() {
 ### Different Aspect Ratios
 
 ```tsx
-import { GalleryLayout } from '@strive-ui/layout';
+import { GalleryLayout } from '@pulseui/layout';
 import { useState } from 'react';
 
 function AspectRatioExample() {
@@ -124,7 +124,7 @@ function AspectRatioExample() {
 ### Responsive Gallery
 
 ```tsx
-import { GalleryLayout } from '@strive-ui/layout';
+import { GalleryLayout } from '@pulseui/layout';
 
 function ResponsiveGalleryExample() {
   const images = [
@@ -161,7 +161,7 @@ function ResponsiveGalleryExample() {
 ### Carousel Gallery
 
 ```tsx
-import { GalleryLayout } from '@strive-ui/layout';
+import { GalleryLayout } from '@pulseui/layout';
 
 function CarouselGalleryExample() {
   const images = [
@@ -191,7 +191,7 @@ function CarouselGalleryExample() {
 ### Mosaic Gallery
 
 ```tsx
-import { GalleryLayout } from '@strive-ui/layout';
+import { GalleryLayout } from '@pulseui/layout';
 
 function MosaicGalleryExample() {
   const images = [

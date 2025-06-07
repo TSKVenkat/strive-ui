@@ -13,13 +13,13 @@ The `Container` component is a fundamental layout element that provides consiste
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { Container } from '@strive-ui/layout';
+import { Container } from '@pulseui/layout';
 
 function MyPage() {
   return (
@@ -36,7 +36,7 @@ function MyPage() {
 ### Different Max Widths
 
 ```tsx
-import { Container } from '@strive-ui/layout';
+import { Container } from '@pulseui/layout';
 
 function WidthExamples() {
   return (
@@ -78,7 +78,7 @@ function WidthExamples() {
 ### Custom Padding
 
 ```tsx
-import { Container } from '@strive-ui/layout';
+import { Container } from '@pulseui/layout';
 
 function PaddingExamples() {
   return (
@@ -108,7 +108,7 @@ function PaddingExamples() {
 ### Fluid Container
 
 ```tsx
-import { Container } from '@strive-ui/layout';
+import { Container } from '@pulseui/layout';
 
 function FluidExample() {
   return (
@@ -124,7 +124,7 @@ function FluidExample() {
 ### As Different Element
 
 ```tsx
-import { Container } from '@strive-ui/layout';
+import { Container } from '@pulseui/layout';
 
 function AsExample() {
   return (

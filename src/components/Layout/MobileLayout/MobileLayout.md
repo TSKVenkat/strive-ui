@@ -16,13 +16,13 @@ The `MobileLayout` component provides a layout optimized for mobile devices with
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { MobileLayout, MobileScreen } from '@strive-ui/layout';
+import { MobileLayout, MobileScreen } from '@pulseui/layout';
 
 function BasicMobileApp() {
   return (
@@ -62,7 +62,7 @@ function BasicMobileApp() {
 ### Multi-Screen Mobile App
 
 ```tsx
-import { MobileLayout, MobileScreen, MobileTabBar } from '@strive-ui/layout';
+import { MobileLayout, MobileScreen, MobileTabBar } from '@pulseui/layout';
 import { useState } from 'react';
 
 function MultiScreenApp() {
@@ -292,7 +292,7 @@ function MultiScreenApp() {
 ### Dark Theme Mobile App
 
 ```tsx
-import { MobileLayout, MobileScreen } from '@strive-ui/layout';
+import { MobileLayout, MobileScreen } from '@pulseui/layout';
 
 function DarkThemeMobileApp() {
   return (

@@ -5,7 +5,7 @@ A headless component for creating customizable 404 (Not Found) pages with extens
 ## Usage
 
 ```jsx
-import { NotFoundPageHeadless } from 'strive-ui';
+import { NotFoundPageHeadless } from 'pulseui';
 
 function My404Page() {
   return (
@@ -24,7 +24,7 @@ function My404Page() {
 ## Custom 404 Page
 
 ```jsx
-import { NotFoundPageHeadless } from 'strive-ui';
+import { NotFoundPageHeadless } from 'pulseui';
 import styled from 'styled-components';
 
 // Styled components
@@ -88,7 +88,7 @@ function Custom404Page() {
 ## 404 Page with Search and Suggestions
 
 ```jsx
-import { NotFoundPageHeadless } from 'strive-ui';
+import { NotFoundPageHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function NotFoundPageWithSearch() {
@@ -162,7 +162,7 @@ function NotFoundPageWithSearch() {
 ## Creative 404 Page
 
 ```jsx
-import { NotFoundPageHeadless } from 'strive-ui';
+import { NotFoundPageHeadless } from 'pulseui';
 import { useState, useEffect } from 'react';
 
 function Creative404Page() {
@@ -268,7 +268,7 @@ function Creative404Page() {
 ## Responsive 404 Page
 
 ```jsx
-import { NotFoundPageHeadless } from 'strive-ui';
+import { NotFoundPageHeadless } from 'pulseui';
 import { useEffect, useState } from 'react';
 
 function Responsive404Page() {
@@ -393,7 +393,7 @@ function Responsive404Page() {
 For even more control, you can use the `useNotFoundPage` hook directly:
 
 ```jsx
-import { useNotFoundPage } from 'strive-ui';
+import { useNotFoundPage } from 'pulseui';
 
 function MyCustomNotFoundPage() {
   const {

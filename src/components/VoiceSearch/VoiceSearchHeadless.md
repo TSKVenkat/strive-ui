@@ -5,7 +5,7 @@ A headless component for creating customizable voice search interfaces with exte
 ## Usage
 
 ```jsx
-import { VoiceSearchHeadless } from 'strive-ui';
+import { VoiceSearchHeadless } from 'pulseui';
 
 function MyVoiceSearch() {
   const handleResult = (result, isFinal) => {
@@ -155,7 +155,7 @@ interface SpeechRecognitionResult {
 For even more control, you can use the `useVoiceSearch` hook directly:
 
 ```jsx
-import { useVoiceSearch } from 'strive-ui';
+import { useVoiceSearch } from 'pulseui';
 
 function MyCustomVoiceSearch() {
   const {

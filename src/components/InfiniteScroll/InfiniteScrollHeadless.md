@@ -15,7 +15,7 @@ A headless implementation of infinite scrolling that provides all the functional
 ## Basic Usage
 
 ```jsx
-import { InfiniteScroll } from 'strive-ui';
+import { InfiniteScroll } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -107,7 +107,7 @@ function MyInfiniteScroll() {
 ## Window Scrolling
 
 ```jsx
-import { InfiniteScroll } from 'strive-ui';
+import { InfiniteScroll } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -213,7 +213,7 @@ function WindowScrollExample() {
 ## Error Handling
 
 ```jsx
-import { InfiniteScroll } from 'strive-ui';
+import { InfiniteScroll } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -323,7 +323,7 @@ function ErrorHandlingExample() {
 ## Advanced Customization
 
 ```jsx
-import { InfiniteScroll } from 'strive-ui';
+import { InfiniteScroll } from 'pulseui';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';

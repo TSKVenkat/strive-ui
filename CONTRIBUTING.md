@@ -12,8 +12,8 @@ Please read our [Code of Conduct](./CODE_OF_CONDUCT.md) before participating in 
 
 ```bash
 # Clone repository
-git clone https://github.com/TSKVenkat/pulse-ui.git
-cd pulse-ui
+git clone https://github.com/TSKVenkat/pulseui.git
+cd pulseui
 
 # Install dependencies
 npm install

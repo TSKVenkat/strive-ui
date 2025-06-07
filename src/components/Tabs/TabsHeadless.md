@@ -15,7 +15,7 @@ A headless implementation of tabs that provides all the functionality without an
 ## Basic Usage
 
 ```jsx
-import { Tabs } from 'strive-ui';
+import { Tabs } from 'pulseui';
 import styled from 'styled-components';
 
 // Create your own styled components
@@ -75,7 +75,7 @@ function MyTabs() {
 ### Vertical Tabs
 
 ```jsx
-import { Tabs } from 'strive-ui';
+import { Tabs } from 'pulseui';
 import styled from 'styled-components';
 
 const VerticalTabsContainer = styled(Tabs)`
@@ -134,7 +134,7 @@ function VerticalTabs() {
 
 ```jsx
 import { useState } from 'react';
-import { Tabs } from 'strive-ui';
+import { Tabs } from 'pulseui';
 
 function ControlledTabs() {
   const [activeTab, setActiveTab] = useState('tab1');
@@ -163,7 +163,7 @@ function ControlledTabs() {
 ### Customizing Keyboard Behavior
 
 ```jsx
-import { Tabs } from 'strive-ui';
+import { Tabs } from 'pulseui';
 
 function CustomKeyboardTabs() {
   return (
@@ -189,7 +189,7 @@ function CustomKeyboardTabs() {
 ### Polymorphic Usage
 
 ```jsx
-import { Tabs } from 'strive-ui';
+import { Tabs } from 'pulseui';
 
 function PolymorphicTabs() {
   return (

@@ -21,7 +21,7 @@ A clear and concise description of what you expected to happen.
 **Code Example**
 ```jsx
 // Provide a minimal code example that demonstrates the issue
-import { Component } from '@pulse-ui/core';
+import { Component } from '@pulseui/core';
 
 function Example() {
   return <Component prop="value" />;

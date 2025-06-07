@@ -17,7 +17,7 @@ A headless multi-select component that provides all the functionality for select
 ### Basic Usage
 
 ```jsx
-import { MultiSelect } from '@strive-ui/multi-select';
+import { MultiSelect } from '@pulseui/multi-select';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -42,7 +42,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { MultiSelect } from '@strive-ui/multi-select';
+import { MultiSelect } from '@pulseui/multi-select';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -81,7 +81,7 @@ function ControlledMultiSelect() {
 ### With Search
 
 ```jsx
-import { MultiSelect } from '@strive-ui/multi-select';
+import { MultiSelect } from '@pulseui/multi-select';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -109,7 +109,7 @@ function SearchableMultiSelect() {
 ### With Option Groups
 
 ```jsx
-import { MultiSelect } from '@strive-ui/multi-select';
+import { MultiSelect } from '@pulseui/multi-select';
 
 const options = [
   { value: 'apple', label: 'Apple', group: 'Fruits' },
@@ -165,7 +165,7 @@ function GroupedMultiSelect() {
 ### With Maximum Selection Limit
 
 ```jsx
-import { MultiSelect } from '@strive-ui/multi-select';
+import { MultiSelect } from '@pulseui/multi-select';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -189,7 +189,7 @@ function LimitedMultiSelect() {
 ### Disabled State
 
 ```jsx
-import { MultiSelect } from '@strive-ui/multi-select';
+import { MultiSelect } from '@pulseui/multi-select';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -214,7 +214,7 @@ function DisabledMultiSelect() {
 ### Custom Styling
 
 ```jsx
-import { MultiSelect } from '@strive-ui/multi-select';
+import { MultiSelect } from '@pulseui/multi-select';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -369,7 +369,7 @@ function CustomStyledMultiSelect() {
 ### Using the Hook Directly
 
 ```jsx
-import { useMultiSelect } from '@strive-ui/multi-select';
+import { useMultiSelect } from '@pulseui/multi-select';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -524,7 +524,7 @@ The MultiSelect component and its sub-components expose several data attributes 
 #### useMultiSelect
 
 ```jsx
-import { useMultiSelect } from '@strive-ui/multi-select';
+import { useMultiSelect } from '@pulseui/multi-select';
 
 function MyCustomMultiSelect() {
   const {

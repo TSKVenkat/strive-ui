@@ -5,7 +5,7 @@ The Rating component provides an intuitive interface for users to provide rating
 ## Import
 
 ```jsx
-import { Rating } from 'strive-ui';
+import { Rating } from 'pulseui';
 ```
 
 ## Usage

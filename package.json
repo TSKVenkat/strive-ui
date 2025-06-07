@@ -1,5 +1,5 @@
 {
-    "name": "@pulse-ui/core",
+    "name": "@pulseui/core",
     "version": "1.0.0",
     "description": "A production-ready, headless React UI component library offering maximum styling flexibility with robust TypeScript support and comprehensive accessibility features",
     "main": "dist/cjs/index.js",

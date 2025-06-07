@@ -5,7 +5,7 @@ The Icon component provides a consistent way to display vector icons throughout 
 ## Import
 
 ```jsx
-import { Icon } from 'strive-ui';
+import { Icon } from 'pulseui';
 ```
 
 ## Features
@@ -20,7 +20,7 @@ import { Icon } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Icon } from 'strive-ui';
+import { Icon } from 'pulseui';
 
 // Basic usage with icon name
 <Icon name="check" />

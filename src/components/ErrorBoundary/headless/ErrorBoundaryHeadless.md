@@ -5,7 +5,7 @@ A headless component for creating customizable error boundaries with extensive f
 ## Usage
 
 ```jsx
-import { ErrorBoundaryHeadless } from 'strive-ui';
+import { ErrorBoundaryHeadless } from 'pulseui';
 
 function MyComponent() {
   return (
@@ -28,7 +28,7 @@ function MyComponent() {
 ## Custom Error Fallback UI
 
 ```jsx
-import { ErrorBoundaryHeadless } from 'strive-ui';
+import { ErrorBoundaryHeadless } from 'pulseui';
 
 function CustomErrorFallback() {
   const { error, resetErrorBoundary } = ErrorBoundaryHeadless.useErrorBoundaryContext();
@@ -68,7 +68,7 @@ function MyApplication() {
 ## Developer Mode with Error Details
 
 ```jsx
-import { ErrorBoundaryHeadless } from 'strive-ui';
+import { ErrorBoundaryHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function BuggyCounter() {
@@ -115,7 +115,7 @@ function DeveloperExample() {
 ## Nested Error Boundaries
 
 ```jsx
-import { ErrorBoundaryHeadless } from 'strive-ui';
+import { ErrorBoundaryHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function BuggyComponent() {
@@ -200,7 +200,7 @@ function NestedErrorBoundariesExample() {
 ## Error Boundary with Retry Logic
 
 ```jsx
-import { ErrorBoundaryHeadless } from 'strive-ui';
+import { ErrorBoundaryHeadless } from 'pulseui';
 import { useState, useEffect } from 'react';
 
 function DataFetcher({ url }) {
@@ -320,7 +320,7 @@ function RetryExample() {
 For even more control, you can use the `useErrorBoundary` hook directly:
 
 ```jsx
-import { useErrorBoundary } from 'strive-ui';
+import { useErrorBoundary } from 'pulseui';
 
 function MyCustomErrorBoundary() {
   const {

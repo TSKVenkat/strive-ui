@@ -5,7 +5,7 @@ The Alert component is designed to display important messages to users, such as 
 ## Import
 
 ```jsx
-import { Alert } from 'strive-ui';
+import { Alert } from 'pulseui';
 ```
 
 ## Features
@@ -24,7 +24,7 @@ import { Alert } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Alert, Button } from 'strive-ui';
+import { Alert, Button } from 'pulseui';
 
 // Basic usage
 <Alert variant="info" title="Information">

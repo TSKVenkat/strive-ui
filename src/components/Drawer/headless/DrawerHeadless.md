@@ -5,7 +5,7 @@ A headless component for creating customizable sliding drawers with extensive fl
 ## Usage
 
 ```jsx
-import { DrawerHeadless } from 'strive-ui';
+import { DrawerHeadless } from 'pulseui';
 
 function MyDrawer() {
   return (
@@ -110,7 +110,7 @@ function MyDrawer() {
 ## Creating a Reusable Drawer
 
 ```jsx
-import { DrawerHeadless } from 'strive-ui';
+import { DrawerHeadless } from 'pulseui';
 
 function CustomDrawer({ 
   isOpen, 
@@ -249,7 +249,7 @@ function App() {
 For even more control, you can use the `useDrawer` hook directly:
 
 ```jsx
-import { useDrawer } from 'strive-ui';
+import { useDrawer } from 'pulseui';
 
 function MyCustomDrawer() {
   const {

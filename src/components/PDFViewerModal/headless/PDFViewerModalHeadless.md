@@ -5,7 +5,7 @@ A headless component for creating customizable PDF viewer modals with extensive 
 ## Usage
 
 ```jsx
-import { PDFViewerModalHeadless } from 'strive-ui';
+import { PDFViewerModalHeadless } from 'pulseui';
 
 function MyPDFViewer() {
   return (
@@ -313,7 +313,7 @@ function MyPDFViewer() {
 ## Creating a Reusable PDF Viewer Modal
 
 ```jsx
-import { PDFViewerModalHeadless } from 'strive-ui';
+import { PDFViewerModalHeadless } from 'pulseui';
 
 function CustomPDFViewer({ 
   isOpen, 
@@ -582,7 +582,7 @@ function App() {
 The PDFViewerModalHeadless component is designed to be used with a PDF rendering library like PDF.js. Here's an example of how to integrate it with PDF.js:
 
 ```jsx
-import { PDFViewerModalHeadless } from 'strive-ui';
+import { PDFViewerModalHeadless } from 'pulseui';
 import { Document, Page, pdfjs } from 'react-pdf';
 
 // Initialize PDF.js worker
@@ -715,7 +715,7 @@ function PDFViewerWithPDFJS() {
 For even more control, you can use the `usePDFViewerModal` hook directly:
 
 ```jsx
-import { usePDFViewerModal } from 'strive-ui';
+import { usePDFViewerModal } from 'pulseui';
 
 function MyCustomPDFViewer() {
   const {

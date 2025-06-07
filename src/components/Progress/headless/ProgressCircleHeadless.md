@@ -5,7 +5,7 @@ A headless component for creating customizable circular progress indicators with
 ## Usage
 
 ```jsx
-import { ProgressCircleHeadless } from 'strive-ui';
+import { ProgressCircleHeadless } from 'pulseui';
 
 function MyProgressCircle() {
   return (
@@ -55,7 +55,7 @@ function MyProgressCircle() {
 ## Creating Different Progress Circle Variants
 
 ```jsx
-import { ProgressCircleHeadless } from 'strive-ui';
+import { ProgressCircleHeadless } from 'pulseui';
 import { useState, useEffect } from 'react';
 
 function ProgressCircleExample() {
@@ -199,7 +199,7 @@ function ProgressCircleExample() {
 ## Creating a Reusable Progress Circle Component
 
 ```jsx
-import { ProgressCircleHeadless } from 'strive-ui';
+import { ProgressCircleHeadless } from 'pulseui';
 import { useState, useEffect } from 'react';
 
 function CustomProgressCircle({ 
@@ -371,7 +371,7 @@ function App() {
 ## Creating a Dashboard with Progress Circles
 
 ```jsx
-import { ProgressCircleHeadless } from 'strive-ui';
+import { ProgressCircleHeadless } from 'pulseui';
 import { useState, useEffect } from 'react';
 
 function ProgressDashboard() {
@@ -502,7 +502,7 @@ function ProgressDashboard() {
 For even more control, you can use the `useProgress` hook directly:
 
 ```jsx
-import { useProgress } from 'strive-ui';
+import { useProgress } from 'pulseui';
 
 function MyCustomProgressCircle() {
   const {

@@ -16,7 +16,7 @@ A headless rich text editor component that provides all the functionality for ri
 ### Basic Usage
 
 ```jsx
-import { RichTextEditor } from '@strive-ui/rich-text-editor';
+import { RichTextEditor } from '@pulseui/rich-text-editor';
 
 function MyComponent() {
   return (
@@ -33,7 +33,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { RichTextEditor } from '@strive-ui/rich-text-editor';
+import { RichTextEditor } from '@pulseui/rich-text-editor';
 
 function ControlledEditor() {
   const [value, setValue] = useState('<p>Initial content</p>');
@@ -57,7 +57,7 @@ function ControlledEditor() {
 ### Custom Toolbar Options
 
 ```jsx
-import { RichTextEditor } from '@strive-ui/rich-text-editor';
+import { RichTextEditor } from '@pulseui/rich-text-editor';
 
 function EditorWithCustomToolbar() {
   return (
@@ -72,7 +72,7 @@ function EditorWithCustomToolbar() {
 ### Character Limit
 
 ```jsx
-import { RichTextEditor } from '@strive-ui/rich-text-editor';
+import { RichTextEditor } from '@pulseui/rich-text-editor';
 
 function EditorWithCharLimit() {
   return (
@@ -87,7 +87,7 @@ function EditorWithCharLimit() {
 ### Custom File Upload Handler
 
 ```jsx
-import { RichTextEditor } from '@strive-ui/rich-text-editor';
+import { RichTextEditor } from '@pulseui/rich-text-editor';
 
 function EditorWithFileUpload() {
   const handleFileUpload = async (file) => {
@@ -118,7 +118,7 @@ function EditorWithFileUpload() {
 ### Read-Only Mode
 
 ```jsx
-import { RichTextEditor } from '@strive-ui/rich-text-editor';
+import { RichTextEditor } from '@pulseui/rich-text-editor';
 
 function ReadOnlyEditor() {
   return (
@@ -133,7 +133,7 @@ function ReadOnlyEditor() {
 ### Disabled State
 
 ```jsx
-import { RichTextEditor } from '@strive-ui/rich-text-editor';
+import { RichTextEditor } from '@pulseui/rich-text-editor';
 
 function DisabledEditor() {
   return (
@@ -148,7 +148,7 @@ function DisabledEditor() {
 ### Custom Styling
 
 ```jsx
-import { RichTextEditor } from '@strive-ui/rich-text-editor';
+import { RichTextEditor } from '@pulseui/rich-text-editor';
 
 function CustomStyledEditor() {
   return (
@@ -322,7 +322,7 @@ The following toolbar options are available:
 #### useRichTextEditor
 
 ```jsx
-import { useRichTextEditor } from '@strive-ui/rich-text-editor';
+import { useRichTextEditor } from '@pulseui/rich-text-editor';
 
 function MyCustomEditor() {
   const { 
@@ -374,7 +374,7 @@ Then, in your application:
 import { useEffect, useRef } from 'react';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css'; // Import Quill styles
-import { RichTextEditor } from '@strive-ui/rich-text-editor';
+import { RichTextEditor } from '@pulseui/rich-text-editor';
 
 function QuillEditor() {
   const editorRef = useRef(null);
@@ -426,7 +426,7 @@ The RichTextEditor component is designed to be highly customizable. You can over
 
 ```jsx
 import styled from 'styled-components';
-import { RichTextEditor } from '@strive-ui/rich-text-editor';
+import { RichTextEditor } from '@pulseui/rich-text-editor';
 
 const StyledEditor = styled(RichTextEditor)`
   border: 1px solid #e2e8f0;

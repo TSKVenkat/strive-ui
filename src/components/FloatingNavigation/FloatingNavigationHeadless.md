@@ -17,7 +17,7 @@ A headless implementation of a floating navigation component that can be positio
 ## Basic Usage
 
 ```jsx
-import { FloatingNavigation } from 'strive-ui';
+import { FloatingNavigation } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -157,7 +157,7 @@ function MyFloatingNavigation() {
 ## Collapsible Navigation Example
 
 ```jsx
-import { FloatingNavigation } from 'strive-ui';
+import { FloatingNavigation } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -291,7 +291,7 @@ function CollapsibleFloatingNavigation() {
 ## Draggable Navigation Example
 
 ```jsx
-import { FloatingNavigation } from 'strive-ui';
+import { FloatingNavigation } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 

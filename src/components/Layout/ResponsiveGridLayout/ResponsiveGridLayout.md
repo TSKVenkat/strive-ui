@@ -19,7 +19,7 @@ The `ResponsiveGridLayout` component provides a powerful and flexible grid syste
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
@@ -30,7 +30,7 @@ npm install @strive-ui/layout
 import { 
   ResponsiveGridLayout, 
   GridItem 
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function BasicGridLayout() {
   return (
@@ -59,7 +59,7 @@ import {
   GridContainer, 
   GridRow, 
   GridCol 
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function FlexboxGridLayout() {
   return (
@@ -92,7 +92,7 @@ import {
   GridContainer, 
   GridRow, 
   GridCol 
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function ResponsiveColumnsLayout() {
   return (
@@ -141,7 +141,7 @@ import {
   GridContainer, 
   GridRow, 
   GridCol 
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function ColumnOffsetsLayout() {
   return (
@@ -200,7 +200,7 @@ import {
   GridContainer, 
   GridRow, 
   GridCol 
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function ColumnOrderingLayout() {
   return (
@@ -268,7 +268,7 @@ import {
   GridContainer, 
   GridRow, 
   GridCol 
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function ResponsiveVisibilityLayout() {
   return (
@@ -310,7 +310,7 @@ import {
   GridContainer, 
   GridRow, 
   GridCol 
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function AutoEqualWidthLayout() {
   return (
@@ -376,7 +376,7 @@ import {
   GridContainer, 
   GridRow, 
   GridCol 
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function NestedGridLayout() {
   return (
@@ -440,7 +440,7 @@ function NestedGridLayout() {
 import { 
   ResponsiveGridLayout, 
   GridItem 
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function CSSGridAreasLayout() {
   // Define a custom grid with named areas

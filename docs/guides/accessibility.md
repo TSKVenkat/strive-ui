@@ -181,4 +181,4 @@ We recommend a comprehensive testing approach:
 
 ## Feedback and Contributions
 
-We're committed to continuously improving accessibility in Pulse UI. If you encounter any accessibility issues or have suggestions for improvements, please [open an issue](https://github.com/TSKVenkat/pulse-ui/issues/new?labels=accessibility) on our GitHub repository.
+We're committed to continuously improving accessibility in Pulse UI. If you encounter any accessibility issues or have suggestions for improvements, please [open an issue](https://github.com/TSKVenkat/pulseui/issues/new?labels=accessibility) on our GitHub repository.

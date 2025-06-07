@@ -17,7 +17,7 @@ A headless implementation of a text input component that provides all the functi
 ### With Regular CSS
 
 ```jsx
-import { TextInput } from 'strive-ui';
+import { TextInput } from 'pulseui';
 import './styles.css'; // Your CSS file
 
 function BasicTextInput() {
@@ -86,7 +86,7 @@ function BasicTextInput() {
 ### With Tailwind CSS
 
 ```jsx
-import { TextInput } from 'strive-ui';
+import { TextInput } from 'pulseui';
 
 function TailwindTextInput() {
   return (
@@ -109,7 +109,7 @@ function TailwindTextInput() {
 ### With styled-components
 
 ```jsx
-import { TextInput } from 'strive-ui';
+import { TextInput } from 'pulseui';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -187,7 +187,7 @@ function StyledTextInput() {
 ### With CSS Modules
 
 ```jsx
-import { TextInput } from 'strive-ui';
+import { TextInput } from 'pulseui';
 import styles from './TextInput.module.css';
 
 function CSSModulesTextInput() {
@@ -259,7 +259,7 @@ function CSSModulesTextInput() {
 ### With Render Props
 
 ```jsx
-import { TextInput } from 'strive-ui';
+import { TextInput } from 'pulseui';
 
 function RenderPropsTextInput() {
   return (
@@ -304,7 +304,7 @@ function RenderPropsTextInput() {
 ### With Validation
 
 ```jsx
-import { TextInput } from 'strive-ui';
+import { TextInput } from 'pulseui';
 import { useState } from 'react';
 
 function ValidationTextInput() {

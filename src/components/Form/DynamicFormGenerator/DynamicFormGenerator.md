@@ -18,15 +18,15 @@ The DynamicFormGenerator component provides a powerful solution for creating for
 ## Installation
 
 ```bash
-npm install strive-ui
+npm install pulseui
 # or
-yarn add strive-ui
+yarn add pulseui
 ```
 
 ## Basic Usage
 
 ```jsx
-import { DynamicFormGenerator } from 'strive-ui';
+import { DynamicFormGenerator } from 'pulseui';
 
 function MyForm() {
   const fields = [
@@ -55,7 +55,7 @@ function MyForm() {
 ## Advanced Usage with Validation
 
 ```jsx
-import { DynamicFormGenerator } from 'strive-ui';
+import { DynamicFormGenerator } from 'pulseui';
 
 function ValidatedForm() {
   const fields = [
@@ -115,7 +115,7 @@ function ValidatedForm() {
 ## Conditional Fields
 
 ```jsx
-import { DynamicFormGenerator } from 'strive-ui';
+import { DynamicFormGenerator } from 'pulseui';
 
 function ConditionalForm() {
   const fields = [
@@ -178,7 +178,7 @@ function ConditionalForm() {
 ## Field Groups
 
 ```jsx
-import { DynamicFormGenerator } from 'strive-ui';
+import { DynamicFormGenerator } from 'pulseui';
 
 function GroupedForm() {
   const fields = [
@@ -218,7 +218,7 @@ function GroupedForm() {
 For maximum customization, you can use the headless version of the DynamicFormGenerator:
 
 ```jsx
-import { DynamicFormGeneratorHeadless } from 'strive-ui';
+import { DynamicFormGeneratorHeadless } from 'pulseui';
 import styled from 'styled-components';
 
 // Custom styled components
@@ -466,7 +466,7 @@ The following field types are supported:
 The `useDynamicForm` hook provides the core functionality for the DynamicFormGenerator component and can be used independently for custom implementations.
 
 ```jsx
-import { useDynamicForm } from 'strive-ui';
+import { useDynamicForm } from 'pulseui';
 
 function CustomForm() {
   const {
@@ -678,7 +678,7 @@ The DynamicFormGenerator component is built with accessibility in mind:
 ### Registration Form
 
 ```jsx
-import { DynamicFormGenerator } from 'strive-ui';
+import { DynamicFormGenerator } from 'pulseui';
 
 function RegistrationForm() {
   const fields = [
@@ -715,7 +715,7 @@ function RegistrationForm() {
 ### Survey Form
 
 ```jsx
-import { DynamicFormGenerator } from 'strive-ui';
+import { DynamicFormGenerator } from 'pulseui';
 
 function SurveyForm() {
   const fields = [
@@ -761,7 +761,7 @@ The DynamicFormGenerator component can be customized using styled-components:
 
 ```jsx
 import styled from 'styled-components';
-import { DynamicFormGenerator } from 'strive-ui';
+import { DynamicFormGenerator } from 'pulseui';
 
 const CustomDynamicFormGenerator = styled(DynamicFormGenerator)`
   /* Custom styles for the form */

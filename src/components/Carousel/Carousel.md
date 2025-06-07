@@ -5,7 +5,7 @@ The Carousel component is a customizable slideshow for cycling through elements 
 ## Import
 
 ```jsx
-import { Carousel } from 'strive-ui';
+import { Carousel } from 'pulseui';
 ```
 
 ## Usage

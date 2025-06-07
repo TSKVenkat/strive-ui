@@ -18,15 +18,15 @@ The FormWizard component provides a comprehensive solution for creating multi-st
 ## Installation
 
 ```bash
-npm install strive-ui
+npm install pulseui
 # or
-yarn add strive-ui
+yarn add pulseui
 ```
 
 ## Basic Usage
 
 ```jsx
-import { FormWizard } from 'strive-ui';
+import { FormWizard } from 'pulseui';
 
 function MyFormWizard() {
   const steps = [
@@ -74,7 +74,7 @@ function MyFormWizard() {
 ## Advanced Usage with Validation
 
 ```jsx
-import { FormWizard } from 'strive-ui';
+import { FormWizard } from 'pulseui';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -186,7 +186,7 @@ function ValidatedFormWizard() {
 For maximum customization, you can use the headless version of the FormWizard:
 
 ```jsx
-import { FormWizardHeadless } from 'strive-ui';
+import { FormWizardHeadless } from 'pulseui';
 import styled from 'styled-components';
 
 // Custom styled components
@@ -322,7 +322,7 @@ function CustomFormWizard() {
 The `useFormWizard` hook provides the core functionality for the FormWizard component and can be used independently for custom implementations.
 
 ```jsx
-import { useFormWizard } from 'strive-ui';
+import { useFormWizard } from 'pulseui';
 
 function CustomWizard() {
   const {
@@ -483,7 +483,7 @@ The FormWizard component is built with accessibility in mind:
 ### Basic Form Wizard
 
 ```jsx
-import { FormWizard } from 'strive-ui';
+import { FormWizard } from 'pulseui';
 
 function BasicFormWizard() {
   return (
@@ -505,7 +505,7 @@ function BasicFormWizard() {
 ### Vertical Form Wizard
 
 ```jsx
-import { FormWizard } from 'strive-ui';
+import { FormWizard } from 'pulseui';
 
 function VerticalFormWizard() {
   return (
@@ -528,7 +528,7 @@ function VerticalFormWizard() {
 ### Form Wizard with Optional Steps
 
 ```jsx
-import { FormWizard } from 'strive-ui';
+import { FormWizard } from 'pulseui';
 
 function OptionalStepsWizard() {
   return (
@@ -554,7 +554,7 @@ The FormWizard component can be customized using styled-components:
 
 ```jsx
 import styled from 'styled-components';
-import { FormWizard } from 'strive-ui';
+import { FormWizard } from 'pulseui';
 
 const CustomFormWizard = styled(FormWizard)`
   /* Custom styles for the FormWizard */
@@ -588,7 +588,7 @@ The FormWizard component works well with popular form libraries:
 ### React Hook Form
 
 ```jsx
-import { FormWizard } from 'strive-ui';
+import { FormWizard } from 'pulseui';
 import { useForm } from 'react-hook-form';
 
 function ReactHookFormWizard() {
@@ -633,7 +633,7 @@ function ReactHookFormWizard() {
 ### Formik
 
 ```jsx
-import { FormWizard } from 'strive-ui';
+import { FormWizard } from 'pulseui';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 

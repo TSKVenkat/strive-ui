@@ -5,7 +5,7 @@ A headless component for creating customizable pulse effects with extensive flex
 ## Usage
 
 ```jsx
-import { PulseHeadless } from 'strive-ui';
+import { PulseHeadless } from 'pulseui';
 
 function MyPulseEffect() {
   return (
@@ -52,7 +52,7 @@ function MyPulseEffect() {
 ## Creating Different Pulse Variants
 
 ```jsx
-import { PulseHeadless } from 'strive-ui';
+import { PulseHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function PulseExample() {
@@ -213,7 +213,7 @@ function PulseExample() {
 ## Creating a Notification Badge with Pulse
 
 ```jsx
-import { PulseHeadless } from 'strive-ui';
+import { PulseHeadless } from 'pulseui';
 
 function NotificationBadge({ count }) {
   return (
@@ -287,7 +287,7 @@ function App() {
 ## Creating a Call-to-Action Button with Pulse
 
 ```jsx
-import { PulseHeadless } from 'strive-ui';
+import { PulseHeadless } from 'pulseui';
 
 function PulseButton({ children, color = '#2196f3', onClick }) {
   return (
@@ -357,7 +357,7 @@ function App() {
 ## Creating a Feature Highlight with Pulse
 
 ```jsx
-import { PulseHeadless } from 'strive-ui';
+import { PulseHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function FeatureHighlight({ children, title, description, position = 'right' }) {
@@ -504,7 +504,7 @@ function App() {
 For even more control, you can use the `usePulse` hook directly:
 
 ```jsx
-import { usePulse } from 'strive-ui';
+import { usePulse } from 'pulseui';
 
 function MyCustomPulse() {
   const {

@@ -5,7 +5,7 @@ A headless component for creating customizable select menus with extensive flexi
 ## Usage
 
 ```jsx
-import { SelectMenuHeadless } from 'strive-ui';
+import { SelectMenuHeadless } from 'pulseui';
 
 function MySelectMenu() {
   const options = [
@@ -130,7 +130,7 @@ function MySelectMenu() {
 ## Creating a Multi-Select Menu
 
 ```jsx
-import { SelectMenuHeadless } from 'strive-ui';
+import { SelectMenuHeadless } from 'pulseui';
 
 function MultiSelectMenu() {
   const options = [
@@ -291,7 +291,7 @@ function MultiSelectMenu() {
 ## Creating a Creatable Select
 
 ```jsx
-import { SelectMenuHeadless } from 'strive-ui';
+import { SelectMenuHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function CreatableSelect() {
@@ -483,7 +483,7 @@ interface SelectOption {
 For even more control, you can use the `useSelectMenu` hook directly:
 
 ```jsx
-import { useSelectMenu } from 'strive-ui';
+import { useSelectMenu } from 'pulseui';
 
 function MyCustomSelectMenu() {
   const {

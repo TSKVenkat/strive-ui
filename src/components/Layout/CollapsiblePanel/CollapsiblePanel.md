@@ -18,13 +18,13 @@ The `CollapsiblePanel` component provides an expandable and collapsible content 
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { CollapsiblePanel } from '@strive-ui/layout';
+import { CollapsiblePanel } from '@pulseui/layout';
 
 function BasicCollapsiblePanel() {
   return (
@@ -45,7 +45,7 @@ function BasicCollapsiblePanel() {
 ### Accordion Group
 
 ```tsx
-import { CollapsiblePanel, CollapsibleGroup } from '@strive-ui/layout';
+import { CollapsiblePanel, CollapsibleGroup } from '@pulseui/layout';
 
 function AccordionExample() {
   return (
@@ -85,7 +85,7 @@ function AccordionExample() {
 ### FAQ Section
 
 ```tsx
-import { CollapsiblePanel, CollapsibleGroup } from '@strive-ui/layout';
+import { CollapsiblePanel, CollapsibleGroup } from '@pulseui/layout';
 
 function FAQExample() {
   return (
@@ -109,9 +109,9 @@ function FAQExample() {
           animation="both"
         >
           <p>You can install Strive UI using npm or yarn:</p>
-          <pre>npm install @pulse-ui/core</pre>
+          <pre>npm install @pulseui/core</pre>
           <p>or</p>
-          <pre>yarn add @pulse-ui/core</pre>
+          <pre>yarn add @pulseui/core</pre>
         </CollapsiblePanel>
         
         <CollapsiblePanel 
@@ -131,7 +131,7 @@ function FAQExample() {
 ### Settings Panel
 
 ```tsx
-import { CollapsiblePanel } from '@strive-ui/layout';
+import { CollapsiblePanel } from '@pulseui/layout';
 import { useState } from 'react';
 
 function SettingsPanelExample() {
@@ -221,7 +221,7 @@ function SettingsPanelExample() {
 ### Horizontal Collapsible Panel
 
 ```tsx
-import { CollapsiblePanel } from '@strive-ui/layout';
+import { CollapsiblePanel } from '@pulseui/layout';
 
 function HorizontalPanelExample() {
   return (
@@ -259,7 +259,7 @@ function HorizontalPanelExample() {
 ### Custom Animation and Icons
 
 ```tsx
-import { CollapsiblePanel } from '@strive-ui/layout';
+import { CollapsiblePanel } from '@pulseui/layout';
 
 function CustomAnimationExample() {
   return (
@@ -286,7 +286,7 @@ function CustomAnimationExample() {
 ### Controlled Component
 
 ```tsx
-import { CollapsiblePanel } from '@strive-ui/layout';
+import { CollapsiblePanel } from '@pulseui/layout';
 import { useState } from 'react';
 
 function ControlledPanelExample() {

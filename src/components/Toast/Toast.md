@@ -5,7 +5,7 @@ The Toast component displays brief, non-blocking notifications to provide feedba
 ## Import
 
 ```jsx
-import { Toast, useToast } from 'strive-ui';
+import { Toast, useToast } from 'pulseui';
 ```
 
 ## Features
@@ -26,7 +26,7 @@ import { Toast, useToast } from 'strive-ui';
 The recommended way to use toasts is with the `useToast` hook:
 
 ```jsx
-import { useToast, Button } from 'strive-ui';
+import { useToast, Button } from 'pulseui';
 
 function ToastExample() {
   const toast = useToast();
@@ -54,7 +54,7 @@ function ToastExample() {
 You can also use the Toast component directly for more control:
 
 ```jsx
-import { Toast, Button } from 'strive-ui';
+import { Toast, Button } from 'pulseui';
 import { useState } from 'react';
 
 function DirectToastExample() {
@@ -85,7 +85,7 @@ function DirectToastExample() {
 To use toasts throughout your application, wrap your app with the ToastProvider:
 
 ```jsx
-import { ToastProvider } from 'strive-ui';
+import { ToastProvider } from 'pulseui';
 
 function App() {
   return (

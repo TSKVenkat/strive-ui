@@ -5,7 +5,7 @@ A headless component for creating customizable banner notifications with extensi
 ## Usage
 
 ```jsx
-import { BannerHeadless } from 'strive-ui';
+import { BannerHeadless } from 'pulseui';
 
 function MyBanner() {
   return (
@@ -103,7 +103,7 @@ function MyBanner() {
 ## Creating Different Banner Variants
 
 ```jsx
-import { BannerHeadless } from 'strive-ui';
+import { BannerHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function BannerExample() {
@@ -215,7 +215,7 @@ function BannerExample() {
 ## Creating a Reusable Banner Component
 
 ```jsx
-import { BannerHeadless } from 'strive-ui';
+import { BannerHeadless } from 'pulseui';
 
 function CustomBanner({ 
   title, 
@@ -424,7 +424,7 @@ function App() {
 For even more control, you can use the `useBanner` hook directly:
 
 ```jsx
-import { useBanner } from 'strive-ui';
+import { useBanner } from 'pulseui';
 
 function MyCustomBanner() {
   const {

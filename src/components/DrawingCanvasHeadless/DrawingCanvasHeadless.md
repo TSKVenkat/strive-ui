@@ -16,13 +16,13 @@ The `DrawingCanvasHeadless` component is a flexible, headless UI component for c
 ## Installation
 
 ```bash
-npm install @strive-ui/drawing-canvas-headless
+npm install @pulseui/drawing-canvas-headless
 ```
 
 ## Basic Usage
 
 ```tsx
-import { DrawingCanvasHeadless, useDrawingCanvas } from '@strive-ui/drawing-canvas-headless';
+import { DrawingCanvasHeadless, useDrawingCanvas } from '@pulseui/drawing-canvas-headless';
 
 function MyDrawingCanvas() {
   const drawingCanvas = useDrawingCanvas({
@@ -57,7 +57,7 @@ function MyDrawingCanvas() {
 ## Advanced Usage
 
 ```tsx
-import { DrawingCanvasHeadless, useDrawingCanvas } from '@strive-ui/drawing-canvas-headless';
+import { DrawingCanvasHeadless, useDrawingCanvas } from '@pulseui/drawing-canvas-headless';
 import { useState } from 'react';
 
 function AdvancedDrawingCanvas() {

@@ -5,7 +5,7 @@ The Tooltip component displays informative text when users hover over, focus on,
 ## Import
 
 ```jsx
-import { Tooltip } from 'strive-ui';
+import { Tooltip } from 'pulseui';
 ```
 
 ## Features
@@ -21,7 +21,7 @@ import { Tooltip } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Tooltip, Button } from 'strive-ui';
+import { Tooltip, Button } from 'pulseui';
 
 // Basic usage
 <Tooltip content="This is a tooltip">

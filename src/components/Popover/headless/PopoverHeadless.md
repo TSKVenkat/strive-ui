@@ -5,7 +5,7 @@ A headless component for creating customizable popovers with extensive flexibili
 ## Usage
 
 ```jsx
-import { PopoverHeadless } from 'strive-ui';
+import { PopoverHeadless } from 'pulseui';
 
 function MyPopover() {
   return (
@@ -100,7 +100,7 @@ function MyPopover() {
 ## Creating a Tooltip
 
 ```jsx
-import { PopoverHeadless } from 'strive-ui';
+import { PopoverHeadless } from 'pulseui';
 
 function Tooltip({ children, content, placement = 'top' }) {
   return (
@@ -152,7 +152,7 @@ function App() {
 ## Creating a Dropdown Menu
 
 ```jsx
-import { PopoverHeadless } from 'strive-ui';
+import { PopoverHeadless } from 'pulseui';
 
 function DropdownMenu({ trigger, items }) {
   return (
@@ -279,7 +279,7 @@ type PopoverPlacement =
 For even more control, you can use the `usePopover` hook directly:
 
 ```jsx
-import { usePopover } from 'strive-ui';
+import { usePopover } from 'pulseui';
 
 function MyCustomPopover() {
   const {

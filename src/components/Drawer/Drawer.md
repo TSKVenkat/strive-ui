@@ -5,7 +5,7 @@ The Drawer component is a panel that slides in from the edge of the screen. It c
 ## Import
 
 ```jsx
-import { Drawer } from 'strive-ui';
+import { Drawer } from 'pulseui';
 ```
 
 ## Features
@@ -22,7 +22,7 @@ import { Drawer } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Drawer, Button } from 'strive-ui';
+import { Drawer, Button } from 'pulseui';
 import { useState } from 'react';
 
 function DrawerExample() {

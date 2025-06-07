@@ -5,7 +5,7 @@ The ColorPicker component provides an intuitive interface for selecting colors, 
 ## Import
 
 ```jsx
-import { ColorPicker } from 'strive-ui';
+import { ColorPicker } from 'pulseui';
 ```
 
 ## Usage

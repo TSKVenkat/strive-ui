@@ -5,7 +5,7 @@ A headless component for creating customizable QR code scanning interfaces with 
 ## Usage
 
 ```jsx
-import { QRCodeScannerHeadless } from 'strive-ui';
+import { QRCodeScannerHeadless } from 'pulseui';
 
 function MyQRCodeScanner() {
   const handleScan = (result) => {
@@ -138,7 +138,7 @@ interface QRCodeResult {
 For even more control, you can use the `useQRCodeScanner` hook directly:
 
 ```jsx
-import { useQRCodeScanner } from 'strive-ui';
+import { useQRCodeScanner } from 'pulseui';
 
 function MyCustomQRCodeScanner() {
   const {

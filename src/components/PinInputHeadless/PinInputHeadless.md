@@ -17,7 +17,7 @@ A headless PIN input component that provides all the functionality for entering 
 ### Basic Usage
 
 ```jsx
-import { PinInput } from '@strive-ui/pin-input';
+import { PinInput } from '@pulseui/pin-input';
 
 function MyComponent() {
   return (
@@ -33,7 +33,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { PinInput } from '@strive-ui/pin-input';
+import { PinInput } from '@pulseui/pin-input';
 
 function ControlledPinInput() {
   const [value, setValue] = useState('');
@@ -56,7 +56,7 @@ function ControlledPinInput() {
 ### Password Type
 
 ```jsx
-import { PinInput } from '@strive-ui/pin-input';
+import { PinInput } from '@pulseui/pin-input';
 
 function PasswordPinInput() {
   return (
@@ -73,7 +73,7 @@ function PasswordPinInput() {
 ### With Separator
 
 ```jsx
-import { PinInput } from '@strive-ui/pin-input';
+import { PinInput } from '@pulseui/pin-input';
 
 function PinInputWithSeparator() {
   return (
@@ -88,7 +88,7 @@ function PinInputWithSeparator() {
 ### Custom Validation Pattern
 
 ```jsx
-import { PinInput } from '@strive-ui/pin-input';
+import { PinInput } from '@pulseui/pin-input';
 
 function AlphanumericPinInput() {
   return (
@@ -105,7 +105,7 @@ function AlphanumericPinInput() {
 ### OTP Input
 
 ```jsx
-import { PinInput } from '@strive-ui/pin-input';
+import { PinInput } from '@pulseui/pin-input';
 
 function OTPInput() {
   return (
@@ -128,7 +128,7 @@ function OTPInput() {
 ### Disabled State
 
 ```jsx
-import { PinInput } from '@strive-ui/pin-input';
+import { PinInput } from '@pulseui/pin-input';
 
 function DisabledPinInput() {
   return (
@@ -144,7 +144,7 @@ function DisabledPinInput() {
 ### Custom Styling
 
 ```jsx
-import { PinInput } from '@strive-ui/pin-input';
+import { PinInput } from '@pulseui/pin-input';
 
 function CustomStyledPinInput() {
   return (
@@ -201,7 +201,7 @@ function CustomStyledPinInput() {
 ### With Custom Field Rendering
 
 ```jsx
-import { PinInput } from '@strive-ui/pin-input';
+import { PinInput } from '@pulseui/pin-input';
 
 function CustomFieldPinInput() {
   return (
@@ -270,7 +270,7 @@ function CustomFieldPinInput() {
 ### Using the Hook Directly
 
 ```jsx
-import { usePinInput } from '@strive-ui/pin-input';
+import { usePinInput } from '@pulseui/pin-input';
 
 function CustomPinInput() {
   const {
@@ -365,7 +365,7 @@ The PinInput component and its sub-components expose several data attributes tha
 #### usePinInput
 
 ```jsx
-import { usePinInput } from '@strive-ui/pin-input';
+import { usePinInput } from '@pulseui/pin-input';
 
 function MyCustomPinInput() {
   const {

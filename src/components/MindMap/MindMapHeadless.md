@@ -5,7 +5,7 @@ A headless component for creating customizable mind mapping interfaces with exte
 ## Usage
 
 ```jsx
-import { MindMapHeadless } from 'strive-ui';
+import { MindMapHeadless } from 'pulseui';
 
 function MyMindMap() {
   const initialNodes = [
@@ -281,7 +281,7 @@ interface MindMapConnection {
 For even more control, you can use the `useMindMap` hook directly:
 
 ```jsx
-import { useMindMap } from 'strive-ui';
+import { useMindMap } from 'pulseui';
 
 function MyCustomMindMap() {
   const {

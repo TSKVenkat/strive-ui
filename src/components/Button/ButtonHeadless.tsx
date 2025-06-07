@@ -23,7 +23,7 @@ export type ButtonHeadlessProps<C extends React.ElementType = 'button'> = Polymo
  *
  * @example
  * ```jsx
- * import { ButtonHeadless } from 'strive-ui';
+ * import { ButtonHeadless } from 'pulseui';
  * import styled from 'styled-components';
  *
  * const StyledButton = styled(ButtonHeadless)`

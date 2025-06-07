@@ -19,7 +19,7 @@ A specialized carousel component for showcasing customer testimonials, reviews, 
 ## Installation
 
 ```bash
-npm install @strive-ui/testimonial-carousel
+npm install @pulseui/testimonial-carousel
 ```
 
 ## Usage
@@ -27,7 +27,7 @@ npm install @strive-ui/testimonial-carousel
 ### Basic Usage
 
 ```jsx
-import { TestimonialCarousel } from '@strive-ui/testimonial-carousel';
+import { TestimonialCarousel } from '@pulseui/testimonial-carousel';
 
 const testimonials = [
   {
@@ -68,7 +68,7 @@ function App() {
 ### Different Layouts
 
 ```jsx
-import { TestimonialCarousel } from '@strive-ui/testimonial-carousel';
+import { TestimonialCarousel } from '@pulseui/testimonial-carousel';
 import { useState } from 'react';
 
 function App() {
@@ -98,7 +98,7 @@ function App() {
 ### Styled with Styled Components
 
 ```jsx
-import { TestimonialCarousel } from '@strive-ui/testimonial-carousel';
+import { TestimonialCarousel } from '@pulseui/testimonial-carousel';
 import styled from 'styled-components';
 
 const StyledTestimonialCarousel = styled(TestimonialCarousel)`

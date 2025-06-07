@@ -17,7 +17,7 @@ A headless slider component that provides all the functionality without any styl
 ### Basic Usage
 
 ```jsx
-import { Slider } from '@strive-ui/slider';
+import { Slider } from '@pulseui/slider';
 
 function MyComponent() {
   return (
@@ -35,7 +35,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { Slider } from '@strive-ui/slider';
+import { Slider } from '@pulseui/slider';
 
 function ControlledSlider() {
   const [value, setValue] = useState(50);
@@ -58,7 +58,7 @@ function ControlledSlider() {
 ### With Marks
 
 ```jsx
-import { Slider } from '@strive-ui/slider';
+import { Slider } from '@pulseui/slider';
 
 function SliderWithMarks() {
   return (
@@ -82,7 +82,7 @@ function SliderWithMarks() {
 ### With Tooltip
 
 ```jsx
-import { Slider } from '@strive-ui/slider';
+import { Slider } from '@pulseui/slider';
 
 function SliderWithTooltip() {
   return (
@@ -99,7 +99,7 @@ function SliderWithTooltip() {
 ### Vertical Orientation
 
 ```jsx
-import { Slider } from '@strive-ui/slider';
+import { Slider } from '@pulseui/slider';
 
 function VerticalSlider() {
   return (
@@ -117,7 +117,7 @@ function VerticalSlider() {
 ### Custom Styling
 
 ```jsx
-import { Slider } from '@strive-ui/slider';
+import { Slider } from '@pulseui/slider';
 
 function CustomSlider() {
   return (
@@ -200,7 +200,7 @@ function CustomSlider() {
 #### useSlider
 
 ```jsx
-import { useSlider } from '@strive-ui/slider';
+import { useSlider } from '@pulseui/slider';
 
 function MyCustomSlider() {
   const { 

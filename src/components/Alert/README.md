@@ -18,7 +18,7 @@ The Alert component is designed to display important messages to users, such as 
 ## Usage
 
 ```jsx
-import { Alert, Button } from 'strive-ui';
+import { Alert, Button } from 'pulseui';
 
 // Basic usage
 <Alert variant="info" title="Information">

@@ -14,13 +14,13 @@ The `Masonry` component creates a Pinterest-like grid layout where items are arr
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { Masonry } from '@strive-ui/layout';
+import { Masonry } from '@pulseui/layout';
 
 function BasicMasonry() {
   // Create an array of items with varying heights
@@ -51,7 +51,7 @@ function BasicMasonry() {
 ### Responsive Columns
 
 ```tsx
-import { Masonry } from '@strive-ui/layout';
+import { Masonry } from '@pulseui/layout';
 
 function ResponsiveMasonry() {
   const items = Array.from({ length: 20 }, (_, i) => (
@@ -88,7 +88,7 @@ function ResponsiveMasonry() {
 ### Custom Gap Spacing
 
 ```tsx
-import { Masonry } from '@strive-ui/layout';
+import { Masonry } from '@pulseui/layout';
 
 function CustomGapMasonry() {
   const items = Array.from({ length: 20 }, (_, i) => (
@@ -120,7 +120,7 @@ function CustomGapMasonry() {
 ### Image Gallery
 
 ```tsx
-import { Masonry } from '@strive-ui/layout';
+import { Masonry } from '@pulseui/layout';
 import { useState, useEffect } from 'react';
 
 function ImageGallery() {
@@ -185,7 +185,7 @@ function ImageGallery() {
 ### With Card Components
 
 ```tsx
-import { Masonry } from '@strive-ui/layout';
+import { Masonry } from '@pulseui/layout';
 
 function CardMasonry() {
   // Sample card data

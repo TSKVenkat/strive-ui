@@ -5,7 +5,7 @@ A headless component for creating powerful, customizable search interfaces with 
 ## Usage
 
 ```jsx
-import { SearchHeadless } from 'strive-ui';
+import { SearchHeadless } from 'pulseui';
 
 function MySearchInterface() {
   const data = [
@@ -133,7 +133,7 @@ function MySearchInterface() {
 For even more control, you can use the `useSearch` hook directly:
 
 ```jsx
-import { useSearch } from 'strive-ui';
+import { useSearch } from 'pulseui';
 
 function MyCustomSearch() {
   const {

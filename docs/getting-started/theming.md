@@ -9,7 +9,7 @@ Pulse UI provides a flexible theming system that works with its headless archite
 The default theme includes a comprehensive set of design tokens for colors, typography, spacing, and more. It's automatically applied when using the `ThemeProvider`:
 
 ```jsx
-import { ThemeProvider } from '@pulse-ui/core';
+import { ThemeProvider } from '@pulseui/core';
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
 Create a custom theme by extending the default theme:
 
 ```jsx
-import { ThemeProvider, theme } from '@strive-ui/core';
+import { ThemeProvider, theme } from '@pulseui/core';
 
 const customTheme = {
   ...theme,
@@ -113,7 +113,7 @@ Implement dark mode with a theme toggle:
 
 ```jsx
 import React, { useState } from 'react';
-import { ThemeProvider, theme, Button } from '@strive-ui/core';
+import { ThemeProvider, theme, Button } from '@pulseui/core';
 
 // Create a dark theme variant
 const darkTheme = {
@@ -152,7 +152,7 @@ function App() {
 Access theme values in your functional components:
 
 ```jsx
-import { useTheme } from '@strive-ui/core';
+import { useTheme } from '@pulseui/core';
 
 function MyComponent() {
   const theme = useTheme();

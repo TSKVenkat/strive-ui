@@ -18,7 +18,7 @@ A headless video upload component that provides all the functionality for upload
 ### Basic Usage
 
 ```jsx
-import { VideoUpload } from '@strive-ui/video-upload';
+import { VideoUpload } from '@pulseui/video-upload';
 
 function MyComponent() {
   return (
@@ -35,7 +35,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { VideoUpload } from '@strive-ui/video-upload';
+import { VideoUpload } from '@pulseui/video-upload';
 
 function ControlledUpload() {
   const [files, setFiles] = useState([]);
@@ -63,7 +63,7 @@ function ControlledUpload() {
 ### With Upload Function
 
 ```jsx
-import { VideoUpload } from '@strive-ui/video-upload';
+import { VideoUpload } from '@pulseui/video-upload';
 
 function UploadWithServer() {
   const uploadToServer = async (files) => {
@@ -103,7 +103,7 @@ function UploadWithServer() {
 ### Multiple File Upload
 
 ```jsx
-import { VideoUpload } from '@strive-ui/video-upload';
+import { VideoUpload } from '@pulseui/video-upload';
 
 function MultipleFileUpload() {
   return (
@@ -119,7 +119,7 @@ function MultipleFileUpload() {
 ### With File Validation
 
 ```jsx
-import { VideoUpload } from '@strive-ui/video-upload';
+import { VideoUpload } from '@pulseui/video-upload';
 
 function ValidatedUpload() {
   return (
@@ -144,7 +144,7 @@ function ValidatedUpload() {
 ### Thumbnail Generation
 
 ```jsx
-import { VideoUpload } from '@strive-ui/video-upload';
+import { VideoUpload } from '@pulseui/video-upload';
 
 function ThumbnailGeneration() {
   return (
@@ -162,7 +162,7 @@ function ThumbnailGeneration() {
 ### Disabled State
 
 ```jsx
-import { VideoUpload } from '@strive-ui/video-upload';
+import { VideoUpload } from '@pulseui/video-upload';
 
 function DisabledUpload() {
   return (
@@ -177,7 +177,7 @@ function DisabledUpload() {
 ### Read-Only State
 
 ```jsx
-import { VideoUpload } from '@strive-ui/video-upload';
+import { VideoUpload } from '@pulseui/video-upload';
 
 function ReadOnlyUpload() {
   return (
@@ -193,7 +193,7 @@ function ReadOnlyUpload() {
 ### Custom Styling
 
 ```jsx
-import { VideoUpload } from '@strive-ui/video-upload';
+import { VideoUpload } from '@pulseui/video-upload';
 
 function CustomStyledUpload() {
   return (
@@ -415,7 +415,7 @@ The VideoFile interface extends the standard File interface with additional prop
 #### useVideoUpload
 
 ```jsx
-import { useVideoUpload } from '@strive-ui/video-upload';
+import { useVideoUpload } from '@pulseui/video-upload';
 
 function MyCustomUpload() {
   const { 

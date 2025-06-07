@@ -342,7 +342,7 @@ export interface DataGridProps<T extends object = any> extends Omit<DataGridOpti
  *
  * @example
  * ```jsx
- * import { DataGrid } from 'strive-ui';
+ * import { DataGrid } from 'pulseui';
  *
  * const columns = [
  *   { id: 'name', header: 'Name', width: 200 },

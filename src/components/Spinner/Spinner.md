@@ -5,7 +5,7 @@ The Spinner component provides a visual indicator of loading or processing state
 ## Import
 
 ```jsx
-import { Spinner } from 'strive-ui';
+import { Spinner } from 'pulseui';
 ```
 
 ## Features
@@ -20,7 +20,7 @@ import { Spinner } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Spinner } from 'strive-ui';
+import { Spinner } from 'pulseui';
 
 // Basic usage
 <Spinner />

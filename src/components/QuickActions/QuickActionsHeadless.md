@@ -17,7 +17,7 @@ A headless implementation of a quick actions menu that provides a command palett
 ## Basic Usage
 
 ```jsx
-import { QuickActions } from 'strive-ui';
+import { QuickActions } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -230,7 +230,7 @@ function MyQuickActions() {
 ## Grouped Actions Example
 
 ```jsx
-import { QuickActions } from 'strive-ui';
+import { QuickActions } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -446,7 +446,7 @@ function GroupedQuickActions() {
 ## Command Palette Example
 
 ```jsx
-import { QuickActions } from 'strive-ui';
+import { QuickActions } from 'pulseui';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 

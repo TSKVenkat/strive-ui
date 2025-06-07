@@ -16,7 +16,7 @@ A headless implementation of a progressive navigation component that adapts to a
 ## Basic Usage
 
 ```jsx
-import { ProgressiveNavigation } from 'strive-ui';
+import { ProgressiveNavigation } from 'pulseui';
 import styled from 'styled-components';
 
 const Nav = styled(ProgressiveNavigation)`
@@ -161,7 +161,7 @@ function MyProgressiveNavigation() {
 ## With Icons Example
 
 ```jsx
-import { ProgressiveNavigation } from 'strive-ui';
+import { ProgressiveNavigation } from 'pulseui';
 import styled from 'styled-components';
 
 const Nav = styled(ProgressiveNavigation)`
@@ -324,7 +324,7 @@ function IconsExample() {
 ## Screen Size Adaptation Example
 
 ```jsx
-import { ProgressiveNavigation } from 'strive-ui';
+import { ProgressiveNavigation } from 'pulseui';
 import styled from 'styled-components';
 
 const Nav = styled(ProgressiveNavigation)`
@@ -478,7 +478,7 @@ function ScreenSizeExample() {
 ## Combined Space and Screen Size Adaptation Example
 
 ```jsx
-import { ProgressiveNavigation } from 'strive-ui';
+import { ProgressiveNavigation } from 'pulseui';
 import styled from 'styled-components';
 
 const Nav = styled(ProgressiveNavigation)`

@@ -16,7 +16,7 @@ The `HolyGrailLayout` component provides a classic web layout pattern with heade
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
@@ -28,7 +28,7 @@ import {
   HolyGrailLeftSidebar, 
   HolyGrailContent, 
   HolyGrailFooter 
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function BasicLayout() {
   return (
@@ -85,7 +85,7 @@ import {
   HolyGrailLeftSidebar, 
   HolyGrailContent, 
   HolyGrailFooter 
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function FixedWidthLayout() {
   return (
@@ -134,7 +134,7 @@ import {
   HolyGrailContent, 
   HolyGrailRightSidebar, 
   HolyGrailFooter 
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function DualSidebarLayout() {
   return (
@@ -196,7 +196,7 @@ import {
   HolyGrailLeftSidebar, 
   HolyGrailContent, 
   HolyGrailFooter 
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function StickyLayout() {
   return (
@@ -262,7 +262,7 @@ import {
   HolyGrailContent, 
   HolyGrailRightSidebar, 
   HolyGrailFooter 
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function BlogLayout() {
   return (

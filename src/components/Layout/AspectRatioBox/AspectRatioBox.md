@@ -15,13 +15,13 @@ The `AspectRatioBox` component helps maintain consistent aspect ratios for conte
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { AspectRatioBox } from '@strive-ui/layout';
+import { AspectRatioBox } from '@pulseui/layout';
 
 function BasicAspectRatio() {
   return (
@@ -41,7 +41,7 @@ function BasicAspectRatio() {
 ### Image Gallery with Different Aspect Ratios
 
 ```tsx
-import { AspectRatioBox } from '@strive-ui/layout';
+import { AspectRatioBox } from '@pulseui/layout';
 
 function ImageGallery() {
   return (
@@ -85,7 +85,7 @@ function ImageGallery() {
 ### Video Player
 
 ```tsx
-import { AspectRatioBox } from '@strive-ui/layout';
+import { AspectRatioBox } from '@pulseui/layout';
 
 function VideoPlayer() {
   return (
@@ -110,7 +110,7 @@ function VideoPlayer() {
 ### Embedded Map
 
 ```tsx
-import { AspectRatioBox } from '@strive-ui/layout';
+import { AspectRatioBox } from '@pulseui/layout';
 
 function EmbeddedMap() {
   return (
@@ -136,7 +136,7 @@ function EmbeddedMap() {
 ### Card with Image and Content
 
 ```tsx
-import { AspectRatioBox } from '@strive-ui/layout';
+import { AspectRatioBox } from '@pulseui/layout';
 
 function CardWithImage() {
   return (
@@ -176,7 +176,7 @@ function CardWithImage() {
 ### Responsive Chart
 
 ```tsx
-import { AspectRatioBox } from '@strive-ui/layout';
+import { AspectRatioBox } from '@pulseui/layout';
 import { Chart } from 'react-chartjs-2';
 
 function ResponsiveChart() {
@@ -210,7 +210,7 @@ function ResponsiveChart() {
 ### Background Image with Content Overlay
 
 ```tsx
-import { AspectRatioBox } from '@strive-ui/layout';
+import { AspectRatioBox } from '@pulseui/layout';
 
 function BackgroundWithOverlay() {
   return (
@@ -271,7 +271,7 @@ function BackgroundWithOverlay() {
 ### Placeholder with Loading Indicator
 
 ```tsx
-import { AspectRatioBox } from '@strive-ui/layout';
+import { AspectRatioBox } from '@pulseui/layout';
 import { useState, useEffect } from 'react';
 
 function ImageWithPlaceholder() {

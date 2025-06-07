@@ -17,7 +17,7 @@ The `DashboardLayout` component and its related subcomponents provide a flexible
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
@@ -29,7 +29,7 @@ import {
   DashboardSidebar, 
   DashboardContent, 
   DashboardFooter 
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function BasicDashboard() {
   return (
@@ -80,7 +80,7 @@ import {
   DashboardSidebar, 
   DashboardContent, 
   DashboardFooter 
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 import { useState } from 'react';
 
 function CollapsibleSidebarDashboard() {
@@ -154,7 +154,7 @@ import {
   DashboardContent, 
   DashboardFooter,
   DashboardItem
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function DashboardWithCards() {
   return (
@@ -248,7 +248,7 @@ import {
   DashboardContent, 
   DashboardFooter,
   DashboardItem
-} from '@strive-ui/layout';
+} from '@pulseui/layout';
 
 function ComplexDashboard() {
   return (

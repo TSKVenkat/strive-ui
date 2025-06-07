@@ -17,7 +17,7 @@ A headless rating component that provides all the functionality for rating syste
 ### Basic Usage
 
 ```jsx
-import { Rating } from '@strive-ui/rating';
+import { Rating } from '@pulseui/rating';
 
 function MyComponent() {
   return (
@@ -34,7 +34,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { Rating } from '@strive-ui/rating';
+import { Rating } from '@pulseui/rating';
 
 function ControlledRating() {
   const [value, setValue] = useState(3);
@@ -55,7 +55,7 @@ function ControlledRating() {
 ### Half Ratings
 
 ```jsx
-import { Rating } from '@strive-ui/rating';
+import { Rating } from '@pulseui/rating';
 
 function HalfRating() {
   return (
@@ -71,7 +71,7 @@ function HalfRating() {
 ### Custom Icons
 
 ```jsx
-import { Rating } from '@strive-ui/rating';
+import { Rating } from '@pulseui/rating';
 
 function CustomIconRating() {
   return (
@@ -94,7 +94,7 @@ function CustomIconRating() {
 ### RTL Support
 
 ```jsx
-import { Rating } from '@strive-ui/rating';
+import { Rating } from '@pulseui/rating';
 
 function RTLRating() {
   return (
@@ -110,7 +110,7 @@ function RTLRating() {
 ### Custom Styling
 
 ```jsx
-import { Rating } from '@strive-ui/rating';
+import { Rating } from '@pulseui/rating';
 
 function CustomStyledRating() {
   return (
@@ -182,7 +182,7 @@ The Rating component uses a compound component pattern, providing the following 
 #### useRating
 
 ```jsx
-import { useRating } from '@strive-ui/rating';
+import { useRating } from '@pulseui/rating';
 
 function MyCustomRating() {
   const { 

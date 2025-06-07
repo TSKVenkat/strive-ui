@@ -17,7 +17,7 @@ A headless implementation of a tree navigation component that provides hierarchi
 ## Basic Usage
 
 ```jsx
-import { TreeNavigation } from 'strive-ui';
+import { TreeNavigation } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -156,7 +156,7 @@ function MyTreeNavigation() {
 ## Multi-Select Example
 
 ```jsx
-import { TreeNavigation } from 'strive-ui';
+import { TreeNavigation } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -290,7 +290,7 @@ function MultiSelectTreeNavigation() {
 ## Custom Icons and Styling
 
 ```jsx
-import { TreeNavigation } from 'strive-ui';
+import { TreeNavigation } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -451,7 +451,7 @@ function CustomIconsTreeNavigation() {
 ## Drag and Drop Example
 
 ```jsx
-import { TreeNavigation } from 'strive-ui';
+import { TreeNavigation } from 'pulseui';
 import { useState, useRef } from 'react';
 import styled from 'styled-components';
 

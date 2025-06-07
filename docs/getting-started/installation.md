@@ -6,20 +6,20 @@
 
 ```bash
 # npm
-npm install @pulse-ui/core
+npm install @pulseui/core
 
 # yarn
-yarn add @pulse-ui/core
+yarn add @pulseui/core
 
 # pnpm
-pnpm add @pulse-ui/core
+pnpm add @pulseui/core
 ```
 
 ### Basic Setup
 
 ```jsx
-import { ThemeProvider } from '@pulse-ui/core';
-import '@pulse-ui/core/style.css';
+import { ThemeProvider } from '@pulseui/core';
+import '@pulseui/core/style.css';
 
 function App() {
   return (
@@ -38,8 +38,8 @@ function App() {
 
 ```jsx
 // app/layout.tsx
-import { ThemeProvider } from '@pulse-ui/core';
-import '@pulse-ui/core/style.css';
+import { ThemeProvider } from '@pulseui/core';
+import '@pulseui/core/style.css';
 
 export default function RootLayout({
   children,
@@ -62,8 +62,8 @@ export default function RootLayout({
 
 ```jsx
 // pages/_app.js
-import { ThemeProvider } from '@pulse-ui/core';
-import '@pulse-ui/core/style.css';
+import { ThemeProvider } from '@pulseui/core';
+import '@pulseui/core/style.css';
 
 export default function App({ Component, pageProps }) {
   return (
@@ -80,8 +80,8 @@ export default function App({ Component, pageProps }) {
 // main.jsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { ThemeProvider } from '@pulse-ui/core';
-import '@pulse-ui/core/style.css';
+import { ThemeProvider } from '@pulseui/core';
+import '@pulseui/core/style.css';
 import App from './App';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -99,8 +99,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 // src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { ThemeProvider } from '@pulse-ui/core';
-import '@pulse-ui/core/style.css';
+import { ThemeProvider } from '@pulseui/core';
+import '@pulseui/core/style.css';
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -125,8 +125,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import { ThemeProvider } from '@pulse-ui/core';
-import styles from '@pulse-ui/core/style.css';
+import { ThemeProvider } from '@pulseui/core';
+import styles from '@pulseui/core/style.css';
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -158,8 +158,8 @@ export default function App() {
 
 ```jsx
 // gatsby-browser.js
-import { ThemeProvider } from '@pulse-ui/core';
-import '@pulse-ui/core/style.css';
+import { ThemeProvider } from '@pulseui/core';
+import '@pulseui/core/style.css';
 
 export const wrapRootElement = ({ element }) => (
   <ThemeProvider>{element}</ThemeProvider>
@@ -168,7 +168,7 @@ export const wrapRootElement = ({ element }) => (
 
 ```jsx
 // gatsby-ssr.js
-import { ThemeProvider } from '@pulse-ui/core';
+import { ThemeProvider } from '@pulseui/core';
 
 export const wrapRootElement = ({ element }) => (
   <ThemeProvider>{element}</ThemeProvider>
@@ -184,10 +184,10 @@ Pulse UI is built with TypeScript and provides comprehensive type definitions ou
 If you're extending the default theme, you can augment the theme types:
 
 ```typescript
-// types/pulse-ui.d.ts
-import '@pulse-ui/core';
+// types/pulseui.d.ts
+import '@pulseui/core';
 
-declare module '@pulse-ui/core' {
+declare module '@pulseui/core' {
   interface Theme {
     customProperty?: string;
   }
@@ -201,7 +201,7 @@ declare module '@pulse-ui/core' {
 Pulse UI works seamlessly with Tailwind CSS. You can use Tailwind classes alongside Pulse UI components:
 
 ```jsx
-import { Button } from '@pulse-ui/core';
+import { Button } from '@pulseui/core';
 
 function MyComponent() {
   return (
@@ -216,7 +216,7 @@ function MyComponent() {
 
 ```jsx
 import styled from 'styled-components';
-import { Button } from '@pulse-ui/core';
+import { Button } from '@pulseui/core';
 
 const StyledButton = styled(Button)`
   background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
@@ -232,7 +232,7 @@ const StyledButton = styled(Button)`
 ### Using with CSS Modules
 
 ```jsx
-import { Button } from '@pulse-ui/core';
+import { Button } from '@pulseui/core';
 import styles from './MyComponent.module.css';
 
 function MyComponent() {
@@ -252,10 +252,10 @@ Pulse UI supports tree shaking out of the box. Import only the components you ne
 
 ```jsx
 // ✅ Good - only imports Button
-import { Button } from '@pulse-ui/core';
+import { Button } from '@pulseui/core';
 
 // ❌ Avoid - imports everything
-import * as PulseUI from '@pulse-ui/core';
+import * as PulseUI from '@pulseui/core';
 ```
 
 ### Code Splitting
@@ -266,7 +266,7 @@ For better performance, you can use dynamic imports with React.lazy:
 import { lazy, Suspense } from 'react';
 
 const DataGrid = lazy(() => 
-  import('@pulse-ui/core').then(module => ({ default: module.DataGrid }))
+  import('@pulseui/core').then(module => ({ default: module.DataGrid }))
 );
 
 function MyComponent() {
@@ -286,13 +286,13 @@ For quick prototyping or simple projects, you can use Pulse UI via CDN:
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://unpkg.com/@pulse-ui/core/dist/css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@pulseui/core/dist/css/style.css">
 </head>
 <body>
   <div id="root"></div>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@pulse-ui/core/dist/umd/pulse-ui.min.js"></script>
+  <script src="https://unpkg.com/@pulseui/core/dist/umd/pulseui.min.js"></script>
   <script>
     const { Button, ThemeProvider } = PulseUI;
     
@@ -316,7 +316,7 @@ For quick prototyping or simple projects, you can use Pulse UI via CDN:
 Make sure you're importing the CSS file:
 
 ```jsx
-import '@pulse-ui/core/style.css';
+import '@pulseui/core/style.css';
 ```
 
 #### TypeScript Errors
@@ -339,7 +339,7 @@ If you encounter build errors with Next.js, add this to your `next.config.js`:
 
 ```javascript
 module.exports = {
-  transpilePackages: ['@pulse-ui/core'],
+  transpilePackages: ['@pulseui/core'],
 };
 ```
 
@@ -347,9 +347,9 @@ module.exports = {
 
 If you encounter any issues during installation:
 
-1. Check our [GitHub Issues](https://github.com/TSKVenkat/pulse-ui/issues)
-2. Join our [Discord Community](https://discord.gg/pulse-ui)
-3. Email us at [support@pulse-ui.dev](mailto:support@pulse-ui.dev)
+1. Check our [GitHub Issues](https://github.com/TSKVenkat/pulseui/issues)
+2. Join our [Discord Community](https://discord.gg/pulseui)
+3. Email us at [support@pulseui.dev](mailto:support@pulseui.dev)
 
 ## What's Next?
 

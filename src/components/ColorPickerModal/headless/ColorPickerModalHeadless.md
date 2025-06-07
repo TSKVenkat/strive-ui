@@ -5,7 +5,7 @@ A headless component for creating customizable color picker modals with extensiv
 ## Usage
 
 ```jsx
-import { ColorPickerModalHeadless } from 'strive-ui';
+import { ColorPickerModalHeadless } from 'pulseui';
 
 function MyColorPicker() {
   const [selectedColor, setSelectedColor] = useState('#3498db');
@@ -238,7 +238,7 @@ function MyColorPicker() {
 ## Creating a Reusable Color Picker Modal
 
 ```jsx
-import { ColorPickerModalHeadless } from 'strive-ui';
+import { ColorPickerModalHeadless } from 'pulseui';
 
 function CustomColorPicker({ 
   isOpen, 
@@ -474,7 +474,7 @@ function App() {
 ## Creating a Color Picker with Custom Presets
 
 ```jsx
-import { ColorPickerModalHeadless } from 'strive-ui';
+import { ColorPickerModalHeadless } from 'pulseui';
 
 function ColorPickerWithCustomPresets() {
   const [selectedColor, setSelectedColor] = useState('#3498db');
@@ -712,7 +712,7 @@ function ColorPickerWithCustomPresets() {
 For even more control, you can use the `useColorPickerModal` hook directly:
 
 ```jsx
-import { useColorPickerModal } from 'strive-ui';
+import { useColorPickerModal } from 'pulseui';
 
 function MyCustomColorPicker() {
   const {

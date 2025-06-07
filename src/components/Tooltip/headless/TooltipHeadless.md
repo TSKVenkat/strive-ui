@@ -5,7 +5,7 @@ A headless component for creating customizable tooltips with extensive flexibili
 ## Usage
 
 ```jsx
-import { TooltipHeadless } from 'strive-ui';
+import { TooltipHeadless } from 'pulseui';
 
 function MyTooltip() {
   return (
@@ -47,7 +47,7 @@ function MyTooltip() {
 ## Creating a Reusable Tooltip Component
 
 ```jsx
-import { TooltipHeadless } from 'strive-ui';
+import { TooltipHeadless } from 'pulseui';
 
 function Tooltip({ 
   children, 
@@ -125,7 +125,7 @@ function App() {
 ## Different Tooltip Styles
 
 ```jsx
-import { TooltipHeadless } from 'strive-ui';
+import { TooltipHeadless } from 'pulseui';
 
 function App() {
   return (
@@ -288,7 +288,7 @@ type PopoverPlacement =
 For even more control, you can use the `useTooltip` hook directly:
 
 ```jsx
-import { useTooltip } from 'strive-ui';
+import { useTooltip } from 'pulseui';
 
 function MyCustomTooltip() {
   const {

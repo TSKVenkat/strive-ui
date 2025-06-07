@@ -5,7 +5,7 @@ A headless component for creating resizable elements with extensive customizatio
 ## Usage
 
 ```jsx
-import { ResizableHeadless } from 'strive-ui';
+import { ResizableHeadless } from 'pulseui';
 
 function MyResizableComponent() {
   return (

@@ -5,7 +5,7 @@ The Modal component displays content in a layer that appears above the main cont
 ## Import
 
 ```jsx
-import { Modal } from 'strive-ui';
+import { Modal } from 'pulseui';
 ```
 
 ## Features
@@ -21,7 +21,7 @@ import { Modal } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Modal, Button } from 'strive-ui';
+import { Modal, Button } from 'pulseui';
 import { useState } from 'react';
 
 function ModalExample() {

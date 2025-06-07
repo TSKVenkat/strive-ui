@@ -15,13 +15,13 @@ The `FullscreenLayout` component provides a flexible way to display content in f
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { FullscreenLayout } from '@strive-ui/layout';
+import { FullscreenLayout } from '@pulseui/layout';
 import { useState } from 'react';
 
 function BasicFullscreen() {
@@ -73,7 +73,7 @@ function BasicFullscreen() {
 ### Image Gallery with Click Trigger
 
 ```tsx
-import { FullscreenLayout } from '@strive-ui/layout';
+import { FullscreenLayout } from '@pulseui/layout';
 
 function ImageGallery() {
   return (
@@ -110,7 +110,7 @@ function ImageGallery() {
 ### Video Player with Custom Exit Button
 
 ```tsx
-import { FullscreenLayout } from '@strive-ui/layout';
+import { FullscreenLayout } from '@pulseui/layout';
 import { useState } from 'react';
 
 function VideoPlayer() {
@@ -178,7 +178,7 @@ function VideoPlayer() {
 ### Presentation Slides with Double-Click
 
 ```tsx
-import { FullscreenLayout } from '@strive-ui/layout';
+import { FullscreenLayout } from '@pulseui/layout';
 import { useState } from 'react';
 
 function PresentationSlides() {
@@ -303,7 +303,7 @@ function PresentationSlides() {
 ### Product Detail Modal
 
 ```tsx
-import { FullscreenLayout } from '@strive-ui/layout';
+import { FullscreenLayout } from '@pulseui/layout';
 import { useState } from 'react';
 
 function ProductDetailModal() {
@@ -453,7 +453,7 @@ function ProductDetailModal() {
 ### Map Viewer with Hover Trigger
 
 ```tsx
-import { FullscreenLayout } from '@strive-ui/layout';
+import { FullscreenLayout } from '@pulseui/layout';
 
 function MapViewer() {
   return (

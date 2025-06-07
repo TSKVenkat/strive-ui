@@ -5,7 +5,7 @@ A headless component for creating customizable media capture experiences includi
 ## Usage
 
 ```jsx
-import { MediaCaptureHeadless } from 'strive-ui';
+import { MediaCaptureHeadless } from 'pulseui';
 
 function MyCameraApp() {
   const handleCapture = (data, type) => {
@@ -114,7 +114,7 @@ function MyCameraApp() {
 For even more control, you can use the `useMediaCapture` hook directly:
 
 ```jsx
-import { useMediaCapture } from 'strive-ui';
+import { useMediaCapture } from 'pulseui';
 
 function MyCustomMediaCapture() {
   const {

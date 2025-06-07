@@ -5,7 +5,7 @@ A headless component for creating resizable split views with extensive customiza
 ## Usage
 
 ```jsx
-import { SplitterHeadless } from 'strive-ui';
+import { SplitterHeadless } from 'pulseui';
 
 function MySplitView() {
   return (

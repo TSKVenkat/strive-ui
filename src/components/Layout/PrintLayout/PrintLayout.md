@@ -17,13 +17,13 @@ The `PrintLayout` component provides a layout optimized for printing documents. 
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { PrintLayout } from '@strive-ui/layout';
+import { PrintLayout } from '@pulseui/layout';
 
 function BasicPrintDocument() {
   return (
@@ -56,7 +56,7 @@ function BasicPrintDocument() {
 ### Invoice with Header and Footer
 
 ```tsx
-import { PrintLayout } from '@strive-ui/layout';
+import { PrintLayout } from '@pulseui/layout';
 
 function InvoiceDocument() {
   const currentDate = new Date().toLocaleDateString();
@@ -196,7 +196,7 @@ function InvoiceDocument() {
 ### Resume with Custom Margins
 
 ```tsx
-import { PrintLayout } from '@strive-ui/layout';
+import { PrintLayout } from '@pulseui/layout';
 
 function ResumeDocument() {
   return (

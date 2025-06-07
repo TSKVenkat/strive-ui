@@ -5,7 +5,7 @@ A headless component for creating customizable shimmer effects with extensive fl
 ## Usage
 
 ```jsx
-import { ShimmerHeadless } from 'strive-ui';
+import { ShimmerHeadless } from 'pulseui';
 
 function MyShimmerEffect() {
   return (
@@ -34,7 +34,7 @@ function MyShimmerEffect() {
 ## Creating Different Shimmer Variants
 
 ```jsx
-import { ShimmerHeadless } from 'strive-ui';
+import { ShimmerHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function ShimmerExample() {
@@ -159,7 +159,7 @@ function ShimmerExample() {
 ## Creating a Card Shimmer
 
 ```jsx
-import { ShimmerHeadless } from 'strive-ui';
+import { ShimmerHeadless } from 'pulseui';
 
 function CardShimmer() {
   return (
@@ -244,7 +244,7 @@ function App() {
 ## Creating a Profile Shimmer
 
 ```jsx
-import { ShimmerHeadless } from 'strive-ui';
+import { ShimmerHeadless } from 'pulseui';
 
 function ProfileShimmer() {
   return (
@@ -369,7 +369,7 @@ function App() {
 ## Creating a List Shimmer
 
 ```jsx
-import { ShimmerHeadless } from 'strive-ui';
+import { ShimmerHeadless } from 'pulseui';
 
 function ListItemShimmer() {
   return (
@@ -449,7 +449,7 @@ function App() {
 ## Creating a Content Loader with Conditional Rendering
 
 ```jsx
-import { ShimmerHeadless } from 'strive-ui';
+import { ShimmerHeadless } from 'pulseui';
 import { useState, useEffect } from 'react';
 
 function ContentLoader({ children, isLoading, fallback }) {
@@ -658,7 +658,7 @@ function App() {
 For even more control, you can use the `useShimmer` hook directly:
 
 ```jsx
-import { useShimmer } from 'strive-ui';
+import { useShimmer } from 'pulseui';
 
 function MyCustomShimmer() {
   const {

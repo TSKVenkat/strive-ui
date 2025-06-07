@@ -18,7 +18,7 @@ A headless range slider component that provides all the functionality for select
 ### Basic Usage
 
 ```jsx
-import { RangeSlider } from '@strive-ui/range-slider';
+import { RangeSlider } from '@pulseui/range-slider';
 
 function MyComponent() {
   return (
@@ -37,7 +37,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { RangeSlider } from '@strive-ui/range-slider';
+import { RangeSlider } from '@pulseui/range-slider';
 
 function ControlledRangeSlider() {
   const [values, setValues] = useState([25, 75]);
@@ -65,7 +65,7 @@ function ControlledRangeSlider() {
 ### With Marks
 
 ```jsx
-import { RangeSlider } from '@strive-ui/range-slider';
+import { RangeSlider } from '@pulseui/range-slider';
 
 function RangeSliderWithMarks() {
   return (
@@ -91,7 +91,7 @@ function RangeSliderWithMarks() {
 ### With Tooltip
 
 ```jsx
-import { RangeSlider } from '@strive-ui/range-slider';
+import { RangeSlider } from '@pulseui/range-slider';
 
 function RangeSliderWithTooltip() {
   return (
@@ -109,7 +109,7 @@ function RangeSliderWithTooltip() {
 ### With Minimum Distance
 
 ```jsx
-import { RangeSlider } from '@strive-ui/range-slider';
+import { RangeSlider } from '@pulseui/range-slider';
 
 function RangeSliderWithMinDistance() {
   return (
@@ -127,7 +127,7 @@ function RangeSliderWithMinDistance() {
 ### Vertical Orientation
 
 ```jsx
-import { RangeSlider } from '@strive-ui/range-slider';
+import { RangeSlider } from '@pulseui/range-slider';
 
 function VerticalRangeSlider() {
   return (
@@ -146,7 +146,7 @@ function VerticalRangeSlider() {
 ### Custom Styling
 
 ```jsx
-import { RangeSlider } from '@strive-ui/range-slider';
+import { RangeSlider } from '@pulseui/range-slider';
 
 function CustomRangeSlider() {
   return (
@@ -287,7 +287,7 @@ The RangeSlider component uses a compound component pattern, providing the follo
 #### useRangeSlider
 
 ```jsx
-import { useRangeSlider } from '@strive-ui/range-slider';
+import { useRangeSlider } from '@pulseui/range-slider';
 
 function MyCustomRangeSlider() {
   const { 

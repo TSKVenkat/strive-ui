@@ -5,7 +5,7 @@ The Skeleton component is used to display a placeholder preview of content befor
 ## Import
 
 ```jsx
-import { Skeleton } from 'strive-ui';
+import { Skeleton } from 'pulseui';
 ```
 
 ## Usage

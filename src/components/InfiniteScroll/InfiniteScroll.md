@@ -5,7 +5,7 @@ The InfiniteScroll component automatically loads more content as the user scroll
 ## Import
 
 ```jsx
-import { InfiniteScroll } from 'strive-ui';
+import { InfiniteScroll } from 'pulseui';
 ```
 
 ## Usage

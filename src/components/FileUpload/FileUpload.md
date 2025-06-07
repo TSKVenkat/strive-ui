@@ -5,7 +5,7 @@ The FileUpload component provides an intuitive interface for users to upload fil
 ## Import
 
 ```jsx
-import { FileUpload } from 'strive-ui';
+import { FileUpload } from 'pulseui';
 ```
 
 ## Usage

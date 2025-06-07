@@ -5,7 +5,7 @@ The Form component provides a structured way to build forms with validation, err
 ## Import
 
 ```jsx
-import { Form } from 'strive-ui';
+import { Form } from 'pulseui';
 ```
 
 ## Features
@@ -22,7 +22,7 @@ import { Form } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Form, Button } from 'strive-ui';
+import { Form, Button } from 'pulseui';
 import { useState } from 'react';
 
 function FormExample() {
@@ -106,7 +106,7 @@ function FormExample() {
 ## Form with Validation
 
 ```jsx
-import { Form, Button } from 'strive-ui';
+import { Form, Button } from 'pulseui';
 import { useState } from 'react';
 
 function ValidationFormExample() {

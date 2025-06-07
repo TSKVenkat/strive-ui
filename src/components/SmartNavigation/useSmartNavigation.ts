@@ -222,7 +222,7 @@ export function useSmartNavigation({
   enableLearning = true,
   enableContextAwareness = false,
   contextTags = [],
-  storageKey = 'strive-ui-smart-navigation',
+  storageKey = 'pulseui-smart-navigation',
   weightDecayFactor = 0.9,
   clickWeightBoost = 1,
   contextRelevanceBoost = 0.5,

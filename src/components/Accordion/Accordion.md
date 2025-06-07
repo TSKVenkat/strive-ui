@@ -5,7 +5,7 @@ The Accordion component is a collapsible content container that allows users to 
 ## Import
 
 ```jsx
-import { Accordion } from 'strive-ui';
+import { Accordion } from 'pulseui';
 ```
 
 ## Features
@@ -21,7 +21,7 @@ import { Accordion } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Accordion } from 'strive-ui';
+import { Accordion } from 'pulseui';
 
 // Basic usage with single item
 <Accordion title="Section Title">

@@ -5,7 +5,7 @@ The Button component is a customizable button element that supports various styl
 ## Import
 
 ```jsx
-import { Button } from 'strive-ui';
+import { Button } from 'pulseui';
 ```
 
 ## Usage

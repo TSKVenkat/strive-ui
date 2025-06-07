@@ -5,7 +5,7 @@ The Parallax component creates a scrolling effect where background content moves
 ## Import
 
 ```jsx
-import { Parallax } from 'strive-ui';
+import { Parallax } from 'pulseui';
 ```
 
 ## Usage

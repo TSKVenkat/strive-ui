@@ -5,7 +5,7 @@ The Card component is a flexible container that groups related content and actio
 ## Import
 
 ```jsx
-import { Card } from 'strive-ui';
+import { Card } from 'pulseui';
 ```
 
 ## Features
@@ -21,7 +21,7 @@ import { Card } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Card, Button } from 'strive-ui';
+import { Card, Button } from 'pulseui';
 
 // Basic usage
 <Card>

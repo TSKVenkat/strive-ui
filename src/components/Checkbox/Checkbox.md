@@ -5,7 +5,7 @@ The Checkbox component allows users to select one or multiple items from a set o
 ## Import
 
 ```jsx
-import { Checkbox } from 'strive-ui';
+import { Checkbox } from 'pulseui';
 ```
 
 ## Features
@@ -21,7 +21,7 @@ import { Checkbox } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Checkbox } from 'strive-ui';
+import { Checkbox } from 'pulseui';
 
 // Basic usage
 <Checkbox>Accept terms and conditions</Checkbox>

@@ -17,7 +17,7 @@ The Compound Select component is a flexible and customizable select component th
 ## Installation
 
 ```jsx
-import { Select } from 'strive-ui';
+import { Select } from 'pulseui';
 ```
 
 ## Usage
@@ -25,7 +25,7 @@ import { Select } from 'strive-ui';
 ### Simple Usage
 
 ```jsx
-import { Select } from 'strive-ui';
+import { Select } from 'pulseui';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -46,7 +46,7 @@ function MyComponent() {
 ### Controlled Usage
 
 ```jsx
-import { Select } from 'strive-ui';
+import { Select } from 'pulseui';
 import { useState } from 'react';
 
 const options = [
@@ -75,7 +75,7 @@ function MyComponent() {
 ### Custom Trigger
 
 ```jsx
-import { Select } from 'strive-ui';
+import { Select } from 'pulseui';
 import styled from 'styled-components';
 
 const CustomTrigger = styled(Select.Trigger)`
@@ -107,7 +107,7 @@ function MyComponent() {
 ### Custom Items
 
 ```jsx
-import { Select } from 'strive-ui';
+import { Select } from 'pulseui';
 import styled from 'styled-components';
 
 const CustomItem = styled(Select.Item)`
@@ -237,7 +237,7 @@ The individual option item component.
 ### Fully Customized Example
 
 ```jsx
-import { Select } from 'strive-ui';
+import { Select } from 'pulseui';
 import styled from 'styled-components';
 
 const CustomSelectContainer = styled.div`

@@ -5,7 +5,7 @@ A headless component for creating customizable confetti animations with extensiv
 ## Usage
 
 ```jsx
-import { ConfettiHeadless } from 'strive-ui';
+import { ConfettiHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function MyConfetti() {
@@ -51,7 +51,7 @@ function MyConfetti() {
 ## Creating Different Confetti Variants
 
 ```jsx
-import { ConfettiHeadless } from 'strive-ui';
+import { ConfettiHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function ConfettiExample() {
@@ -150,7 +150,7 @@ function ConfettiExample() {
 ## Creating a Celebration Modal
 
 ```jsx
-import { ConfettiHeadless } from 'strive-ui';
+import { ConfettiHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function CelebrationModal({ isOpen, onClose, title, message }) {
@@ -261,7 +261,7 @@ function App() {
 ## Creating a Reward Animation
 
 ```jsx
-import { ConfettiHeadless } from 'strive-ui';
+import { ConfettiHeadless } from 'pulseui';
 import { useState, useEffect } from 'react';
 
 function RewardAnimation({ points, onComplete }) {
@@ -395,7 +395,7 @@ function App() {
 ## Creating a Game Win Celebration
 
 ```jsx
-import { ConfettiHeadless } from 'strive-ui';
+import { ConfettiHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function GameWinCelebration({ isOpen, onClose, score, level }) {
@@ -589,7 +589,7 @@ function App() {
 For even more control, you can use the `useConfetti` hook directly:
 
 ```jsx
-import { useConfetti } from 'strive-ui';
+import { useConfetti } from 'pulseui';
 
 function MyCustomConfetti() {
   const {

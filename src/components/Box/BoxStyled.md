@@ -13,7 +13,7 @@ The BoxStyled component is a powerful, foundational component that leverages tem
 ## Installation
 
 ```jsx
-import { BoxStyled } from 'strive-ui';
+import { BoxStyled } from 'pulseui';
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ import { BoxStyled } from 'strive-ui';
 ### Basic Usage
 
 ```jsx
-import { BoxStyled } from 'strive-ui';
+import { BoxStyled } from 'pulseui';
 
 function MyComponent() {
   return (
@@ -40,7 +40,7 @@ function MyComponent() {
 ### Responsive Styles
 
 ```jsx
-import { BoxStyled } from 'strive-ui';
+import { BoxStyled } from 'pulseui';
 
 function MyComponent() {
   return (
@@ -59,7 +59,7 @@ function MyComponent() {
 ### Layout Example
 
 ```jsx
-import { BoxStyled } from 'strive-ui';
+import { BoxStyled } from 'pulseui';
 
 function MyComponent() {
   return (
@@ -82,7 +82,7 @@ function MyComponent() {
 ### Polymorphic Usage
 
 ```jsx
-import { BoxStyled } from 'strive-ui';
+import { BoxStyled } from 'pulseui';
 
 function MyComponent() {
   return (
@@ -296,7 +296,7 @@ To use responsive styles, provide an object with breakpoint keys:
 ### Card Component
 
 ```jsx
-import { BoxStyled } from 'strive-ui';
+import { BoxStyled } from 'pulseui';
 
 function Card({ title, description, imageUrl }) {
   return (
@@ -355,7 +355,7 @@ function Card({ title, description, imageUrl }) {
 ### Grid Layout
 
 ```jsx
-import { BoxStyled } from 'strive-ui';
+import { BoxStyled } from 'pulseui';
 
 function GridLayout() {
   return (
@@ -388,7 +388,7 @@ function GridLayout() {
 ### Form Elements
 
 ```jsx
-import { BoxStyled } from 'strive-ui';
+import { BoxStyled } from 'pulseui';
 
 function FormExample() {
   return (

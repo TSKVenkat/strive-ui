@@ -5,7 +5,7 @@ A headless component for creating customizable image viewers with extensive flex
 ## Usage
 
 ```jsx
-import { ImageViewerHeadless } from 'strive-ui';
+import { ImageViewerHeadless } from 'pulseui';
 
 function MyImageViewer() {
   return (
@@ -188,7 +188,7 @@ function MyImageViewer() {
 ## Creating a Reusable Image Viewer
 
 ```jsx
-import { ImageViewerHeadless } from 'strive-ui';
+import { ImageViewerHeadless } from 'pulseui';
 
 function CustomImageViewer({ 
   src, 
@@ -443,7 +443,7 @@ function App() {
 For even more control, you can use the `useImageViewer` hook directly:
 
 ```jsx
-import { useImageViewer } from 'strive-ui';
+import { useImageViewer } from 'pulseui';
 
 function MyCustomImageViewer() {
   const {

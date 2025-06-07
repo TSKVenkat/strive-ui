@@ -15,13 +15,13 @@ The Timeline component displays a sequence of events in chronological order. It'
 ## Installation
 
 ```jsx
-import { Timeline } from 'strive-ui';
+import { Timeline } from 'pulseui';
 ```
 
 ## Usage
 
 ```jsx
-import { Timeline } from 'strive-ui';
+import { Timeline } from 'pulseui';
 
 const timelineItems = [
   {

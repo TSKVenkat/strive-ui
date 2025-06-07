@@ -5,7 +5,7 @@ The Select component allows users to choose one option from a dropdown list. It 
 ## Import
 
 ```jsx
-import { Select } from 'strive-ui';
+import { Select } from 'pulseui';
 ```
 
 ## Features
@@ -22,7 +22,7 @@ import { Select } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Select } from 'strive-ui';
+import { Select } from 'pulseui';
 
 // Basic usage
 <Select

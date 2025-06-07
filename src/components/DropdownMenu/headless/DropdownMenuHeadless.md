@@ -5,7 +5,7 @@ A headless component for creating customizable dropdown menus with extensive fle
 ## Usage
 
 ```jsx
-import { DropdownMenuHeadless } from 'strive-ui';
+import { DropdownMenuHeadless } from 'pulseui';
 
 function MyDropdownMenu() {
   const items = [
@@ -75,7 +75,7 @@ function MyDropdownMenu() {
 ## Creating a Reusable Dropdown Menu Component
 
 ```jsx
-import { DropdownMenuHeadless } from 'strive-ui';
+import { DropdownMenuHeadless } from 'pulseui';
 
 function DropdownMenu({ 
   trigger, 
@@ -193,7 +193,7 @@ function App() {
 ## Creating a Multi-Select Dropdown
 
 ```jsx
-import { DropdownMenuHeadless } from 'strive-ui';
+import { DropdownMenuHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function MultiSelectDropdown({ 
@@ -392,7 +392,7 @@ interface DropdownMenuItem {
 For even more control, you can use the `useDropdownMenu` hook directly:
 
 ```jsx
-import { useDropdownMenu } from 'strive-ui';
+import { useDropdownMenu } from 'pulseui';
 
 function MyCustomDropdownMenu() {
   const {

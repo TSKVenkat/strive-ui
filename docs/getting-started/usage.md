@@ -7,7 +7,7 @@ This guide demonstrates how to use Pulse UI components effectively in real-world
 ### Buttons
 
 ```jsx
-import { Button } from '@pulse-ui/core';
+import { Button } from '@pulseui/core';
 
 function ButtonExamples() {
   return (
@@ -36,7 +36,7 @@ function ButtonExamples() {
 ### Form Components
 
 ```jsx
-import { Input, Select, Checkbox, Button } from '@pulse-ui/core';
+import { Input, Select, Checkbox, Button } from '@pulseui/core';
 import { useState } from 'react';
 
 function ContactForm() {
@@ -101,7 +101,7 @@ function ContactForm() {
 ### Grid System
 
 ```jsx
-import { Grid, Card } from '@pulse-ui/core';
+import { Grid, Card } from '@pulseui/core';
 
 function ProductGrid() {
   const products = [
@@ -133,7 +133,7 @@ function ProductGrid() {
 ### Navigation
 
 ```jsx
-import { Navbar, Button } from '@pulse-ui/core';
+import { Navbar, Button } from '@pulseui/core';
 import { useState } from 'react';
 
 function AppNavigation() {
@@ -173,7 +173,7 @@ function AppNavigation() {
 ### Modal Dialog
 
 ```jsx
-import { Modal, Button, Input } from '@pulse-ui/core';
+import { Modal, Button, Input } from '@pulseui/core';
 import { useState } from 'react';
 
 function UserProfileModal() {
@@ -248,7 +248,7 @@ function UserProfileModal() {
 ### Toast Notifications
 
 ```jsx
-import { Button, useToast } from '@pulse-ui/core';
+import { Button, useToast } from '@pulseui/core';
 
 function NotificationExample() {
   const toast = useToast();
@@ -293,7 +293,7 @@ function NotificationExample() {
 ### Data Table
 
 ```jsx
-import { DataTable, Badge, Button } from '@pulse-ui/core';
+import { DataTable, Badge, Button } from '@pulseui/core';
 import { useState } from 'react';
 
 function UserTable() {
@@ -366,7 +366,7 @@ function UserTable() {
 ### Compound Components
 
 ```jsx
-import { Accordion } from '@pulse-ui/core';
+import { Accordion } from '@pulseui/core';
 
 function FAQSection() {
   return (
@@ -386,7 +386,7 @@ function FAQSection() {
         <Accordion.Panel>
           <p>You can install Pulse UI using npm, yarn, or pnpm:</p>
           <pre className="bg-gray-100 p-2 rounded mt-2">
-            npm install @pulse-ui/core
+            npm install @pulseui/core
           </pre>
         </Accordion.Panel>
       </Accordion.Item>
@@ -408,7 +408,7 @@ function FAQSection() {
 ### Polymorphic Components
 
 ```jsx
-import { Button } from '@pulse-ui/core';
+import { Button } from '@pulseui/core';
 import { Link } from 'react-router-dom';
 
 function NavigationButtons() {
@@ -441,7 +441,7 @@ function NavigationButtons() {
 ### Headless Usage
 
 ```jsx
-import { useButton, useModal } from '@pulse-ui/core';
+import { useButton, useModal } from '@pulseui/core';
 
 function CustomButton({ children, ...props }) {
   const { buttonProps } = useButton(props);
@@ -487,7 +487,7 @@ function CustomModal({ children, ...props }) {
 ### Component Composition
 
 ```jsx
-import { Card, Button, Badge, Avatar } from '@pulse-ui/core';
+import { Card, Button, Badge, Avatar } from '@pulseui/core';
 
 // ✅ Good - Compose components for reusability
 function UserCard({ user, onEdit, onDelete }) {
@@ -522,7 +522,7 @@ function UserCard({ user, onEdit, onDelete }) {
 ### Error Handling
 
 ```jsx
-import { Alert, Button } from '@pulse-ui/core';
+import { Alert, Button } from '@pulseui/core';
 import { useState } from 'react';
 
 function DataFetcher() {
@@ -573,7 +573,7 @@ function DataFetcher() {
 ### Accessibility
 
 ```jsx
-import { Button, Input, Modal } from '@pulse-ui/core';
+import { Button, Input, Modal } from '@pulseui/core';
 import { useState } from 'react';
 
 function AccessibleForm() {
@@ -652,10 +652,10 @@ function AccessibleForm() {
 
 ```jsx
 import { lazy, Suspense } from 'react';
-import { Spinner } from '@pulse-ui/core';
+import { Spinner } from '@pulseui/core';
 
 // Lazy load heavy components
-const DataGrid = lazy(() => import('@pulse-ui/core').then(module => ({ 
+const DataGrid = lazy(() => import('@pulseui/core').then(module => ({ 
   default: module.DataGrid 
 })));
 
@@ -682,7 +682,7 @@ function Dashboard() {
 
 ```jsx
 import { memo, useMemo, useCallback } from 'react';
-import { Button, Card } from '@pulse-ui/core';
+import { Button, Card } from '@pulseui/core';
 
 const UserCard = memo(({ user, onEdit, onDelete }) => {
   const handleEdit = useCallback(() => {

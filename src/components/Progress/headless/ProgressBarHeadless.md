@@ -5,7 +5,7 @@ A headless component for creating customizable linear progress indicators with e
 ## Usage
 
 ```jsx
-import { ProgressBarHeadless } from 'strive-ui';
+import { ProgressBarHeadless } from 'pulseui';
 
 function MyProgressBar() {
   return (
@@ -59,7 +59,7 @@ function MyProgressBar() {
 ## Creating Different Progress Bar Variants
 
 ```jsx
-import { ProgressBarHeadless } from 'strive-ui';
+import { ProgressBarHeadless } from 'pulseui';
 import { useState, useEffect } from 'react';
 
 function ProgressBarExample() {
@@ -219,7 +219,7 @@ function ProgressBarExample() {
 ## Creating a Reusable Progress Bar Component
 
 ```jsx
-import { ProgressBarHeadless } from 'strive-ui';
+import { ProgressBarHeadless } from 'pulseui';
 
 function CustomProgressBar({ 
   value, 
@@ -450,7 +450,7 @@ function App() {
 For even more control, you can use the `useProgress` hook directly:
 
 ```jsx
-import { useProgress } from 'strive-ui';
+import { useProgress } from 'pulseui';
 
 function MyCustomProgressBar() {
   const {

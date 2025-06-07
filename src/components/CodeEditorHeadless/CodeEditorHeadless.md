@@ -20,7 +20,7 @@ A headless code editor component that provides all the functionality for code ed
 ### Basic Usage
 
 ```jsx
-import { CodeEditor } from '@strive-ui/code-editor';
+import { CodeEditor } from '@pulseui/code-editor';
 
 function MyComponent() {
   return (
@@ -38,7 +38,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { CodeEditor } from '@strive-ui/code-editor';
+import { CodeEditor } from '@pulseui/code-editor';
 
 function ControlledEditor() {
   const [code, setCode] = useState("function hello() {\n  console.log('Hello, world!');\n}");
@@ -62,7 +62,7 @@ function ControlledEditor() {
 ### Different Languages
 
 ```jsx
-import { CodeEditor } from '@strive-ui/code-editor';
+import { CodeEditor } from '@pulseui/code-editor';
 
 function PythonEditor() {
   return (
@@ -77,7 +77,7 @@ function PythonEditor() {
 ### Dark Theme
 
 ```jsx
-import { CodeEditor } from '@strive-ui/code-editor';
+import { CodeEditor } from '@pulseui/code-editor';
 
 function DarkThemeEditor() {
   return (
@@ -93,7 +93,7 @@ function DarkThemeEditor() {
 ### Line Wrapping
 
 ```jsx
-import { CodeEditor } from '@strive-ui/code-editor';
+import { CodeEditor } from '@pulseui/code-editor';
 
 function WrappingEditor() {
   return (
@@ -109,7 +109,7 @@ function WrappingEditor() {
 ### Custom Tab Size
 
 ```jsx
-import { CodeEditor } from '@strive-ui/code-editor';
+import { CodeEditor } from '@pulseui/code-editor';
 
 function CustomTabSizeEditor() {
   return (
@@ -125,7 +125,7 @@ function CustomTabSizeEditor() {
 ### Read-Only Mode
 
 ```jsx
-import { CodeEditor } from '@strive-ui/code-editor';
+import { CodeEditor } from '@pulseui/code-editor';
 
 function ReadOnlyEditor() {
   return (
@@ -141,7 +141,7 @@ function ReadOnlyEditor() {
 ### Disabled State
 
 ```jsx
-import { CodeEditor } from '@strive-ui/code-editor';
+import { CodeEditor } from '@pulseui/code-editor';
 
 function DisabledEditor() {
   return (
@@ -157,7 +157,7 @@ function DisabledEditor() {
 ### Without Line Numbers
 
 ```jsx
-import { CodeEditor } from '@strive-ui/code-editor';
+import { CodeEditor } from '@pulseui/code-editor';
 
 function NoLineNumbersEditor() {
   return (
@@ -173,7 +173,7 @@ function NoLineNumbersEditor() {
 ### Custom Styling
 
 ```jsx
-import { CodeEditor } from '@strive-ui/code-editor';
+import { CodeEditor } from '@pulseui/code-editor';
 
 function CustomStyledEditor() {
   return (
@@ -265,7 +265,7 @@ import 'codemirror/theme/material.css';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/addon/edit/matchbrackets';
-import { CodeEditor } from '@strive-ui/code-editor';
+import { CodeEditor } from '@pulseui/code-editor';
 
 function CodeMirrorEditor() {
   const editorRef = useRef(null);
@@ -316,7 +316,7 @@ The CodeEditor component is designed to be highly customizable. You can override
 
 ```jsx
 import styled from 'styled-components';
-import { CodeEditor } from '@strive-ui/code-editor';
+import { CodeEditor } from '@pulseui/code-editor';
 
 const StyledEditor = styled(CodeEditor)`
   border-radius: 8px;
@@ -378,7 +378,7 @@ function StyledCodeEditor() {
 ### useCodeEditor
 
 ```jsx
-import { useCodeEditor } from '@strive-ui/code-editor';
+import { useCodeEditor } from '@pulseui/code-editor';
 
 function MyCustomEditor() {
   const { 

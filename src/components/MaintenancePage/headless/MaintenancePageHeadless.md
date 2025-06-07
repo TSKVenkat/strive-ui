@@ -5,7 +5,7 @@ A headless component for creating customizable maintenance pages with extensive 
 ## Usage
 
 ```jsx
-import { MaintenancePageHeadless } from 'strive-ui';
+import { MaintenancePageHeadless } from 'pulseui';
 
 function MyMaintenancePage() {
   return (
@@ -26,7 +26,7 @@ function MyMaintenancePage() {
 ## Custom Maintenance Page
 
 ```jsx
-import { MaintenancePageHeadless } from 'strive-ui';
+import { MaintenancePageHeadless } from 'pulseui';
 import styled from 'styled-components';
 
 // Styled components
@@ -93,7 +93,7 @@ function CustomMaintenancePage() {
 ## Maintenance Page with Newsletter and Social Media
 
 ```jsx
-import { MaintenancePageHeadless } from 'strive-ui';
+import { MaintenancePageHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function MaintenancePageWithNewsletter() {
@@ -213,7 +213,7 @@ function MaintenancePageWithNewsletter() {
 ## Auto-Refreshing Maintenance Page
 
 ```jsx
-import { MaintenancePageHeadless } from 'strive-ui';
+import { MaintenancePageHeadless } from 'pulseui';
 
 function AutoRefreshMaintenancePage() {
   return (
@@ -280,7 +280,7 @@ function AutoRefreshMaintenancePage() {
 ## Responsive Maintenance Page
 
 ```jsx
-import { MaintenancePageHeadless } from 'strive-ui';
+import { MaintenancePageHeadless } from 'pulseui';
 import { useEffect, useState } from 'react';
 
 function ResponsiveMaintenancePage() {
@@ -420,7 +420,7 @@ function ResponsiveMaintenancePage() {
 For even more control, you can use the `useMaintenancePage` hook directly:
 
 ```jsx
-import { useMaintenancePage } from 'strive-ui';
+import { useMaintenancePage } from 'pulseui';
 
 function MyCustomMaintenancePage() {
   const {

@@ -5,7 +5,7 @@ A headless component for creating customizable lightboxes with extensive flexibi
 ## Usage
 
 ```jsx
-import { LightboxHeadless } from 'strive-ui';
+import { LightboxHeadless } from 'pulseui';
 
 function MyLightbox() {
   const images = [
@@ -304,7 +304,7 @@ function MyLightbox() {
 ## Creating a Reusable Lightbox
 
 ```jsx
-import { LightboxHeadless } from 'strive-ui';
+import { LightboxHeadless } from 'pulseui';
 
 function CustomLightbox({ 
   isOpen, 
@@ -654,7 +654,7 @@ function App() {
 For even more control, you can use the `useLightbox` hook directly:
 
 ```jsx
-import { useLightbox } from 'strive-ui';
+import { useLightbox } from 'pulseui';
 
 function MyCustomLightbox() {
   const {

@@ -15,13 +15,13 @@ The `StickyElement` component creates elements that stick to a specific position
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { StickyElement } from '@strive-ui/layout';
+import { StickyElement } from '@pulseui/layout';
 
 function BasicStickyHeader() {
   return (
@@ -56,7 +56,7 @@ function BasicStickyHeader() {
 ### Sticky Header with Visual Changes
 
 ```tsx
-import { StickyElement } from '@strive-ui/layout';
+import { StickyElement } from '@pulseui/layout';
 import { useState } from 'react';
 
 function EnhancedStickyHeader() {
@@ -113,7 +113,7 @@ function EnhancedStickyHeader() {
 ### Sticky Footer
 
 ```tsx
-import { StickyElement } from '@strive-ui/layout';
+import { StickyElement } from '@pulseui/layout';
 
 function StickyCookieConsent() {
   return (
@@ -175,7 +175,7 @@ function StickyCookieConsent() {
 ### Sticky Sidebar
 
 ```tsx
-import { StickyElement } from '@strive-ui/layout';
+import { StickyElement } from '@pulseui/layout';
 import { useRef } from 'react';
 
 function StickySidebar() {
@@ -216,7 +216,7 @@ function StickySidebar() {
 ### Table of Contents
 
 ```tsx
-import { StickyElement } from '@strive-ui/layout';
+import { StickyElement } from '@pulseui/layout';
 
 function TableOfContents() {
   return (
@@ -284,7 +284,7 @@ function TableOfContents() {
 ### Product Details with Sticky Add to Cart
 
 ```tsx
-import { StickyElement } from '@strive-ui/layout';
+import { StickyElement } from '@pulseui/layout';
 
 function ProductPage() {
   return (

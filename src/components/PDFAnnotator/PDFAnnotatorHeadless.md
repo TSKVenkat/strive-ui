@@ -5,7 +5,7 @@ A headless component for creating customizable PDF annotation interfaces with su
 ## Usage
 
 ```jsx
-import { PDFAnnotatorHeadless } from 'strive-ui';
+import { PDFAnnotatorHeadless } from 'pulseui';
 
 function MyPDFAnnotator() {
   const handleAnnotationAdd = (annotation) => {
@@ -272,7 +272,7 @@ interface Annotation {
 For even more control, you can use the `usePDFAnnotator` hook directly:
 
 ```jsx
-import { usePDFAnnotator } from 'strive-ui';
+import { usePDFAnnotator } from 'pulseui';
 
 function MyCustomPDFAnnotator() {
   const {

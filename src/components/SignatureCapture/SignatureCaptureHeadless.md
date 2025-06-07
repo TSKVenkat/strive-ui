@@ -5,7 +5,7 @@ A headless component for creating customizable signature capture interfaces with
 ## Usage
 
 ```jsx
-import { SignatureCaptureHeadless } from 'strive-ui';
+import { SignatureCaptureHeadless } from 'pulseui';
 
 function MySignatureCapture() {
   const handleSave = (dataUrl) => {
@@ -128,7 +128,7 @@ function MySignatureCapture() {
 For even more control, you can use the `useSignatureCapture` hook directly:
 
 ```jsx
-import { useSignatureCapture } from 'strive-ui';
+import { useSignatureCapture } from 'pulseui';
 
 function MyCustomSignatureCapture() {
   const {

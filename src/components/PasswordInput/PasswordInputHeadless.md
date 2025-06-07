@@ -18,7 +18,7 @@ A headless implementation of a password input component that provides all the fu
 ### With Regular CSS
 
 ```jsx
-import { PasswordInput } from 'strive-ui';
+import { PasswordInput } from 'pulseui';
 import './styles.css'; // Your CSS file
 
 function BasicPasswordInput() {
@@ -174,7 +174,7 @@ function BasicPasswordInput() {
 ### With Tailwind CSS
 
 ```jsx
-import { PasswordInput } from 'strive-ui';
+import { PasswordInput } from 'pulseui';
 
 function TailwindPasswordInput() {
   return (
@@ -278,7 +278,7 @@ function TailwindPasswordInput() {
 ### With styled-components
 
 ```jsx
-import { PasswordInput } from 'strive-ui';
+import { PasswordInput } from 'pulseui';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -436,7 +436,7 @@ function StyledPasswordInput() {
 ### With CSS Modules
 
 ```jsx
-import { PasswordInput } from 'strive-ui';
+import { PasswordInput } from 'pulseui';
 import styles from './PasswordInput.module.css';
 
 function CSSModulesPasswordInput() {
@@ -603,7 +603,7 @@ function CSSModulesPasswordInput() {
 ### With Custom Requirements
 
 ```jsx
-import { PasswordInput } from 'strive-ui';
+import { PasswordInput } from 'pulseui';
 
 function CustomRequirementsPasswordInput() {
   return (

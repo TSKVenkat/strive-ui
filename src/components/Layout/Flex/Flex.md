@@ -15,13 +15,13 @@ The `Flex` and `FlexItem` components provide a powerful and intuitive way to cre
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { Flex, FlexItem } from '@strive-ui/layout';
+import { Flex, FlexItem } from '@pulseui/layout';
 
 function BasicFlex() {
   return (
@@ -39,7 +39,7 @@ function BasicFlex() {
 ### Different Directions
 
 ```tsx
-import { Flex, FlexItem } from '@strive-ui/layout';
+import { Flex, FlexItem } from '@pulseui/layout';
 
 function DirectionExample() {
   return (
@@ -69,7 +69,7 @@ function DirectionExample() {
 ### Alignment and Justification
 
 ```tsx
-import { Flex, FlexItem } from '@strive-ui/layout';
+import { Flex, FlexItem } from '@pulseui/layout';
 
 function AlignmentExample() {
   const boxStyle = {
@@ -131,7 +131,7 @@ function AlignmentExample() {
 ### Flex Item Properties
 
 ```tsx
-import { Flex, FlexItem } from '@strive-ui/layout';
+import { Flex, FlexItem } from '@pulseui/layout';
 
 function FlexItemExample() {
   return (
@@ -153,7 +153,7 @@ function FlexItemExample() {
 ### Centering Content
 
 ```tsx
-import { Flex } from '@strive-ui/layout';
+import { Flex } from '@pulseui/layout';
 
 function CenteringExample() {
   return (
@@ -174,7 +174,7 @@ function CenteringExample() {
 ### Responsive Layout
 
 ```tsx
-import { Flex, FlexItem } from '@strive-ui/layout';
+import { Flex, FlexItem } from '@pulseui/layout';
 import { useState, useEffect } from 'react';
 
 function ResponsiveExample() {

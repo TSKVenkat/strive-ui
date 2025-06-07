@@ -16,13 +16,13 @@ The `TimelineHeadless` component provides a flexible and accessible foundation f
 ## Installation
 
 ```bash
-npm install @strive-ui/timeline
+npm install @pulseui/timeline
 ```
 
 ## Basic Usage
 
 ```tsx
-import { TimelineHeadless } from '@strive-ui/timeline';
+import { TimelineHeadless } from '@pulseui/timeline';
 import { styled } from 'styled-components';
 
 // Styled components for the timeline
@@ -198,7 +198,7 @@ function BasicTimeline() {
 ### Alternating Timeline
 
 ```tsx
-import { TimelineHeadless } from '@strive-ui/timeline';
+import { TimelineHeadless } from '@pulseui/timeline';
 import { styled } from 'styled-components';
 
 // Styled components (reusing from previous example)
@@ -307,7 +307,7 @@ function AlternatingTimeline() {
 ### Horizontal Timeline
 
 ```tsx
-import { TimelineHeadless } from '@strive-ui/timeline';
+import { TimelineHeadless } from '@pulseui/timeline';
 import { styled } from 'styled-components';
 
 // Styled components (reusing from previous example)
@@ -388,7 +388,7 @@ function HorizontalTimeline() {
 ### Interactive Timeline with Icons
 
 ```tsx
-import { TimelineHeadless } from '@strive-ui/timeline';
+import { TimelineHeadless } from '@pulseui/timeline';
 import { styled } from 'styled-components';
 import { useState } from 'react';
 

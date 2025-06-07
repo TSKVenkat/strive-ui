@@ -5,7 +5,7 @@ A headless component for creating customizable barcode scanning interfaces with 
 ## Usage
 
 ```jsx
-import { BarcodeScannerHeadless } from 'strive-ui';
+import { BarcodeScannerHeadless } from 'pulseui';
 
 function MyBarcodeScanner() {
   const handleScan = (result) => {
@@ -194,7 +194,7 @@ interface BarcodeResult {
 For even more control, you can use the `useBarcodeScanner` hook directly:
 
 ```jsx
-import { useBarcodeScanner } from 'strive-ui';
+import { useBarcodeScanner } from 'pulseui';
 
 function MyCustomBarcodeScanner() {
   const {

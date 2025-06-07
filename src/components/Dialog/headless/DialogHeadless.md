@@ -5,7 +5,7 @@ A headless component for creating customizable dialog boxes with confirm and can
 ## Usage
 
 ```jsx
-import { DialogHeadless } from 'strive-ui';
+import { DialogHeadless } from 'pulseui';
 
 function MyDialog() {
   const handleConfirm = (value) => {
@@ -90,7 +90,7 @@ function MyDialog() {
 ## Creating a Confirmation Dialog
 
 ```jsx
-import { DialogHeadless } from 'strive-ui';
+import { DialogHeadless } from 'pulseui';
 
 function ConfirmationDialog({ isOpen, onClose, onConfirm, message, title = 'Confirm Action' }) {
   return (
@@ -187,7 +187,7 @@ function App() {
 For even more control, you can use the `useDialog` hook directly:
 
 ```jsx
-import { useDialog } from 'strive-ui';
+import { useDialog } from 'pulseui';
 
 function MyCustomDialog() {
   const {

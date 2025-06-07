@@ -16,7 +16,7 @@ The `StackLayout` component provides a simple way to stack elements vertically o
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
@@ -24,7 +24,7 @@ npm install @strive-ui/layout
 ### Vertical Stack (Default)
 
 ```tsx
-import { StackLayout } from '@strive-ui/layout';
+import { StackLayout } from '@pulseui/layout';
 
 function VerticalStack() {
   return (
@@ -40,7 +40,7 @@ function VerticalStack() {
 ### Horizontal Stack
 
 ```tsx
-import { StackLayout } from '@strive-ui/layout';
+import { StackLayout } from '@pulseui/layout';
 
 function HorizontalStack() {
   return (
@@ -58,7 +58,7 @@ function HorizontalStack() {
 ### Stack with Dividers
 
 ```tsx
-import { StackLayout } from '@strive-ui/layout';
+import { StackLayout } from '@pulseui/layout';
 
 function StackWithDividers() {
   return (
@@ -83,7 +83,7 @@ function StackWithDividers() {
 ### Form Layout
 
 ```tsx
-import { StackLayout, StackItem } from '@strive-ui/layout';
+import { StackLayout, StackItem } from '@pulseui/layout';
 
 function FormLayout() {
   return (
@@ -129,7 +129,7 @@ function FormLayout() {
 ### Card with Header, Content, and Footer
 
 ```tsx
-import { StackLayout } from '@strive-ui/layout';
+import { StackLayout } from '@pulseui/layout';
 
 function CardLayout() {
   return (
@@ -165,7 +165,7 @@ function CardLayout() {
 ### Navigation Menu
 
 ```tsx
-import { StackLayout } from '@strive-ui/layout';
+import { StackLayout } from '@pulseui/layout';
 
 function NavigationMenu() {
   return (
@@ -240,7 +240,7 @@ function NavigationMenu() {
 ### Complex Layout with StackItems
 
 ```tsx
-import { StackLayout, StackItem } from '@strive-ui/layout';
+import { StackLayout, StackItem } from '@pulseui/layout';
 
 function ComplexStackLayout() {
   return (
@@ -309,7 +309,7 @@ function ComplexStackLayout() {
 ### Responsive Stack
 
 ```tsx
-import { StackLayout } from '@strive-ui/layout';
+import { StackLayout } from '@pulseui/layout';
 import { useState, useEffect } from 'react';
 
 function ResponsiveStack() {

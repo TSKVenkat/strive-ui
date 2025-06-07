@@ -355,7 +355,7 @@ export interface DynamicFormGeneratorProps<T extends FieldValues = any> extends 
  * 
  * @example
  * ```jsx
- * import { DynamicFormGenerator } from 'strive-ui';
+ * import { DynamicFormGenerator } from 'pulseui';
  * 
  * function MyForm() {
  *   const fields = [

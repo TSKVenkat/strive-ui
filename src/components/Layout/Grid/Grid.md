@@ -17,13 +17,13 @@ The `Grid` and `GridItem` components provide a powerful and flexible grid system
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { Grid, GridItem } from '@strive-ui/layout';
+import { Grid, GridItem } from '@pulseui/layout';
 
 function BasicGrid() {
   return (
@@ -44,7 +44,7 @@ function BasicGrid() {
 ### Different Column Spans
 
 ```tsx
-import { Grid, GridItem } from '@strive-ui/layout';
+import { Grid, GridItem } from '@pulseui/layout';
 
 function SpanExample() {
   return (
@@ -65,7 +65,7 @@ function SpanExample() {
 ### Precise Item Placement
 
 ```tsx
-import { Grid, GridItem } from '@strive-ui/layout';
+import { Grid, GridItem } from '@pulseui/layout';
 
 function PlacementExample() {
   return (
@@ -87,7 +87,7 @@ function PlacementExample() {
 ### Named Grid Areas
 
 ```tsx
-import { Grid, GridItem } from '@strive-ui/layout';
+import { Grid, GridItem } from '@pulseui/layout';
 
 function NamedAreasExample() {
   return (
@@ -120,7 +120,7 @@ function NamedAreasExample() {
 ### Custom Template Columns
 
 ```tsx
-import { Grid, GridItem } from '@strive-ui/layout';
+import { Grid, GridItem } from '@pulseui/layout';
 
 function CustomColumnsExample() {
   return (
@@ -136,7 +136,7 @@ function CustomColumnsExample() {
 ### Alignment Control
 
 ```tsx
-import { Grid, GridItem } from '@strive-ui/layout';
+import { Grid, GridItem } from '@pulseui/layout';
 
 function AlignmentExample() {
   return (
@@ -172,7 +172,7 @@ function AlignmentExample() {
 ### Auto Flow Control
 
 ```tsx
-import { Grid, GridItem } from '@strive-ui/layout';
+import { Grid, GridItem } from '@pulseui/layout';
 
 function AutoFlowExample() {
   return (

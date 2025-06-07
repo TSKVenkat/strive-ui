@@ -5,7 +5,7 @@ A headless component for creating customizable bottom sheets with extensive flex
 ## Usage
 
 ```jsx
-import { BottomSheetHeadless } from 'strive-ui';
+import { BottomSheetHeadless } from 'pulseui';
 
 function MyBottomSheet() {
   return (
@@ -116,7 +116,7 @@ function MyBottomSheet() {
 ## Creating a Reusable Bottom Sheet
 
 ```jsx
-import { BottomSheetHeadless } from 'strive-ui';
+import { BottomSheetHeadless } from 'pulseui';
 
 function CustomBottomSheet({ 
   isOpen, 
@@ -246,7 +246,7 @@ function App() {
 ## Creating a Bottom Sheet with Snap Points
 
 ```jsx
-import { BottomSheetHeadless } from 'strive-ui';
+import { BottomSheetHeadless } from 'pulseui';
 
 function SnapPointBottomSheet() {
   return (
@@ -340,7 +340,7 @@ function SnapPointBottomSheet() {
 For even more control, you can use the `useBottomSheet` hook directly:
 
 ```jsx
-import { useBottomSheet } from 'strive-ui';
+import { useBottomSheet } from 'pulseui';
 
 function MyCustomBottomSheet() {
   const {

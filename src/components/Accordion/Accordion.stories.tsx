@@ -35,9 +35,9 @@ export const Basic = () => (
       <Accordion.Header>How do I install Pulse UI?</Accordion.Header>
       <Accordion.Panel>
         <p>You can install Pulse UI using npm or yarn:</p>
-        <pre>npm install @pulse-ui/core</pre>
+        <pre>npm install @pulseui/core</pre>
         <p>or</p>
-        <pre>yarn add @pulse-ui/core</pre>
+        <pre>yarn add @pulseui/core</pre>
       </Accordion.Panel>
     </Accordion.Item>
     <Accordion.Item id="item3">

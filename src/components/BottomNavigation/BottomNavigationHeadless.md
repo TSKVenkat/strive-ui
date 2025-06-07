@@ -16,7 +16,7 @@ A headless implementation of a bottom navigation component that provides a mobil
 ## Basic Usage
 
 ```jsx
-import { BottomNavigation } from 'strive-ui';
+import { BottomNavigation } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -110,7 +110,7 @@ function MyBottomNavigation() {
 ## With Badges Example
 
 ```jsx
-import { BottomNavigation } from 'strive-ui';
+import { BottomNavigation } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -232,7 +232,7 @@ function BottomNavigationWithBadges() {
 ## Hide on Scroll Example
 
 ```jsx
-import { BottomNavigation } from 'strive-ui';
+import { BottomNavigation } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -339,7 +339,7 @@ function HideOnScrollBottomNavigation() {
 ## Labels Only for Active Item Example
 
 ```jsx
-import { BottomNavigation } from 'strive-ui';
+import { BottomNavigation } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 

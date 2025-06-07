@@ -2,11 +2,11 @@
 
 A production-ready, headless React component library offering maximum styling flexibility with robust TypeScript support and comprehensive accessibility features.
 
-![npm](https://img.shields.io/npm/v/@pulse-ui/core?style=flat-square&color=blue)
-![license](https://img.shields.io/npm/l/@pulse-ui/core?style=flat-square&color=green)
-![build](https://img.shields.io/github/actions/workflow/status/TSKVenkat/pulse-ui/ci.yml?branch=main&style=flat-square)
-![downloads](https://img.shields.io/npm/dt/@pulse-ui/core?style=flat-square&color=orange)
-![bundle size](https://img.shields.io/bundlephobia/minzip/@pulse-ui/core?style=flat-square&color=purple)
+![npm](https://img.shields.io/npm/v/@pulseui/core?style=flat-square&color=blue)
+![license](https://img.shields.io/npm/l/@pulseui/core?style=flat-square&color=green)
+![build](https://img.shields.io/github/actions/workflow/status/TSKVenkat/pulseui/ci.yml?branch=main&style=flat-square)
+![downloads](https://img.shields.io/npm/dt/@pulseui/core?style=flat-square&color=orange)
+![bundle size](https://img.shields.io/bundlephobia/minzip/@pulseui/core?style=flat-square&color=purple)
 ![typescript](https://img.shields.io/badge/TypeScript-Ready-blue?style=flat-square)
 ![accessibility](https://img.shields.io/badge/a11y-WCAG%202.1%20AA-green?style=flat-square)
 
@@ -32,7 +32,7 @@ Pulse UI implements three powerful component patterns for maximum flexibility:
 ### 1. **Headless Components**
 Pure logic and behavior without styling constraints
 ```jsx
-import { useButton } from '@pulse-ui/core';
+import { useButton } from '@pulseui/core';
 
 function CustomButton(props) {
   const { buttonProps } = useButton(props);
@@ -66,20 +66,20 @@ Render as any HTML element while maintaining functionality
 
 ```bash
 # npm
-npm install @pulse-ui/core
+npm install @pulseui/core
 
 # yarn
-yarn add @pulse-ui/core
+yarn add @pulseui/core
 
 # pnpm
-pnpm add @pulse-ui/core
+pnpm add @pulseui/core
 ```
 
 ### Basic Usage
 
 ```jsx
-import { Button, Modal, ThemeProvider } from '@pulse-ui/core';
-import '@pulse-ui/core/style.css';
+import { Button, Modal, ThemeProvider } from '@pulseui/core';
+import '@pulseui/core/style.css';
 
 function App() {
   return (
@@ -109,8 +109,8 @@ function App() {
 
 ```jsx
 // pages/_app.js
-import { ThemeProvider } from '@pulse-ui/core';
-import '@pulse-ui/core/style.css';
+import { ThemeProvider } from '@pulseui/core';
+import '@pulseui/core/style.css';
 
 export default function App({ Component, pageProps }) {
   return (
@@ -129,8 +129,8 @@ export default function App({ Component, pageProps }) {
 // main.jsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { ThemeProvider } from '@pulse-ui/core';
-import '@pulse-ui/core/style.css';
+import { ThemeProvider } from '@pulseui/core';
+import '@pulseui/core/style.css';
 import App from './App';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -139,6 +139,69 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <App />
     </ThemeProvider>
   </React.StrictMode>
+);
+```
+</details>
+
+<details>
+<summary><strong>Create React App</strong></summary>
+
+```jsx
+// src/index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { ThemeProvider } from '@pulseui/core';
+import '@pulseui/core/style.css';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>
+);
+```
+</details>
+
+<details>
+<summary><strong>Remix</strong></summary>
+
+```jsx
+// app/root.tsx
+import { ThemeProvider } from '@pulseui/core';
+import '@pulseui/core/style.css';
+
+export default function App() {
+  return (
+    <html>
+      <head>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <ThemeProvider>
+          <Outlet />
+        </ThemeProvider>
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+```
+</details>
+
+<details>
+<summary><strong>Gatsby</strong></summary>
+
+```jsx
+// gatsby-browser.js
+import { ThemeProvider } from '@pulseui/core';
+import '@pulseui/core/style.css';
+
+export const wrapRootElement = ({ element }) => (
+  <ThemeProvider>{element}</ThemeProvider>
 );
 ```
 </details>
@@ -198,16 +261,16 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 - **FileUpload** - File upload with drag & drop
 - **DataGrid** - Advanced data table
 
-## 🎯 Browser Support
+## 🌐 Browser Support
 
 | Browser | Version |
 |---------|---------|
-| Chrome | ≥ 88 |
-| Firefox | ≥ 85 |
+| Chrome | ≥ 91 |
+| Firefox | ≥ 90 |
 | Safari | ≥ 14 |
-| Edge | ≥ 88 |
+| Edge | ≥ 91 |
 
-## 📊 Bundle Size
+## 📦 Bundle Size
 
 | Format | Size (gzipped) |
 |--------|----------------|
@@ -217,16 +280,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
-
-- Development setup
-- Code standards
-- Testing requirements
-- Pull request process
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ## 📄 License
 
-MIT License © [Venkataraman T S K](https://github.com/TSKVenkat)
+MIT © [Venkatarama T S K](https://github.com/TSKVenkat)
 
 ---
 

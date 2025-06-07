@@ -16,7 +16,7 @@ A headless switch component that provides all the functionality without any styl
 ## Installation
 
 ```bash
-npm install @strive-ui/switch
+npm install @pulseui/switch
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ npm install @strive-ui/switch
 ### Basic Usage
 
 ```jsx
-import { Switch } from '@strive-ui/switch';
+import { Switch } from '@pulseui/switch';
 
 function MyComponent() {
   return (
@@ -37,7 +37,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { Switch } from '@strive-ui/switch';
+import { Switch } from '@pulseui/switch';
 
 function ControlledSwitch() {
   const [checked, setChecked] = useState(false);
@@ -58,7 +58,7 @@ function ControlledSwitch() {
 ### Different Sizes
 
 ```jsx
-import { Switch } from '@strive-ui/switch';
+import { Switch } from '@pulseui/switch';
 
 function SwitchSizes() {
   return (
@@ -74,7 +74,7 @@ function SwitchSizes() {
 ### Disabled State
 
 ```jsx
-import { Switch } from '@strive-ui/switch';
+import { Switch } from '@pulseui/switch';
 
 function DisabledSwitch() {
   return (
@@ -87,7 +87,7 @@ function DisabledSwitch() {
 
 ```jsx
 import { useState } from 'react';
-import { Switch } from '@strive-ui/switch';
+import { Switch } from '@pulseui/switch';
 
 function LoadingSwitch() {
   const [isLoading, setIsLoading] = useState(false);
@@ -117,7 +117,7 @@ function LoadingSwitch() {
 ### Custom Styling with Compound Components
 
 ```jsx
-import { Switch } from '@strive-ui/switch';
+import { Switch } from '@pulseui/switch';
 
 function CustomSwitch() {
   return (
@@ -161,7 +161,7 @@ function CustomSwitch() {
 ### Styling with Tailwind CSS
 
 ```jsx
-import { Switch } from '@strive-ui/switch';
+import { Switch } from '@pulseui/switch';
 
 function TailwindSwitch() {
   return (
@@ -186,7 +186,7 @@ function TailwindSwitch() {
 
 ```jsx
 import styled from 'styled-components';
-import { Switch } from '@strive-ui/switch';
+import { Switch } from '@pulseui/switch';
 
 const StyledSwitch = styled(Switch)`
   display: flex;
@@ -350,7 +350,7 @@ function StyledComponentsSwitch() {
 
 ```jsx
 import styles from './Switch.module.css';
-import { Switch } from '@strive-ui/switch';
+import { Switch } from '@pulseui/switch';
 
 function CSSModulesSwitch() {
   return (
@@ -370,7 +370,7 @@ function CSSModulesSwitch() {
 ### Using the Render Prop Pattern
 
 ```jsx
-import { Switch } from '@strive-ui/switch';
+import { Switch } from '@pulseui/switch';
 
 function RenderPropSwitch() {
   return (
@@ -528,7 +528,7 @@ The SwitchHeadless component follows the WAI-ARIA switch pattern and includes th
 If you need more control, you can use the `useSwitch` hook directly:
 
 ```jsx
-import { useSwitch } from '@strive-ui/switch';
+import { useSwitch } from '@pulseui/switch';
 
 function MyCustomSwitch() {
   const { 

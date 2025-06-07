@@ -5,7 +5,7 @@ A headless component for creating customizable context menus with extensive flex
 ## Usage
 
 ```jsx
-import { ContextMenuHeadless } from 'strive-ui';
+import { ContextMenuHeadless } from 'pulseui';
 
 function MyContextMenu() {
   const items = [
@@ -80,7 +80,7 @@ function MyContextMenu() {
 ## Creating a Reusable Context Menu Component
 
 ```jsx
-import { ContextMenuHeadless } from 'strive-ui';
+import { ContextMenuHeadless } from 'pulseui';
 
 function ContextMenu({ 
   children, 
@@ -206,7 +206,7 @@ function App() {
 ## Creating a File Explorer with Context Menu
 
 ```jsx
-import { ContextMenuHeadless } from 'strive-ui';
+import { ContextMenuHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function FileExplorer() {
@@ -401,7 +401,7 @@ interface DropdownMenuItem {
 For even more control, you can use the `useContextMenu` hook directly:
 
 ```jsx
-import { useContextMenu } from 'strive-ui';
+import { useContextMenu } from 'pulseui';
 
 function MyCustomContextMenu() {
   const {

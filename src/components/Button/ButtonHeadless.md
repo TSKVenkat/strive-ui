@@ -14,7 +14,7 @@ The Headless Button component is a flexible and customizable button that provide
 ## Installation
 
 ```jsx
-import { ButtonHeadless } from 'strive-ui';
+import { ButtonHeadless } from 'pulseui';
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ import { ButtonHeadless } from 'strive-ui';
 ### Basic Usage
 
 ```jsx
-import { ButtonHeadless } from 'strive-ui';
+import { ButtonHeadless } from 'pulseui';
 
 function MyComponent() {
   return (
@@ -45,7 +45,7 @@ function MyComponent() {
 ### Styled with styled-components
 
 ```jsx
-import { ButtonHeadless } from 'strive-ui';
+import { ButtonHeadless } from 'pulseui';
 import styled from 'styled-components';
 
 const PrimaryButton = styled(ButtonHeadless)`
@@ -73,7 +73,7 @@ function MyComponent() {
 ### Loading State
 
 ```jsx
-import { ButtonHeadless } from 'strive-ui';
+import { ButtonHeadless } from 'pulseui';
 import styled from 'styled-components';
 import { useState } from 'react';
 
@@ -129,7 +129,7 @@ function MyComponent() {
 ### Link Button
 
 ```jsx
-import { ButtonHeadless } from 'strive-ui';
+import { ButtonHeadless } from 'pulseui';
 import styled from 'styled-components';
 
 const LinkButton = styled(ButtonHeadless)`
@@ -168,7 +168,7 @@ function MyComponent() {
 ### Polymorphic Usage
 
 ```jsx
-import { ButtonHeadless } from 'strive-ui';
+import { ButtonHeadless } from 'pulseui';
 import styled from 'styled-components';
 
 const CardButton = styled(ButtonHeadless)`
@@ -241,7 +241,7 @@ The Headless Button component follows accessibility best practices:
 ### Different Button Types
 
 ```jsx
-import { ButtonHeadless } from 'strive-ui';
+import { ButtonHeadless } from 'pulseui';
 import styled from 'styled-components';
 
 const ButtonBase = styled(ButtonHeadless)`
@@ -283,7 +283,7 @@ function MyComponent() {
 ### Icon Button
 
 ```jsx
-import { ButtonHeadless } from 'strive-ui';
+import { ButtonHeadless } from 'pulseui';
 import styled from 'styled-components';
 
 const IconButton = styled(ButtonHeadless)`
@@ -319,7 +319,7 @@ function MyComponent() {
 For even more customization, you can use the `useButton` hook directly:
 
 ```jsx
-import { useButton } from 'strive-ui';
+import { useButton } from 'pulseui';
 
 function CustomButton({ onClick, disabled, children }) {
   const { 

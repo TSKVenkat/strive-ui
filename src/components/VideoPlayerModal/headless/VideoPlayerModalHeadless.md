@@ -5,7 +5,7 @@ A headless component for creating customizable video player modals with extensiv
 ## Usage
 
 ```jsx
-import { VideoPlayerModalHeadless } from 'strive-ui';
+import { VideoPlayerModalHeadless } from 'pulseui';
 
 function MyVideoPlayer() {
   return (
@@ -256,7 +256,7 @@ function MyVideoPlayer() {
 ## Creating a Reusable Video Player Modal
 
 ```jsx
-import { VideoPlayerModalHeadless } from 'strive-ui';
+import { VideoPlayerModalHeadless } from 'pulseui';
 
 function CustomVideoPlayer({ 
   isOpen, 
@@ -562,7 +562,7 @@ function App() {
 For even more control, you can use the `useVideoPlayerModal` hook directly:
 
 ```jsx
-import { useVideoPlayerModal } from 'strive-ui';
+import { useVideoPlayerModal } from 'pulseui';
 
 function MyCustomVideoPlayer() {
   const {

@@ -5,7 +5,7 @@ A headless component for creating customizable skeleton loaders with extensive f
 ## Usage
 
 ```jsx
-import { SkeletonHeadless } from 'strive-ui';
+import { SkeletonHeadless } from 'pulseui';
 
 function MySkeletonLoader() {
   return (
@@ -30,7 +30,7 @@ function MySkeletonLoader() {
 ## Creating Different Skeleton Variants
 
 ```jsx
-import { SkeletonHeadless } from 'strive-ui';
+import { SkeletonHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function SkeletonExample() {
@@ -137,7 +137,7 @@ function SkeletonExample() {
 ## Creating a Card Skeleton
 
 ```jsx
-import { SkeletonHeadless } from 'strive-ui';
+import { SkeletonHeadless } from 'pulseui';
 
 function CardSkeleton() {
   return (
@@ -219,7 +219,7 @@ function App() {
 ## Creating a Profile Skeleton
 
 ```jsx
-import { SkeletonHeadless } from 'strive-ui';
+import { SkeletonHeadless } from 'pulseui';
 
 function ProfileSkeleton() {
   return (
@@ -341,7 +341,7 @@ function App() {
 ## Creating a Table Skeleton
 
 ```jsx
-import { SkeletonHeadless } from 'strive-ui';
+import { SkeletonHeadless } from 'pulseui';
 
 function TableSkeleton({ rows = 5, columns = 4 }) {
   return (
@@ -409,7 +409,7 @@ function App() {
 ## Creating a Content Loader with Conditional Rendering
 
 ```jsx
-import { SkeletonHeadless } from 'strive-ui';
+import { SkeletonHeadless } from 'pulseui';
 import { useState, useEffect } from 'react';
 
 function ContentLoader({ children, isLoading, fallback }) {
@@ -609,7 +609,7 @@ function App() {
 For even more control, you can use the `useSkeleton` hook directly:
 
 ```jsx
-import { useSkeleton } from 'strive-ui';
+import { useSkeleton } from 'pulseui';
 
 function MyCustomSkeleton() {
   const {

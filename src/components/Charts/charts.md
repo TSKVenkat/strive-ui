@@ -60,7 +60,7 @@ All chart components share these common features:
 The AreaChart component displays data as an area chart, which is a line chart with the area below the line filled. It inherits all the customization options and interactive features of the LineChart.
 
 ```tsx
-import { AreaChart } from 'strive-ui';
+import { AreaChart } from 'pulseui';
 
 // Basic usage
 <AreaChart
@@ -121,7 +121,7 @@ The AreaChart extends the LineChart props, with `showArea` automatically set to 
 The BarChart component displays data as a bar chart with various customization options and interactive features. It supports vertical or horizontal bars, grouped or stacked layouts, and extensive styling options.
 
 ```tsx
-import { BarChart } from 'strive-ui';
+import { BarChart } from 'pulseui';
 
 // Basic usage
 <BarChart
@@ -198,7 +198,7 @@ import { BarChart } from 'strive-ui';
 The BoxPlotChart component visualizes statistical data distribution with quartiles, medians, and outliers. It's perfect for displaying the distribution of data sets and identifying outliers.
 
 ```tsx
-import { BoxPlotChart } from 'strive-ui';
+import { BoxPlotChart } from 'pulseui';
 
 // Basic usage
 <BoxPlotChart
@@ -289,7 +289,7 @@ import { BoxPlotChart } from 'strive-ui';
 The BubbleChart component displays data as bubbles on a two-dimensional chart, with the bubble size representing a third dimension of data. It extends the ScatterPlot with specialized bubble visualization features.
 
 ```tsx
-import { BubbleChart } from 'strive-ui';
+import { BubbleChart } from 'pulseui';
 
 // Basic usage
 <BubbleChart
@@ -362,7 +362,7 @@ The BubbleChart extends the ScatterPlot props:
 The CalendarHeatmap component displays data over time in a calendar view, with color intensity representing values. It's perfect for visualizing activity or metrics over days, weeks, months, or years.
 
 ```tsx
-import { CalendarHeatmap } from 'strive-ui';
+import { CalendarHeatmap } from 'pulseui';
 
 // Basic usage
 <CalendarHeatmap
@@ -428,7 +428,7 @@ import { CalendarHeatmap } from 'strive-ui';
 The CandlestickChart component visualizes financial data with open, high, low, and close values, with optional volume display and interactive features. It's perfect for stock market data and financial analysis.
 
 ```tsx
-import { CandlestickChart } from 'strive-ui';
+import { CandlestickChart } from 'pulseui';
 
 // Basic usage
 <CandlestickChart
@@ -497,7 +497,7 @@ import { CandlestickChart } from 'strive-ui';
 The ComparativeChart component is designed for comparing multiple data series with features like synchronized axes, difference highlighting, and percentage change visualization. It's ideal for comparing performance metrics, financial data, or any other numerical data sets.
 
 ```tsx
-import { ComparativeChart } from 'strive-ui';
+import { ComparativeChart } from 'pulseui';
 
 // Basic usage
 <ComparativeChart
@@ -548,7 +548,7 @@ import { ComparativeChart } from 'strive-ui';
 The DonutChart component displays data as a donut chart, which is a pie chart with a hole in the center. It's useful for showing proportions of a whole and can include interactive features like tooltips and selection.
 
 ```tsx
-import { DonutChart } from 'strive-ui';
+import { DonutChart } from 'pulseui';
 
 // Basic usage
 <DonutChart
@@ -616,7 +616,7 @@ import { DonutChart } from 'strive-ui';
 The ChoroplethMap component visualizes statistical data across geographic regions with color intensity representing values. It's ideal for showing data distribution across countries, states, or any other geographic divisions.
 
 ```tsx
-import { ChoroplethMap } from 'strive-ui';
+import { ChoroplethMap } from 'pulseui';
 
 // Basic usage
 <ChoroplethMap
@@ -701,7 +701,7 @@ import { ChoroplethMap } from 'strive-ui';
 The GeographicMap component provides a flexible base for rendering interactive maps with features and markers. It supports tooltips, selection, zooming, and panning, making it perfect for geographic data visualization.
 
 ```tsx
-import { GeographicMap } from 'strive-ui';
+import { GeographicMap } from 'pulseui';
 
 // Basic usage
 <GeographicMap
@@ -797,7 +797,7 @@ import { GeographicMap } from 'strive-ui';
 The InteractiveMap component provides an enhanced map experience with layer controls, search functionality, measurement tools, and more interactive features. It extends the GeographicMap with additional capabilities for advanced geographic data visualization and interaction.
 
 ```tsx
-import { InteractiveMap } from 'strive-ui';
+import { InteractiveMap } from 'pulseui';
 
 // Basic usage
 <InteractiveMap
@@ -936,7 +936,7 @@ import { InteractiveMap } from 'strive-ui';
 The KPICard component displays key performance indicators with current values, trends, and visual indicators. It's perfect for dashboards and analytics interfaces.
 
 ```tsx
-import { KPICard } from 'strive-ui';
+import { KPICard } from 'pulseui';
 
 // Basic usage
 <KPICard
@@ -996,7 +996,7 @@ import { KPICard } from 'strive-ui';
 The MetricCard component displays detailed metrics with historical context, sparkline visualization, and additional related metrics. It's ideal for dashboards that need to show more comprehensive data.
 
 ```tsx
-import { MetricCard } from 'strive-ui';
+import { MetricCard } from 'pulseui';
 
 // Basic usage
 <MetricCard
@@ -1061,7 +1061,7 @@ import { MetricCard } from 'strive-ui';
 The StatisticsPanel component displays multiple related statistics in a structured layout with optional grouping, visualizations, and comparisons. It's perfect for dashboards and analytics pages.
 
 ```tsx
-import { StatisticsPanel } from 'strive-ui';
+import { StatisticsPanel } from 'pulseui';
 
 // Basic usage
 <StatisticsPanel
@@ -1179,7 +1179,7 @@ import { StatisticsPanel } from 'strive-ui';
 The DashboardWidget component serves as a container for various chart types and data visualizations with consistent styling, headers, and interactive features. It's perfect for building modular dashboards.
 
 ```tsx
-import { DashboardWidget } from 'strive-ui';
+import { DashboardWidget } from 'pulseui';
 
 // Basic usage
 <DashboardWidget title="Revenue Chart">

@@ -142,7 +142,7 @@ export interface SortableListProps<T extends SortableItem = SortableItem> extend
  * 
  * @example
  * ```jsx
- * import { SortableList } from 'strive-ui';
+ * import { SortableList } from 'pulseui';
  * 
  * function MyList() {
  *   const [items, setItems] = useState([

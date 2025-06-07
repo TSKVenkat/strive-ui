@@ -15,7 +15,7 @@ A headless checkbox component that provides all the functionality without any st
 ## Installation
 
 ```bash
-npm install @strive-ui/checkbox
+npm install @pulseui/checkbox
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ npm install @strive-ui/checkbox
 ### Basic Usage
 
 ```jsx
-import { Checkbox } from '@strive-ui/checkbox';
+import { Checkbox } from '@pulseui/checkbox';
 
 function MyComponent() {
   return (
@@ -36,7 +36,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { Checkbox } from '@strive-ui/checkbox';
+import { Checkbox } from '@pulseui/checkbox';
 
 function ControlledCheckbox() {
   const [checked, setChecked] = useState(false);
@@ -55,7 +55,7 @@ function ControlledCheckbox() {
 
 ```jsx
 import { useState } from 'react';
-import { Checkbox } from '@strive-ui/checkbox';
+import { Checkbox } from '@pulseui/checkbox';
 
 function IndeterminateCheckbox() {
   const [parentChecked, setParentChecked] = useState(false);
@@ -117,7 +117,7 @@ function IndeterminateCheckbox() {
 ### Custom Styling with Compound Components
 
 ```jsx
-import { Checkbox } from '@strive-ui/checkbox';
+import { Checkbox } from '@pulseui/checkbox';
 
 function CustomCheckbox() {
   return (
@@ -150,7 +150,7 @@ function CustomCheckbox() {
 ### Styling with Tailwind CSS
 
 ```jsx
-import { Checkbox } from '@strive-ui/checkbox';
+import { Checkbox } from '@pulseui/checkbox';
 
 function TailwindCheckbox() {
   return (
@@ -174,7 +174,7 @@ function TailwindCheckbox() {
 
 ```jsx
 import styled from 'styled-components';
-import { Checkbox } from '@strive-ui/checkbox';
+import { Checkbox } from '@pulseui/checkbox';
 
 const StyledCheckbox = styled(Checkbox)`
   display: flex;
@@ -298,7 +298,7 @@ function StyledComponentsCheckbox() {
 
 ```jsx
 import styles from './Checkbox.module.css';
-import { Checkbox } from '@strive-ui/checkbox';
+import { Checkbox } from '@pulseui/checkbox';
 
 function CSSModulesCheckbox() {
   return (
@@ -318,7 +318,7 @@ function CSSModulesCheckbox() {
 ### Using the Render Prop Pattern
 
 ```jsx
-import { Checkbox } from '@strive-ui/checkbox';
+import { Checkbox } from '@pulseui/checkbox';
 
 function RenderPropCheckbox() {
   return (
@@ -456,7 +456,7 @@ The CheckboxHeadless component follows the WAI-ARIA checkbox pattern and include
 If you need more control, you can use the `useCheckbox` hook directly:
 
 ```jsx
-import { useCheckbox } from '@strive-ui/checkbox';
+import { useCheckbox } from '@pulseui/checkbox';
 
 function MyCustomCheckbox() {
   const { 

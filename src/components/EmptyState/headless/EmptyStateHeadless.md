@@ -5,7 +5,7 @@ A headless component for creating customizable empty state displays with extensi
 ## Usage
 
 ```jsx
-import { EmptyStateHeadless } from 'strive-ui';
+import { EmptyStateHeadless } from 'pulseui';
 
 function MyEmptyState() {
   return (
@@ -26,7 +26,7 @@ function MyEmptyState() {
 ## Different Empty State Types
 
 ```jsx
-import { EmptyStateHeadless } from 'strive-ui';
+import { EmptyStateHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function EmptyStateExample() {
@@ -81,7 +81,7 @@ function EmptyStateExample() {
 ## Custom Empty State
 
 ```jsx
-import { EmptyStateHeadless } from 'strive-ui';
+import { EmptyStateHeadless } from 'pulseui';
 
 function CustomEmptyState() {
   return (
@@ -116,7 +116,7 @@ function CustomEmptyState() {
 ## Styled Empty State
 
 ```jsx
-import { EmptyStateHeadless } from 'strive-ui';
+import { EmptyStateHeadless } from 'pulseui';
 import styled from 'styled-components';
 
 // Styled components
@@ -186,7 +186,7 @@ function StyledEmptyState() {
 ## Empty State in a Data Table
 
 ```jsx
-import { EmptyStateHeadless } from 'strive-ui';
+import { EmptyStateHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function DataTableWithEmptyState() {
@@ -301,7 +301,7 @@ function DataTableWithEmptyState() {
 ## Offline State with Network Detection
 
 ```jsx
-import { EmptyStateHeadless } from 'strive-ui';
+import { EmptyStateHeadless } from 'pulseui';
 import { useState, useEffect } from 'react';
 
 function OfflineStateExample() {
@@ -399,7 +399,7 @@ function OfflineStateExample() {
 For even more control, you can use the `useEmptyState` hook directly:
 
 ```jsx
-import { useEmptyState } from 'strive-ui';
+import { useEmptyState } from 'pulseui';
 
 function MyCustomEmptyState() {
   const {

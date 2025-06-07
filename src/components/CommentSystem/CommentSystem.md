@@ -16,16 +16,16 @@ A headless UI component for building flexible and accessible comment systems wit
 ## Installation
 
 ```bash
-npm install @strive-ui/comment-system
+npm install @pulseui/comment-system
 # or
-yarn add @strive-ui/comment-system
+yarn add @pulseui/comment-system
 ```
 
 ## Basic Usage
 
 ```jsx
 import React from 'react';
-import CommentSystem from '@strive-ui/comment-system';
+import CommentSystem from '@pulseui/comment-system';
 
 const initialComments = [
   {
@@ -87,7 +87,7 @@ export default CommentsSection;
 
 ```jsx
 import React from 'react';
-import CommentSystem from '@strive-ui/comment-system';
+import CommentSystem from '@pulseui/comment-system';
 import { formatDistanceToNow } from 'date-fns';
 
 const CustomCommentsSection = () => {
@@ -193,7 +193,7 @@ const CustomCommentsSection = () => {
 
 ```jsx
 import React from 'react';
-import CommentSystem from '@strive-ui/comment-system';
+import CommentSystem from '@pulseui/comment-system';
 import { commentService } from './services';
 
 const ServerIntegratedComments = () => {

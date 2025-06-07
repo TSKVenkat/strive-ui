@@ -5,7 +5,7 @@ The Input component is a form control that allows users to enter and edit text. 
 ## Import
 
 ```jsx
-import { Input } from 'strive-ui';
+import { Input } from 'pulseui';
 ```
 
 ## Features
@@ -21,7 +21,7 @@ import { Input } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Input } from 'strive-ui';
+import { Input } from 'pulseui';
 
 // Basic usage
 <Input placeholder="Enter your name" />

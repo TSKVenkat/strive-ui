@@ -18,7 +18,7 @@ A specialized carousel component for showcasing products with rich product cards
 ## Installation
 
 ```bash
-npm install @strive-ui/product-carousel
+npm install @pulseui/product-carousel
 ```
 
 ## Usage
@@ -26,7 +26,7 @@ npm install @strive-ui/product-carousel
 ### Basic Usage
 
 ```jsx
-import { ProductCarousel } from '@strive-ui/product-carousel';
+import { ProductCarousel } from '@pulseui/product-carousel';
 
 const products = [
   {
@@ -84,7 +84,7 @@ function App() {
 ### Custom Styling and Configuration
 
 ```jsx
-import { ProductCarousel } from '@strive-ui/product-carousel';
+import { ProductCarousel } from '@pulseui/product-carousel';
 import styled from 'styled-components';
 import { FaArrowLeft, FaArrowRight, FaShoppingCart, FaSearch } from 'react-icons/fa';
 
@@ -158,7 +158,7 @@ function App() {
 ### Responsive Configuration
 
 ```jsx
-import { ProductCarousel } from '@strive-ui/product-carousel';
+import { ProductCarousel } from '@pulseui/product-carousel';
 
 function App() {
   const responsiveSettings = [

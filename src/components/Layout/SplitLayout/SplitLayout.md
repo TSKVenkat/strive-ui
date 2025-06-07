@@ -16,13 +16,13 @@ The `SplitLayout` component provides a flexible way to create resizable split la
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { SplitLayout } from '@strive-ui/layout';
+import { SplitLayout } from '@pulseui/layout';
 
 function BasicSplit() {
   return (
@@ -45,7 +45,7 @@ function BasicSplit() {
 ### Vertical Split Layout
 
 ```tsx
-import { SplitLayout } from '@strive-ui/layout';
+import { SplitLayout } from '@pulseui/layout';
 
 function VerticalSplit() {
   return (
@@ -70,7 +70,7 @@ function VerticalSplit() {
 ### Code Editor Layout
 
 ```tsx
-import { SplitLayout } from '@strive-ui/layout';
+import { SplitLayout } from '@pulseui/layout';
 import { useState } from 'react';
 
 function CodeEditorLayout() {
@@ -132,7 +132,7 @@ function CodeEditorLayout() {
 ### Nested Split Layouts
 
 ```tsx
-import { SplitLayout } from '@strive-ui/layout';
+import { SplitLayout } from '@pulseui/layout';
 
 function NestedSplitLayout() {
   return (
@@ -160,7 +160,7 @@ function NestedSplitLayout() {
 ### Collapsible Panes
 
 ```tsx
-import { SplitLayout } from '@strive-ui/layout';
+import { SplitLayout } from '@pulseui/layout';
 
 function CollapsiblePanes() {
   return (
@@ -186,7 +186,7 @@ function CollapsiblePanes() {
 ### File Explorer and Preview
 
 ```tsx
-import { SplitLayout } from '@strive-ui/layout';
+import { SplitLayout } from '@pulseui/layout';
 import { useState } from 'react';
 
 function FileExplorerAndPreview() {

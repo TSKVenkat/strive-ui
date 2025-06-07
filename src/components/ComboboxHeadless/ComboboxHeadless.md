@@ -17,7 +17,7 @@ A headless combobox component that combines the functionality of a dropdown sele
 ### Basic Usage
 
 ```jsx
-import { Combobox } from '@strive-ui/combobox';
+import { Combobox } from '@pulseui/combobox';
 
 function MyComponent() {
   const options = [
@@ -41,7 +41,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { Combobox } from '@strive-ui/combobox';
+import { Combobox } from '@pulseui/combobox';
 
 function ControlledCombobox() {
   const [value, setValue] = useState('');
@@ -78,7 +78,7 @@ function ControlledCombobox() {
 ### With Custom Values
 
 ```jsx
-import { Combobox } from '@strive-ui/combobox';
+import { Combobox } from '@pulseui/combobox';
 
 function ComboboxWithCustomValues() {
   const options = [
@@ -100,7 +100,7 @@ function ComboboxWithCustomValues() {
 ### With Option Groups
 
 ```jsx
-import { Combobox } from '@strive-ui/combobox';
+import { Combobox } from '@pulseui/combobox';
 
 function ComboboxWithGroups() {
   const options = [
@@ -142,7 +142,7 @@ function ComboboxWithGroups() {
 ### With Custom Filtering
 
 ```jsx
-import { Combobox } from '@strive-ui/combobox';
+import { Combobox } from '@pulseui/combobox';
 
 function ComboboxWithCustomFiltering() {
   const options = [
@@ -175,7 +175,7 @@ function ComboboxWithCustomFiltering() {
 ### Disabled State
 
 ```jsx
-import { Combobox } from '@strive-ui/combobox';
+import { Combobox } from '@pulseui/combobox';
 
 function DisabledCombobox() {
   const options = [
@@ -197,7 +197,7 @@ function DisabledCombobox() {
 ### With Disabled Options
 
 ```jsx
-import { Combobox } from '@strive-ui/combobox';
+import { Combobox } from '@pulseui/combobox';
 
 function ComboboxWithDisabledOptions() {
   const options = [
@@ -220,7 +220,7 @@ function ComboboxWithDisabledOptions() {
 ### Custom Styling
 
 ```jsx
-import { Combobox } from '@strive-ui/combobox';
+import { Combobox } from '@pulseui/combobox';
 
 function CustomStyledCombobox() {
   const options = [
@@ -356,7 +356,7 @@ function CustomStyledCombobox() {
 ### Using the Hook Directly
 
 ```jsx
-import { useCombobox } from '@strive-ui/combobox';
+import { useCombobox } from '@pulseui/combobox';
 
 function CustomCombobox() {
   const options = [
@@ -489,7 +489,7 @@ The Combobox component and its sub-components expose several data attributes tha
 #### useCombobox
 
 ```jsx
-import { useCombobox } from '@strive-ui/combobox';
+import { useCombobox } from '@pulseui/combobox';
 
 function MyCustomCombobox() {
   const {

@@ -413,7 +413,7 @@ export interface FormWizardProps extends Omit<HeadlessRootProps, 'children'> {
  * 
  * @example
  * ```jsx
- * import { FormWizard } from 'strive-ui';
+ * import { FormWizard } from 'pulseui';
  * 
  * function MyWizard() {
  *   const steps = [

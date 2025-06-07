@@ -5,7 +5,7 @@ The Box component is a versatile layout primitive that serves as the foundation 
 ## Import
 
 ```jsx
-import { Box } from 'strive-ui';
+import { Box } from 'pulseui';
 ```
 
 ## Features
@@ -20,7 +20,7 @@ import { Box } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Box } from 'strive-ui';
+import { Box } from 'pulseui';
 
 // Basic usage
 <Box padding="4" margin="2" background="gray.100">

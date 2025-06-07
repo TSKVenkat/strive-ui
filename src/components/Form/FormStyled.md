@@ -14,13 +14,13 @@ The `FormStyled` component is a comprehensive form solution that combines the fl
 ## Installation
 
 ```jsx
-import { FormStyled } from 'strive-ui';
+import { FormStyled } from 'pulseui';
 ```
 
 ## Basic Usage
 
 ```jsx
-import { FormStyled } from 'strive-ui';
+import { FormStyled } from 'pulseui';
 
 const MyForm = () => {
   const handleSubmit = (values) => {

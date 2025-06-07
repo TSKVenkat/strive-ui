@@ -15,7 +15,7 @@ A headless toggle component that provides all the functionality for a toggle swi
 ### Basic Usage
 
 ```jsx
-import { Toggle } from '@strive-ui/toggle';
+import { Toggle } from '@pulseui/toggle';
 
 function MyComponent() {
   return (
@@ -28,7 +28,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { Toggle } from '@strive-ui/toggle';
+import { Toggle } from '@pulseui/toggle';
 
 function ControlledToggle() {
   const [toggled, setToggled] = useState(false);
@@ -49,7 +49,7 @@ function ControlledToggle() {
 ### With Label
 
 ```jsx
-import { Toggle } from '@strive-ui/toggle';
+import { Toggle } from '@pulseui/toggle';
 
 function ToggleWithLabel() {
   return (
@@ -66,7 +66,7 @@ function ToggleWithLabel() {
 ### Disabled State
 
 ```jsx
-import { Toggle } from '@strive-ui/toggle';
+import { Toggle } from '@pulseui/toggle';
 
 function DisabledToggle() {
   return (
@@ -81,7 +81,7 @@ function DisabledToggle() {
 ### Read-Only State
 
 ```jsx
-import { Toggle } from '@strive-ui/toggle';
+import { Toggle } from '@pulseui/toggle';
 
 function ReadOnlyToggle() {
   return (
@@ -96,7 +96,7 @@ function ReadOnlyToggle() {
 ### Custom Styling
 
 ```jsx
-import { Toggle } from '@strive-ui/toggle';
+import { Toggle } from '@pulseui/toggle';
 
 function CustomStyledToggle() {
   return (
@@ -158,7 +158,7 @@ function CustomStyledToggle() {
 ### With Icons
 
 ```jsx
-import { Toggle } from '@strive-ui/toggle';
+import { Toggle } from '@pulseui/toggle';
 
 function ToggleWithIcons() {
   return (
@@ -260,7 +260,7 @@ function ToggleWithIcons() {
 ### Using the Hook Directly
 
 ```jsx
-import { useToggle } from '@strive-ui/toggle';
+import { useToggle } from '@pulseui/toggle';
 
 function CustomToggle() {
   const {
@@ -367,7 +367,7 @@ The Toggle component and its sub-components expose several data attributes that 
 #### useToggle
 
 ```jsx
-import { useToggle } from '@strive-ui/toggle';
+import { useToggle } from '@pulseui/toggle';
 
 function MyCustomToggle() {
   const {

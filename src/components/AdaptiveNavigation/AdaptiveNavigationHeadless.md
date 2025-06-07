@@ -18,7 +18,7 @@ A headless implementation of an adaptive navigation component that automatically
 ## Basic Usage
 
 ```jsx
-import { AdaptiveNavigation } from 'strive-ui';
+import { AdaptiveNavigation } from 'pulseui';
 import styled from 'styled-components';
 
 const Nav = styled(AdaptiveNavigation)`
@@ -184,7 +184,7 @@ function MyAdaptiveNavigation() {
 ## Drawer Layout Example
 
 ```jsx
-import { AdaptiveNavigation } from 'strive-ui';
+import { AdaptiveNavigation } from 'pulseui';
 import styled from 'styled-components';
 
 const Nav = styled(AdaptiveNavigation)`
@@ -374,7 +374,7 @@ function DrawerExample() {
 ## Bottom Navigation Example
 
 ```jsx
-import { AdaptiveNavigation } from 'strive-ui';
+import { AdaptiveNavigation } from 'pulseui';
 import styled from 'styled-components';
 
 const Nav = styled(AdaptiveNavigation)`
@@ -481,7 +481,7 @@ function BottomNavigationExample() {
 ## Layout Switcher Example
 
 ```jsx
-import { AdaptiveNavigation } from 'strive-ui';
+import { AdaptiveNavigation } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -714,7 +714,7 @@ function LayoutSwitcherExample() {
 | isOpen | boolean | - | Whether the navigation is open (for drawer/sidebar layouts) |
 | onOpenChange | (isOpen: boolean) => void | - | Callback when open state changes |
 | collapseToIcons | boolean | true | Whether to collapse items to icons only when space is limited |
-| storageKey | string | 'strive-ui-adaptive-navigation' | Storage key for persisting user preferences |
+| storageKey | string | 'pulseui-adaptive-navigation' | Storage key for persisting user preferences |
 | ariaLabel | string | 'Adaptive navigation' | Aria label for the navigation |
 | as | React.ElementType | 'nav' | The element type to render as |
 

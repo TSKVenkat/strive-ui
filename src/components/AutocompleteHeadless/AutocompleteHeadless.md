@@ -17,7 +17,7 @@ A headless autocomplete component that provides all the functionality for search
 ### Basic Usage
 
 ```jsx
-import { Autocomplete } from '@strive-ui/autocomplete';
+import { Autocomplete } from '@pulseui/autocomplete';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -42,7 +42,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { Autocomplete } from '@strive-ui/autocomplete';
+import { Autocomplete } from '@pulseui/autocomplete';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -78,7 +78,7 @@ function ControlledAutocomplete() {
 ### With Custom Values
 
 ```jsx
-import { Autocomplete } from '@strive-ui/autocomplete';
+import { Autocomplete } from '@pulseui/autocomplete';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -103,7 +103,7 @@ function CustomValueAutocomplete() {
 ### With Asynchronous Loading
 
 ```jsx
-import { Autocomplete } from '@strive-ui/autocomplete';
+import { Autocomplete } from '@pulseui/autocomplete';
 
 function AsyncAutocomplete() {
   // Function to load options asynchronously
@@ -134,7 +134,7 @@ function AsyncAutocomplete() {
 ### With Minimum Characters
 
 ```jsx
-import { Autocomplete } from '@strive-ui/autocomplete';
+import { Autocomplete } from '@pulseui/autocomplete';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -162,7 +162,7 @@ function MinCharsAutocomplete() {
 ### With Auto-Select First Option
 
 ```jsx
-import { Autocomplete } from '@strive-ui/autocomplete';
+import { Autocomplete } from '@pulseui/autocomplete';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -186,7 +186,7 @@ function AutoSelectFirstAutocomplete() {
 ### Disabled State
 
 ```jsx
-import { Autocomplete } from '@strive-ui/autocomplete';
+import { Autocomplete } from '@pulseui/autocomplete';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -211,7 +211,7 @@ function DisabledAutocomplete() {
 ### Custom Styling
 
 ```jsx
-import { Autocomplete } from '@strive-ui/autocomplete';
+import { Autocomplete } from '@pulseui/autocomplete';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -334,7 +334,7 @@ function CustomStyledAutocomplete() {
 ### Using the Hook Directly
 
 ```jsx
-import { useAutocomplete } from '@strive-ui/autocomplete';
+import { useAutocomplete } from '@pulseui/autocomplete';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -478,7 +478,7 @@ The Autocomplete component and its sub-components expose several data attributes
 #### useAutocomplete
 
 ```jsx
-import { useAutocomplete } from '@strive-ui/autocomplete';
+import { useAutocomplete } from '@pulseui/autocomplete';
 
 function MyCustomAutocomplete() {
   const {

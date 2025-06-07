@@ -15,7 +15,7 @@ A headless implementation of a sidebar navigation that provides all the function
 ## Basic Usage
 
 ```jsx
-import { Sidebar } from 'strive-ui';
+import { Sidebar } from 'pulseui';
 import styled from 'styled-components';
 
 // Create your own styled components
@@ -67,7 +67,7 @@ function MySidebar() {
 ## Collapsible Sidebar
 
 ```jsx
-import { Sidebar } from 'strive-ui';
+import { Sidebar } from 'pulseui';
 import styled from 'styled-components';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
@@ -169,7 +169,7 @@ function CollapsibleSidebar() {
 ## Nested Sidebar
 
 ```jsx
-import { Sidebar } from 'strive-ui';
+import { Sidebar } from 'pulseui';
 import styled from 'styled-components';
 import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
 
@@ -280,7 +280,7 @@ function NestedSidebar() {
 
 ```jsx
 import { useState } from 'react';
-import { Sidebar } from 'strive-ui';
+import { Sidebar } from 'pulseui';
 import styled from 'styled-components';
 
 function ControlledSidebar() {

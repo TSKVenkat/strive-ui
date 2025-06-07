@@ -17,13 +17,13 @@ The `CarouselHeadless` component provides a flexible and accessible foundation f
 ## Installation
 
 ```bash
-npm install @strive-ui/carousel
+npm install @pulseui/carousel
 ```
 
 ## Basic Usage
 
 ```tsx
-import { CarouselHeadless } from '@strive-ui/carousel';
+import { CarouselHeadless } from '@pulseui/carousel';
 import { styled } from 'styled-components';
 
 // Styled components for the carousel
@@ -151,7 +151,7 @@ function BasicImageCarousel() {
 ### Product Carousel
 
 ```tsx
-import { CarouselHeadless } from '@strive-ui/carousel';
+import { CarouselHeadless } from '@pulseui/carousel';
 import { styled } from 'styled-components';
 
 // Styled components (reusing from previous example)
@@ -236,7 +236,7 @@ function ProductCarousel() {
 ### Testimonial Carousel
 
 ```tsx
-import { CarouselHeadless } from '@strive-ui/carousel';
+import { CarouselHeadless } from '@pulseui/carousel';
 import { styled } from 'styled-components';
 
 // Styled components (reusing from previous example)

@@ -15,7 +15,7 @@ A headless radio button component that provides all the functionality without an
 ## Installation
 
 ```bash
-npm install @strive-ui/radio
+npm install @pulseui/radio
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ npm install @strive-ui/radio
 ### Basic Usage
 
 ```jsx
-import { Radio } from '@strive-ui/radio';
+import { Radio } from '@pulseui/radio';
 
 function MyComponent() {
   return (
@@ -35,7 +35,7 @@ function MyComponent() {
 ### Radio Group
 
 ```jsx
-import { Radio } from '@strive-ui/radio';
+import { Radio } from '@pulseui/radio';
 
 function RadioGroupExample() {
   return (
@@ -52,7 +52,7 @@ function RadioGroupExample() {
 
 ```jsx
 import { useState } from 'react';
-import { Radio } from '@strive-ui/radio';
+import { Radio } from '@pulseui/radio';
 
 function ControlledRadioGroup() {
   const [value, setValue] = useState('option1');
@@ -77,7 +77,7 @@ function ControlledRadioGroup() {
 ### Horizontal Radio Group
 
 ```jsx
-import { Radio } from '@strive-ui/radio';
+import { Radio } from '@pulseui/radio';
 
 function HorizontalRadioGroup() {
   return (
@@ -93,7 +93,7 @@ function HorizontalRadioGroup() {
 ### Disabled Radio Buttons
 
 ```jsx
-import { Radio } from '@strive-ui/radio';
+import { Radio } from '@pulseui/radio';
 
 function DisabledRadioExample() {
   return (
@@ -109,7 +109,7 @@ function DisabledRadioExample() {
 ### Custom Styling with Compound Components
 
 ```jsx
-import { Radio } from '@strive-ui/radio';
+import { Radio } from '@pulseui/radio';
 
 function CustomRadio() {
   return (
@@ -142,7 +142,7 @@ function CustomRadio() {
 ### Styling with Tailwind CSS
 
 ```jsx
-import { Radio } from '@strive-ui/radio';
+import { Radio } from '@pulseui/radio';
 
 function TailwindRadio() {
   return (
@@ -191,7 +191,7 @@ function TailwindRadio() {
 
 ```jsx
 import styled from 'styled-components';
-import { Radio } from '@strive-ui/radio';
+import { Radio } from '@pulseui/radio';
 
 const StyledRadioGroup = styled(Radio.Group)`
   display: flex;
@@ -348,7 +348,7 @@ function StyledComponentsRadio() {
 
 ```jsx
 import styles from './Radio.module.css';
-import { Radio } from '@strive-ui/radio';
+import { Radio } from '@pulseui/radio';
 
 function CSSModulesRadio() {
   return (
@@ -390,7 +390,7 @@ function CSSModulesRadio() {
 ### Using the Render Prop Pattern
 
 ```jsx
-import { Radio } from '@strive-ui/radio';
+import { Radio } from '@pulseui/radio';
 
 function RenderPropRadio() {
   return (
@@ -579,7 +579,7 @@ The RadioHeadless component follows the WAI-ARIA radio button pattern and includ
 If you need more control, you can use the `useRadio` hook directly:
 
 ```jsx
-import { useRadio } from '@strive-ui/radio';
+import { useRadio } from '@pulseui/radio';
 
 function MyCustomRadio() {
   const { 
@@ -615,7 +615,7 @@ function MyCustomRadio() {
 For managing a group of radio buttons:
 
 ```jsx
-import { useRadioGroup, useRadio } from '@strive-ui/radio';
+import { useRadioGroup, useRadio } from '@pulseui/radio';
 
 function MyCustomRadioGroup() {
   const { 

@@ -5,7 +5,7 @@ The Pagination component enables users to navigate through multiple pages of con
 ## Import
 
 ```jsx
-import { Pagination } from 'strive-ui';
+import { Pagination } from 'pulseui';
 ```
 
 ## Features
@@ -22,7 +22,7 @@ import { Pagination } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Pagination } from 'strive-ui';
+import { Pagination } from 'pulseui';
 import { useState } from 'react';
 
 function PaginationExample() {
@@ -42,7 +42,7 @@ function PaginationExample() {
 ## Advanced Usage
 
 ```jsx
-import { Pagination } from 'strive-ui';
+import { Pagination } from 'pulseui';
 import { useState } from 'react';
 
 function AdvancedPaginationExample() {

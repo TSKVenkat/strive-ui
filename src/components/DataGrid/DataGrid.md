@@ -23,9 +23,9 @@ The DataGrid component is a powerful and flexible data grid for displaying and m
 ## Installation
 
 ```bash
-npm install strive-ui
+npm install pulseui
 # or
-yarn add strive-ui
+yarn add pulseui
 ```
 
 ## Usage
@@ -33,7 +33,7 @@ yarn add strive-ui
 ### Basic Usage
 
 ```jsx
-import { DataGrid } from 'strive-ui';
+import { DataGrid } from 'pulseui';
 
 const columns = [
   { id: 'name', header: 'Name', width: 200 },
@@ -62,7 +62,7 @@ function MyComponent() {
 ### Advanced Usage
 
 ```jsx
-import { DataGrid } from 'strive-ui';
+import { DataGrid } from 'pulseui';
 import { useState } from 'react';
 
 function AdvancedDataGridExample() {
@@ -155,7 +155,7 @@ function AdvancedDataGridExample() {
 ### Virtualization for Large Datasets
 
 ```jsx
-import { DataGrid } from 'strive-ui';
+import { DataGrid } from 'pulseui';
 
 function VirtualizedDataGridExample() {
   // Generate a large dataset
@@ -190,7 +190,7 @@ function VirtualizedDataGridExample() {
 ### Custom Cell Rendering
 
 ```jsx
-import { DataGrid } from 'strive-ui';
+import { DataGrid } from 'pulseui';
 
 function CustomCellRenderingExample() {
   const columns = [
@@ -254,7 +254,7 @@ function CustomCellRenderingExample() {
 ### Custom Editors
 
 ```jsx
-import { DataGrid } from 'strive-ui';
+import { DataGrid } from 'pulseui';
 
 function CustomEditorsExample() {
   const columns = [
@@ -398,8 +398,8 @@ function CustomEditorsExample() {
 For complete control over styling and behavior, you can use the headless version of the DataGrid component:
 
 ```jsx
-import { DataGridHeadless } from 'strive-ui';
-import { useDataGrid } from 'strive-ui';
+import { DataGridHeadless } from 'pulseui';
+import { useDataGrid } from 'pulseui';
 import styled from 'styled-components';
 
 // Custom styled components

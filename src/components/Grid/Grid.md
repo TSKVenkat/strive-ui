@@ -5,7 +5,7 @@ The Grid component provides a flexible and responsive layout system based on CSS
 ## Import
 
 ```jsx
-import { Grid } from 'strive-ui';
+import { Grid } from 'pulseui';
 ```
 
 ## Features
@@ -21,7 +21,7 @@ import { Grid } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Grid } from 'strive-ui';
+import { Grid } from 'pulseui';
 
 // Basic grid with equal columns
 <Grid columns={3} gap="1rem">

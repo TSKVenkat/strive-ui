@@ -14,7 +14,7 @@ A headless implementation of breadcrumbs navigation that provides all the functi
 ## Basic Usage
 
 ```jsx
-import { Breadcrumbs } from 'strive-ui';
+import { Breadcrumbs } from 'pulseui';
 import styled from 'styled-components';
 
 // Create your own styled components
@@ -82,7 +82,7 @@ function MyBreadcrumbs() {
 ## Collapsible Breadcrumbs
 
 ```jsx
-import { Breadcrumbs } from 'strive-ui';
+import { Breadcrumbs } from 'pulseui';
 import styled from 'styled-components';
 
 const StyledBreadcrumbs = styled(Breadcrumbs)`
@@ -179,7 +179,7 @@ function CollapsibleBreadcrumbs() {
 ## With Icons
 
 ```jsx
-import { Breadcrumbs } from 'strive-ui';
+import { Breadcrumbs } from 'pulseui';
 import styled from 'styled-components';
 import { FaHome, FaBox, FaLaptop, FaMicrochip } from 'react-icons/fa';
 
@@ -254,7 +254,7 @@ function IconBreadcrumbs() {
 
 ```jsx
 import { useLocation } from 'react-router-dom';
-import { Breadcrumbs } from 'strive-ui';
+import { Breadcrumbs } from 'pulseui';
 
 function DynamicBreadcrumbs() {
   const location = useLocation();

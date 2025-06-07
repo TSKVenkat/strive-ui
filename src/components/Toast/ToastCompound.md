@@ -17,13 +17,13 @@ The Toast Compound Component is a flexible notification system built using the c
 ## Installation
 
 ```jsx
-import Toast from 'strive-ui/Toast';
+import Toast from 'pulseui/Toast';
 ```
 
 ## Basic Usage
 
 ```jsx
-import Toast from 'strive-ui/Toast';
+import Toast from 'pulseui/Toast';
 
 function App() {
   return (
@@ -254,7 +254,7 @@ You can customize the appearance of toasts using styled-components:
 
 ```jsx
 import styled from 'styled-components';
-import Toast from 'strive-ui/Toast';
+import Toast from 'pulseui/Toast';
 
 const StyledToast = styled(Toast.Custom)`
   background-color: #f8f9fa;

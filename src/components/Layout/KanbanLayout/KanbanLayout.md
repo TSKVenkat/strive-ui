@@ -15,13 +15,13 @@ The `KanbanLayout`, `KanbanColumn`, and `KanbanCard` components provide a flexib
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { KanbanLayout, KanbanColumn, KanbanCard } from '@strive-ui/layout';
+import { KanbanLayout, KanbanColumn, KanbanCard } from '@pulseui/layout';
 
 function BasicKanban() {
   return (
@@ -59,7 +59,7 @@ function BasicKanban() {
 ### With Drag and Drop
 
 ```tsx
-import { KanbanLayout, KanbanColumn, KanbanCard } from '@strive-ui/layout';
+import { KanbanLayout, KanbanColumn, KanbanCard } from '@pulseui/layout';
 import { useState } from 'react';
 
 function DraggableKanban() {
@@ -134,7 +134,7 @@ function DraggableKanban() {
 ### Custom Styled Kanban
 
 ```tsx
-import { KanbanLayout, KanbanColumn, KanbanCard } from '@strive-ui/layout';
+import { KanbanLayout, KanbanColumn, KanbanCard } from '@pulseui/layout';
 
 function StyledKanban() {
   return (
@@ -268,7 +268,7 @@ function StyledKanban() {
 ### Project Management Kanban
 
 ```tsx
-import { KanbanLayout, KanbanColumn, KanbanCard } from '@strive-ui/layout';
+import { KanbanLayout, KanbanColumn, KanbanCard } from '@pulseui/layout';
 
 function ProjectKanban() {
   // Define custom card component for project tasks

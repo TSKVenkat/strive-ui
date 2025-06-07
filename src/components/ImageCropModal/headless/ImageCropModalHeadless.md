@@ -5,7 +5,7 @@ A headless component for creating customizable image cropping modals with extens
 ## Usage
 
 ```jsx
-import { ImageCropModalHeadless } from 'strive-ui';
+import { ImageCropModalHeadless } from 'pulseui';
 
 function MyImageCropper() {
   const [croppedImage, setCroppedImage] = useState(null);
@@ -262,7 +262,7 @@ function MyImageCropper() {
 ## Creating a Reusable Image Cropper
 
 ```jsx
-import { ImageCropModalHeadless } from 'strive-ui';
+import { ImageCropModalHeadless } from 'pulseui';
 
 function CustomImageCropper({ 
   isOpen, 
@@ -610,7 +610,7 @@ function App() {
 For even more control, you can use the `useImageCropModal` hook directly:
 
 ```jsx
-import { useImageCropModal } from 'strive-ui';
+import { useImageCropModal } from 'pulseui';
 
 function MyCustomImageCropper() {
   const {

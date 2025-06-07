@@ -17,7 +17,7 @@ A headless implementation of virtual scrolling that efficiently renders only the
 ## Basic Usage
 
 ```jsx
-import { VirtualScroll } from 'strive-ui';
+import { VirtualScroll } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -78,7 +78,7 @@ function MyVirtualScroll() {
 ## Variable Height Items
 
 ```jsx
-import { VirtualScroll } from 'strive-ui';
+import { VirtualScroll } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -156,7 +156,7 @@ function VariableHeightExample() {
 ## Horizontal Scrolling
 
 ```jsx
-import { VirtualScroll } from 'strive-ui';
+import { VirtualScroll } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -220,7 +220,7 @@ function HorizontalScrollExample() {
 ## Scroll To Item
 
 ```jsx
-import { VirtualScroll } from 'strive-ui';
+import { VirtualScroll } from 'pulseui';
 import { useState, useRef } from 'react';
 import styled from 'styled-components';
 
@@ -386,7 +386,7 @@ function ScrollToExample() {
 ## Advanced Customization with Data Fetching
 
 ```jsx
-import { VirtualScroll } from 'strive-ui';
+import { VirtualScroll } from 'pulseui';
 import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';

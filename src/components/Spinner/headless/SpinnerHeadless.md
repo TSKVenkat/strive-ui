@@ -5,7 +5,7 @@ A headless component for creating customizable loading spinners with extensive f
 ## Usage
 
 ```jsx
-import { SpinnerHeadless } from 'strive-ui';
+import { SpinnerHeadless } from 'pulseui';
 
 function MySpinner() {
   return (
@@ -37,7 +37,7 @@ function MySpinner() {
 ## Creating Different Spinner Variants
 
 ```jsx
-import { SpinnerHeadless } from 'strive-ui';
+import { SpinnerHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function SpinnerExample() {
@@ -263,7 +263,7 @@ function SpinnerExample() {
 ## Creating a Reusable Spinner Component
 
 ```jsx
-import { SpinnerHeadless } from 'strive-ui';
+import { SpinnerHeadless } from 'pulseui';
 
 function CustomSpinner({ 
   size = 'medium',
@@ -439,7 +439,7 @@ function App() {
 ## Creating a Loading Overlay
 
 ```jsx
-import { SpinnerHeadless } from 'strive-ui';
+import { SpinnerHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function LoadingOverlay({ 
@@ -556,7 +556,7 @@ function App() {
 For even more control, you can use the `useSpinner` hook directly:
 
 ```jsx
-import { useSpinner } from 'strive-ui';
+import { useSpinner } from 'pulseui';
 
 function MyCustomSpinner() {
   const {

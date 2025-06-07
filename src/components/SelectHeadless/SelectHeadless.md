@@ -17,7 +17,7 @@ A headless select component that provides all the functionality without any styl
 ## Installation
 
 ```bash
-npm install @strive-ui/select
+npm install @pulseui/select
 ```
 
 ## Usage
@@ -25,7 +25,7 @@ npm install @strive-ui/select
 ### Basic Usage
 
 ```jsx
-import { Select } from '@strive-ui/select';
+import { Select } from '@pulseui/select';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -52,7 +52,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { Select } from '@strive-ui/select';
+import { Select } from '@pulseui/select';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -87,7 +87,7 @@ function ControlledSelect() {
 ### Searchable Select
 
 ```jsx
-import { Select } from '@strive-ui/select';
+import { Select } from '@pulseui/select';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -121,7 +121,7 @@ function SearchableSelect() {
 ### Option Groups
 
 ```jsx
-import { Select } from '@strive-ui/select';
+import { Select } from '@pulseui/select';
 
 const options = [
   { value: 'apple', label: 'Apple', group: 'fruits' },
@@ -168,7 +168,7 @@ function GroupedSelect() {
 ### Clearable Select
 
 ```jsx
-import { Select } from '@strive-ui/select';
+import { Select } from '@pulseui/select';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -197,7 +197,7 @@ function ClearableSelect() {
 ### Custom Styling with Compound Components
 
 ```jsx
-import { Select } from '@strive-ui/select';
+import { Select } from '@pulseui/select';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -281,7 +281,7 @@ function CustomSelect() {
 ### Styling with Tailwind CSS
 
 ```jsx
-import { Select } from '@strive-ui/select';
+import { Select } from '@pulseui/select';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -357,7 +357,7 @@ function TailwindSelect() {
 
 ```jsx
 import styled from 'styled-components';
-import { Select } from '@strive-ui/select';
+import { Select } from '@pulseui/select';
 
 const options = [
   { value: 'apple', label: 'Apple' },
@@ -613,7 +613,7 @@ The SelectHeadless component follows the WAI-ARIA combobox pattern and includes 
 If you need more control, you can use the `useSelect` hook directly:
 
 ```jsx
-import { useSelect } from '@strive-ui/select';
+import { useSelect } from '@pulseui/select';
 
 function MyCustomSelect() {
   const { 

@@ -36,7 +36,7 @@ Add any other context, code examples, or screenshots about the feature request h
 **Example usage (if applicable)**
 ```jsx
 // Show how you would like to use this feature
-import { NewComponent } from '@pulse-ui/core';
+import { NewComponent } from '@pulseui/core';
 
 function Example() {
   return <NewComponent newProp="value" />;

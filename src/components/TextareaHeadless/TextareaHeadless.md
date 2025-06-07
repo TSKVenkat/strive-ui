@@ -16,7 +16,7 @@ A headless textarea component that provides all the functionality without any st
 ## Installation
 
 ```bash
-npm install @strive-ui/textarea
+npm install @pulseui/textarea
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ npm install @strive-ui/textarea
 ### Basic Usage
 
 ```jsx
-import { Textarea } from '@strive-ui/textarea';
+import { Textarea } from '@pulseui/textarea';
 
 function MyComponent() {
   return (
@@ -41,7 +41,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { Textarea } from '@strive-ui/textarea';
+import { Textarea } from '@pulseui/textarea';
 
 function ControlledTextarea() {
   const [value, setValue] = useState('');
@@ -63,7 +63,7 @@ function ControlledTextarea() {
 ### Auto-resize Textarea
 
 ```jsx
-import { Textarea } from '@strive-ui/textarea';
+import { Textarea } from '@pulseui/textarea';
 
 function AutoResizeTextarea() {
   return (
@@ -81,7 +81,7 @@ function AutoResizeTextarea() {
 ### Character Count
 
 ```jsx
-import { Textarea } from '@strive-ui/textarea';
+import { Textarea } from '@pulseui/textarea';
 
 function TextareaWithCount() {
   return (
@@ -98,7 +98,7 @@ function TextareaWithCount() {
 ### Word Count
 
 ```jsx
-import { Textarea } from '@strive-ui/textarea';
+import { Textarea } from '@pulseui/textarea';
 
 function TextareaWithWordCount() {
   return (
@@ -115,7 +115,7 @@ function TextareaWithWordCount() {
 ### With Clear Button
 
 ```jsx
-import { Textarea } from '@strive-ui/textarea';
+import { Textarea } from '@pulseui/textarea';
 
 function TextareaWithClear() {
   return (
@@ -135,7 +135,7 @@ function TextareaWithClear() {
 ### Custom Styling with Compound Components
 
 ```jsx
-import { Textarea } from '@strive-ui/textarea';
+import { Textarea } from '@pulseui/textarea';
 
 function CustomTextarea() {
   return (
@@ -187,7 +187,7 @@ function CustomTextarea() {
 ### Styling with Tailwind CSS
 
 ```jsx
-import { Textarea } from '@strive-ui/textarea';
+import { Textarea } from '@pulseui/textarea';
 
 function TailwindTextarea() {
   return (
@@ -224,7 +224,7 @@ function TailwindTextarea() {
 
 ```jsx
 import styled from 'styled-components';
-import { Textarea } from '@strive-ui/textarea';
+import { Textarea } from '@pulseui/textarea';
 
 const StyledTextarea = styled(Textarea)`
   display: flex;
@@ -360,7 +360,7 @@ function StyledComponentsTextarea() {
 
 ```jsx
 import styles from './Textarea.module.css';
-import { Textarea } from '@strive-ui/textarea';
+import { Textarea } from '@pulseui/textarea';
 
 function CSSModulesTextarea() {
   return (
@@ -379,7 +379,7 @@ function CSSModulesTextarea() {
 ### Using the Render Prop Pattern
 
 ```jsx
-import { Textarea } from '@strive-ui/textarea';
+import { Textarea } from '@pulseui/textarea';
 
 function RenderPropTextarea() {
   return (
@@ -531,7 +531,7 @@ The TextareaHeadless component follows the WAI-ARIA textarea pattern and include
 If you need more control, you can use the `useTextarea` hook directly:
 
 ```jsx
-import { useTextarea } from '@strive-ui/textarea';
+import { useTextarea } from '@pulseui/textarea';
 
 function MyCustomTextarea() {
   const { 

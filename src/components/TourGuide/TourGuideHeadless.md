@@ -5,7 +5,7 @@ A headless component for creating guided tours and walkthroughs for your applica
 ## Usage
 
 ```jsx
-import { TourGuideHeadless } from 'strive-ui';
+import { TourGuideHeadless } from 'pulseui';
 import { useRef } from 'react';
 
 function MyApp() {

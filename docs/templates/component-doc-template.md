@@ -9,17 +9,17 @@ A more detailed explanation of the component, its design philosophy, and how it 
 ## Installation
 
 ```bash
-npm install @pulse-ui/core
+npm install @pulseui/core
 ```
 
 ## Import
 
 ```jsx
 // Import the component
-import { ComponentName } from '@pulse-ui/core';
+import { ComponentName } from '@pulseui/core';
 
 // Import the hook (for headless usage)
-import { useComponentName } from '@pulse-ui/core';
+import { useComponentName } from '@pulseui/core';
 ```
 
 ## Features
@@ -209,7 +209,7 @@ function FormExample() {
 ### With Theme
 
 ```jsx
-import { createTheme, ThemeProvider } from '@pulse-ui/core';
+import { createTheme, ThemeProvider } from '@pulseui/core';
 
 const theme = createTheme({
   colors: {

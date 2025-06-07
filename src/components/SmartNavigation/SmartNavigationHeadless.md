@@ -16,7 +16,7 @@ A headless implementation of a smart navigation component that adapts to user be
 ## Basic Usage
 
 ```jsx
-import { SmartNavigation } from 'strive-ui';
+import { SmartNavigation } from 'pulseui';
 import styled from 'styled-components';
 
 const Nav = styled(SmartNavigation)`
@@ -177,7 +177,7 @@ function MySmartNavigation() {
 ## With Icons Example
 
 ```jsx
-import { SmartNavigation } from 'strive-ui';
+import { SmartNavigation } from 'pulseui';
 import styled from 'styled-components';
 
 const Nav = styled(SmartNavigation)`
@@ -354,7 +354,7 @@ function IconsExample() {
 ## Context Awareness Example
 
 ```jsx
-import { SmartNavigation } from 'strive-ui';
+import { SmartNavigation } from 'pulseui';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -601,7 +601,7 @@ function ContextAwarenessExample() {
 ## Reset Button Example
 
 ```jsx
-import { SmartNavigation } from 'strive-ui';
+import { SmartNavigation } from 'pulseui';
 import styled from 'styled-components';
 
 const Nav = styled(SmartNavigation)`
@@ -806,7 +806,7 @@ function ResetButtonExample() {
 | enableLearning | boolean | true | Whether to enable learning from user behavior |
 | enableContextAwareness | boolean | false | Whether to enable context awareness |
 | contextTags | string[] | [] | Current context tags to prioritize items by |
-| storageKey | string | 'strive-ui-smart-navigation' | Storage key for persisting usage data |
+| storageKey | string | 'pulseui-smart-navigation' | Storage key for persisting usage data |
 | weightDecayFactor | number | 0.9 | Weight decay factor (0-1, lower means faster decay) |
 | clickWeightBoost | number | 1 | Weight boost for each click |
 | contextRelevanceBoost | number | 0.5 | Weight boost for contextual relevance |

@@ -16,13 +16,13 @@ The `ListLayout` and `ListItem` components provide a flexible way to create vari
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { ListLayout, ListItem } from '@strive-ui/layout';
+import { ListLayout, ListItem } from '@pulseui/layout';
 
 function BasicList() {
   return (
@@ -42,7 +42,7 @@ function BasicList() {
 ### Different Variants
 
 ```tsx
-import { ListLayout, ListItem } from '@strive-ui/layout';
+import { ListLayout, ListItem } from '@pulseui/layout';
 import { useState } from 'react';
 
 function VariantsExample() {
@@ -75,7 +75,7 @@ function VariantsExample() {
 ### Different Sizes
 
 ```tsx
-import { ListLayout, ListItem } from '@strive-ui/layout';
+import { ListLayout, ListItem } from '@pulseui/layout';
 
 function SizesExample() {
   return (
@@ -122,7 +122,7 @@ function SizesExample() {
 ### Horizontal List
 
 ```tsx
-import { ListLayout, ListItem } from '@strive-ui/layout';
+import { ListLayout, ListItem } from '@pulseui/layout';
 
 function HorizontalListExample() {
   return (
@@ -140,7 +140,7 @@ function HorizontalListExample() {
 ### Ordered List
 
 ```tsx
-import { ListLayout, ListItem } from '@strive-ui/layout';
+import { ListLayout, ListItem } from '@pulseui/layout';
 
 function OrderedListExample() {
   return (
@@ -158,7 +158,7 @@ function OrderedListExample() {
 ### Active and Disabled Items
 
 ```tsx
-import { ListLayout, ListItem } from '@strive-ui/layout';
+import { ListLayout, ListItem } from '@pulseui/layout';
 
 function StateExample() {
   return (
@@ -176,7 +176,7 @@ function StateExample() {
 ### Feature List
 
 ```tsx
-import { ListLayout, ListItem } from '@strive-ui/layout';
+import { ListLayout, ListItem } from '@pulseui/layout';
 
 function FeatureListExample() {
   const features = [

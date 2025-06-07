@@ -14,13 +14,13 @@ The `CardLayout` component provides a flexible way to create card-based layouts 
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { CardLayout } from '@strive-ui/layout';
+import { CardLayout } from '@pulseui/layout';
 
 function BasicCardLayout() {
   return (
@@ -41,7 +41,7 @@ function BasicCardLayout() {
 ### Different Layout Variants
 
 ```tsx
-import { CardLayout } from '@strive-ui/layout';
+import { CardLayout } from '@pulseui/layout';
 import { useState } from 'react';
 
 function LayoutVariantsExample() {
@@ -82,7 +82,7 @@ function LayoutVariantsExample() {
 ### Equal Height Cards
 
 ```tsx
-import { CardLayout } from '@strive-ui/layout';
+import { CardLayout } from '@pulseui/layout';
 
 function EqualHeightExample() {
   const cards = [
@@ -121,7 +121,7 @@ function EqualHeightExample() {
 ### Featured Layout
 
 ```tsx
-import { CardLayout } from '@strive-ui/layout';
+import { CardLayout } from '@pulseui/layout';
 
 function FeaturedLayoutExample() {
   const articles = [
@@ -166,7 +166,7 @@ function FeaturedLayoutExample() {
 ### Product Grid
 
 ```tsx
-import { CardLayout } from '@strive-ui/layout';
+import { CardLayout } from '@pulseui/layout';
 
 function ProductGridExample() {
   const products = [

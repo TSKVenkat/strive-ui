@@ -5,7 +5,7 @@ The ScrollToTop component provides a button that appears when the user scrolls d
 ## Import
 
 ```jsx
-import { ScrollToTop } from 'strive-ui';
+import { ScrollToTop } from 'pulseui';
 ```
 
 ## Usage

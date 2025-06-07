@@ -16,15 +16,15 @@ The DragAndDrop component provides a flexible and powerful system for implementi
 ## Installation
 
 ```bash
-npm install strive-ui
+npm install pulseui
 # or
-yarn add strive-ui
+yarn add pulseui
 ```
 
 ## Basic Usage
 
 ```jsx
-import { DragAndDrop } from 'strive-ui';
+import { DragAndDrop } from 'pulseui';
 
 function DragAndDropExample() {
   const handleDrop = (data) => {
@@ -78,7 +78,7 @@ function DragAndDropExample() {
 ### Sortable List
 
 ```jsx
-import { DragAndDrop } from 'strive-ui';
+import { DragAndDrop } from 'pulseui';
 import { useState } from 'react';
 
 function SortableList() {
@@ -155,7 +155,7 @@ function SortableList() {
 ### Kanban Board
 
 ```jsx
-import { DragAndDrop } from 'strive-ui';
+import { DragAndDrop } from 'pulseui';
 import { useState } from 'react';
 
 function KanbanBoard() {
@@ -292,7 +292,7 @@ function KanbanBoard() {
 For maximum customization, you can use the headless version of the DragAndDrop component:
 
 ```jsx
-import { DragAndDropHeadless } from 'strive-ui';
+import { DragAndDropHeadless } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -602,7 +602,7 @@ type DragOperation = 'move' | 'copy' | 'link' | 'none';
 The `useDragAndDrop` hook provides the core functionality for the DragAndDrop component and can be used independently for custom implementations.
 
 ```jsx
-import { useDragAndDrop } from 'strive-ui';
+import { useDragAndDrop } from 'pulseui';
 
 function CustomDragAndDrop() {
   const {
@@ -650,7 +650,7 @@ The DragAndDrop component is built with accessibility in mind:
 ### File Upload
 
 ```jsx
-import { DragAndDrop } from 'strive-ui';
+import { DragAndDrop } from 'pulseui';
 import { useState } from 'react';
 
 function FileUpload() {
@@ -725,7 +725,7 @@ function FileUpload() {
 ### Color Palette
 
 ```jsx
-import { DragAndDrop } from 'strive-ui';
+import { DragAndDrop } from 'pulseui';
 import { useState } from 'react';
 
 function ColorPalette() {

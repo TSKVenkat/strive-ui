@@ -16,7 +16,7 @@ A specialized carousel component for displaying images with captions, navigation
 ## Installation
 
 ```bash
-npm install @strive-ui/image-carousel
+npm install @pulseui/image-carousel
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ npm install @strive-ui/image-carousel
 ### Basic Usage
 
 ```jsx
-import { ImageCarousel } from '@strive-ui/image-carousel';
+import { ImageCarousel } from '@pulseui/image-carousel';
 
 const images = [
   {
@@ -58,7 +58,7 @@ function App() {
 ### With Lightbox and Custom Navigation
 
 ```jsx
-import { ImageCarousel } from '@strive-ui/image-carousel';
+import { ImageCarousel } from '@pulseui/image-carousel';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 function App() {
@@ -93,7 +93,7 @@ function App() {
 ### Styled with Styled Components
 
 ```jsx
-import { ImageCarousel } from '@strive-ui/image-carousel';
+import { ImageCarousel } from '@pulseui/image-carousel';
 import styled from 'styled-components';
 
 const StyledCarousel = styled(ImageCarousel)`

@@ -15,7 +15,7 @@ A headless thumbs up/down rating component that provides all the functionality f
 ### Basic Usage
 
 ```jsx
-import { ThumbsRating } from '@strive-ui/thumbs-rating';
+import { ThumbsRating } from '@pulseui/thumbs-rating';
 
 function MyComponent() {
   return (
@@ -31,7 +31,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { ThumbsRating } from '@strive-ui/thumbs-rating';
+import { ThumbsRating } from '@pulseui/thumbs-rating';
 
 function ControlledThumbsRating() {
   const [value, setValue] = useState(null);
@@ -51,7 +51,7 @@ function ControlledThumbsRating() {
 ### Custom Colors
 
 ```jsx
-import { ThumbsRating } from '@strive-ui/thumbs-rating';
+import { ThumbsRating } from '@pulseui/thumbs-rating';
 
 function ColoredThumbsRating() {
   return (
@@ -67,7 +67,7 @@ function ColoredThumbsRating() {
 ### Custom Size
 
 ```jsx
-import { ThumbsRating } from '@strive-ui/thumbs-rating';
+import { ThumbsRating } from '@pulseui/thumbs-rating';
 
 function LargeThumbsRating() {
   return (
@@ -82,7 +82,7 @@ function LargeThumbsRating() {
 ### Disabled State
 
 ```jsx
-import { ThumbsRating } from '@strive-ui/thumbs-rating';
+import { ThumbsRating } from '@pulseui/thumbs-rating';
 
 function DisabledThumbsRating() {
   return (
@@ -97,7 +97,7 @@ function DisabledThumbsRating() {
 ### Read-Only State
 
 ```jsx
-import { ThumbsRating } from '@strive-ui/thumbs-rating';
+import { ThumbsRating } from '@pulseui/thumbs-rating';
 
 function ReadOnlyThumbsRating() {
   return (
@@ -112,7 +112,7 @@ function ReadOnlyThumbsRating() {
 ### Custom Labels
 
 ```jsx
-import { ThumbsRating } from '@strive-ui/thumbs-rating';
+import { ThumbsRating } from '@pulseui/thumbs-rating';
 
 function CustomLabelThumbsRating() {
   return (
@@ -128,7 +128,7 @@ function CustomLabelThumbsRating() {
 ### Custom Styling
 
 ```jsx
-import { ThumbsRating } from '@strive-ui/thumbs-rating';
+import { ThumbsRating } from '@pulseui/thumbs-rating';
 
 function CustomStyledThumbsRating() {
   return (
@@ -212,7 +212,7 @@ The ThumbsRating component is designed to be highly customizable. You can overri
 
 ```jsx
 import styled from 'styled-components';
-import { ThumbsRating } from '@strive-ui/thumbs-rating';
+import { ThumbsRating } from '@pulseui/thumbs-rating';
 
 const StyledThumbsRating = styled(ThumbsRating)`
   padding: 16px;

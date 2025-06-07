@@ -7,10 +7,10 @@ This guide provides comprehensive instructions for publishing the Pulse UI libra
 Pulse UI follows a modern package structure:
 
 ```
-@pulse-ui/core         # Main package with core components
-@pulse-ui/hooks        # Reusable hooks for headless components
-@pulse-ui/utils        # Utility functions
-@pulse-ui/theme        # Theming system
+@pulseui/core         # Main package with core components
+@pulseui/hooks        # Reusable hooks for headless components
+@pulseui/utils        # Utility functions
+@pulseui/theme        # Theming system
 ```
 
 ## Prerequisites
@@ -102,10 +102,10 @@ Test the package locally before publishing:
 # Create a tarball
 npm pack
 
-# The output will be something like @strive-ui/core-1.0.0.tgz
+# The output will be something like @pulseui/core-1.0.0.tgz
 
 # In a test project, install the tarball
-npm install /path/to/@strive-ui/core-1.0.0.tgz
+npm install /path/to/@pulseui/core-1.0.0.tgz
 ```
 
 Verify that:
@@ -118,7 +118,7 @@ Verify that:
 ### 1. Authenticate with npm
 
 ```bash
-# Login to npm (you'll need an npm account with access to the @strive-ui organization)
+# Login to npm (you'll need an npm account with access to the @pulseui organization)
 npm login
 ```
 
@@ -147,8 +147,8 @@ npm publish --access public
 
 After publishing, verify that:
 
-1. The package is available on npm: `npm view @pulse-ui/core`
-2. The package can be installed: `npm install @pulse-ui/core`
+1. The package is available on npm: `npm view @pulseui/core`
+2. The package can be installed: `npm install @pulseui/core`
 3. The package works correctly in a test project
 4. The documentation site is updated with the latest version
 
@@ -194,13 +194,13 @@ Users can install pre-release versions with:
 
 ```bash
 # Alpha version
-npm install @pulse-ui/core@alpha
+npm install @pulseui/core@alpha
 
 # Beta version
-npm install @pulse-ui/core@beta
+npm install @pulseui/core@beta
 
 # Release candidate
-npm install @pulse-ui/core@rc
+npm install @pulseui/core@rc
 ```
 
 ## Post-Publication Tasks
@@ -233,7 +233,7 @@ After publishing:
 If you need to deprecate a version:
 
 ```bash
-npm deprecate @pulse-ui/core@"<1.0.0" "This version is no longer supported, please upgrade to v1.x"
+npm deprecate @pulseui/core@"<1.0.0" "This version is no longer supported, please upgrade to v1.x"
 ```
 
 For deprecating features within the code, use JSDoc annotations and console warnings:
@@ -263,9 +263,9 @@ For major versions with breaking changes, provide migration guides in the docume
 
 ### Common Issues
 
-1. **Authentication failures**: Make sure you're logged in with `npm login` and have the correct permissions for the @strive-ui organization
+1. **Authentication failures**: Make sure you're logged in with `npm login` and have the correct permissions for the @pulseui organization
 
-2. **Version conflicts**: Ensure the version hasn't been published before. Check with `npm view @pulse-ui/core versions`
+2. **Version conflicts**: Ensure the version hasn't been published before. Check with `npm view @pulseui/core versions`
 
 3. **Missing files**: Check your `.npmignore` and `files` field in package.json to ensure all necessary files are included
 

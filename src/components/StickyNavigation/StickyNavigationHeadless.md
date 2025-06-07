@@ -16,7 +16,7 @@ A headless implementation of a sticky navigation component that sticks to the to
 ## Basic Usage
 
 ```jsx
-import { StickyNavigation } from 'strive-ui';
+import { StickyNavigation } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -150,7 +150,7 @@ function MyStickyNavigation() {
 ## Hide on Scroll Example
 
 ```jsx
-import { StickyNavigation } from 'strive-ui';
+import { StickyNavigation } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -270,7 +270,7 @@ function HideOnScrollExample() {
 ## With Icons Example
 
 ```jsx
-import { StickyNavigation } from 'strive-ui';
+import { StickyNavigation } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -415,7 +415,7 @@ function IconsExample() {
 ## Responsive Example
 
 ```jsx
-import { StickyNavigation } from 'strive-ui';
+import { StickyNavigation } from 'pulseui';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 

@@ -17,7 +17,7 @@ A headless audio upload component that provides all the functionality for upload
 ### Basic Usage
 
 ```jsx
-import { AudioUpload } from '@strive-ui/audio-upload';
+import { AudioUpload } from '@pulseui/audio-upload';
 
 function MyComponent() {
   return (
@@ -34,7 +34,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { AudioUpload } from '@strive-ui/audio-upload';
+import { AudioUpload } from '@pulseui/audio-upload';
 
 function ControlledUpload() {
   const [files, setFiles] = useState([]);
@@ -62,7 +62,7 @@ function ControlledUpload() {
 ### With Upload Function
 
 ```jsx
-import { AudioUpload } from '@strive-ui/audio-upload';
+import { AudioUpload } from '@pulseui/audio-upload';
 
 function UploadWithServer() {
   const uploadToServer = async (files) => {
@@ -102,7 +102,7 @@ function UploadWithServer() {
 ### Multiple File Upload
 
 ```jsx
-import { AudioUpload } from '@strive-ui/audio-upload';
+import { AudioUpload } from '@pulseui/audio-upload';
 
 function MultipleFileUpload() {
   return (
@@ -118,7 +118,7 @@ function MultipleFileUpload() {
 ### With File Validation
 
 ```jsx
-import { AudioUpload } from '@strive-ui/audio-upload';
+import { AudioUpload } from '@pulseui/audio-upload';
 
 function ValidatedUpload() {
   return (
@@ -143,7 +143,7 @@ function ValidatedUpload() {
 ### Disabled State
 
 ```jsx
-import { AudioUpload } from '@strive-ui/audio-upload';
+import { AudioUpload } from '@pulseui/audio-upload';
 
 function DisabledUpload() {
   return (
@@ -158,7 +158,7 @@ function DisabledUpload() {
 ### Read-Only State
 
 ```jsx
-import { AudioUpload } from '@strive-ui/audio-upload';
+import { AudioUpload } from '@pulseui/audio-upload';
 
 function ReadOnlyUpload() {
   return (
@@ -174,7 +174,7 @@ function ReadOnlyUpload() {
 ### Custom Styling
 
 ```jsx
-import { AudioUpload } from '@strive-ui/audio-upload';
+import { AudioUpload } from '@pulseui/audio-upload';
 
 function CustomStyledUpload() {
   return (
@@ -387,7 +387,7 @@ The AudioFile interface extends the standard File interface with additional prop
 #### useAudioUpload
 
 ```jsx
-import { useAudioUpload } from '@strive-ui/audio-upload';
+import { useAudioUpload } from '@pulseui/audio-upload';
 
 function MyCustomUpload() {
   const { 

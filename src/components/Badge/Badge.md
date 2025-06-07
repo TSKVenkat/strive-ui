@@ -5,7 +5,7 @@ The Badge component is used to highlight and display counts, status indicators, 
 ## Import
 
 ```jsx
-import { Badge } from 'strive-ui';
+import { Badge } from 'pulseui';
 ```
 
 ## Features
@@ -20,7 +20,7 @@ import { Badge } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Badge, Avatar, Icon } from 'strive-ui';
+import { Badge, Avatar, Icon } from 'pulseui';
 
 // Basic usage
 <Badge>New</Badge>

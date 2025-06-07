@@ -14,7 +14,7 @@ A headless implementation of a navigation bar that provides all the functionalit
 ## Basic Usage
 
 ```jsx
-import { Navbar } from 'strive-ui';
+import { Navbar } from 'pulseui';
 import styled from 'styled-components';
 
 // Create your own styled components
@@ -70,7 +70,7 @@ function MyNavbar() {
 ## Responsive Navbar
 
 ```jsx
-import { Navbar } from 'strive-ui';
+import { Navbar } from 'pulseui';
 import styled from 'styled-components';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
@@ -165,7 +165,7 @@ function ResponsiveNavbar() {
 
 ```jsx
 import { useState } from 'react';
-import { Navbar } from 'strive-ui';
+import { Navbar } from 'pulseui';
 import styled from 'styled-components';
 
 function ControlledNavbar() {
@@ -202,7 +202,7 @@ function ControlledNavbar() {
 ## Polymorphic Usage
 
 ```jsx
-import { Navbar } from 'strive-ui';
+import { Navbar } from 'pulseui';
 
 function PolymorphicNavbar() {
   return (

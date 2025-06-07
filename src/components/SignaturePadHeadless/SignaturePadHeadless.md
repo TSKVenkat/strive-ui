@@ -17,7 +17,7 @@ A headless signature pad component that provides all the functionality for captu
 ### Basic Usage
 
 ```jsx
-import { SignaturePad } from '@strive-ui/signature-pad';
+import { SignaturePad } from '@pulseui/signature-pad';
 
 function MyComponent() {
   return (
@@ -34,7 +34,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { SignaturePad } from '@strive-ui/signature-pad';
+import { SignaturePad } from '@pulseui/signature-pad';
 
 function ControlledSignaturePad() {
   const [strokes, setStrokes] = useState([]);
@@ -59,7 +59,7 @@ function ControlledSignaturePad() {
 ### With Custom Colors
 
 ```jsx
-import { SignaturePad } from '@strive-ui/signature-pad';
+import { SignaturePad } from '@pulseui/signature-pad';
 
 function ColorfulSignaturePad() {
   return (
@@ -92,7 +92,7 @@ function ColorfulSignaturePad() {
 
 ```jsx
 import { useState } from 'react';
-import { SignaturePad } from '@strive-ui/signature-pad';
+import { SignaturePad } from '@pulseui/signature-pad';
 
 function ValidatedSignaturePad() {
   const [isValid, setIsValid] = useState(false);
@@ -139,7 +139,7 @@ function ValidatedSignaturePad() {
 ### Disabled State
 
 ```jsx
-import { SignaturePad } from '@strive-ui/signature-pad';
+import { SignaturePad } from '@pulseui/signature-pad';
 
 function DisabledSignaturePad() {
   return (
@@ -155,7 +155,7 @@ function DisabledSignaturePad() {
 ### Read-Only State with Existing Signature
 
 ```jsx
-import { SignaturePad } from '@strive-ui/signature-pad';
+import { SignaturePad } from '@pulseui/signature-pad';
 
 // Example of a saved signature
 const savedStrokes = [
@@ -186,7 +186,7 @@ function ReadOnlySignaturePad() {
 ### Custom Styling
 
 ```jsx
-import { SignaturePad } from '@strive-ui/signature-pad';
+import { SignaturePad } from '@pulseui/signature-pad';
 
 function CustomStyledSignaturePad() {
   return (
@@ -294,7 +294,7 @@ function CustomStyledSignaturePad() {
 ### Using the Hook Directly
 
 ```jsx
-import { useSignaturePad } from '@strive-ui/signature-pad';
+import { useSignaturePad } from '@pulseui/signature-pad';
 
 function CustomSignaturePad() {
   const {
@@ -440,7 +440,7 @@ The SignaturePad component and its sub-components expose several data attributes
 #### useSignaturePad
 
 ```jsx
-import { useSignaturePad } from '@strive-ui/signature-pad';
+import { useSignaturePad } from '@pulseui/signature-pad';
 
 function MyCustomSignaturePad() {
   const {

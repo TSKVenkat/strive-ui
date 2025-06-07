@@ -16,7 +16,7 @@ A headless tag input component that provides all the functionality for creating 
 ### Basic Usage
 
 ```jsx
-import { TagInput } from '@strive-ui/tag-input';
+import { TagInput } from '@pulseui/tag-input';
 
 function MyComponent() {
   return (
@@ -32,7 +32,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { TagInput } from '@strive-ui/tag-input';
+import { TagInput } from '@pulseui/tag-input';
 
 function ControlledTagInput() {
   const [tags, setTags] = useState([]);
@@ -60,7 +60,7 @@ function ControlledTagInput() {
 ### With Custom Delimiters
 
 ```jsx
-import { TagInput } from '@strive-ui/tag-input';
+import { TagInput } from '@pulseui/tag-input';
 
 function TagInputWithCustomDelimiters() {
   return (
@@ -75,7 +75,7 @@ function TagInputWithCustomDelimiters() {
 ### With Validation
 
 ```jsx
-import { TagInput } from '@strive-ui/tag-input';
+import { TagInput } from '@pulseui/tag-input';
 
 function ValidatedTagInput() {
   // Validate that the tag is at least 3 characters long
@@ -98,7 +98,7 @@ function ValidatedTagInput() {
 ### With Transformation
 
 ```jsx
-import { TagInput } from '@strive-ui/tag-input';
+import { TagInput } from '@pulseui/tag-input';
 
 function TransformedTagInput() {
   // Transform tag to lowercase
@@ -118,7 +118,7 @@ function TransformedTagInput() {
 ### With Maximum Tags
 
 ```jsx
-import { TagInput } from '@strive-ui/tag-input';
+import { TagInput } from '@pulseui/tag-input';
 
 function LimitedTagInput() {
   return (
@@ -133,7 +133,7 @@ function LimitedTagInput() {
 ### Disabled State
 
 ```jsx
-import { TagInput } from '@strive-ui/tag-input';
+import { TagInput } from '@pulseui/tag-input';
 
 function DisabledTagInput() {
   return (
@@ -152,7 +152,7 @@ function DisabledTagInput() {
 ### With Disabled Tags
 
 ```jsx
-import { TagInput } from '@strive-ui/tag-input';
+import { TagInput } from '@pulseui/tag-input';
 
 function TagInputWithDisabledTags() {
   const defaultTags = [
@@ -173,7 +173,7 @@ function TagInputWithDisabledTags() {
 ### Custom Styling
 
 ```jsx
-import { TagInput } from '@strive-ui/tag-input';
+import { TagInput } from '@pulseui/tag-input';
 
 function CustomStyledTagInput() {
   return (
@@ -280,7 +280,7 @@ function CustomStyledTagInput() {
 ### Using the Hook Directly
 
 ```jsx
-import { useTagInput } from '@strive-ui/tag-input';
+import { useTagInput } from '@pulseui/tag-input';
 
 function CustomTagInput() {
   const {
@@ -399,7 +399,7 @@ The TagInput component and its sub-components expose several data attributes tha
 #### useTagInput
 
 ```jsx
-import { useTagInput } from '@strive-ui/tag-input';
+import { useTagInput } from '@pulseui/tag-input';
 
 function MyCustomTagInput() {
   const {

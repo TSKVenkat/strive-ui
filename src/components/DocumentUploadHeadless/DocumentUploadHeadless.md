@@ -18,7 +18,7 @@ A headless document upload component that provides all the functionality for upl
 ### Basic Usage
 
 ```jsx
-import { DocumentUpload } from '@strive-ui/document-upload';
+import { DocumentUpload } from '@pulseui/document-upload';
 
 function MyComponent() {
   return (
@@ -35,7 +35,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { DocumentUpload } from '@strive-ui/document-upload';
+import { DocumentUpload } from '@pulseui/document-upload';
 
 function ControlledUpload() {
   const [files, setFiles] = useState([]);
@@ -63,7 +63,7 @@ function ControlledUpload() {
 ### With Upload Function
 
 ```jsx
-import { DocumentUpload } from '@strive-ui/document-upload';
+import { DocumentUpload } from '@pulseui/document-upload';
 
 function UploadWithServer() {
   const uploadToServer = async (files) => {
@@ -103,7 +103,7 @@ function UploadWithServer() {
 ### Multiple File Upload
 
 ```jsx
-import { DocumentUpload } from '@strive-ui/document-upload';
+import { DocumentUpload } from '@pulseui/document-upload';
 
 function MultipleFileUpload() {
   return (
@@ -119,7 +119,7 @@ function MultipleFileUpload() {
 ### With File Validation
 
 ```jsx
-import { DocumentUpload } from '@strive-ui/document-upload';
+import { DocumentUpload } from '@pulseui/document-upload';
 
 function ValidatedUpload() {
   return (
@@ -144,7 +144,7 @@ function ValidatedUpload() {
 ### Custom Preview Renderer
 
 ```jsx
-import { DocumentUpload } from '@strive-ui/document-upload';
+import { DocumentUpload } from '@pulseui/document-upload';
 
 function CustomPreviewRenderer() {
   // Custom preview renderer for specific file types
@@ -170,7 +170,7 @@ function CustomPreviewRenderer() {
 ### Disabled State
 
 ```jsx
-import { DocumentUpload } from '@strive-ui/document-upload';
+import { DocumentUpload } from '@pulseui/document-upload';
 
 function DisabledUpload() {
   return (
@@ -185,7 +185,7 @@ function DisabledUpload() {
 ### Read-Only State
 
 ```jsx
-import { DocumentUpload } from '@strive-ui/document-upload';
+import { DocumentUpload } from '@pulseui/document-upload';
 
 function ReadOnlyUpload() {
   return (
@@ -201,7 +201,7 @@ function ReadOnlyUpload() {
 ### Custom Styling
 
 ```jsx
-import { DocumentUpload } from '@strive-ui/document-upload';
+import { DocumentUpload } from '@pulseui/document-upload';
 
 function CustomStyledUpload() {
   return (
@@ -432,7 +432,7 @@ The DocumentFile interface extends the standard File interface with additional p
 #### useDocumentUpload
 
 ```jsx
-import { useDocumentUpload } from '@strive-ui/document-upload';
+import { useDocumentUpload } from '@pulseui/document-upload';
 
 function MyCustomUpload() {
   const { 

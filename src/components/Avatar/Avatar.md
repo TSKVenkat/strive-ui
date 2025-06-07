@@ -5,7 +5,7 @@ The Avatar component displays a user's profile picture, initials, or fallback ic
 ## Import
 
 ```jsx
-import { Avatar } from 'strive-ui';
+import { Avatar } from 'pulseui';
 ```
 
 ## Features
@@ -21,7 +21,7 @@ import { Avatar } from 'strive-ui';
 ## Usage
 
 ```jsx
-import { Avatar } from 'strive-ui';
+import { Avatar } from 'pulseui';
 
 // Basic usage with image
 <Avatar src="/path/to/image.jpg" alt="User Name" />

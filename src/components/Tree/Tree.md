@@ -18,13 +18,13 @@ The Tree component displays hierarchical data structures in a tree-like format. 
 ## Installation
 
 ```jsx
-import { Tree } from 'strive-ui';
+import { Tree } from 'pulseui';
 ```
 
 ## Usage
 
 ```jsx
-import { Tree } from 'strive-ui';
+import { Tree } from 'pulseui';
 
 const fileStructure = [
   {

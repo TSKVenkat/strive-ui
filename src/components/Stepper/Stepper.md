@@ -5,7 +5,7 @@ The Stepper component displays progress through a sequence of logical and number
 ## Import
 
 ```jsx
-import { Stepper } from 'strive-ui';
+import { Stepper } from 'pulseui';
 ```
 
 ## Usage

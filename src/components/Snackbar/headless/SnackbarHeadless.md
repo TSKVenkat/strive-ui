@@ -5,7 +5,7 @@ A headless component for creating customizable snackbar notifications with exten
 ## Usage
 
 ```jsx
-import { SnackbarHeadless } from 'strive-ui';
+import { SnackbarHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function MySnackbar() {
@@ -90,7 +90,7 @@ function MySnackbar() {
 ## Creating Different Snackbar Variants
 
 ```jsx
-import { SnackbarHeadless } from 'strive-ui';
+import { SnackbarHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function SnackbarExample() {
@@ -216,7 +216,7 @@ function SnackbarExample() {
 ## Creating a Reusable Snackbar Component
 
 ```jsx
-import { SnackbarHeadless } from 'strive-ui';
+import { SnackbarHeadless } from 'pulseui';
 import { useState, useEffect } from 'react';
 
 function useSnackbarManager() {
@@ -427,7 +427,7 @@ function App() {
 For even more control, you can use the `useSnackbar` hook directly:
 
 ```jsx
-import { useSnackbar } from 'strive-ui';
+import { useSnackbar } from 'pulseui';
 
 function MyCustomSnackbar() {
   const {

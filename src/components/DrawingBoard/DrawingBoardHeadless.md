@@ -5,7 +5,7 @@ A headless component for creating customizable drawing and whiteboard applicatio
 ## Usage
 
 ```jsx
-import { DrawingBoardHeadless } from 'strive-ui';
+import { DrawingBoardHeadless } from 'pulseui';
 
 function MyDrawingApp() {
   const handleExport = (dataUrl) => {
@@ -154,7 +154,7 @@ interface DrawingObject {
 For even more control, you can use the `useDrawingBoard` hook directly:
 
 ```jsx
-import { useDrawingBoard } from 'strive-ui';
+import { useDrawingBoard } from 'pulseui';
 
 function MyCustomDrawingBoard() {
   const {

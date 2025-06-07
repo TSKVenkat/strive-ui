@@ -5,7 +5,7 @@ The Tabs component provides a way to organize content into separate views that c
 ## Import
 
 ```jsx
-import { Tabs } from 'strive-ui';
+import { Tabs } from 'pulseui';
 ```
 
 ## Usage

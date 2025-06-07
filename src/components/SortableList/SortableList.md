@@ -17,13 +17,13 @@ The SortableList component provides a flexible and accessible way to create sort
 ## Installation
 
 ```bash
-npm install @strive-ui/sortable-list
+npm install @pulseui/sortable-list
 ```
 
 ## Basic Usage
 
 ```jsx
-import { SortableList } from 'strive-ui';
+import { SortableList } from 'pulseui';
 import { useState } from 'react';
 
 function MyComponent() {
@@ -93,7 +93,7 @@ const items = [
 For maximum customization, you can use the headless version of the component:
 
 ```jsx
-import { SortableListHeadless } from 'strive-ui';
+import { SortableListHeadless } from 'pulseui';
 import { useState } from 'react';
 import styled from 'styled-components';
 

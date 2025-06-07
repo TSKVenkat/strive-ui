@@ -18,7 +18,7 @@ A flexible and customizable headless component for displaying news articles with
 ## Installation
 
 ```bash
-npm install @strive-ui/news-feed
+npm install @pulseui/news-feed
 ```
 
 ## Usage
@@ -26,7 +26,7 @@ npm install @strive-ui/news-feed
 ### Basic Usage
 
 ```jsx
-import { NewsFeed } from '@strive-ui/news-feed';
+import { NewsFeed } from '@pulseui/news-feed';
 
 const newsItems = [
   {
@@ -71,7 +71,7 @@ function App() {
 ### Custom Styling with Styled Components
 
 ```jsx
-import { NewsFeed } from '@strive-ui/news-feed';
+import { NewsFeed } from '@pulseui/news-feed';
 import styled from 'styled-components';
 
 // Custom styled components
@@ -174,7 +174,7 @@ function App() {
 ### Grouping News by Date
 
 ```jsx
-import { NewsFeed } from '@strive-ui/news-feed';
+import { NewsFeed } from '@pulseui/news-feed';
 
 function App() {
   // Group news items by date
@@ -210,7 +210,7 @@ function App() {
 ### Infinite Scrolling
 
 ```jsx
-import { NewsFeed } from '@strive-ui/news-feed';
+import { NewsFeed } from '@pulseui/news-feed';
 import { useEffect, useRef, useCallback } from 'react';
 
 function App() {

@@ -19,7 +19,7 @@ A flexible and customizable headless component for building chat interfaces with
 ## Installation
 
 ```bash
-npm install @strive-ui/chat-messages
+npm install @pulseui/chat-messages
 ```
 
 ## Usage
@@ -27,7 +27,7 @@ npm install @strive-ui/chat-messages
 ### Basic Usage
 
 ```jsx
-import { ChatMessages } from '@strive-ui/chat-messages';
+import { ChatMessages } from '@pulseui/chat-messages';
 
 const currentUser = {
   id: '1',
@@ -99,7 +99,7 @@ function App() {
 ### Custom Styling with Styled Components
 
 ```jsx
-import { ChatMessages } from '@strive-ui/chat-messages';
+import { ChatMessages } from '@pulseui/chat-messages';
 import styled from 'styled-components';
 
 // Custom styled components
@@ -214,7 +214,7 @@ function App() {
 ### Advanced Features: Reactions, Attachments, and Replies
 
 ```jsx
-import { ChatMessages } from '@strive-ui/chat-messages';
+import { ChatMessages } from '@pulseui/chat-messages';
 
 function App() {
   const handleAddReaction = async (message, reaction) => {

@@ -17,13 +17,13 @@ The `ParallaxContainer` component creates visually engaging parallax scrolling e
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { ParallaxContainer } from '@strive-ui/layout';
+import { ParallaxContainer } from '@pulseui/layout';
 
 function BasicParallax() {
   return (
@@ -48,7 +48,7 @@ function BasicParallax() {
 ### Hero Section with Parallax
 
 ```tsx
-import { ParallaxContainer } from '@strive-ui/layout';
+import { ParallaxContainer } from '@pulseui/layout';
 
 function ParallaxHero() {
   return (
@@ -100,7 +100,7 @@ function ParallaxHero() {
 ### Mouse Movement Parallax
 
 ```tsx
-import { ParallaxContainer } from '@strive-ui/layout';
+import { ParallaxContainer } from '@pulseui/layout';
 
 function MouseParallax() {
   return (
@@ -132,7 +132,7 @@ function MouseParallax() {
 ### Multi-Layer Parallax
 
 ```tsx
-import { ParallaxContainer, ParallaxLayer } from '@strive-ui/layout';
+import { ParallaxContainer, ParallaxLayer } from '@pulseui/layout';
 
 function MultiLayerParallax() {
   return (
@@ -241,7 +241,7 @@ function MultiLayerParallax() {
 ### Horizontal Parallax
 
 ```tsx
-import { ParallaxContainer } from '@strive-ui/layout';
+import { ParallaxContainer } from '@pulseui/layout';
 
 function HorizontalParallax() {
   return (
@@ -272,7 +272,7 @@ function HorizontalParallax() {
 ### Product Showcase with Parallax
 
 ```tsx
-import { ParallaxContainer } from '@strive-ui/layout';
+import { ParallaxContainer } from '@pulseui/layout';
 
 function ProductShowcase() {
   return (

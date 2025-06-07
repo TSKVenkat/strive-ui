@@ -16,7 +16,7 @@ A headless star rating component that provides all the functionality for star ra
 ### Basic Usage
 
 ```jsx
-import { StarRating } from '@strive-ui/star-rating';
+import { StarRating } from '@pulseui/star-rating';
 
 function MyComponent() {
   return (
@@ -33,7 +33,7 @@ function MyComponent() {
 
 ```jsx
 import { useState } from 'react';
-import { StarRating } from '@strive-ui/star-rating';
+import { StarRating } from '@pulseui/star-rating';
 
 function ControlledStarRating() {
   const [value, setValue] = useState(3);
@@ -54,7 +54,7 @@ function ControlledStarRating() {
 ### Half Stars
 
 ```jsx
-import { StarRating } from '@strive-ui/star-rating';
+import { StarRating } from '@pulseui/star-rating';
 
 function HalfStarRating() {
   return (
@@ -70,7 +70,7 @@ function HalfStarRating() {
 ### Custom Colors
 
 ```jsx
-import { StarRating } from '@strive-ui/star-rating';
+import { StarRating } from '@pulseui/star-rating';
 
 function ColoredStarRating() {
   return (
@@ -87,7 +87,7 @@ function ColoredStarRating() {
 ### Custom Size
 
 ```jsx
-import { StarRating } from '@strive-ui/star-rating';
+import { StarRating } from '@pulseui/star-rating';
 
 function LargeStarRating() {
   return (
@@ -103,7 +103,7 @@ function LargeStarRating() {
 ### Show Rating Value
 
 ```jsx
-import { StarRating } from '@strive-ui/star-rating';
+import { StarRating } from '@pulseui/star-rating';
 
 function StarRatingWithValue() {
   return (
@@ -119,7 +119,7 @@ function StarRatingWithValue() {
 ### Custom Value Formatting
 
 ```jsx
-import { StarRating } from '@strive-ui/star-rating';
+import { StarRating } from '@pulseui/star-rating';
 
 function FormattedStarRating() {
   return (
@@ -136,7 +136,7 @@ function FormattedStarRating() {
 ### Precise Size Control
 
 ```jsx
-import { StarRating } from '@strive-ui/star-rating';
+import { StarRating } from '@pulseui/star-rating';
 
 function CustomSizedStarRating() {
   return (
@@ -152,7 +152,7 @@ function CustomSizedStarRating() {
 ### Disabled State
 
 ```jsx
-import { StarRating } from '@strive-ui/star-rating';
+import { StarRating } from '@pulseui/star-rating';
 
 function DisabledStarRating() {
   return (
@@ -168,7 +168,7 @@ function DisabledStarRating() {
 ### Read-Only State
 
 ```jsx
-import { StarRating } from '@strive-ui/star-rating';
+import { StarRating } from '@pulseui/star-rating';
 
 function ReadOnlyStarRating() {
   return (
@@ -221,7 +221,7 @@ The StarRating component is designed to be highly customizable. You can override
 
 ```jsx
 import styled from 'styled-components';
-import { StarRating } from '@strive-ui/star-rating';
+import { StarRating } from '@pulseui/star-rating';
 
 const StyledStarRating = styled(StarRating)`
   padding: 16px;

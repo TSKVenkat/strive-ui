@@ -5,7 +5,7 @@ A headless component for creating customizable modal dialogs with extensive flex
 ## Usage
 
 ```jsx
-import { ModalHeadless } from 'strive-ui';
+import { ModalHeadless } from 'pulseui';
 
 function MyModal() {
   return (
@@ -97,7 +97,7 @@ function MyModal() {
 For even more control, you can use the `useModal` hook directly:
 
 ```jsx
-import { useModal } from 'strive-ui';
+import { useModal } from 'pulseui';
 
 function MyCustomModal() {
   const {

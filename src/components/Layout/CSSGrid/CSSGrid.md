@@ -16,13 +16,13 @@ The `CSSGrid` and `GridCell` components provide a powerful and intuitive way to 
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { CSSGrid, GridCell } from '@strive-ui/layout';
+import { CSSGrid, GridCell } from '@pulseui/layout';
 
 function BasicCSSGrid() {
   return (
@@ -43,7 +43,7 @@ function BasicCSSGrid() {
 ### Template Areas
 
 ```tsx
-import { CSSGrid, GridCell } from '@strive-ui/layout';
+import { CSSGrid, GridCell } from '@pulseui/layout';
 
 function TemplateAreasExample() {
   return (
@@ -78,7 +78,7 @@ function TemplateAreasExample() {
 ### Cell Spanning
 
 ```tsx
-import { CSSGrid, GridCell } from '@strive-ui/layout';
+import { CSSGrid, GridCell } from '@pulseui/layout';
 
 function CellSpanningExample() {
   return (
@@ -106,7 +106,7 @@ function CellSpanningExample() {
 ### Complex Layout
 
 ```tsx
-import { CSSGrid, GridCell } from '@strive-ui/layout';
+import { CSSGrid, GridCell } from '@pulseui/layout';
 
 function ComplexLayoutExample() {
   return (
@@ -148,7 +148,7 @@ function ComplexLayoutExample() {
 ### Alignment Control
 
 ```tsx
-import { CSSGrid, GridCell } from '@strive-ui/layout';
+import { CSSGrid, GridCell } from '@pulseui/layout';
 
 function AlignmentExample() {
   const cellStyle = {
@@ -208,7 +208,7 @@ function AlignmentExample() {
 ### Responsive Layout
 
 ```tsx
-import { CSSGrid, GridCell } from '@strive-ui/layout';
+import { CSSGrid, GridCell } from '@pulseui/layout';
 import { useState, useEffect } from 'react';
 
 function ResponsiveExample() {

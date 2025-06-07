@@ -15,13 +15,13 @@ The `TimelineLayout` and `TimelineItem` components provide a flexible way to cre
 ## Installation
 
 ```bash
-npm install @strive-ui/layout
+npm install @pulseui/layout
 ```
 
 ## Basic Usage
 
 ```tsx
-import { TimelineLayout, TimelineItem } from '@strive-ui/layout';
+import { TimelineLayout, TimelineItem } from '@pulseui/layout';
 
 function BasicTimeline() {
   return (
@@ -60,7 +60,7 @@ function BasicTimeline() {
 ### Different Variants
 
 ```tsx
-import { TimelineLayout, TimelineItem } from '@strive-ui/layout';
+import { TimelineLayout, TimelineItem } from '@pulseui/layout';
 import { useState } from 'react';
 
 function VariantsExample() {
@@ -101,7 +101,7 @@ function VariantsExample() {
 ### Different Alignments
 
 ```tsx
-import { TimelineLayout, TimelineItem } from '@strive-ui/layout';
+import { TimelineLayout, TimelineItem } from '@pulseui/layout';
 import { useState } from 'react';
 
 function AlignmentExample() {
@@ -141,7 +141,7 @@ function AlignmentExample() {
 ### Custom Colors and Sizes
 
 ```tsx
-import { TimelineLayout, TimelineItem } from '@strive-ui/layout';
+import { TimelineLayout, TimelineItem } from '@pulseui/layout';
 
 function CustomStylesExample() {
   return (
@@ -187,7 +187,7 @@ function CustomStylesExample() {
 ### Active and Completed Items
 
 ```tsx
-import { TimelineLayout, TimelineItem } from '@strive-ui/layout';
+import { TimelineLayout, TimelineItem } from '@pulseui/layout';
 
 function StateExample() {
   return (
@@ -227,7 +227,7 @@ function StateExample() {
 ### Reverse Order
 
 ```tsx
-import { TimelineLayout, TimelineItem } from '@strive-ui/layout';
+import { TimelineLayout, TimelineItem } from '@pulseui/layout';
 
 function ReverseOrderExample() {
   return (
@@ -264,7 +264,7 @@ function ReverseOrderExample() {
 ### Company History Timeline
 
 ```tsx
-import { TimelineLayout, TimelineItem } from '@strive-ui/layout';
+import { TimelineLayout, TimelineItem } from '@pulseui/layout';
 
 function CompanyHistoryExample() {
   const history = [

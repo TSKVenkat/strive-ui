@@ -5,7 +5,7 @@ A headless component for creating customizable coming soon pages with extensive 
 ## Usage
 
 ```jsx
-import { ComingSoonPageHeadless } from 'strive-ui';
+import { ComingSoonPageHeadless } from 'pulseui';
 
 function MyComingSoonPage() {
   return (
@@ -26,7 +26,7 @@ function MyComingSoonPage() {
 ## Custom Coming Soon Page
 
 ```jsx
-import { ComingSoonPageHeadless } from 'strive-ui';
+import { ComingSoonPageHeadless } from 'pulseui';
 import styled from 'styled-components';
 
 // Styled components
@@ -93,7 +93,7 @@ function CustomComingSoonPage() {
 ## Coming Soon Page with Newsletter and Social Media
 
 ```jsx
-import { ComingSoonPageHeadless } from 'strive-ui';
+import { ComingSoonPageHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function ComingSoonPageWithNewsletter() {
@@ -213,7 +213,7 @@ function ComingSoonPageWithNewsletter() {
 ## Creative Coming Soon Page
 
 ```jsx
-import { ComingSoonPageHeadless } from 'strive-ui';
+import { ComingSoonPageHeadless } from 'pulseui';
 import { useState, useEffect } from 'react';
 
 function CreativeComingSoonPage() {
@@ -321,7 +321,7 @@ function CreativeComingSoonPage() {
 ## Responsive Coming Soon Page
 
 ```jsx
-import { ComingSoonPageHeadless } from 'strive-ui';
+import { ComingSoonPageHeadless } from 'pulseui';
 import { useEffect, useState } from 'react';
 
 function ResponsiveComingSoonPage() {
@@ -453,7 +453,7 @@ function ResponsiveComingSoonPage() {
 For even more control, you can use the `useComingSoonPage` hook directly:
 
 ```jsx
-import { useComingSoonPage } from 'strive-ui';
+import { useComingSoonPage } from 'pulseui';
 
 function MyCustomComingSoonPage() {
   const {

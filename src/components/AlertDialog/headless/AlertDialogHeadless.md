@@ -5,7 +5,7 @@ A headless component for creating customizable alert dialogs that require user a
 ## Usage
 
 ```jsx
-import { AlertDialogHeadless } from 'strive-ui';
+import { AlertDialogHeadless } from 'pulseui';
 
 function MyAlertDialog() {
   const handleAction = () => {
@@ -68,7 +68,7 @@ function MyAlertDialog() {
 ## Creating a Reusable Alert Dialog
 
 ```jsx
-import { AlertDialogHeadless } from 'strive-ui';
+import { AlertDialogHeadless } from 'pulseui';
 
 function DangerAlertDialog({ 
   isOpen, 
@@ -212,7 +212,7 @@ function App() {
 For even more control, you can use the `useAlertDialog` hook directly:
 
 ```jsx
-import { useAlertDialog } from 'strive-ui';
+import { useAlertDialog } from 'pulseui';
 
 function MyCustomAlertDialog() {
   const {

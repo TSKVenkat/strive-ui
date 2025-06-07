@@ -5,7 +5,7 @@ A headless component for creating customizable status animations with extensive 
 ## Usage
 
 ```jsx
-import { StatusAnimationHeadless } from 'strive-ui';
+import { StatusAnimationHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function MyStatusAnimation() {
@@ -44,7 +44,7 @@ function MyStatusAnimation() {
 ## Creating Different Status Animation Types
 
 ```jsx
-import { StatusAnimationHeadless } from 'strive-ui';
+import { StatusAnimationHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function StatusAnimationExample() {
@@ -95,7 +95,7 @@ function StatusAnimationExample() {
 ## Creating a Form Submission Status Animation
 
 ```jsx
-import { StatusAnimationHeadless } from 'strive-ui';
+import { StatusAnimationHeadless } from 'pulseui';
 import { useState } from 'react';
 
 function FormWithStatusAnimation() {
@@ -251,7 +251,7 @@ function FormWithStatusAnimation() {
 ## Creating a Multi-Step Process Indicator
 
 ```jsx
-import { StatusAnimationHeadless } from 'strive-ui';
+import { StatusAnimationHeadless } from 'pulseui';
 import { useState, useEffect } from 'react';
 
 function ProcessStepIndicator({ step, status, title, description }) {
@@ -390,7 +390,7 @@ function MultiStepProcess() {
 ## Creating a Notification System
 
 ```jsx
-import { StatusAnimationHeadless } from 'strive-ui';
+import { StatusAnimationHeadless } from 'pulseui';
 import { useState, useEffect } from 'react';
 
 function Notification({ type, message, onClose }) {
@@ -537,7 +537,7 @@ function NotificationSystem() {
 For even more control, you can use the `useStatusAnimation` hook directly:
 
 ```jsx
-import { useStatusAnimation } from 'strive-ui';
+import { useStatusAnimation } from 'pulseui';
 
 function MyCustomStatusAnimation() {
   const {
